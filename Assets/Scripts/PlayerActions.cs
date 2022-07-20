@@ -7,6 +7,8 @@ public class PlayerActions : MonoBehaviour
     public Animator anim;
     Rigidbody2D rigid;
 
+    public SerihuManager manager;
+
     public float Speed = 3;
     float h;
     float v;
@@ -59,7 +61,8 @@ public class PlayerActions : MonoBehaviour
         // Scan Object
         if(Input.GetButtonDown("Submit") && scanObject != null)
         {
-            Debug.Log(scanObject);
+            // Debug.Log(scanObject);
+            manager.Action(scanObject);
         }
     }
 
