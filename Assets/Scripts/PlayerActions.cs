@@ -24,23 +24,23 @@ public class PlayerActions : MonoBehaviour
     void Update()
     {
         // Move Value
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
+        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
-        bool shiftDown = Input.GetButtonDown("Run");
+        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical");
+        bool shiftDown = manager.isAction ? false : Input.GetButton("Run");
+
+        if(shiftDown) this.Speed = 5;
+        else this.Speed = 3;
 
         // Direction
         if(vDown && v == 1) dirVec = Vector3.up;
         else if(vDown && v == -1) dirVec = Vector3.down;
         else if(hDown && h == -1) dirVec = Vector3.left;
         else if(hDown && h == 1) dirVec = Vector3.right;
-
-        if(shiftDown) this.Speed = 5f;
-        else this.Speed = 3f;
 
         // Animation
         if(anim.GetInteger("hAxisRaw") != h)

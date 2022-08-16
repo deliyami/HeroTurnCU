@@ -73,10 +73,10 @@ InputManager:
     m_Name: Run
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: right shift
     positiveButton: left shift
     altNegativeButton: 
-    altPositiveButton: right shift
+    altPositiveButton: 
     gravity: 3
     dead: 0.001
     sensitivity: 3
