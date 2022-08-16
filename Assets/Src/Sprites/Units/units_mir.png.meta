@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9af17589438ba6c43b52d77e9c115e20
+guid: 7529adb2a0e53ad46a84153daebf6883
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 7_karl_0
+      name: units_mir_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0963b249a3a6bb041a48eafd98db5b2d
-      internalID: -77766418
+      spriteID: 6b2b98c62aa20b14ba4c5683bcff15a5
+      internalID: -906818864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_1
+      name: units_mir_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdee306eaeab01c428a1e909e2a00e8a
-      internalID: -517500622
+      spriteID: 55355cca5d9b1844f9486fa2385074f9
+      internalID: -1115939924
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_2
+      name: units_mir_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4bbc2b440523d824eb9c122b30027cf2
-      internalID: -1896869487
+      spriteID: a78ae6b6f296b5d4298f758810dfc2b3
+      internalID: 1102711022
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_3
+      name: units_mir_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4db68424c7a251940bd8eaf92e231ccc
-      internalID: -1203309526
+      spriteID: e046da84b85bf054e8d6215086314956
+      internalID: -267940413
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_4
+      name: units_mir_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34a7739eb8599a94d8cc141976edf8da
-      internalID: -278665510
+      spriteID: 713922d7403927c4f87c78beeeaf82ac
+      internalID: 116370962
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_5
+      name: units_mir_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bf123e3a3923a2478dec695e6db98e5
-      internalID: 1369670583
+      spriteID: 639a41d6389a2944895e6eb49f256b19
+      internalID: 1066378612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_6
+      name: units_mir_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3e68c782b743a540a82d5d26d8e2fbf
-      internalID: -156188445
+      spriteID: 687c7f647567a524eb9a9f0610baeba9
+      internalID: 2087591486
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_7
+      name: units_mir_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0614493bdf895d349a1fa6fabb63e36f
-      internalID: -21845333
+      spriteID: 172fac4804908804eaa32b399848fd06
+      internalID: 2138899202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_8
+      name: units_mir_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b51256d3a9856df42ab1e57d7956e0f7
-      internalID: 1458795152
+      spriteID: 1281f5dbc0969204d8bf15999c012dc2
+      internalID: -99997975
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_9
+      name: units_mir_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33afc767a133721479b90b2ae318756b
-      internalID: -1266194792
+      spriteID: a53957a1ce8cebd428b94e1c3e55d1bd
+      internalID: 509653623
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_10
+      name: units_mir_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 430c5f1a7d6eadd4a9f85a57c88bb080
-      internalID: 498387045
+      spriteID: ee40605be4e42b9449e688d454b6bc97
+      internalID: -652551751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_11
+      name: units_mir_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9381e62509222cc4b907b21cd93c75de
-      internalID: 2114868991
+      spriteID: ff14b2b14be4ff148afe09cf9efa9557
+      internalID: -344995842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_12
+      name: units_mir_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f3a97244adbc1b4cada29f9812ca3a3
-      internalID: -1490384357
+      spriteID: 602c44e6aef87194898341c827768b95
+      internalID: 10154286
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_13
+      name: units_mir_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f35f020094690f64e842778e6502823a
-      internalID: 1463497818
+      spriteID: 4dd31cdb3dcfeea4fa2f5cf2e4540903
+      internalID: 1314609530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_14
+      name: units_mir_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3500a80a866f6fa469c59abcc5492daa
-      internalID: -569315747
+      spriteID: 9cf43a0990022be4d856295a6f5377cf
+      internalID: 1023370363
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_karl_15
+      name: units_mir_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94434cd0c7b3ea24d8c362594a846e6f
-      internalID: -802155268
+      spriteID: c6f77fc91e5368b4eb1240b9d26c8167
+      internalID: -939296330
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      7_karl_0: -77766418
-      7_karl_4: -278665510
-      7_karl_11: 2114868991
-      7_karl_3: -1203309526
-      7_karl_7: -21845333
-      7_karl_2: -1896869487
-      7_karl_6: -156188445
-      7_karl_8: 1458795152
-      7_karl_9: -1266194792
-      7_karl_12: -1490384357
-      7_karl_15: -802155268
-      7_karl_5: 1369670583
-      7_karl_13: 1463497818
-      7_karl_1: -517500622
-      7_karl_14: -569315747
-      7_karl_10: 498387045
+      units_mir_0: -906818864
+      units_mir_6: 2087591486
+      units_mir_2: 1102711022
+      units_mir_4: 116370962
+      units_mir_10: -652551751
+      units_mir_15: -939296330
+      units_mir_12: 10154286
+      units_mir_9: 509653623
+      units_mir_8: -99997975
+      units_mir_13: 1314609530
+      units_mir_1: -1115939924
+      units_mir_11: -344995842
+      units_mir_14: 1023370363
+      units_mir_5: 1066378612
+      units_mir_7: 2138899202
+      units_mir_3: -267940413
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

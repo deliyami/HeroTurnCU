@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed6155e5775988a42829bfc3acee4a98
+guid: a4e8ad1ea77a0eb4a959c471972edeeb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 9_salamandar_0
+      name: units_it_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2257d1a0c1b575e45a911accfd5d6637
-      internalID: -802687728
+      spriteID: 6a57310c32f253e488dfe3d18a284962
+      internalID: -480098491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_1
+      name: units_it_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd6b00f8b8bbe6844b6f107bd1ae1ac4
-      internalID: 135410157
+      spriteID: 99c3d2539ef318e42b34d04a8be667a0
+      internalID: 338778638
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_2
+      name: units_it_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df589b13bc288d74981397d4f1261f20
-      internalID: 1662517784
+      spriteID: f3f26b1771ddf704c9114046518cfb1c
+      internalID: -1280989123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_3
+      name: units_it_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb30b1b41bc76744b95f1a20b553cb1e
-      internalID: 25243179
+      spriteID: 74c52cca6834063408d9c02cdf555fa3
+      internalID: 1174435544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_4
+      name: units_it_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4810b392dd28c8146b14b55587d565d9
-      internalID: 1220068607
+      spriteID: cb1754fbc4f852240b671a0c2ce83d49
+      internalID: -1532194446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_5
+      name: units_it_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 248621903f5bf30429bfd76e0f76460b
-      internalID: -920506197
+      spriteID: 4df17135dff11e643a40b03ab513d31e
+      internalID: 907110997
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_6
+      name: units_it_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3aa8ff7bbdcba79428a2907b0b1aae82
-      internalID: -2044824154
+      spriteID: 3c39b3c6b0ef05048b48c01137694a8e
+      internalID: 1530306439
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_7
+      name: units_it_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cdad84861bb4054aa136c2b05c20355
-      internalID: -1161978700
+      spriteID: 0bdb3ce013dc0ee45bdf4c0a4d2821c0
+      internalID: -1193781172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_8
+      name: units_it_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75732c259439b57488fd4e12e8f5d2f6
-      internalID: -1642641020
+      spriteID: 4687ace4246feef4b96f9266639c282f
+      internalID: 1618487479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_9
+      name: units_it_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dfd778d211fe9c458646202857e3d2f
-      internalID: 1384091852
+      spriteID: 46402bf3a6ed7634fbc16a15def38198
+      internalID: 273048424
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_10
+      name: units_it_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 769e83569997a184cabfaec9935ca5d7
-      internalID: -957819609
+      spriteID: 50fbdaa1db08d4b4ba1077944b85c341
+      internalID: 786310543
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_11
+      name: units_it_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d993ff512ecb2164397f8a479016f291
-      internalID: -1969425835
+      spriteID: 0da0533b2de0e16489d796575c50ae5b
+      internalID: 1267103775
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_12
+      name: units_it_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 694dbc402c2e7ac4aac46a2c5855e0b0
-      internalID: -2051644213
+      spriteID: e90fd98cedc6d874ca7d64a15a3bfef8
+      internalID: -312838687
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_13
+      name: units_it_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3c0aff0a2560924ab43204d0f5c51e5
-      internalID: 1044575289
+      spriteID: 2916d02ff93ce764c90db5379c7dd3e0
+      internalID: -1641016384
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_14
+      name: units_it_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7c92f61011686c4c8c2b4ceecdbeaba
-      internalID: 1303186692
+      spriteID: 5be473b2f770f3c4f9528ea58b078244
+      internalID: 949532397
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_salamandar_15
+      name: units_it_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d24216458d99a74448f6b1aac7740bc9
-      internalID: -1851324679
+      spriteID: 79d3d574caf6b6245a9a17438df657e3
+      internalID: -1372196290
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      9_salamandar_0: -802687728
-      9_salamandar_10: -957819609
-      9_salamandar_4: 1220068607
-      9_salamandar_7: -1161978700
-      9_salamandar_1: 135410157
-      9_salamandar_6: -2044824154
-      9_salamandar_2: 1662517784
-      9_salamandar_11: -1969425835
-      9_salamandar_8: -1642641020
-      9_salamandar_14: 1303186692
-      9_salamandar_15: -1851324679
-      9_salamandar_13: 1044575289
-      9_salamandar_9: 1384091852
-      9_salamandar_5: -920506197
-      9_salamandar_3: 25243179
-      9_salamandar_12: -2051644213
+      units_it_9: 273048424
+      units_it_0: -480098491
+      units_it_4: -1532194446
+      units_it_3: 1174435544
+      units_it_11: 1267103775
+      units_it_15: -1372196290
+      units_it_2: -1280989123
+      units_it_12: -312838687
+      units_it_6: 1530306439
+      units_it_8: 1618487479
+      units_it_14: 949532397
+      units_it_5: 907110997
+      units_it_1: 338778638
+      units_it_7: -1193781172
+      units_it_13: -1641016384
+      units_it_10: 786310543
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

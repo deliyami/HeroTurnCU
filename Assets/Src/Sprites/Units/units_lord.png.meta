@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7529adb2a0e53ad46a84153daebf6883
+guid: 9cbc9dadff37dd945b1e838c883086eb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 3_mir_0
+      name: units_lord_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b2b98c62aa20b14ba4c5683bcff15a5
-      internalID: -906818864
+      spriteID: fe3330d9577771841a19af931250323a
+      internalID: -1669930542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_1
+      name: units_lord_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55355cca5d9b1844f9486fa2385074f9
-      internalID: -1115939924
+      spriteID: ec1bc4a242870d841aeb324f84006cab
+      internalID: -1036468025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_2
+      name: units_lord_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a78ae6b6f296b5d4298f758810dfc2b3
-      internalID: 1102711022
+      spriteID: 024b64cf36436404280c1436f225c93d
+      internalID: 1543360526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_3
+      name: units_lord_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e046da84b85bf054e8d6215086314956
-      internalID: -267940413
+      spriteID: 9d995a5a5014cf14a829508b91d2a452
+      internalID: -510891365
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_4
+      name: units_lord_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 713922d7403927c4f87c78beeeaf82ac
-      internalID: 116370962
+      spriteID: 791ca6d68d2317d44b5ddb725944098f
+      internalID: 623628562
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_5
+      name: units_lord_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 639a41d6389a2944895e6eb49f256b19
-      internalID: 1066378612
+      spriteID: 91ca3d897f9411741b7363d21a2633d7
+      internalID: -2023438114
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_6
+      name: units_lord_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 687c7f647567a524eb9a9f0610baeba9
-      internalID: 2087591486
+      spriteID: badfce0bee08d5c47a867e3e01fcb62e
+      internalID: 71605490
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_7
+      name: units_lord_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 172fac4804908804eaa32b399848fd06
-      internalID: 2138899202
+      spriteID: e3480f5ff2dfbb9419cb0e57314faa81
+      internalID: 1235817735
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_8
+      name: units_lord_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1281f5dbc0969204d8bf15999c012dc2
-      internalID: -99997975
+      spriteID: 8962bcafa52bcfb4bac95729eb00198f
+      internalID: 465854883
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_9
+      name: units_lord_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a53957a1ce8cebd428b94e1c3e55d1bd
-      internalID: 509653623
+      spriteID: 6c0a4663e5f60974eb03d9c024105896
+      internalID: -1125620588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_10
+      name: units_lord_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee40605be4e42b9449e688d454b6bc97
-      internalID: -652551751
+      spriteID: 7127cbbaf657b4140a4914e1bcef1220
+      internalID: 1867589519
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_11
+      name: units_lord_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff14b2b14be4ff148afe09cf9efa9557
-      internalID: -344995842
+      spriteID: b73d5959fcb7be14291c33deb15b7159
+      internalID: 526605217
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_12
+      name: units_lord_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 602c44e6aef87194898341c827768b95
-      internalID: 10154286
+      spriteID: 31c122185d4f22a42a300b7a7d0ccbb6
+      internalID: 476812911
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_13
+      name: units_lord_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4dd31cdb3dcfeea4fa2f5cf2e4540903
-      internalID: 1314609530
+      spriteID: 52357d9bc7db95643a7d3bda3c27e652
+      internalID: 1000249169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_14
+      name: units_lord_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9cf43a0990022be4d856295a6f5377cf
-      internalID: 1023370363
+      spriteID: 50b7f63dcdb8cb346b48fae896cf6de8
+      internalID: -654627862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_mir_15
+      name: units_lord_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6f77fc91e5368b4eb1240b9d26c8167
-      internalID: -939296330
+      spriteID: ba183eea279a09240872b3e9215cd1c1
+      internalID: 2080667639
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      3_mir_0: -906818864
-      3_mir_6: 2087591486
-      3_mir_2: 1102711022
-      3_mir_4: 116370962
-      3_mir_10: -652551751
-      3_mir_15: -939296330
-      3_mir_12: 10154286
-      3_mir_9: 509653623
-      3_mir_8: -99997975
-      3_mir_13: 1314609530
-      3_mir_1: -1115939924
-      3_mir_11: -344995842
-      3_mir_14: 1023370363
-      3_mir_5: 1066378612
-      3_mir_7: 2138899202
-      3_mir_3: -267940413
+      units_lord_11: 526605217
+      units_lord_7: 1235817735
+      units_lord_15: 2080667639
+      units_lord_1: -1036468025
+      units_lord_2: 1543360526
+      units_lord_0: -1669930542
+      units_lord_3: -510891365
+      units_lord_4: 623628562
+      units_lord_9: -1125620588
+      units_lord_12: 476812911
+      units_lord_14: -654627862
+      units_lord_6: 71605490
+      units_lord_5: -2023438114
+      units_lord_10: 1867589519
+      units_lord_13: 1000249169
+      units_lord_8: 465854883
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

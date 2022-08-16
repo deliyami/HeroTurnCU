@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d4d300ceb938d10449da9c6ef2dc54ba
+guid: 85f733a4b3a390f41a46bcb0971dcb09
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 5_mashiro_0
+      name: units_hero_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d7e5e3961d9e7245919910ddfa3c530
-      internalID: -2133330632
+      spriteID: 5ab83b6647d5664418e0df38f76a0d91
+      internalID: 1544096047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_1
+      name: units_hero_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c811dc53083a4b49b05a245ad57f709
-      internalID: 318449604
+      spriteID: 76897b9a73bd8d4458dad23c94ea9ab1
+      internalID: -1861235956
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_2
+      name: units_hero_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd731570b4095444cb3128978ae2570e
-      internalID: 1642272470
+      spriteID: 73e007f69a7aa244d845f8e7906287c5
+      internalID: 648893186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_3
+      name: units_hero_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f70bc6c2fdd3595469ed6b78ffffccf0
-      internalID: 1792949597
+      spriteID: 36e2e73caec477349ba1375f65be8750
+      internalID: 2089392550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_4
+      name: units_hero_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 253d151c634e2d940a1e8e8189435c8a
-      internalID: 1638683844
+      spriteID: 1ec80f1d67d201948af8359f63030edf
+      internalID: 156976445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_5
+      name: units_hero_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78e01e49cc419aa43b4d705c3ba1b0cd
-      internalID: -831846901
+      spriteID: b778d40affb29c047a841888a4184114
+      internalID: 520865393
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_6
+      name: units_hero_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a8794c9ae8aea54691370851fb60069
-      internalID: 1177522384
+      spriteID: 3a80bbb6316367e41a65edbea4be0af8
+      internalID: 1762958315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_7
+      name: units_hero_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54796b4bd888d8745a5197ded9036df1
-      internalID: -1952526216
+      spriteID: 3e48f34800e4ccb4daf532ac9d8bd199
+      internalID: 428320039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_8
+      name: units_hero_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c73076998289fc488e70f24b24052a5
-      internalID: 751240754
+      spriteID: 9ba6e57af08435c4c94fd7cfe8ca8552
+      internalID: -1825546776
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_9
+      name: units_hero_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad15f74322cc1c74c82335644b1f3aed
-      internalID: 1036827768
+      spriteID: 8a1bd5c2d39de5249b9d5229812e5a1d
+      internalID: 1063953264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_10
+      name: units_hero_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b54881ac59cae04fa22dad21f6373d0
-      internalID: -1437582304
+      spriteID: f25bcc350dea6a841acb7d0f3bec8f5b
+      internalID: -685183069
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_11
+      name: units_hero_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52751eea15884244e9cd5f97bbbbf6fc
-      internalID: 1611020461
+      spriteID: ad61acf92476e7b459652f7cbd17a68a
+      internalID: 294734170
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_12
+      name: units_hero_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a819c310d10eac24492d7deb1a74867b
-      internalID: -1041807878
+      spriteID: 88c337837457d7247bf794e8efd01e0b
+      internalID: 1434749505
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_13
+      name: units_hero_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5368a431c27333d43841722b2d680089
-      internalID: -1774542112
+      spriteID: eb53d8123a655ac42b6d2eb075287942
+      internalID: 1723123995
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_14
+      name: units_hero_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 067834f1fed13f647be6596166443027
-      internalID: -892536574
+      spriteID: a1415c7574c125744986cdd9a0f875c1
+      internalID: -1065741017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_mashiro_15
+      name: units_hero_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dc17ded28342524ba398d250a1f76fb
-      internalID: -20039950
+      spriteID: 321ed7a4d70840f40a61ba687821814d
+      internalID: -606041963
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      5_mashiro_8: 751240754
-      5_mashiro_3: 1792949597
-      5_mashiro_12: -1041807878
-      5_mashiro_14: -892536574
-      5_mashiro_6: 1177522384
-      5_mashiro_5: -831846901
-      5_mashiro_0: -2133330632
-      5_mashiro_15: -20039950
-      5_mashiro_9: 1036827768
-      5_mashiro_13: -1774542112
-      5_mashiro_4: 1638683844
-      5_mashiro_1: 318449604
-      5_mashiro_7: -1952526216
-      5_mashiro_11: 1611020461
-      5_mashiro_10: -1437582304
-      5_mashiro_2: 1642272470
+      units_hero_7: 428320039
+      units_hero_10: -685183069
+      units_hero_12: 1434749505
+      units_hero_9: 1063953264
+      units_hero_5: 520865393
+      units_hero_8: -1825546776
+      units_hero_11: 294734170
+      units_hero_13: 1723123995
+      units_hero_0: 1544096047
+      units_hero_14: -1065741017
+      units_hero_3: 2089392550
+      units_hero_1: -1861235956
+      units_hero_4: 156976445
+      units_hero_6: 1762958315
+      units_hero_2: 648893186
+      units_hero_15: -606041963
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

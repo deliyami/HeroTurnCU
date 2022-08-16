@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b780aad5d00a4140967b68b1b0b8977
+guid: ed6155e5775988a42829bfc3acee4a98
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 4_ghost_0
+      name: units_salamandar_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fdecfe37d2e88a49bfa1074020b7dc7
-      internalID: 101791423
+      spriteID: 2257d1a0c1b575e45a911accfd5d6637
+      internalID: -802687728
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_1
+      name: units_salamandar_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9e1cbe3e034c3040bc85d50bd94ee49
-      internalID: -1671163794
+      spriteID: bd6b00f8b8bbe6844b6f107bd1ae1ac4
+      internalID: 135410157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_2
+      name: units_salamandar_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78284b7fa03999e4e8344adc8b59eee4
-      internalID: 182709967
+      spriteID: df589b13bc288d74981397d4f1261f20
+      internalID: 1662517784
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_3
+      name: units_salamandar_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56ecfc3beda48a54d8bb9a92b7692035
-      internalID: -395474915
+      spriteID: eb30b1b41bc76744b95f1a20b553cb1e
+      internalID: 25243179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_4
+      name: units_salamandar_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd44b61450aab514999ea8aa5b34ad72
-      internalID: -242794204
+      spriteID: 4810b392dd28c8146b14b55587d565d9
+      internalID: 1220068607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_5
+      name: units_salamandar_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e01b0b12e5f0874c8e057b312922605
-      internalID: -1034601926
+      spriteID: 248621903f5bf30429bfd76e0f76460b
+      internalID: -920506197
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_6
+      name: units_salamandar_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc1df3b524b31f04c82ec2ef751f5ab3
-      internalID: -532438827
+      spriteID: 3aa8ff7bbdcba79428a2907b0b1aae82
+      internalID: -2044824154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_7
+      name: units_salamandar_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94fe702b98bae9c45bfde600f9df2c3a
-      internalID: 1023226106
+      spriteID: 0cdad84861bb4054aa136c2b05c20355
+      internalID: -1161978700
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_8
+      name: units_salamandar_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41821d795fc4ea743ab0178648877c3b
-      internalID: -708433662
+      spriteID: 75732c259439b57488fd4e12e8f5d2f6
+      internalID: -1642641020
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_9
+      name: units_salamandar_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44a485bf3d296a44ab753d873662d403
-      internalID: -109219154
+      spriteID: 3dfd778d211fe9c458646202857e3d2f
+      internalID: 1384091852
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_10
+      name: units_salamandar_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48ff5d70f455ed04c9916bea591e38bc
-      internalID: 901710674
+      spriteID: 769e83569997a184cabfaec9935ca5d7
+      internalID: -957819609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_11
+      name: units_salamandar_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c272177d80803b42b768024cba87c24
-      internalID: -594295635
+      spriteID: d993ff512ecb2164397f8a479016f291
+      internalID: -1969425835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_12
+      name: units_salamandar_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d2dc108b5437bf499041ae90373d273
-      internalID: 1694620655
+      spriteID: 694dbc402c2e7ac4aac46a2c5855e0b0
+      internalID: -2051644213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_13
+      name: units_salamandar_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cffa29aff116e84d99be11d7479e5ca
-      internalID: -744545486
+      spriteID: d3c0aff0a2560924ab43204d0f5c51e5
+      internalID: 1044575289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_14
+      name: units_salamandar_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 516daa089b4cec4408d6ede56829904d
-      internalID: -175269522
+      spriteID: e7c92f61011686c4c8c2b4ceecdbeaba
+      internalID: 1303186692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_ghost_15
+      name: units_salamandar_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc6fd3023b8f1a24a96538bbbc19ddc5
-      internalID: 398847145
+      spriteID: d24216458d99a74448f6b1aac7740bc9
+      internalID: -1851324679
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      4_ghost_1: -1671163794
-      4_ghost_7: 1023226106
-      4_ghost_4: -242794204
-      4_ghost_10: 901710674
-      4_ghost_3: -395474915
-      4_ghost_8: -708433662
-      4_ghost_9: -109219154
-      4_ghost_14: -175269522
-      4_ghost_15: 398847145
-      4_ghost_12: 1694620655
-      4_ghost_13: -744545486
-      4_ghost_5: -1034601926
-      4_ghost_0: 101791423
-      4_ghost_2: 182709967
-      4_ghost_11: -594295635
-      4_ghost_6: -532438827
+      units_salamandar_0: -802687728
+      units_salamandar_10: -957819609
+      units_salamandar_4: 1220068607
+      units_salamandar_7: -1161978700
+      units_salamandar_1: 135410157
+      units_salamandar_6: -2044824154
+      units_salamandar_2: 1662517784
+      units_salamandar_11: -1969425835
+      units_salamandar_8: -1642641020
+      units_salamandar_14: 1303186692
+      units_salamandar_15: -1851324679
+      units_salamandar_13: 1044575289
+      units_salamandar_9: 1384091852
+      units_salamandar_5: -920506197
+      units_salamandar_3: 25243179
+      units_salamandar_12: -2051644213
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 85f733a4b3a390f41a46bcb0971dcb09
+guid: 9af17589438ba6c43b52d77e9c115e20
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1_hero_0
+      name: units_karl_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ab83b6647d5664418e0df38f76a0d91
-      internalID: 1544096047
+      spriteID: 0963b249a3a6bb041a48eafd98db5b2d
+      internalID: -77766418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_1
+      name: units_karl_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76897b9a73bd8d4458dad23c94ea9ab1
-      internalID: -1861235956
+      spriteID: cdee306eaeab01c428a1e909e2a00e8a
+      internalID: -517500622
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_2
+      name: units_karl_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73e007f69a7aa244d845f8e7906287c5
-      internalID: 648893186
+      spriteID: 4bbc2b440523d824eb9c122b30027cf2
+      internalID: -1896869487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_3
+      name: units_karl_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36e2e73caec477349ba1375f65be8750
-      internalID: 2089392550
+      spriteID: 4db68424c7a251940bd8eaf92e231ccc
+      internalID: -1203309526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_4
+      name: units_karl_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ec80f1d67d201948af8359f63030edf
-      internalID: 156976445
+      spriteID: 34a7739eb8599a94d8cc141976edf8da
+      internalID: -278665510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_5
+      name: units_karl_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b778d40affb29c047a841888a4184114
-      internalID: 520865393
+      spriteID: 8bf123e3a3923a2478dec695e6db98e5
+      internalID: 1369670583
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_6
+      name: units_karl_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a80bbb6316367e41a65edbea4be0af8
-      internalID: 1762958315
+      spriteID: b3e68c782b743a540a82d5d26d8e2fbf
+      internalID: -156188445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_7
+      name: units_karl_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e48f34800e4ccb4daf532ac9d8bd199
-      internalID: 428320039
+      spriteID: 0614493bdf895d349a1fa6fabb63e36f
+      internalID: -21845333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_8
+      name: units_karl_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ba6e57af08435c4c94fd7cfe8ca8552
-      internalID: -1825546776
+      spriteID: b51256d3a9856df42ab1e57d7956e0f7
+      internalID: 1458795152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_9
+      name: units_karl_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a1bd5c2d39de5249b9d5229812e5a1d
-      internalID: 1063953264
+      spriteID: 33afc767a133721479b90b2ae318756b
+      internalID: -1266194792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_10
+      name: units_karl_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f25bcc350dea6a841acb7d0f3bec8f5b
-      internalID: -685183069
+      spriteID: 430c5f1a7d6eadd4a9f85a57c88bb080
+      internalID: 498387045
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_11
+      name: units_karl_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad61acf92476e7b459652f7cbd17a68a
-      internalID: 294734170
+      spriteID: 9381e62509222cc4b907b21cd93c75de
+      internalID: 2114868991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_12
+      name: units_karl_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88c337837457d7247bf794e8efd01e0b
-      internalID: 1434749505
+      spriteID: 7f3a97244adbc1b4cada29f9812ca3a3
+      internalID: -1490384357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_13
+      name: units_karl_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb53d8123a655ac42b6d2eb075287942
-      internalID: 1723123995
+      spriteID: f35f020094690f64e842778e6502823a
+      internalID: 1463497818
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_14
+      name: units_karl_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1415c7574c125744986cdd9a0f875c1
-      internalID: -1065741017
+      spriteID: 3500a80a866f6fa469c59abcc5492daa
+      internalID: -569315747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hero_15
+      name: units_karl_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 321ed7a4d70840f40a61ba687821814d
-      internalID: -606041963
+      spriteID: 94434cd0c7b3ea24d8c362594a846e6f
+      internalID: -802155268
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      1_hero_7: 428320039
-      1_hero_10: -685183069
-      1_hero_12: 1434749505
-      1_hero_9: 1063953264
-      1_hero_5: 520865393
-      1_hero_8: -1825546776
-      1_hero_11: 294734170
-      1_hero_13: 1723123995
-      1_hero_0: 1544096047
-      1_hero_14: -1065741017
-      1_hero_3: 2089392550
-      1_hero_1: -1861235956
-      1_hero_4: 156976445
-      1_hero_6: 1762958315
-      1_hero_2: 648893186
-      1_hero_15: -606041963
+      units_karl_0: -77766418
+      units_karl_4: -278665510
+      units_karl_11: 2114868991
+      units_karl_3: -1203309526
+      units_karl_7: -21845333
+      units_karl_2: -1896869487
+      units_karl_6: -156188445
+      units_karl_8: 1458795152
+      units_karl_9: -1266194792
+      units_karl_12: -1490384357
+      units_karl_15: -802155268
+      units_karl_5: 1369670583
+      units_karl_13: 1463497818
+      units_karl_1: -517500622
+      units_karl_14: -569315747
+      units_karl_10: 498387045
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

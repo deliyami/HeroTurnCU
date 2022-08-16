@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9cbc9dadff37dd945b1e838c883086eb
+guid: f31b413e388728446a4f29e2da64cfc8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 8_lord_0
+      name: units_hinami_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe3330d9577771841a19af931250323a
-      internalID: -1669930542
+      spriteID: 297a47d730c06334ab2f01cf659f1163
+      internalID: -56300427
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_1
+      name: units_hinami_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec1bc4a242870d841aeb324f84006cab
-      internalID: -1036468025
+      spriteID: 40eb0c133a7fd7445bb8e3699c617ddf
+      internalID: -925460017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_2
+      name: units_hinami_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 024b64cf36436404280c1436f225c93d
-      internalID: 1543360526
+      spriteID: 8e9e0c7cc8df42749a74cc753d838213
+      internalID: 53717866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_3
+      name: units_hinami_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d995a5a5014cf14a829508b91d2a452
-      internalID: -510891365
+      spriteID: 7bac2b38625832244aab3f8aa9edacd2
+      internalID: -920379309
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_4
+      name: units_hinami_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 791ca6d68d2317d44b5ddb725944098f
-      internalID: 623628562
+      spriteID: e66bcd2305ba54d45848c2e882e2975a
+      internalID: -1149701209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_5
+      name: units_hinami_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91ca3d897f9411741b7363d21a2633d7
-      internalID: -2023438114
+      spriteID: d16caf2f2f26f0147aa91d0b385f1810
+      internalID: 698125835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_6
+      name: units_hinami_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: badfce0bee08d5c47a867e3e01fcb62e
-      internalID: 71605490
+      spriteID: 9aad7fc96e3d7fa4d81423f6c185ac02
+      internalID: 1264222606
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_7
+      name: units_hinami_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3480f5ff2dfbb9419cb0e57314faa81
-      internalID: 1235817735
+      spriteID: 99c9768321940634895d1648e397d74d
+      internalID: -1083760535
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_8
+      name: units_hinami_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8962bcafa52bcfb4bac95729eb00198f
-      internalID: 465854883
+      spriteID: 57f224b9ef52e1447b04ad38a59f0d62
+      internalID: 1954416830
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_9
+      name: units_hinami_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c0a4663e5f60974eb03d9c024105896
-      internalID: -1125620588
+      spriteID: 7b47c1aa0a97c274da9d518ba539298d
+      internalID: -197158144
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_10
+      name: units_hinami_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7127cbbaf657b4140a4914e1bcef1220
-      internalID: 1867589519
+      spriteID: dfd7aa53d9d9fb24baa27d5b56740f3d
+      internalID: -1496647882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_11
+      name: units_hinami_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b73d5959fcb7be14291c33deb15b7159
-      internalID: 526605217
+      spriteID: fc0fc74d332ff384bbca3959ba8fcf29
+      internalID: 1995246436
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_12
+      name: units_hinami_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31c122185d4f22a42a300b7a7d0ccbb6
-      internalID: 476812911
+      spriteID: 1f47f33867e60754dbbcaf4c388fb3a8
+      internalID: 1063673417
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_13
+      name: units_hinami_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52357d9bc7db95643a7d3bda3c27e652
-      internalID: 1000249169
+      spriteID: 48ba99ca95833e543a60b0e13ec90dd2
+      internalID: -1538699839
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_14
+      name: units_hinami_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50b7f63dcdb8cb346b48fae896cf6de8
-      internalID: -654627862
+      spriteID: 4cfba2ba26abe554c87a00d92f2024f1
+      internalID: -863226856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_lord_15
+      name: units_hinami_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba183eea279a09240872b3e9215cd1c1
-      internalID: 2080667639
+      spriteID: 64fef5c008721e54aaf2b90ef1589cc5
+      internalID: -1026674573
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      8_lord_11: 526605217
-      8_lord_7: 1235817735
-      8_lord_15: 2080667639
-      8_lord_1: -1036468025
-      8_lord_2: 1543360526
-      8_lord_0: -1669930542
-      8_lord_3: -510891365
-      8_lord_4: 623628562
-      8_lord_9: -1125620588
-      8_lord_12: 476812911
-      8_lord_14: -654627862
-      8_lord_6: 71605490
-      8_lord_5: -2023438114
-      8_lord_10: 1867589519
-      8_lord_13: 1000249169
-      8_lord_8: 465854883
+      units_hinami_6: 1264222606
+      units_hinami_7: -1083760535
+      units_hinami_11: 1995246436
+      units_hinami_14: -863226856
+      units_hinami_10: -1496647882
+      units_hinami_12: 1063673417
+      units_hinami_5: 698125835
+      units_hinami_2: 53717866
+      units_hinami_9: -197158144
+      units_hinami_1: -925460017
+      units_hinami_13: -1538699839
+      units_hinami_3: -920379309
+      units_hinami_0: -56300427
+      units_hinami_15: -1026674573
+      units_hinami_4: -1149701209
+      units_hinami_8: 1954416830
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

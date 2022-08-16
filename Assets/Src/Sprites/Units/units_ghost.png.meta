@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 03125010db0e1914dbba7fdc59d964c8
+guid: 9b780aad5d00a4140967b68b1b0b8977
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 10_violet_0
+      name: units_ghost_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2dad61474841714abf445e13f74db41
-      internalID: -2141927124
+      spriteID: 1fdecfe37d2e88a49bfa1074020b7dc7
+      internalID: 101791423
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_1
+      name: units_ghost_1
       rect:
         serializedVersion: 2
         x: 16
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 631c6e01417a0744187000d167ea46fe
-      internalID: 375912753
+      spriteID: f9e1cbe3e034c3040bc85d50bd94ee49
+      internalID: -1671163794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_2
+      name: units_ghost_2
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b26630389ebb50d4ba3fc6efda63f60b
-      internalID: -1215408180
+      spriteID: 78284b7fa03999e4e8344adc8b59eee4
+      internalID: 182709967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_3
+      name: units_ghost_3
       rect:
         serializedVersion: 2
         x: 48
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82d4b4ec40e6eed498673cac80527550
-      internalID: -1299597159
+      spriteID: 56ecfc3beda48a54d8bb9a92b7692035
+      internalID: -395474915
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_4
+      name: units_ghost_4
       rect:
         serializedVersion: 2
         x: 0
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c127da6ef3ded54d846c09eb86f1444
-      internalID: -1582156402
+      spriteID: dd44b61450aab514999ea8aa5b34ad72
+      internalID: -242794204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_5
+      name: units_ghost_5
       rect:
         serializedVersion: 2
         x: 16
@@ -247,14 +247,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ed3cd17d08234f4281c494d24818d99
-      internalID: -1563648189
+      spriteID: 9e01b0b12e5f0874c8e057b312922605
+      internalID: -1034601926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_6
+      name: units_ghost_6
       rect:
         serializedVersion: 2
         x: 32
@@ -268,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 115c4b08ca80596418428b68ffc328c4
-      internalID: -404014605
+      spriteID: cc1df3b524b31f04c82ec2ef751f5ab3
+      internalID: -532438827
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_7
+      name: units_ghost_7
       rect:
         serializedVersion: 2
         x: 48
@@ -289,14 +289,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44d18bd7db1a69f45975088928fe1546
-      internalID: -9172702
+      spriteID: 94fe702b98bae9c45bfde600f9df2c3a
+      internalID: 1023226106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_8
+      name: units_ghost_8
       rect:
         serializedVersion: 2
         x: 0
@@ -310,14 +310,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d2feb84f65a7df4ea211dd8ff5c547f
-      internalID: 747222049
+      spriteID: 41821d795fc4ea743ab0178648877c3b
+      internalID: -708433662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_9
+      name: units_ghost_9
       rect:
         serializedVersion: 2
         x: 16
@@ -331,14 +331,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4427a9d8d432863459d754c9ed179cb0
-      internalID: 1655125230
+      spriteID: 44a485bf3d296a44ab753d873662d403
+      internalID: -109219154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_10
+      name: units_ghost_10
       rect:
         serializedVersion: 2
         x: 32
@@ -352,14 +352,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 776bf805f31f27b4197bb0604bb550f2
-      internalID: 872956421
+      spriteID: 48ff5d70f455ed04c9916bea591e38bc
+      internalID: 901710674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_11
+      name: units_ghost_11
       rect:
         serializedVersion: 2
         x: 48
@@ -373,14 +373,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71bf71eeef5cf7d4aa69027ef8608768
-      internalID: -1901166544
+      spriteID: 6c272177d80803b42b768024cba87c24
+      internalID: -594295635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_12
+      name: units_ghost_12
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +394,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10ebf44391cb76c4d8f8311c84618c18
-      internalID: -524072259
+      spriteID: 5d2dc108b5437bf499041ae90373d273
+      internalID: 1694620655
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_13
+      name: units_ghost_13
       rect:
         serializedVersion: 2
         x: 16
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79404f9d20edf4f47a57a64361b886d4
-      internalID: 443139228
+      spriteID: 7cffa29aff116e84d99be11d7479e5ca
+      internalID: -744545486
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_14
+      name: units_ghost_14
       rect:
         serializedVersion: 2
         x: 32
@@ -436,14 +436,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb97ff5f32ce94a4788b490a0d091121
-      internalID: -2050515713
+      spriteID: 516daa089b4cec4408d6ede56829904d
+      internalID: -175269522
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_violet_15
+      name: units_ghost_15
       rect:
         serializedVersion: 2
         x: 48
@@ -457,8 +457,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c359bdd2c38fe04bbeb007217d84ad4
-      internalID: -1678721676
+      spriteID: fc6fd3023b8f1a24a96538bbbc19ddc5
+      internalID: 398847145
       vertices: []
       indices: 
       edges: []
@@ -474,22 +474,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      10_violet_1: 375912753
-      10_violet_3: -1299597159
-      10_violet_5: -1563648189
-      10_violet_13: 443139228
-      10_violet_11: -1901166544
-      10_violet_2: -1215408180
-      10_violet_8: 747222049
-      10_violet_6: -404014605
-      10_violet_0: -2141927124
-      10_violet_9: 1655125230
-      10_violet_4: -1582156402
-      10_violet_7: -9172702
-      10_violet_10: 872956421
-      10_violet_12: -524072259
-      10_violet_14: -2050515713
-      10_violet_15: -1678721676
+      units_ghost_1: -1671163794
+      units_ghost_7: 1023226106
+      units_ghost_4: -242794204
+      units_ghost_10: 901710674
+      units_ghost_3: -395474915
+      units_ghost_8: -708433662
+      units_ghost_9: -109219154
+      units_ghost_14: -175269522
+      units_ghost_15: 398847145
+      units_ghost_12: 1694620655
+      units_ghost_13: -744545486
+      units_ghost_5: -1034601926
+      units_ghost_0: 101791423
+      units_ghost_2: 182709967
+      units_ghost_11: -594295635
+      units_ghost_6: -532438827
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
