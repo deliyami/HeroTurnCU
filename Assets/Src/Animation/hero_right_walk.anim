@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 1_Hero_Right_Walk
+  m_Name: hero_right_walk
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0

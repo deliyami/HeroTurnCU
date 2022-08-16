@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: balloon_button_0
+      name: ui_balloon_button_0
       rect:
         serializedVersion: 2
         x: 0
@@ -149,7 +149,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: balloon_button_1
+      name: ui_balloon_button_1
       rect:
         serializedVersion: 2
         x: 10
@@ -170,7 +170,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: balloon_button_2
+      name: ui_balloon_button_2
       rect:
         serializedVersion: 2
         x: 0
@@ -191,7 +191,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: balloon_button_3
+      name: ui_balloon_button_3
       rect:
         serializedVersion: 2
         x: 8
@@ -238,10 +238,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      balloon_button_0: -821707375
-      balloon_button_2: -1276362547
-      balloon_button_3: -1204353512
-      balloon_button_1: -375306635
+      ui_balloon_button_0: -821707375
+      ui_balloon_button_2: -1276362547
+      ui_balloon_button_3: -1204353512
+      ui_balloon_button_1: -375306635
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
