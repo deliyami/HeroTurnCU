@@ -36,7 +36,7 @@ public class SerihuManager : MonoBehaviour
                     thisName = "주인공";
                     break;
                 case "Nun":
-                    thisName = "수녀";
+                    thisName = "히나미";
                     break;
                 case "Mir":
                     thisName = "미르";

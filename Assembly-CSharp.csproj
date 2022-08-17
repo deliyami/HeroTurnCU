@@ -74,6 +74,16 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
+     <Compile Include="Assets\Scripts\ObjData.cs" />
+     <Compile Include="Assets\Scripts\Status\DEF.cs" />
+     <Compile Include="Assets\Scripts\Status\SPATK.cs" />
+     <Compile Include="Assets\Scripts\Status\ParentStat.cs" />
+     <Compile Include="Assets\Scripts\Status\IStatInterface.cs" />
+     <Compile Include="Assets\Scripts\Status\AllStat.cs" />
+     <Compile Include="Assets\Scripts\Status\SPD.cs" />
+     <Compile Include="Assets\Scripts\Status\SPDEF.cs" />
+     <Compile Include="Assets\Scripts\Status\ATK.cs" />
+     <Compile Include="Assets\Scripts\Status\HP.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
