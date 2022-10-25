@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - UI_Image
-  - 
-  - Object
   - 
   - 
+  - 
+  - SolidObjects
+  - LongGrass
   - 
   - 
   - 
@@ -40,4 +40,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4073942505
+    locked: 0
+  - name: Foreground
+    uniqueID: 2733355091
+    locked: 0
+  - name: Object
+    uniqueID: 2058341151
+    locked: 0
+  - name: Player
+    uniqueID: 2903174987
+    locked: 0
+  - name: Blind
+    uniqueID: 1155575287
+    locked: 0
+  - name: UI
+    uniqueID: 1035876711
+    locked: 0
+  - name: UI_Image
+    uniqueID: 3504693395
     locked: 0
