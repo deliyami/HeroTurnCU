@@ -44,8 +44,6 @@ public class TalkManager : MonoBehaviour
 
     public string GetTalk(int id, int talkIndex)
     {
-        print("들어옴");
-        print(talkIndex);
         // print(talkData[id].Length);
         if(talkIndex == talkData[id].Length) return null;
         return talkData[id][talkIndex];

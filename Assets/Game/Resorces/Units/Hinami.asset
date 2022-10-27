@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Hinami
+  m_EditorClassIdentifier: 
+  name: "\uD788\uB098\uBBF8"
+  description: "\uC218\uB140"
+  frontSprite: {fileID: 1012367594, guid: a8e39491421c8164cbf9f62885665c83, type: 3}
+  backSprite: {fileID: 1475105659, guid: a8e39491421c8164cbf9f62885665c83, type: 3}
+  type1: 3
+  type2: 6
+  maxHP: 95
+  attack: 125
+  defense: 79
+  spAttack: 60
+  spDefense: 100
+  speed: 81
+  ability: "\uD14C\uD06C\uB2C8\uC158"
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: a5995acfc06eae9488010e9247d1e980, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 7625cf2569e78ac459a3e4dd5281e760, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: a3359d64b19253b4d973901d5c8aeba4, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: c1c8a3e132dae9d43a058cde9755f796, type: 2}
+    level: 0

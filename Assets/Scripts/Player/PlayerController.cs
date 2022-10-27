@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
 
         // bool shiftDown = manager.isAction ? false : Input.GetButton("Run");
-        // print(Input.GetButton("Run"));
         
         // speed boots
         if(Input.GetButton("Run") && this.moveSpeed == 3) this.moveSpeed = 5;
