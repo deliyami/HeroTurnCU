@@ -15,6 +15,7 @@ public class MoveBase : ScriptableObject
     [SerializeField] int power;
     [SerializeField] int accuracy;
     [SerializeField] int pp;
+    [SerializeField] bool sp; // 공격, 특공 true == 공격, false == 특공
     [SerializeField] int priority; // 선공기
     // [SerializeField] int strange; // 상태이상
     // [SerializeField] int strangePercentage;
@@ -41,6 +42,11 @@ public class MoveBase : ScriptableObject
     public int PP {
         get { return pp; }
     }
+    // 공격, 특공
+    public bool SP {
+        get { return sp; }
+    }
+    // 우선도
     public int Priority {
         get { return priority; }
     }

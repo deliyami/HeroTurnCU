@@ -2282,7 +2282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: fc6d9c7fa29affa4cac093801e684a17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4372,7 +4372,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734410296}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!4 &734410299
 Transform:
   m_ObjectHideFlags: 0
@@ -11554,7 +11554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: fc6d9c7fa29affa4cac093801e684a17, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

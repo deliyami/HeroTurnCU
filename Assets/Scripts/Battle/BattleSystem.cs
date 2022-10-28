@@ -58,6 +58,49 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableMoveSelector(true);
     }
 
+    IEnumerator PerformPlayerMove()
+    {
+        state = BattleState.Busy;
+
+        var move = playerUnit.Unit.Moves[currentMove];
+        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
+
+        yield return new WaitForSeconds(1f);
+
+        bool isFainted = enemyUnit.Unit.TakeDamage(move, playerUnit.Unit);
+        yield return enemyHud.UpdateHP();
+
+        if (isFainted)
+        {
+            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+        }
+        else
+        {
+            StartCoroutine(EnemyMove());
+        }
+    }
+    IEnumerator EnemyMove()
+    {
+        state = BattleState.EnemyMove;
+        
+        var move = enemyUnit.Unit.GetRandomMove();
+        yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
+
+        yield return new WaitForSeconds(1f);
+
+        bool isFainted = playerUnit.Unit.TakeDamage(move, enemyUnit.Unit);
+        yield return playerHud.UpdateHP();
+
+        if (isFainted)
+        {
+            yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+        }
+        else
+        {
+            PlayerAction();
+        }
+    }
+
     private void Update() 
     {
         if (state == BattleState.PlayerAction)
@@ -123,17 +166,12 @@ public class BattleSystem : MonoBehaviour
 
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Unit.Moves[currentMove]);
 
-        // if (Input.GetButtonDown("Submit"))
-        // {
-        //     if (currentMove == 0)
-        //     {
-        //         // fight
-        //         PlayerMove();
-        //     }
-        //     else if (currentMove == 1)
-        //     {
-        //         // run
-        //     }
-        // }
+        if (Input.GetButtonDown("Submit"))
+        {
+            dialogBox.EnableMoveSelector(false);
+            dialogBox.EnableDialogText(true);
+
+            StartCoroutine(PerformPlayerMove());
+        }
     }
 }

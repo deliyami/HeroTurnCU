@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Type", menuName = "Unit/Create new Types")]
+[CreateAssetMenu(fileName = "Type", menuName = "Unit/Create new types")]
 public class TypeBase : ScriptableObject
 {
     [SerializeField] Sprite none;

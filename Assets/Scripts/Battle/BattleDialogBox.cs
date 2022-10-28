@@ -58,7 +58,6 @@ public class BattleDialogBox : MonoBehaviour
     {
         for (int i = 0; i < actionTexts.Count; ++i)
         {
-            print(highlightColor);
             if (i == selectedAction)
                 actionTexts[i].color = highlightColor;
             else
@@ -69,7 +68,6 @@ public class BattleDialogBox : MonoBehaviour
     {
         for (int i = 0; i < moveTexts.Count; ++i)
         {
-            print(highlightColor);
             if (i == selectedMove)
                 moveTexts[i].color = highlightColor;
             else
