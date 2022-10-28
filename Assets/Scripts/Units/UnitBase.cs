@@ -128,3 +128,40 @@ public enum UnitType
     강철,
     이상함
 }
+
+public class TypeChart
+{
+    static float[][] chart =
+    {
+        //                    없음, 불꽃,    물,   풀, 번개, 얼음,  용기,   독,   흙, 하늘,  마법, 바람,  바위, 유령,   용, 악마, 강철, 이상함
+        /*없음*/new float[] {   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f, 0.5f,   0f,   1f,   1f, 0.5f,   1f},
+        /*불꽃*/new float[] {   1f, 0.5f, 0.5f,   2f,   1f,   2f,   1f,   1f,   1f,   1f,   1f,   2f, 0.5f,   1f, 0.5f,   1f,   2f,   1f},
+        /*풀  */new float[] {   1f,   1f, 0.5f, 0.5f,   1f,   1f,   1f,   1f,   2f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f,   1f,   1f},
+        /*물  */new float[] {   1f, 0.5f,   2f, 0.5f,   1f,   1f,   1f, 0.5f,   2f, 0.5f,   1f, 0.5f,   2f,   1f, 0.5f,   1f, 0.5f,   1f},
+        /*번개*/new float[] {   1f,   1f,   2f, 0.5f,   1f,   1f,   1f,   1f,   0f,   2f,   1f,   1f,   1f,   1f, 0.5f,   1f,   1f,   1f},
+        /*얼음*/new float[] {   1f, 0.5f, 0.5f,   2f,   1f, 0.5f,   1f,   1f,   2f,   2f,   1f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f},
+        /*용기*/new float[] {   2f,   1f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f, 0.5f, 0.5f, 0.5f,   2f,   0f,   1f,   2f,   2f, 0.5f},
+        /*독  */new float[] {   1f,   1f,   1f,   2f,   1f,   1f,   1f, 0.5f, 0.5f,   1f,   1f,   1f, 0.5f, 0.5f,   1f,   1f,   0f,   2f},
+        /*흙  */new float[] {   1f,   2f,   1f,   1f,   2f,   1f,   1f,   2f,   1f,   0f,   1f, 0.5f,   2f,   1f,   1f,   1f,   2f,   1f},
+        /*하늘*/new float[] {   1f,   1f,   1f,   2f, 0.5f,   1f,   2f,   1f,   1f,   1f,   1f,   2f, 0.5f,   1f,   1f,   1f, 0.5f,   1f},
+        /*마법*/new float[] {   1f,   1f,   1f,   1f,   1f,   1f,   2f,   2f,   1f,   1f, 0.5f,   1f,   1f,   1f,   1f,   0f, 0.5f,   1f},
+        /*바람*/new float[] {   1f, 0.5f,   1f,   2f,   1f,   1f, 0.5f, 0.5f,   1f, 0.5f,   2f,   1f,   1f, 0.5f,   1f,   2f, 0.5f, 0.5f},
+        /*바위*/new float[] {   1f,   2f,   1f,   1f,   1f,   2f, 0.5f,   1f, 0.5f,   2f,   1f,   2f,   1f,   1f,   1f,   1f, 0.5f,   1f},
+        /*유령*/new float[] {   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   2f,   1f,   1f,   2f,   1f, 0.5f,   1f,   1f},
+        /*용  */new float[] {   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   2f,   1f, 0.5f,   0f},
+        /*악마*/new float[] {   1f,   1f,   1f,   1f,   1f,   1f, 0.5f,   1f,   1f,   1f,   2f,   1f,   1f,   2f,   1f, 0.5f,   1f, 0.5f},
+        /*강철*/new float[] {   1f, 0.5f, 0.5f,   1f, 0.5f,   2f,   1f,   1f,   1f,   1f,   1f,   1f,   2f,   1f,   1f,   1f, 0.5f,   2f},
+        /*이상*/new float[] {   1f, 0.5f,   1f,   1f,   1f,   1f,   2f, 0.5f,   1f,   1f,   1f,   1f,   1f,   1f,   2f,   2f, 0.5f,   1f},
+    };
+
+    public static float GetEffectiveness(UnitType attackType, UnitType defenseType)
+    {
+        if (attackType == UnitType.None || defenseType == UnitType.None)
+            return 1;
+
+        int row = (int)attackType - 1;
+        int col = (int)defenseType - 1;
+
+        return chart[row][col];
+    }
+}

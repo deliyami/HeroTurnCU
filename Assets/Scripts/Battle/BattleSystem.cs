@@ -38,7 +38,6 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(playerUnit.Unit.Moves);
 
         yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Unit.Base.Name}(이)가 나타났다!");
-        yield return new WaitForSeconds(1f);
 
         PlayerAction();
     }
@@ -65,12 +64,12 @@ public class BattleSystem : MonoBehaviour
         var move = playerUnit.Unit.Moves[currentMove];
         yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
 
-        yield return new WaitForSeconds(1f);
-
-        bool isFainted = enemyUnit.Unit.TakeDamage(move, playerUnit.Unit);
+        var damageDetails = enemyUnit.Unit.TakeDamage(move, playerUnit.Unit);
         yield return enemyHud.UpdateHP();
+        yield return ShowDamageDetails(damageDetails);
 
-        if (isFainted)
+
+        if (damageDetails.Fainted)
         {
             yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 쓰러졌다!");
         }
@@ -86,12 +85,11 @@ public class BattleSystem : MonoBehaviour
         var move = enemyUnit.Unit.GetRandomMove();
         yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
 
-        yield return new WaitForSeconds(1f);
-
-        bool isFainted = playerUnit.Unit.TakeDamage(move, enemyUnit.Unit);
+        var damageDetails = playerUnit.Unit.TakeDamage(move, enemyUnit.Unit);
         yield return playerHud.UpdateHP();
+        yield return ShowDamageDetails(damageDetails);
 
-        if (isFainted)
+        if (damageDetails.Fainted)
         {
             yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(이)가 쓰러졌다!");
         }
@@ -99,6 +97,16 @@ public class BattleSystem : MonoBehaviour
         {
             PlayerAction();
         }
+    }
+
+    IEnumerator ShowDamageDetails(DamageDetails damageDetails)
+    {
+        if (damageDetails.Critical > 1f)
+            yield return dialogBox.TypeDialog("치명타가 적중했다!");
+        if (damageDetails.TypeEffectiveness > 1f)
+            yield return dialogBox.TypeDialog("효과가 굉장한 듯 하다!");
+        else if (damageDetails.TypeEffectiveness < 1f)
+            yield return dialogBox.TypeDialog("효과가 별로인 듯 하다...");
     }
 
     private void Update() 

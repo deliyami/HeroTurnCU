@@ -69,30 +69,49 @@ public class Unit
     // virtual public int SettingRealStat() {
     //     return (((STAT * 2) + tribe + (effort / 4)) * level / 100 + 5) * personality;
     // }
-    public bool TakeDamage(Move move, Unit attacker)
-    {  
-        // 랜덤수
-        float modifiers = Random.Range(85f, 100f) / 100f;
+    public DamageDetails TakeDamage(Move move, Unit attacker)
+    {
+        float critical = 1f;
+        if (Random.value * 100f <= 6.25f)
+            critical = 2f;
+        float typeEffectiveness = TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type1) * TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type2);
+        critical = 2f;
+        var damageDetails = new DamageDetails()
+        {
+            TypeEffectiveness = typeEffectiveness,
+            Critical = critical,
+            Fainted = false,
+        };
+
+        // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3)
+        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical;
         // 데미지 = (레벨 × 2 + 10) ÷ 250
         float a = (2 * attacker.Level + 10) / 250f;
-        // 위력 × (특수공격 ÷ 특수방어)) × Mod1) + 2) × [[급소]] × Mod2 ×  랜덤수 ÷ 100) × 자속보정 × 타입상성1 × 타입상성2 × Mod3)
+        // 위력 × (특수공격 ÷ 특수방어)) × Mod1) + 2)
         // mod1 mod2 mod3다 해둬야 됨...
         float d = a * move.Base.Power * ((float)attacker.Attack / Defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
-        // Debug.Log($"Name: {Base.Name}");
-        // Debug.Log($"HP: {HP}");
-        // Debug.Log($"Dmg: {damage}");
+        Debug.Log($"Name: {Base.Name}");
+        Debug.Log($"HP: {HP}");
+        Debug.Log($"Dmg: {damage}");
         HP -= damage;
         if (HP <= 0)
         {
             HP = 0;
-            return true;
+            damageDetails.Fainted = true;
         }
-        return false;
+        return damageDetails;
     }
     public Move GetRandomMove()
     {
         int r = Random.Range(0, Moves.Count);
         return Moves[r];
     }
+}
+
+public class DamageDetails
+{
+    public bool Fainted { get; set; }
+    public float Critical { get; set; }
+    public float TypeEffectiveness { get; set; }
 }
