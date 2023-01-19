@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Ghost
+  m_EditorClassIdentifier: 
+  name: "\uD751\uC720\uB839"
+  description: "\uD751\uC720\uB839"
+  frontSprite: {fileID: 91787429, guid: 4ba3f7a08ccc24e4d9655a357f48106c, type: 3}
+  backSprite: {fileID: 431041706, guid: 4ba3f7a08ccc24e4d9655a357f48106c, type: 3}
+  smallSprite: {fileID: 101791423, guid: 9b780aad5d00a4140967b68b1b0b8977, type: 3}
+  type1: 14
+  type2: 2
+  maxHP: 60
+  attack: 65
+  defense: 60
+  spAttack: 130
+  spDefense: 75
+  speed: 110
+  ability: "\uBD80\uC720"
+  learnableMoves:
+  - moveBase: {fileID: 0}
+    level: 0
+  - moveBase: {fileID: 0}
+    level: 0
+  - moveBase: {fileID: 0}
+    level: 0
+  - moveBase: {fileID: 0}
+    level: 0

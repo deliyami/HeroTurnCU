@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
   m_Name: doubleIronBash
   m_EditorClassIdentifier: 
-  name: "\uB354\uBE14\uC2AC\uB798\uC2DC\uB77C\uB358\uAC00"
-  description: 
+  name: "\uB354\uBE14\uD380\uCC98"
+  description: "\uB450\uBC88 \uB54C\uB9BC"
   type: 13
   statIndex: 0
   power: 50
   accuracy: 100
   pp: 5
+  category: 0
+  effects:
+    boosts: []
+    status: 0
+  target: 0
   priority: 0

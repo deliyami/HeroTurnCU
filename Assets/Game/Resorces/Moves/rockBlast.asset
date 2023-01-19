@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: rockBlast
   m_EditorClassIdentifier: 
   name: "\uB09C\uC0AC"
-  description: 
+  description: "2-5\uD68C \uBC1C\uC0AC"
   type: 13
   statIndex: 0
   power: 25
   accuracy: 90
   pp: 30
+  category: 0
+  effects:
+    boosts: []
+    status: 0
+  target: 0
   priority: 0

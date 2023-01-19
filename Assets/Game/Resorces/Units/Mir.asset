@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Mir
+  m_EditorClassIdentifier: 
+  name: "\uBBF8\uB974"
+  description: "\uBBF8\uB974\uBBF8\uB974\uBBF8\uB974\uBBF8\uB974"
+  frontSprite: {fileID: -584214328, guid: 8f79c115e3be6d74eaac3c2ed3f16dc8, type: 3}
+  backSprite: {fileID: -789219770, guid: 8f79c115e3be6d74eaac3c2ed3f16dc8, type: 3}
+  smallSprite: {fileID: -906818864, guid: 7529adb2a0e53ad46a84153daebf6883, type: 3}
+  type1: 15
+  type2: 4
+  maxHP: 90
+  attack: 100
+  defense: 80
+  spAttack: 100
+  spDefense: 150
+  speed: 80
+  ability: "\uD2C8\uC0C8\uD3EC\uCC29/\uD2C0\uAE68\uAE30/\uC704\uD611"
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: 10a118f0c2ada7f47ba2dcdefc300bb8, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: cfdc2ad04438f794fbb3fd6f26bb257b, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 8a66261f50469714082e53277a2d9a48, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 9092c49e3e10b2a49b4569e7acba5d9b, type: 2}
+    level: 0

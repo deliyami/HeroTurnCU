@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: snipeShot
   m_EditorClassIdentifier: 
   name: "\uBB3C\uC904\uAE30\uC4E9\uC4E9"
-  description: 
+  description: "\uC0C1\uB300 \uB7AD\uD06C\uC5C5 \uBB34\uC2DC"
   type: 3
   statIndex: 0
   power: 80
   accuracy: 100
   pp: 15
+  category: 0
+  effects:
+    boosts: []
+    status: 0
+  target: 0
   priority: 0

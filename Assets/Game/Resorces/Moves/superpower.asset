@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
   m_Name: superpower
   m_EditorClassIdentifier: 
-  name: 
-  description: 
+  name: "\uC5C4\uCCAD\uB09C \uD798"
+  description: "\uC288\uD37C\uD30C\uC6CC \n\uC0AC\uC6A9\uC2DC \uBCF8\uC778 \uACF5,\uBC29
+    1 \uB2E4\uC6B4 "
   type: 7
   statIndex: 0
   power: 120
   accuracy: 100
   pp: 5
+  category: 0
+  effects:
+    boosts: []
+    status: 0
+  target: 0
   priority: 0

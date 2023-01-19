@@ -12,6 +12,7 @@ public class UnitBase : ScriptableObject
 
     [SerializeField] Sprite frontSprite;
     [SerializeField] Sprite backSprite;
+    [SerializeField] Sprite smallSprite;
 
     [SerializeField] UnitType type1;
     [SerializeField] UnitType type2;
@@ -39,6 +40,9 @@ public class UnitBase : ScriptableObject
     }
     public Sprite BackSprite {
         get { return backSprite; }
+    }
+    public Sprite SmallSprite{
+        get { return smallSprite; }
     }
     public UnitType Type1 {
         get { return type1; }
@@ -111,8 +115,8 @@ public enum UnitType
     None,
     없음,
     불꽃,
-    풀,
     물,
+    풀,
     번개,
     얼음,
     용기,
@@ -129,6 +133,19 @@ public enum UnitType
     이상함
 }
 
+public enum Stat
+{
+    Attack,
+    Defense,
+    SpAttack,
+    SpDefense,
+    Speed,
+
+    // 실수치가 아닌 %의 스텟
+    Accuracy,
+    Evasion
+}
+
 public class TypeChart
 {
     static float[][] chart =
@@ -136,8 +153,8 @@ public class TypeChart
         //                    없음, 불꽃,    물,   풀, 번개, 얼음,  용기,   독,   흙, 하늘,  마법, 바람,  바위, 유령,   용, 악마, 강철, 이상함
         /*없음*/new float[] {   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f,   1f, 0.5f,   0f,   1f,   1f, 0.5f,   1f},
         /*불꽃*/new float[] {   1f, 0.5f, 0.5f,   2f,   1f,   2f,   1f,   1f,   1f,   1f,   1f,   2f, 0.5f,   1f, 0.5f,   1f,   2f,   1f},
-        /*풀  */new float[] {   1f,   1f, 0.5f, 0.5f,   1f,   1f,   1f,   1f,   2f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f,   1f,   1f},
-        /*물  */new float[] {   1f, 0.5f,   2f, 0.5f,   1f,   1f,   1f, 0.5f,   2f, 0.5f,   1f, 0.5f,   2f,   1f, 0.5f,   1f, 0.5f,   1f},
+        /*물  */new float[] {   1f,   2f, 0.5f, 0.5f,   1f,   1f,   1f,   1f,   2f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f,   1f,   1f},
+        /*풀  */new float[] {   1f, 0.5f,   2f, 0.5f,   1f,   1f,   1f, 0.5f,   2f, 0.5f,   1f, 0.5f,   2f,   1f, 0.5f,   1f, 0.5f,   1f},
         /*번개*/new float[] {   1f,   1f,   2f, 0.5f,   1f,   1f,   1f,   1f,   0f,   2f,   1f,   1f,   1f,   1f, 0.5f,   1f,   1f,   1f},
         /*얼음*/new float[] {   1f, 0.5f, 0.5f,   2f,   1f, 0.5f,   1f,   1f,   2f,   2f,   1f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f},
         /*용기*/new float[] {   2f,   1f,   1f,   1f,   1f,   2f,   1f, 0.5f,   1f, 0.5f, 0.5f, 0.5f,   2f,   0f,   1f,   2f,   2f, 0.5f},

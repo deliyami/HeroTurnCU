@@ -1,102 +1,263 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum BattleState 
-{
-    Start,
-    PlayerAction,
-    PlayerMove,
-    EnemyMove,
-    Busy
+{ Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, BattleOver,
 }
+public enum BattleAction { Move, SwitchUnit, UseItem, Run }
 
 public class BattleSystem : MonoBehaviour
 {
     [SerializeField] BattleUnit playerUnit;
     [SerializeField] BattleUnit enemyUnit;
-    [SerializeField] BattleHud playerHud;
-    [SerializeField] BattleHud enemyHud;
     [SerializeField] BattleDialogBox dialogBox;
+    [SerializeField] PartyScreen partyScreen;
+
+    public event Action<bool> OnBattleOver;
 
     BattleState state;
     int currentAction;
     int currentMove;
+    int currentMember;
 
-    private void Start()
+    UnitParty playerParty;
+    Unit wildUnit;
+
+    public void StartBattle(UnitParty playerParty, Unit wildUnit)
     {
+        this.playerParty = playerParty;
+        this.wildUnit = wildUnit;
         StartCoroutine(SetupBattle());
     }
 
     public IEnumerator SetupBattle()
     {
-        playerUnit.Setup();
-        playerHud.SetData(playerUnit.Unit);
-        enemyUnit.Setup();
-        enemyHud.SetData(enemyUnit.Unit);
+        playerUnit.Setup(playerParty.GetHealtyhUnit());
+        enemyUnit.Setup(wildUnit);
+
+        partyScreen.Init();
 
         dialogBox.SetMoveNames(playerUnit.Unit.Moves);
 
         yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Unit.Base.Name}(이)가 나타났다!");
 
-        PlayerAction();
+        ChooseFirstTurn();
     }
 
-    void PlayerAction()
+    void ChooseFirstTurn()
     {
-        state = BattleState.PlayerAction;
-        StartCoroutine(dialogBox.TypeDialog("행동을 선택하세요."));
-        dialogBox.EnableActionSelector(true);
-    }
-
-    void PlayerMove()
-    {
-        state = BattleState.PlayerMove;
-        dialogBox.EnableActionSelector(false);
-        dialogBox.EnableDialogText(false);
-        dialogBox.EnableMoveSelector(true);
-    }
-
-    IEnumerator PerformPlayerMove()
-    {
-        state = BattleState.Busy;
-
-        var move = playerUnit.Unit.Moves[currentMove];
-        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
-
-        var damageDetails = enemyUnit.Unit.TakeDamage(move, playerUnit.Unit);
-        yield return enemyHud.UpdateHP();
-        yield return ShowDamageDetails(damageDetails);
-
-
-        if (damageDetails.Fainted)
+        if (playerUnit.Unit.Speed >= enemyUnit.Unit.Speed)
         {
-            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+            ActionSelection();
         }
         else
         {
             StartCoroutine(EnemyMove());
         }
     }
+
+    void BattleOver(bool won)
+    {
+        state = BattleState.BattleOver;
+        playerParty.Units.ForEach(unit => unit.OnBattleOver());
+        OnBattleOver(won);
+    }
+
+    void ActionSelection()
+    {
+        state = BattleState.ActionSelection;
+        // StartCoroutine(dialogBox.SetDialog("행동을 선택하세요."));
+        dialogBox.SetDialog("행동을 선택하세요.");
+        dialogBox.EnableActionSelector(true);
+    }
+
+    void OpenPartyScreen()
+    {
+        state = BattleState.PartyScreen;
+        partyScreen.SetPartyData(playerParty.Units);
+        partyScreen.gameObject.SetActive(true);
+    }
+
+    void MoveSelection()
+    {
+        state = BattleState.MoveSelection;
+        dialogBox.EnableActionSelector(false);
+        dialogBox.EnableDialogText(false);
+        dialogBox.EnableMoveSelector(true);
+    }
+    IEnumerator RunTurns(BattleAction playerAction)
+    {
+        
+    }
+    IEnumerator PlayerMove()
+    {
+        state = BattleState.RunningTurn;
+
+        var move = playerUnit.Unit.Moves[currentMove];
+        yield return RunMove(playerUnit, enemyUnit, move);
+
+        // If the battle stat was not changed by RunMove, thn go to next step
+        if (state == BattleState.RunningTurn)
+            StartCoroutine(EnemyMove());
+    }
     IEnumerator EnemyMove()
     {
-        state = BattleState.EnemyMove;
+        state = BattleState.RunningTurn;
         
         var move = enemyUnit.Unit.GetRandomMove();
-        yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
+        yield return RunMove(enemyUnit, playerUnit, move);
 
-        var damageDetails = playerUnit.Unit.TakeDamage(move, enemyUnit.Unit);
-        yield return playerHud.UpdateHP();
-        yield return ShowDamageDetails(damageDetails);
+        // If the battle stat was not changed by RunMove, thn go to next step
+        if (state == BattleState.RunningTurn)
+            ActionSelection();
+    }
 
-        if (damageDetails.Fainted)
+    IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
+    {
+        bool canRunMove = sourceUnit.Unit.OnBeforeMove();
+
+        if(!canRunMove)
         {
-            yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+            yield return ShowStatusChanges(sourceUnit.Unit);
+            yield return sourceUnit.Hud.UpdateHP();
+            yield break;
+        }
+        yield return ShowStatusChanges(sourceUnit.Unit);
+
+        move.PP--;
+        yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
+
+        if (CheckIfMoveHits(move, sourceUnit.Unit, targetUnit.Unit))
+        {
+            sourceUnit.PlayAttackAnimation();
+            yield return new WaitForSeconds(1f);
+            targetUnit.PlayerHitAnimation();
+
+            if (move.Base.Category == MoveCategory.Status)
+            {
+                yield return RunMoveEffect(move.Base.Effects, sourceUnit.Unit, targetUnit.Unit, move.Base.Target);
+            }
+            else
+            {
+                var damageDetails = targetUnit.Unit.TakeDamage(move, sourceUnit.Unit);
+                yield return targetUnit.Hud.UpdateHP();
+                yield return ShowDamageDetails(damageDetails);
+            }
+
+            if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targetUnit.Unit.HP > 0)
+            {
+                foreach (var secondary in move.Base.Secondaries)
+                {
+                    var rnd = UnityEngine.Random.Range(1, 101);
+                    if (rnd <= secondary.Chance)
+                        yield return RunMoveEffect(secondary, sourceUnit.Unit, targetUnit.Unit, secondary.Target);
+                }
+            }
+
+            if (targetUnit.Unit.HP <= 0)
+            {
+                yield return dialogBox.TypeDialog($"{targetUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+                targetUnit.PlayFaintAnimation();
+
+                yield return new WaitForSeconds(2f);
+
+                CheckForBattleOver(targetUnit);
+            }
         }
         else
         {
-            PlayerAction();
+            yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
         }
+
+
+        // 상태이상으로 쓰러지는가?
+        sourceUnit.Unit.OnAfterTurn();
+        yield return ShowStatusChanges(sourceUnit.Unit);
+        yield return sourceUnit.Hud.UpdateHP();
+
+        if (sourceUnit.Unit.HP <= 0)
+        {
+            yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+            sourceUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+
+            CheckForBattleOver(sourceUnit);
+        }
+    }
+
+    bool CheckIfMoveHits(Move move, Unit source, Unit target)
+    {
+        if (move.Base.AlwaysHits) return true;
+        
+        float moveAccuracy = move.Base.Accuracy;
+
+        int accuracy = source.StatBoosts[Stat.Accuracy];
+        int evasion = target.StatBoosts[Stat.Evasion];
+
+        // statVal = Mathf.FloorToInt(statVal * (2f + max(0, boost)) / (2f - min(0, boost)))
+        moveAccuracy *= (3f + Math.Max(0, accuracy - evasion)) / (3f - Math.Min(0, accuracy - evasion));
+
+        return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
+    }
+
+    IEnumerator ShowStatusChanges(Unit unit)
+    {
+        while (unit.StatusChanges.Count > 0)
+        {
+            var message = unit.StatusChanges.Dequeue();
+            yield return dialogBox.TypeDialog(message);
+        }
+    }
+
+    void CheckForBattleOver(BattleUnit faintedUnit)
+    {
+        if (faintedUnit.IsPlayerUnit)
+        {
+            var nextUnit = playerParty.GetHealtyhUnit();
+            if (nextUnit != null)
+            {
+                OpenPartyScreen();
+            }
+            else
+            {
+                BattleOver(false);
+            }
+        }
+        else
+        {
+            BattleOver(true);
+        }
+    }
+
+    IEnumerator RunMoveEffect(MoveEffects effects, Unit source, Unit target, MoveTarget moveTarget)
+    {
+        // stat 증가
+        if (effects.Boosts != null)
+        {
+            if (moveTarget == MoveTarget.Self)
+                source.ApplyBoosts(effects.Boosts);
+            else
+                target.ApplyBoosts(effects.Boosts);
+        }
+
+        // status 이상
+        if (effects.Status != ConditionID.none)
+        {
+            target.SetStatus(effects.Status);
+        }
+        if (effects.VolatileStatus != ConditionID.none)
+        {
+            target.SetVolatileStatus(effects.VolatileStatus);
+        }
+
+        // dialog 박스 변경
+        // playerUnit.Hud.UpdateStatus();
+
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
     }
 
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
@@ -109,30 +270,34 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog("효과가 별로인 듯 하다...");
     }
 
-    private void Update() 
+    public void HandleUpdate() 
     {
-        if (state == BattleState.PlayerAction)
+        if (state == BattleState.ActionSelection)
         {
             HandleActionSelection();
         }
-        else if (state == BattleState.PlayerMove)
+        else if (state == BattleState.MoveSelection)
         {
             HandleMoveSelection();
+        }
+        else if (state == BattleState.PartyScreen)
+        {
+            HandlePartySelection();
         }
     }
 
     void HandleActionSelection()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-        {
-            if (currentAction < 1)
-                ++currentAction;
-        }
+            currentAction += 2;
         else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-        {
-            if (currentAction > 0)
-                --currentAction;
-        }
+            currentAction -= 2;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            --currentAction;
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            ++currentAction;
+
+        currentAction = Mathf.Clamp(currentAction, 0, 3);
 
         dialogBox.UpdateActionSelection(currentAction);
 
@@ -141,9 +306,18 @@ public class BattleSystem : MonoBehaviour
             if (currentAction == 0)
             {
                 // fight
-                PlayerMove();
+                MoveSelection();
             }
             else if (currentAction == 1)
+            {
+                // Bag
+            }
+            else if (currentAction == 2)
+            {
+                // Unit
+                OpenPartyScreen();
+            }
+            else if (currentAction == 3)
             {
                 // run
             }
@@ -152,25 +326,15 @@ public class BattleSystem : MonoBehaviour
     void HandleMoveSelection()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-        {
-            if (currentMove < playerUnit.Unit.Moves.Count - 2)
-                currentMove += 2;
-        }
+            currentMove += 2;
         else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-        {
-            if (currentMove > 1)
-                currentMove -= 2;
-        }
+            currentMove -= 2;
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        {
-            if (currentMove > 0)
-                --currentMove;
-        }
+            --currentMove;
         else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        {
-            if (currentMove < playerUnit.Unit.Moves.Count - 1)
-                ++currentMove;
-        }
+            ++currentMove;
+
+        currentMove = Mathf.Clamp(currentMove, 0, playerUnit.Unit.Moves.Count - 1);
 
         dialogBox.UpdateMoveSelection(currentMove, playerUnit.Unit.Moves[currentMove]);
 
@@ -179,7 +343,75 @@ public class BattleSystem : MonoBehaviour
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
 
-            StartCoroutine(PerformPlayerMove());
+            StartCoroutine(PlayerMove());
         }
+        else if (Input.GetButtonDown("Cancel"))
+        {
+            dialogBox.EnableMoveSelector(false);
+            dialogBox.EnableDialogText(true);
+            ActionSelection();
+        }
+    }
+    
+    void HandlePartySelection()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            currentMember += 2;
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            currentMember -= 2;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            --currentMember;
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            ++currentMember;
+
+        currentMember = Mathf.Clamp(currentMember, 0, playerParty.Units.Count - 1);
+
+        partyScreen.UpdateMemberSelection(currentMember);
+
+        if (Input.GetButtonDown("Submit"))
+        {
+            var selectedMember = playerParty.Units[currentMember];
+            if (selectedMember.HP <= 0)
+            {
+                partyScreen.SetMessageText("그 동료는 지쳤다!");
+                return;
+            }
+            if (selectedMember == playerUnit.Unit)
+            {
+                partyScreen.SetMessageText("그 동료는 싸우고 있다!");
+                return;
+            }
+            // StartCoroutine(PerformPlayerMove());
+            partyScreen.gameObject.SetActive(false);
+            state = BattleState.Busy;
+            StartCoroutine(SwitchUnit(selectedMember));
+        }
+        else if (Input.GetButtonDown("Cancel"))
+        {
+            partyScreen.gameObject.SetActive(false);
+            ActionSelection();
+        }
+    }
+
+    IEnumerator SwitchUnit(Unit newUnit)
+    {
+        bool currentUnitFainted = true;
+
+        if (playerUnit.Unit.HP > 0)
+        {
+            currentUnitFainted = false;
+            yield return dialogBox.TypeDialog($"교체하자 {playerUnit.Unit.Base.Name}!");
+            playerUnit.PlayFaintAnimation();
+            yield return new WaitForSeconds(2f);
+        }
+
+        playerUnit.Setup(newUnit);
+        dialogBox.SetMoveNames(newUnit.Moves);
+        yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
+
+        if (currentUnitFainted)
+            ChooseFirstTurn();
+        else
+            StartCoroutine(EnemyMove());
     }
 }

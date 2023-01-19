@@ -16,6 +16,7 @@ MonoBehaviour:
   description: "\uC218\uB140"
   frontSprite: {fileID: 1012367594, guid: a8e39491421c8164cbf9f62885665c83, type: 3}
   backSprite: {fileID: 1475105659, guid: a8e39491421c8164cbf9f62885665c83, type: 3}
+  smallSprite: {fileID: -56300427, guid: f31b413e388728446a4f29e2da64cfc8, type: 3}
   type1: 3
   type2: 6
   maxHP: 95

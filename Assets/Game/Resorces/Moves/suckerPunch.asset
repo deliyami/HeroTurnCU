@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: suckerPunch
   m_EditorClassIdentifier: 
   name: "\uAE30\uC2B5"
-  description: 
+  description: "\uC0C1\uB300\uAC00 \uACF5\uACA9\uD558\uBA74 \uD655\uC815\n\uACF5\uACA9
+    \uC548\uD558\uBA74 \uC2E4\uD328"
   type: 16
   statIndex: 0
   power: 70
   accuracy: 100
   pp: 5
+  category: 0
+  effects:
+    boosts: []
+    status: 0
+  target: 0
   priority: 1

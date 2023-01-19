@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 3;
     public LayerMask solidObjectsLayer; //solidObjectsLayer
     public LayerMask grassLayer; //grassLayer
+
+    public event Action OnEncountered;
+
     public bool isMoving;
     private Vector2 input;
     GameObject scanObject;
@@ -21,7 +25,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Update()
+    public void HandleUpdate()
     {
         // Move Value
         if (!isMoving)
@@ -56,7 +60,6 @@ public class PlayerController : MonoBehaviour
         // Scan Object
         if(Input.GetButtonDown("Submit") && scanObject != null)
         {
-            // Debug.Log(scanObject);
             manager.Action(scanObject);
         }
     }
@@ -90,10 +93,15 @@ public class PlayerController : MonoBehaviour
     {
         if(Physics2D.OverlapCircle(transform.position, 0.2f, grassLayer) != null)
         {
-            if (Random.Range(1, 101) <= 10)
-            {
-                Debug.Log("Encountered a wild pokemon");
-            }
+            // if (UnityEngine.Random.Range(1, 101) <= 10)
+            // {
+            //     animator.SetBool("isMoving", false);
+            //     OnEncountered();
+            // }
+            
+            // 100% 만남
+            animator.SetBool("isMoving", false);
+            OnEncountered();
         }
     }
 

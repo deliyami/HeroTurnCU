@@ -12,11 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
   m_Name: bodyPress
   m_EditorClassIdentifier: 
-  name: "\uBC14\uB514\uD504\uB808\uC2A4"
+  name: bodypress
   description: 
   type: 7
   statIndex: 0
   power: 80
   accuracy: 100
+  alwaysHits: 0
   pp: 10
+  category: 0
+  effects:
+    boosts: []
+    status: 0
+    volatileStatus: 0
+  target: 0
   priority: 0

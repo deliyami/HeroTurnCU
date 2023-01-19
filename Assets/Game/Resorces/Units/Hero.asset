@@ -16,6 +16,7 @@ MonoBehaviour:
   description: "\uC8FC\uC778\uACF5"
   frontSprite: {fileID: -477678144, guid: 0fad21ee4b16abe4b87c502cd23b513d, type: 3}
   backSprite: {fileID: 1399105051, guid: 0fad21ee4b16abe4b87c502cd23b513d, type: 3}
+  smallSprite: {fileID: 1544096047, guid: 85f733a4b3a390f41a46bcb0971dcb09, type: 3}
   type1: 7
   type2: 17
   maxHP: 104
@@ -31,4 +32,6 @@ MonoBehaviour:
   - moveBase: {fileID: 11400000, guid: e63b763cc8462614bb636d04eac2cfb6, type: 2}
     level: 0
   - moveBase: {fileID: 11400000, guid: 19fd0d24d25af064ba42987225fd43a2, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: bef47f8ff988d624da10e87efe794abc, type: 2}
     level: 0

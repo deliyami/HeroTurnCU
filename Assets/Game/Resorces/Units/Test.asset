@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  name: "\uD14C\uC2A4\uD2B8 \uC720\uB2DB"
+  description: "\uD14C\uC2A4\uD2B8"
+  frontSprite: {fileID: -477678144, guid: 0fad21ee4b16abe4b87c502cd23b513d, type: 3}
+  backSprite: {fileID: -1172122696, guid: 75a886bb2d8433e4fbd1c4e3c026ecec, type: 3}
+  smallSprite: {fileID: -906818864, guid: 7529adb2a0e53ad46a84153daebf6883, type: 3}
+  type1: 10
+  type2: 6
+  maxHP: 200
+  attack: 10
+  defense: 300
+  spAttack: 10
+  spDefense: 300
+  speed: 80
+  ability: "\uD2C8\uC0C8\uD3EC\uCC29/\uD2C0\uAE68\uAE30/\uC704\uD611"
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: c328bb049414558408a834c1ca40d1b4, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 43604f2e2ba67a247a9abc3bab2fac45, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 142497b1f128fc645a2a2ef0831a6fe1, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 67ff60295aa61ff45916475478593269, type: 2}
+    level: 0
