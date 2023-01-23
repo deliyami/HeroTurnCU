@@ -18,6 +18,7 @@ public class BattleSystem : MonoBehaviour
     public event Action<bool> OnBattleOver;
 
     BattleState state;
+    BattleState? prevState;
     int currentAction;
     int currentMove;
     int currentMember;
@@ -43,20 +44,9 @@ public class BattleSystem : MonoBehaviour
 
         yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Unit.Base.Name}(이)가 나타났다!");
 
-        ChooseFirstTurn();
+        ActionSelection();
     }
 
-    void ChooseFirstTurn()
-    {
-        if (playerUnit.Unit.Speed >= enemyUnit.Unit.Speed)
-        {
-            ActionSelection();
-        }
-        else
-        {
-            StartCoroutine(EnemyMove());
-        }
-    }
 
     void BattleOver(bool won)
     {
@@ -89,31 +79,59 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator RunTurns(BattleAction playerAction)
     {
-        
-    }
-    IEnumerator PlayerMove()
-    {
         state = BattleState.RunningTurn;
 
-        var move = playerUnit.Unit.Moves[currentMove];
-        yield return RunMove(playerUnit, enemyUnit, move);
+        if (playerAction == BattleAction.Move)
+        {
+            playerUnit.Unit.CurrentMove = playerUnit.Unit.Moves[currentMove];
+            enemyUnit.Unit.CurrentMove = enemyUnit.Unit.GetRandomMove();
 
-        // If the battle stat was not changed by RunMove, thn go to next step
-        if (state == BattleState.RunningTurn)
-            StartCoroutine(EnemyMove());
-    }
-    IEnumerator EnemyMove()
-    {
-        state = BattleState.RunningTurn;
-        
-        var move = enemyUnit.Unit.GetRandomMove();
-        yield return RunMove(enemyUnit, playerUnit, move);
+            int playerMovePriority = playerUnit.Unit.CurrentMove.Base.Priority;
+            int enemyMovePriority = enemyUnit.Unit.CurrentMove.Base.Priority;
 
-        // If the battle stat was not changed by RunMove, thn go to next step
-        if (state == BattleState.RunningTurn)
+            // 순서 정하기
+            bool playerGoesFirst = true;
+
+            if (enemyMovePriority > playerMovePriority)
+                playerGoesFirst = false;
+            else if (enemyMovePriority == playerMovePriority)
+            {
+                playerGoesFirst = playerUnit.Unit.Speed >= enemyUnit.Unit.Speed;
+            }
+
+            var firstUnit = (playerGoesFirst) ? playerUnit : enemyUnit;
+            var secondUnit = (playerGoesFirst) ? enemyUnit : playerUnit;
+
+            var second = secondUnit.Unit;
+            yield return RunMove(firstUnit, secondUnit, firstUnit.Unit.CurrentMove);
+            yield return RunAfterTurn(firstUnit);
+            if (state == BattleState.BattleOver) yield break;
+
+
+            if (second.HP > 0){
+                yield return RunMove(secondUnit, firstUnit, secondUnit.Unit.CurrentMove);
+                yield return RunAfterTurn(secondUnit);
+                if (state == BattleState.BattleOver) yield break;
+            }
+        }
+        else
+        {
+            if (playerAction == BattleAction.SwitchUnit)
+            {
+                var selectedUnit = playerParty.Units[currentMember];
+                state = BattleState.Busy;
+                yield return SwitchUnit(selectedUnit);
+            }
+
+            var enemyMove = enemyUnit.Unit.GetRandomMove();
+            yield return RunMove(enemyUnit, playerUnit, enemyMove);
+            yield return RunAfterTurn(enemyUnit);
+            if (state == BattleState.BattleOver) yield break;
+        }
+
+        if (state != BattleState.BattleOver)
             ActionSelection();
     }
-
     IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
     {
         bool canRunMove = sourceUnit.Unit.OnBeforeMove();
@@ -170,38 +188,8 @@ public class BattleSystem : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
         }
-
-
-        // 상태이상으로 쓰러지는가?
-        sourceUnit.Unit.OnAfterTurn();
-        yield return ShowStatusChanges(sourceUnit.Unit);
-        yield return sourceUnit.Hud.UpdateHP();
-
-        if (sourceUnit.Unit.HP <= 0)
-        {
-            yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 쓰러졌다!");
-            sourceUnit.PlayFaintAnimation();
-
-            yield return new WaitForSeconds(2f);
-
-            CheckForBattleOver(sourceUnit);
-        }
     }
-
-    bool CheckIfMoveHits(Move move, Unit source, Unit target)
-    {
-        if (move.Base.AlwaysHits) return true;
-        
-        float moveAccuracy = move.Base.Accuracy;
-
-        int accuracy = source.StatBoosts[Stat.Accuracy];
-        int evasion = target.StatBoosts[Stat.Evasion];
-
-        // statVal = Mathf.FloorToInt(statVal * (2f + max(0, boost)) / (2f - min(0, boost)))
-        moveAccuracy *= (3f + Math.Max(0, accuracy - evasion)) / (3f - Math.Min(0, accuracy - evasion));
-
-        return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
-    }
+    
 
     IEnumerator ShowStatusChanges(Unit unit)
     {
@@ -259,6 +247,40 @@ public class BattleSystem : MonoBehaviour
         yield return ShowStatusChanges(source);
         yield return ShowStatusChanges(target);
     }
+    IEnumerator RunAfterTurn(BattleUnit sourceUnit)
+    {
+        if (state == BattleState.BattleOver) yield break;
+        yield return new WaitUntil(() => state == BattleState.RunningTurn);
+        // 상태이상으로 쓰러지는가?
+        sourceUnit.Unit.OnAfterTurn();
+        yield return ShowStatusChanges(sourceUnit.Unit);
+        yield return sourceUnit.Hud.UpdateHP();
+
+        if (sourceUnit.Unit.HP <= 0)
+        {
+            yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+            sourceUnit.PlayFaintAnimation();
+
+            yield return new WaitForSeconds(2f);
+
+            CheckForBattleOver(sourceUnit);
+        }
+    }
+
+    bool CheckIfMoveHits(Move move, Unit source, Unit target)
+    {
+        if (move.Base.AlwaysHits) return true;
+        
+        float moveAccuracy = move.Base.Accuracy;
+
+        int accuracy = source.StatBoosts[Stat.Accuracy];
+        int evasion = target.StatBoosts[Stat.Evasion];
+
+        // statVal = Mathf.FloorToInt(statVal * (2f + max(0, boost)) / (2f - min(0, boost)))
+        moveAccuracy *= (3f + Math.Max(0, accuracy - evasion)) / (3f - Math.Min(0, accuracy - evasion));
+
+        return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
+    }
 
     IEnumerator ShowDamageDetails(DamageDetails damageDetails)
     {
@@ -315,6 +337,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 2)
             {
                 // Unit
+                prevState = state;
                 OpenPartyScreen();
             }
             else if (currentAction == 3)
@@ -340,10 +363,12 @@ public class BattleSystem : MonoBehaviour
 
         if (Input.GetButtonDown("Submit"))
         {
+            var move = playerUnit.Unit.Moves[currentMove];
+            if (move.PP == 0) return;
+
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
-
-            StartCoroutine(PlayerMove());
+            StartCoroutine(RunTurns(BattleAction.Move));
         }
         else if (Input.GetButtonDown("Cancel"))
         {
@@ -383,8 +408,17 @@ public class BattleSystem : MonoBehaviour
             }
             // StartCoroutine(PerformPlayerMove());
             partyScreen.gameObject.SetActive(false);
-            state = BattleState.Busy;
-            StartCoroutine(SwitchUnit(selectedMember));
+
+            if (prevState == BattleState.ActionSelection)
+            {
+                prevState = null;
+                StartCoroutine(RunTurns(BattleAction.SwitchUnit));
+            }
+            else
+            {
+                state = BattleState.Busy;
+                StartCoroutine(SwitchUnit(selectedMember));
+            }
         }
         else if (Input.GetButtonDown("Cancel"))
         {
@@ -395,11 +429,8 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator SwitchUnit(Unit newUnit)
     {
-        bool currentUnitFainted = true;
-
         if (playerUnit.Unit.HP > 0)
         {
-            currentUnitFainted = false;
             yield return dialogBox.TypeDialog($"교체하자 {playerUnit.Unit.Base.Name}!");
             playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
@@ -409,9 +440,6 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(newUnit.Moves);
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
-        if (currentUnitFainted)
-            ChooseFirstTurn();
-        else
-            StartCoroutine(EnemyMove());
+        state = BattleState.RunningTurn;
     }
 }

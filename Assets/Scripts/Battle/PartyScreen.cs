@@ -18,7 +18,6 @@ public class PartyScreen : MonoBehaviour
     public void SetPartyData(List<Unit> units)
     {
         this.units = units;
-
         for (int i = 0; i < memberSlots.Length; i++)
         {
             if (i < units.Count)

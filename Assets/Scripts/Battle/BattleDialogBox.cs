@@ -6,7 +6,7 @@ using TMPro;
 
 public class BattleDialogBox : MonoBehaviour
 {
-    [SerializeField] int letterPerSecond;
+    [SerializeField] int lettersPerSecond;
     [SerializeField] Color highlightColor;
 
     [SerializeField] TextMeshProUGUI dialogText;
@@ -34,7 +34,7 @@ public class BattleDialogBox : MonoBehaviour
         foreach (var letter in dialog.ToCharArray())
         {
             dialogText.text += letter;
-            yield return new WaitForSeconds(1f/letterPerSecond);
+            yield return new WaitForSeconds(1f/lettersPerSecond);
         }
 
         yield return new WaitForSeconds(1f);
@@ -80,6 +80,13 @@ public class BattleDialogBox : MonoBehaviour
         typeText.text = move.Base.Type.ToString();
         // typeSprite.Type.Base.Courage
         typeSprite.Setup(typeText.text);
+
+        if (move.PP == 0)
+            ppText.color = Color.red;
+        else if((float)move.PP / (float)move.Base.PP < 0.5f)
+            ppText.color = new Color(1f, 0.6f, 0.2f, 1f);
+        else
+            ppText.color = Color.white;
     }
 
     public void SetMoveNames(List<Move> moves)

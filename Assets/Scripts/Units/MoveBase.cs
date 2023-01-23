@@ -17,15 +17,11 @@ public class MoveBase : ScriptableObject
     [SerializeField] int accuracy;
     [SerializeField] bool alwaysHits;
     [SerializeField] int pp;
+    [SerializeField] int priority; // 선공기
     [SerializeField] MoveCategory category;
     [SerializeField] MoveEffects effects;
     [SerializeField] List<Secondaries> secondaries;
     [SerializeField] MoveTarget target;
-
-    [SerializeField] int priority; // 선공기
-    // [SerializeField] int strange; // 상태이상
-    // [SerializeField] int strangePercentage;
-    // [SerializeField] string spStat?; 이거 특수 기능 삽입해야하는데...
 
     public string Name {
         get { return name; }

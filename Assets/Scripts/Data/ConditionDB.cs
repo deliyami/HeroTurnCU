@@ -124,7 +124,6 @@ public class ConditionDB
                 OnStart = (Unit unit) =>
                 {
                     unit.VolatileStatusTime = Random.Range(1, 5);
-                    Debug.Log($"혼란");
                 },
                 OnBeforeMove = (Unit unit) => 
                 {
@@ -136,7 +135,6 @@ public class ConditionDB
                     }
                     unit.VolatileStatusTime--;
                     int value = Random.Range(1, 4);
-                    Debug.Log($"혼란 확률:{value}");
                     if (value == 1)
                     {
                         unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 정신을 못차린다!");

@@ -42,6 +42,7 @@ public class Unit
 
     public int HP { get; set; }
     public List<Move> moves { get; set; }
+    public Move CurrentMove { get; set; }
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatBoosts { get; private set; }
     public Condition Status { get; private set; }
@@ -109,9 +110,9 @@ public class Unit
     }
 
     private int ClaculateBaseStats(int stat, int statIndex) {
-        int HP = statIndex == 0 ? (10 + Level) : 5;
+        int staticValue = statIndex == 0 ? (10 + Level) : 5;
         float personalityData = (1.0f + (Personality[0] == statIndex ? 0.1f : 0) - (Personality[1] == statIndex ? 0.1f : 0));
-        return (int)((((stat * 2) + Tribe[statIndex] + (Effort[statIndex] / 4)) * Level / 100 + HP) * personalityData);
+        return (int)((((stat * 2) + Tribe[statIndex] + (Effort[statIndex] / 4)) * Level / 100 + staticValue) * personalityData);
     }
 
     int GetStat(Stat stat)
@@ -274,8 +275,13 @@ public class Unit
 
     public Move GetRandomMove()
     {
-        int r = Random.Range(0, Moves.Count);
-        return Moves[r];
+        var movesWithPP = new List<Move>();
+        foreach (Move m in Moves)
+        {
+            if(m.PP > 0) movesWithPP.Add(m);
+        }
+        int r = Random.Range(0, movesWithPP.Count);
+        return movesWithPP[r];
     }
 
     public bool OnBeforeMove()
