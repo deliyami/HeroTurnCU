@@ -48,18 +48,18 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
-     <Compile Include="Assets\Scripts\Character\Change.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+     <Compile Include="Assets\Scripts\GamePlay\Dialog.cs" />
      <Compile Include="Assets\Scripts\Battle\PartyMemberUI.cs" />
      <Compile Include="Assets\Scripts\Character\PlayerController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+     <Compile Include="Assets\Scripts\GamePlay\DialogManager.cs" />
      <Compile Include="Assets\Scripts\Units\Status\SPATK.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleStatus.cs" />
-     <Compile Include="Assets\Scripts\Character\ObjData.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Units\UnitBase.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -68,7 +68,6 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
      <Compile Include="Assets\Scripts\Units\UnitType.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-     <Compile Include="Assets\Scripts\Character\GameManager.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
      <Compile Include="Assets\Scripts\Units\TypeBase.cs" />
      <Compile Include="Assets\Scripts\Units\MoveBase.cs" />
@@ -82,7 +81,6 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
      <Compile Include="Assets\Scripts\Units\Status\ATK.cs" />
-     <Compile Include="Assets\Scripts\Character\TalkManager.cs" />
      <Compile Include="Assets\Scripts\Units\Status\AllStat.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleDialogBox.cs" />
@@ -111,8 +109,8 @@
      <Compile Include="Assets\Scripts\Units\ConditionBase.cs" />
      <Compile Include="Assets\Scripts\Units\Move.cs" />
      <Compile Include="Assets\Scripts\Units\Status\IStatInterface.cs" />
-     <Compile Include="Assets\Scripts\GamePlay\DialogManager.cs" />
-     <Compile Include="Assets\Scripts\GamePlay\Dialog.cs" />
+     <Compile Include="Assets\Scripts\Util\SpriteAnimator.cs" />
+     <Compile Include="Assets\Scripts\Character\CharacterAnimator.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

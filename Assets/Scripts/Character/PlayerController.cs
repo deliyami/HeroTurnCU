@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Animator animator;
+    public CharacterAnimator animator;
     Rigidbody2D rigid;
-    public GameManager manager;
 
     public float moveSpeed = 3;
     public LayerMask solidObjectsLayer; //solidObjectsLayer
@@ -23,7 +22,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        animator = GetComponent<CharacterAnimator>();
     }
 
     public void HandleUpdate()
@@ -39,8 +38,8 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                animator.SetFloat("moveX", input.x);
-                animator.SetFloat("moveY", input.y);
+                animator.MoveX = input.x;
+                animator.MoveY = input.y;
                 
                 var targetPos = transform.position;
                 targetPos.x += input.x;
@@ -50,7 +49,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        animator.SetBool("isMoving", isMoving);
+        animator.IsMoving = isMoving;
 
         // bool shiftDown = manager.isAction ? false : Input.GetButton("Run");
         
@@ -69,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
-        var facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
+        var facingDir = new Vector3(animator.MoveX, animator.MoveY);
         var interactPos = transform.position + facingDir;
 
         // Debug.DrawLine(transform.position, interactPos, Color.green, 0.5f);
@@ -117,7 +116,7 @@ public class PlayerController : MonoBehaviour
             // }
             
             // 100% 만남
-            animator.SetBool("isMoving", false);
+            animator.IsMoving = false;
             OnEncountered();
         }
     }
