@@ -44,9 +44,12 @@
      <Compile Include="Assets\Scripts\Battle\PlayerHud.cs" />
      <Compile Include="Assets\Scripts\Data\ConditionDB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+     <Compile Include="Assets\Scripts\GamePlay\GameLayers.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
+     <Compile Include="Assets\Scripts\Character\CharacterAnimator.cs" />
+     <Compile Include="Assets\Scripts\Util\SpriteAnimator.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
      <Compile Include="Assets\Scripts\GamePlay\Dialog.cs" />
@@ -59,6 +62,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+     <Compile Include="Assets\Scripts\Character\Character.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleStatus.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Units\UnitBase.cs" />
@@ -109,8 +113,7 @@
      <Compile Include="Assets\Scripts\Units\ConditionBase.cs" />
      <Compile Include="Assets\Scripts\Units\Move.cs" />
      <Compile Include="Assets\Scripts\Units\Status\IStatInterface.cs" />
-     <Compile Include="Assets\Scripts\Util\SpriteAnimator.cs" />
-     <Compile Include="Assets\Scripts\Character\CharacterAnimator.cs" />
+     <Compile Include="Assets\Scripts\Character\TrainerController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
