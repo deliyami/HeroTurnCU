@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public float moveSpeed = 3;
 
     public bool IsMoving { get; private set; }
 

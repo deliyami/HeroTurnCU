@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigid;
     public event Action OnEncountered;
+    public event Action<Collider2D> OnEnterTrainersView;
+
 
     private Vector2 input;
     
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
-                StartCoroutine(character.Move(input, CheckForEncounters));
+                StartCoroutine(character.Move(input, OnMoveOver));
             }
         }
 
@@ -63,6 +65,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnMoveOver()
+    {
+        CheckForEncounters();
+        CheckIfInTrainersView();
+    }
+
     private void CheckForEncounters()
     {
         if(Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.GrassLayer) != null)
@@ -76,6 +84,16 @@ public class PlayerController : MonoBehaviour
             // 100% 만남
             character.Animator.IsMoving = false;
             OnEncountered();
+        }
+    }
+
+    private void CheckIfInTrainersView()
+    {
+        var collider = Physics2D.OverlapCircle(transform.position, 0.2f, GameLayers.i.FovLayer);
+        if(collider != null)
+        {
+            character.Animator.IsMoving = false;
+            OnEnterTrainersView?.Invoke(collider);
         }
     }
 
