@@ -9,9 +9,11 @@ public class GameController : MonoBehaviour
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
     GameState state;
+    public static GameController Instance { get; private set; }
 
     private void Awake()
     {
+        Instance = this;
         ConditionDB.Init();
     }
 
@@ -51,6 +53,19 @@ public class GameController : MonoBehaviour
 
         battleSystem.StartBattle(playerParty, wildUnit);
     }
+
+    public void StartTrainerBattle(TrainerController trainer)
+    {
+        state = GameState.Battle;
+        battleSystem.gameObject.SetActive(true);
+        worldCamera.gameObject.SetActive(false);
+
+        var playerParty = playerController.GetComponent<UnitParty>();
+        var trainerParty = trainer.GetComponent<UnitParty>();
+
+        battleSystem.StartTrainerBattle(playerParty, trainerParty);
+    }
+
     void EndBattle(bool won)
     {
         state = GameState.FreeRoam;

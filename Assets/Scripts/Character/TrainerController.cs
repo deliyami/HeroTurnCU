@@ -5,6 +5,8 @@ using UnityEngine;
 // TODO Trainer -> Combatant
 public class TrainerController : MonoBehaviour
 {
+    [SerializeField] string name;
+    [SerializeField] Sprite sprite;
     [SerializeField] Dialog dialog;
     [SerializeField] GameObject exclamation;
     [SerializeField] GameObject fov;
@@ -36,7 +38,7 @@ public class TrainerController : MonoBehaviour
         // 대화창 생성
         StartCoroutine(DialogManager.Instance.ShowDialog(dialog, () => 
         {
-            Debug.Log("적과의 전투를 시작");
+            GameController.Instance.StartTrainerBattle(this);
         }));
     }
     public void SetFovRotation(FacingDirection dir)
@@ -50,5 +52,13 @@ public class TrainerController : MonoBehaviour
             angle = 270f;
         
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
+    }
+
+    public string Name {
+        get => name;
+    }    
+
+    public Sprite Sprite {
+        get => sprite;
     }
 }

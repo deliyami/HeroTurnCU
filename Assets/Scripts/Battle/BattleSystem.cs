@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BattleState 
 { Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, BattleOver,
@@ -14,6 +15,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] BattleUnit enemyUnit;
     [SerializeField] BattleDialogBox dialogBox;
     [SerializeField] PartyScreen partyScreen;
+    [SerializeField] Image playerImage;
+    [SerializeField] Image trainerImage;
 
     public event Action<bool> OnBattleOver;
 
@@ -24,7 +27,12 @@ public class BattleSystem : MonoBehaviour
     int currentMember;
 
     UnitParty playerParty;
+    UnitParty trainerParty;
     Unit wildUnit;
+
+    bool isTrainerBattle = false;
+    PlayerController player;
+    TrainerController trainer;
 
     public void StartBattle(UnitParty playerParty, Unit wildUnit)
     {
@@ -33,17 +41,65 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(SetupBattle());
     }
 
+    public void StartTrainerBattle(UnitParty playerParty, UnitParty trainerParty)
+    {
+        this.playerParty = playerParty;
+        this.trainerParty = trainerParty;
+
+        isTrainerBattle = true;
+        player = playerParty.GetComponent<PlayerController>();
+        trainer = trainerParty.GetComponent<TrainerController>();
+
+        StartCoroutine(SetupBattle());
+    }
+
     public IEnumerator SetupBattle()
     {
-        playerUnit.Setup(playerParty.GetHealtyhUnit());
-        enemyUnit.Setup(wildUnit);
+        playerUnit.Clear();
+        enemyUnit.Clear();
+
+        if(!isTrainerBattle)
+        {
+            // 야생 전투
+            playerUnit.Setup(playerParty.GetHealtyhUnit());
+            enemyUnit.Setup(wildUnit);
+
+            dialogBox.SetMoveNames(playerUnit.Unit.Moves);
+            yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Unit.Base.Name}(이)가 나타났다!");
+        }
+        else
+        {
+            // 네임드 전투
+
+            // 스프라이트 먼저 출력
+            playerUnit.gameObject.SetActive(false);
+            enemyUnit.gameObject.SetActive(false);
+
+            playerImage.gameObject.SetActive(true);
+            trainerImage.gameObject.SetActive(true);
+            playerImage.sprite = player.Sprite;
+            trainerImage.sprite = trainer.Sprite;
+            Debug.Log("Battlesystem: before trainer.name과의 전투");
+            yield return dialogBox.TypeDialog($"{trainer.Name}와(과)의 전투가 시작된다!");
+            Debug.Log("Battlesystem: after trainer.name과의 전투");
+
+            // 상대 전투 유닛 출동
+            trainerImage.gameObject.SetActive(false);
+            enemyUnit.gameObject.SetActive(true);
+            var firstHealthEnemyUnit = trainerParty.GetHealtyhUnit();
+            enemyUnit.Setup(firstHealthEnemyUnit);
+            yield return dialogBox.TypeDialog($"상대 {firstHealthEnemyUnit.Base.Name}(이)가 먼저 나온다!");
+            
+            // 팀 전투 유닛 출동
+            playerImage.gameObject.SetActive(false);
+            playerUnit.gameObject.SetActive(true);
+            var firstHealthPlayerUnit = playerParty.GetHealtyhUnit();
+            playerUnit.Setup(firstHealthPlayerUnit);
+            yield return dialogBox.TypeDialog($"힘내, {firstHealthPlayerUnit.Base.Name}!");
+            dialogBox.SetMoveNames(playerUnit.Unit.Moves);
+        }
 
         partyScreen.Init();
-
-        dialogBox.SetMoveNames(playerUnit.Unit.Moves);
-
-        yield return dialogBox.TypeDialog($"야생의 {enemyUnit.Unit.Base.Name}(이)가 나타났다!");
-
         ActionSelection();
     }
 
@@ -206,17 +262,24 @@ public class BattleSystem : MonoBehaviour
         {
             var nextUnit = playerParty.GetHealtyhUnit();
             if (nextUnit != null)
-            {
                 OpenPartyScreen();
-            }
             else
-            {
                 BattleOver(false);
-            }
         }
         else
         {
-            BattleOver(true);
+            if (!isTrainerBattle)
+            {
+                BattleOver(true);
+            }
+            else
+            {
+                var nextUnit = trainerParty.GetHealtyhUnit();
+                if (nextUnit != null)
+                    StartCoroutine(SendNextTrainerUnit(nextUnit));
+                else
+                    BattleOver(true);
+            }
         }
     }
 
@@ -439,6 +502,16 @@ public class BattleSystem : MonoBehaviour
         playerUnit.Setup(newUnit);
         dialogBox.SetMoveNames(newUnit.Moves);
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
+
+        state = BattleState.RunningTurn;
+    }
+
+    IEnumerator SendNextTrainerUnit(Unit nextUnit)
+    {
+        state = BattleState.Busy;
+
+        enemyUnit.Setup(nextUnit);
+        yield return dialogBox.TypeDialog($"{nextUnit.Base.Name}(이)가 교대로 나온다!");
 
         state = BattleState.RunningTurn;
     }

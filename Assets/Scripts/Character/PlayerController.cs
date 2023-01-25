@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody2D rigid;
+    [SerializeField] string name;
+    [SerializeField] Sprite sprite;
     public event Action OnEncountered;
     public event Action<Collider2D> OnEnterTrainersView;
 
@@ -16,8 +17,6 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
-
         character = GetComponent<Character>();
     }
 
@@ -112,4 +111,11 @@ public class PlayerController : MonoBehaviour
     //     }
     //     else scanObject = null;
     // }
+    public string Name {
+        get => name;
+    }    
+
+    public Sprite Sprite {
+        get => sprite;
+    }
 }
