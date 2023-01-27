@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public enum BattleState 
-{ Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, BattleOver,
-}
+public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, AboutToUse, BattleOver }
 public enum BattleAction { Move, SwitchUnit, UseItem, Run }
 
 public class BattleSystem : MonoBehaviour
@@ -17,6 +16,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] Image playerImage;
     [SerializeField] Image trainerImage;
+    [SerializeField] GameObject ballSprite;
 
     public event Action<bool> OnBattleOver;
 
@@ -25,6 +25,7 @@ public class BattleSystem : MonoBehaviour
     int currentAction;
     int currentMove;
     int currentMember;
+    bool aboutToUseChoice = true;
 
     UnitParty playerParty;
     UnitParty trainerParty;
@@ -38,6 +39,8 @@ public class BattleSystem : MonoBehaviour
     {
         this.playerParty = playerParty;
         this.wildUnit = wildUnit;
+        player = playerParty.GetComponent<PlayerController>();
+
         StartCoroutine(SetupBattle());
     }
 
@@ -133,6 +136,14 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
     }
+    IEnumerator AboutToUse(Unit newUnit)
+    {
+        state = BattleState.Busy;
+        yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 준비중이다! 팀원을 교체하겠습니까?");
+
+        state = BattleState.AboutToUse;
+        dialogBox.EnableChoiceBox(true);
+    }
     IEnumerator RunTurns(BattleAction playerAction)
     {
         state = BattleState.RunningTurn;
@@ -177,6 +188,11 @@ public class BattleSystem : MonoBehaviour
                 var selectedUnit = playerParty.Units[currentMember];
                 state = BattleState.Busy;
                 yield return SwitchUnit(selectedUnit);
+            }
+            else if (playerAction == BattleAction.UseItem)
+            {
+                dialogBox.EnableActionSelector(false);
+                yield return ThrowBall();
             }
 
             var enemyMove = enemyUnit.Unit.GetRandomMove();
@@ -276,7 +292,7 @@ public class BattleSystem : MonoBehaviour
             {
                 var nextUnit = trainerParty.GetHealtyhUnit();
                 if (nextUnit != null)
-                    StartCoroutine(SendNextTrainerUnit(nextUnit));
+                    StartCoroutine(AboutToUse(nextUnit));
                 else
                     BattleOver(true);
             }
@@ -327,6 +343,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(2f);
 
             CheckForBattleOver(sourceUnit);
+            yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }
 
@@ -369,6 +386,12 @@ public class BattleSystem : MonoBehaviour
         {
             HandlePartySelection();
         }
+        else if (state == BattleState.AboutToUse)
+        {
+            HandleAboutToUse();
+        }
+        // if (Input.GetKeyDown(KeyCode.T))
+        //     StartCoroutine(ThrowBall());
     }
 
     void HandleActionSelection()
@@ -396,6 +419,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // Bag
+                StartCoroutine(RunTurns(BattleAction.UseItem));
             }
             else if (currentAction == 2)
             {
@@ -490,6 +514,45 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    void HandleAboutToUse()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            aboutToUseChoice = !aboutToUseChoice;
+
+        dialogBox.UpdateChoiceBox(aboutToUseChoice);
+        if (Input.GetButtonDown("Submit"))
+        {
+            dialogBox.EnableChoiceBox(false);
+            if (aboutToUseChoice == true)
+            {
+                prevState = BattleState.AboutToUse;
+                OpenPartyScreen();
+            }
+            else
+            {
+                StartCoroutine(SendNextTrainerUnit());
+            }
+        }
+        else if (Input.GetButtonDown("Cancel"))
+        {
+            if (playerUnit.Unit.HP <= 0)
+            {
+                partyScreen.SetMessageText("전투를 계속하기 위해 팀원을 보내야합니다!");
+                return;
+            }
+
+            dialogBox.EnableChoiceBox(false);
+
+            if (prevState == BattleState.AboutToUse)
+            {
+                prevState = null;
+                StartCoroutine(SendNextTrainerUnit());
+            }
+            else
+                ActionSelection();
+        }
+    }
+
     IEnumerator SwitchUnit(Unit newUnit)
     {
         if (playerUnit.Unit.HP > 0)
@@ -503,16 +566,115 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(newUnit.Moves);
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
-        state = BattleState.RunningTurn;
+        if (prevState == null)
+        {
+            state = BattleState.RunningTurn;
+        }
+        else if (prevState == BattleState.AboutToUse)
+        {
+            prevState = null;
+            StartCoroutine(SendNextTrainerUnit());
+        }
     }
 
-    IEnumerator SendNextTrainerUnit(Unit nextUnit)
+    IEnumerator SendNextTrainerUnit()
     {
         state = BattleState.Busy;
 
+        var nextUnit = trainerParty.GetHealtyhUnit();
         enemyUnit.Setup(nextUnit);
         yield return dialogBox.TypeDialog($"{nextUnit.Base.Name}(이)가 교대로 나온다!");
 
         state = BattleState.RunningTurn;
+    }
+    IEnumerator ThrowBall()
+    {
+        state = BattleState.Busy;
+
+        if (isTrainerBattle)
+        {
+            if (enemyUnit.name == "로드")
+            {
+                bool hasKarl = false;
+                // TODO: 로드에게 던졌을 때, 카를 격노 이벤트?
+                foreach(Unit u in trainerParty.Units)
+                    if(u.Base.name == "카를") hasKarl = true;
+                if (hasKarl)
+                    yield return dialogBox.TypeDialog($"당신은 죄악이 등을 타고 오르는 것을 느꼈다.");
+            }
+            yield return dialogBox.TypeDialog($"이 녀석들에겐 통하지 않는다!");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
+        yield return dialogBox.TypeDialog("밧줄을 던졌다!");
+
+        var ballObj = Instantiate(ballSprite, playerUnit.transform.position - new Vector3(2, 0), Quaternion.identity);
+        var ball =  ballObj.GetComponent<SpriteRenderer>();
+
+        // 애니메이션
+        yield return ball.transform.DOJump(enemyUnit.transform.position + new Vector3(0, 1), 2f, 1, 1f).WaitForCompletion();
+        yield return enemyUnit.PlayCaptureAnimation();
+        yield return ball.transform.DOMoveY(enemyUnit.transform.position.y - 2, 0.5f).WaitForCompletion();
+
+        int shakeCount = TryToCatchUnit(enemyUnit.Unit);
+        for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
+        {
+            yield return new WaitForSeconds(0.5f);
+            yield return ball.transform.DOPunchRotation(new Vector3(0, 0, 10f), 0.8f).WaitForCompletion();
+        }
+
+        if (shakeCount == 4)
+        {
+            // unit 잡음
+            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(을)를 잡았다!");
+            yield return ball.DOFade(0, 1.5f).WaitForCompletion();
+
+            playerParty.AddUnit(enemyUnit.Unit);
+            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(을)를 겨우 잡았다.");
+
+            Destroy(ball);
+            BattleOver(true);
+        }
+        else
+        {
+            // unit 못잡음
+            yield return new WaitForSeconds(1f);
+            ball.DOFade(0, 0.2f);
+            yield return enemyUnit.PlayBreakOutAnimation();
+
+            if (shakeCount < 2)
+                yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(이)가 저항한다!");
+            else
+                yield return dialogBox.TypeDialog($"녀석이 저항한다!");
+
+            Destroy(ball);
+            state = BattleState.RunningTurn;
+        }
+    }
+
+    int TryToCatchUnit(Unit unit)
+    {
+        // a = [{1 - (2/3 × 현재HP/최대HP)} × 포획률 × 몬스터볼 보정 × 상태이상 보정 × (잡기파워 보정)] 잡기파워는 없을 예정
+        // 독, 마비, 화상 상태에선 x1.5(3세대)
+        // 수면 및 얼음 상태에선 ×2.5(5세대 이후)
+        // float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * unit.Base.CatchRate * ConditionDB.GetStatusBonus(unit.Status));
+        float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * 100 * ConditionDB.GetStatusBonus(unit.Status));
+
+        if (a >= 255) return 4;
+
+        float b = 65536 / Mathf.Pow(255 / a, 0.1875f);
+
+        // int shakeCount = -1;
+        for (int i = 0; i < 4 ; i++){
+            if (UnityEngine.Random.Range(0, 65536) > b)
+            {
+                // shakeCount = i;
+                // break;
+                return i;
+            }
+        }
+        // return shakeCount == -1?4:shakeCount;
+        return 4;
     }
 }

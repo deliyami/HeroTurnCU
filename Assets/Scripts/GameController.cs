@@ -51,8 +51,12 @@ public class GameController : MonoBehaviour
         var playerParty = playerController.GetComponent<UnitParty>();
         var wildUnit = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRadomWildUnit();
 
+        var wildUnitCopy = new Unit(wildUnit.Base, wildUnit.Level);
+
         battleSystem.StartBattle(playerParty, wildUnit);
     }
+
+    TrainerController trainer;
 
     public void StartTrainerBattle(TrainerController trainer)
     {
@@ -60,6 +64,7 @@ public class GameController : MonoBehaviour
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
 
+        this.trainer = trainer;
         var playerParty = playerController.GetComponent<UnitParty>();
         var trainerParty = trainer.GetComponent<UnitParty>();
 
@@ -68,6 +73,12 @@ public class GameController : MonoBehaviour
 
     void EndBattle(bool won)
     {
+        if (trainer != null && won == true)
+        {
+            trainer.BattleLost();
+            trainer = null;
+        }
+
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);

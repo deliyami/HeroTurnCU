@@ -23,4 +23,16 @@ public class UnitParty : MonoBehaviour
     {
         return units.Where(x => x.HP > 0).FirstOrDefault();
     }
+
+    public void AddUnit(Unit newUnit)
+    {
+        if (units.Count < 6)
+        {
+            units.Add(newUnit);
+        }
+        else
+        {
+            // TODO: 외부로 보낼 것
+        }
+    }
 }

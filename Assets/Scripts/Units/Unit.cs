@@ -7,6 +7,15 @@ public class Unit
 {
     [SerializeField] UnitBase _base;
     [SerializeField] int level;
+
+    public Unit(UnitBase pBase, int pLevel)
+    {
+        _base = pBase;
+        level = pLevel;
+
+        // Init();
+    }
+
     // 개체치 31 {HP, attack, defense, spAttack, spDefense, speed}
     [SerializeField] int[] tribe;
     // 노력치 0~252 {HP, attack, defense, spAttack, spDefense, speed} /4해서 더해야 하는데... 적혀있네
@@ -76,8 +85,7 @@ public class Unit
         CalculateStats();
         HP = MaxHP;
 
-        ResetStatBoost();
-
+        StatusChanges = new Queue<string>();
         ResetStatBoost();
         Status = null;
         VolatileStatus = null;
@@ -87,12 +95,12 @@ public class Unit
     {
         // 여기 주의 할 것...
         Stats = new Dictionary<Stat, int>();
-        Stats.Add(Stat.Attack, ClaculateBaseStats(Base.Attack, 1));
-        Stats.Add(Stat.Defense, ClaculateBaseStats(Base.Defense, 2));
-        Stats.Add(Stat.SpAttack, ClaculateBaseStats(Base.SpAttack, 3));
-        Stats.Add(Stat.SpDefense, ClaculateBaseStats(Base.SpDefense, 4));
-        Stats.Add(Stat.Speed, ClaculateBaseStats(Base.Speed, 5));
-        MaxHP = ClaculateBaseStats(Base.MaxHP, 0);
+        Stats.Add(Stat.Attack, CalculateBaseStats(Base.Attack, 1));
+        Stats.Add(Stat.Defense, CalculateBaseStats(Base.Defense, 2));
+        Stats.Add(Stat.SpAttack, CalculateBaseStats(Base.SpAttack, 3));
+        Stats.Add(Stat.SpDefense, CalculateBaseStats(Base.SpDefense, 4));
+        Stats.Add(Stat.Speed, CalculateBaseStats(Base.Speed, 5));
+        MaxHP = CalculateBaseStats(Base.MaxHP, 0);
     }
 
     void ResetStatBoost()
@@ -109,7 +117,7 @@ public class Unit
         };
     }
 
-    private int ClaculateBaseStats(int stat, int statIndex) {
+    private int CalculateBaseStats(int stat, int statIndex) {
         int staticValue = statIndex == 0 ? (10 + Level) : 5;
         float personalityData = (1.0f + (Personality[0] == statIndex ? 0.1f : 0) - (Personality[1] == statIndex ? 0.1f : 0));
         return (int)((((stat * 2) + Tribe[statIndex] + (Effort[statIndex] / 4)) * Level / 100 + staticValue) * personalityData);

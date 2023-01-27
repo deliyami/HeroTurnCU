@@ -19,7 +19,7 @@ TagManager:
   - Interactable
   - Player
   - FovLayer
-  - 
+  - Battle
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2903174987
+    locked: 0
+  - name: Battle
+    uniqueID: 688749637
     locked: 0
   - name: Blind
     uniqueID: 1155575287

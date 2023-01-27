@@ -147,6 +147,19 @@ public class ConditionDB
             }
         },
     };
+
+    public static float GetStatusBonus(Condition condition)
+    {
+        // 독, 마비, 화상 상태에선 x1.5(3세대)
+        // 수면 및 얼음 상태에선 ×2.5(5세대 이후)
+        if (condition == null)
+            return 1f;
+        else if (condition.ID == ConditionID.slp || condition.ID == ConditionID.frz)
+            return 2.5f;
+        else if (condition.ID == ConditionID.psn || condition.ID == ConditionID.par || condition.ID == ConditionID.brn)
+            return 1.5f;
+        return 1f;
+    }
 }
 
 public enum ConditionID

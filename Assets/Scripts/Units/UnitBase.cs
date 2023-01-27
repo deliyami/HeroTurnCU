@@ -24,6 +24,9 @@ public class UnitBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
+
+    [SerializeField] int catchRate = 255;
+
     [SerializeField] string ability; // 특성
     
     [SerializeField] List<LearnableMove> learnableMoves;
@@ -68,6 +71,10 @@ public class UnitBase : ScriptableObject
     public int Speed {
         get { return speed; }
     }
+    // public int CatchRate {
+    //     get { return catchRate; }
+    // }
+    public int CatchRate => catchRate;
     public string Ability { 
         get { return ability; }
     }
