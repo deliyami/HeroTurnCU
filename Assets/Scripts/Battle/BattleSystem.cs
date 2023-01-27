@@ -42,7 +42,7 @@ public class BattleSystem : MonoBehaviour
         this.playerParty = playerParty;
         this.wildUnit = wildUnit;
         player = playerParty.GetComponent<PlayerController>();
-
+        isTrainerBattle = false;
         StartCoroutine(SetupBattle());
     }
 
@@ -254,12 +254,7 @@ public class BattleSystem : MonoBehaviour
 
             if (targetUnit.Unit.HP <= 0)
             {
-                yield return dialogBox.TypeDialog($"{targetUnit.Unit.Base.Name}(이)가 쓰러졌다!");
-                targetUnit.PlayFaintAnimation();
-
-                yield return new WaitForSeconds(2f);
-
-                CheckForBattleOver(targetUnit);
+                yield return HandleUnitFainted(targetUnit);
             }
         }
         else
@@ -278,6 +273,39 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    IEnumerator HandleUnitFainted(BattleUnit faintedUnit)
+    {
+        yield return dialogBox.TypeDialog($"{faintedUnit.Unit.Base.Name}(이)가 쓰러졌다!");
+        faintedUnit.PlayFaintAnimation();
+
+        yield return new WaitForSeconds(2f);
+
+        if (!faintedUnit.IsPlayerUnit)
+        {
+            // exp 획득
+            int expYield = faintedUnit.Unit.Base.ExpYield;
+            int enemyLevel = faintedUnit.Unit.Level;
+            float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
+            
+            // int expGain = Mathf.FloorToInt(expYield * enemyLevel * trainerBonus / 7);
+            int expGain = 0;
+            playerUnit.Unit.Exp += expGain;
+            yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 자세를 다잡는다!");
+            // yield return playerUnit.Hud.SetExpSmooth();
+            // 레벨 업
+
+            yield return new WaitForSeconds(1f);
+            while (playerUnit.Unit.CheckForLevelUp())
+            {
+                playerUnit.Hud.SetLevel();
+                // 스킬 배우기
+                yield return playerUnit.Hud.SetExpSmooth(true);
+                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 렙업했긴한데 사용하지 않는 코드다!!");
+            }
+        }
+
+        CheckForBattleOver(faintedUnit);
+    }
     void CheckForBattleOver(BattleUnit faintedUnit)
     {
         if (faintedUnit.IsPlayerUnit)
@@ -343,12 +371,7 @@ public class BattleSystem : MonoBehaviour
 
         if (sourceUnit.Unit.HP <= 0)
         {
-            yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 쓰러졌다!");
-            sourceUnit.PlayFaintAnimation();
-
-            yield return new WaitForSeconds(2f);
-
-            CheckForBattleOver(sourceUnit);
+            yield return HandleUnitFainted(sourceUnit);
             yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }

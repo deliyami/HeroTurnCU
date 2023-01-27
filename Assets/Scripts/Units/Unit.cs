@@ -48,7 +48,7 @@ public class Unit
             return personality;
         }
     }
-
+    public int Exp { get; set; }
     public int HP { get; set; }
     public List<Move> moves { get; set; }
     public Move CurrentMove { get; set; }
@@ -81,6 +81,8 @@ public class Unit
             if (moves.Count >= 4)
                 break;
         }
+
+        Exp = Base.GetExpForLevel(level);
 
         CalculateStats();
         HP = MaxHP;
@@ -185,7 +187,15 @@ public class Unit
             Debug.Log($"{Base.Name}의 {stat}는 {StatBoosts[stat]}으로 됨...");
         }
     }
-
+    public bool CheckForLevelUp()
+    {
+        if (Exp > Base.GetExpForLevel(level + 1))
+        {
+            ++level;
+            return true;
+        }
+        return false;
+    }
     public int MaxHP { get; private set; }
     public int Attack {
         get { return GetStat(Stat.Attack);}

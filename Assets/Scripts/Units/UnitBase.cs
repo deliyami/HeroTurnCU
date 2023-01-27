@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,12 +25,27 @@ public class UnitBase : ScriptableObject
     [SerializeField] int spAttack;
     [SerializeField] int spDefense;
     [SerializeField] int speed;
+    [SerializeField] int expYield;
+    [SerializeField] GrowthRate growthRate;
 
     [SerializeField] int catchRate = 255;
 
     [SerializeField] string ability; // 특성
     
     [SerializeField] List<LearnableMove> learnableMoves;
+
+    public int GetExpForLevel(int level)
+    {
+        if (growthRate == GrowthRate.Fast)
+        {
+            return 4 * (Mathf.FloorToInt(Mathf.Pow(level, 3))) / 5;
+        }
+        else if (growthRate == GrowthRate.MediumFast)
+        {
+            return Mathf.FloorToInt(Mathf.Pow(level, 3));
+        }
+        return 100;
+    }
 
     public string Name {
         get { return name; }
@@ -75,6 +91,8 @@ public class UnitBase : ScriptableObject
     //     get { return catchRate; }
     // }
     public int CatchRate => catchRate;
+    public int ExpYield => expYield;
+    public GrowthRate GrowthRate => growthRate;
     public string Ability { 
         get { return ability; }
     }
@@ -138,6 +156,11 @@ public enum UnitType
     악마,
     강철,
     이상함
+}
+
+public enum GrowthRate
+{
+    Fast, MediumFast
 }
 
 public enum Stat

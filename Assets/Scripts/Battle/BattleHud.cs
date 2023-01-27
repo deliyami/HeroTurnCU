@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class BattleHud : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class BattleHud : MonoBehaviour
     [SerializeField] TextMeshProUGUI HPText;
     [SerializeField] TextMeshProUGUI MaxHPText;
     [SerializeField] HPBar hpBar;
+    [SerializeField] GameObject expBar;
     [SerializeField] TextMeshProUGUI statusText;
     [SerializeField] Image statusSprite;
     [SerializeField] Color psnColor;
@@ -38,7 +40,7 @@ public class BattleHud : MonoBehaviour
         _unit = unit;
 
         nameText.text = unit.Base.Name;
-        levelText.text = "Lvl " + unit.Level;
+        SetLevel();
         hpBar.SetHP((float) unit.HP / unit.MaxHP);
         HPText.text = $"{unit.HP}";
         MaxHPText.text = $"/{unit.MaxHP}";
@@ -85,6 +87,35 @@ public class BattleHud : MonoBehaviour
         }
     }
 
+    public void SetLevel()
+    {
+        levelText.text = "Lvl " + _unit.Level;
+    }
+    public void SetExp()
+    {
+        if (expBar == null) return;
+
+        float normalizedExp = GetNormalizedExp();
+        expBar.transform.localScale = new Vector3(normalizedExp, 1f, 1f);
+    }
+
+    public IEnumerator SetExpSmooth(bool reset = false)
+    {
+        if (expBar == null) yield break;
+        if (reset)
+            expBar.transform.localScale = new Vector3(0, 1f, 1f);
+        float normalizedExp = GetNormalizedExp();
+        yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
+    }
+
+    float GetNormalizedExp()
+    {
+        int currLevelExp = _unit.Base.GetExpForLevel(_unit.Level);
+        int nextLevelExp = _unit.Base.GetExpForLevel(_unit.Level + 1);
+
+        float normalizedExp = (_unit.Exp -currLevelExp) / (nextLevelExp - currLevelExp);
+        return Mathf.Clamp01(normalizedExp);
+    }
     public virtual IEnumerator UpdateHP()
     {
         if (_unit.HPChanged)
