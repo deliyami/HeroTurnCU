@@ -78,7 +78,7 @@ public class Unit
             if (move.Level <= Level)
                 moves.Add(new Move(move.Base));
             
-            if (moves.Count >= 4)
+            if (moves.Count >= UnitBase.MaxNumOfMoves)
                 break;
         }
 
@@ -195,6 +195,22 @@ public class Unit
             return true;
         }
         return false;
+    }
+
+    public LearnableMove GetLearnableMoveAtCurrLevel()
+    {
+        LearnableMove returnMove = null;
+        foreach(LearnableMove lm in Base.LearnableMoves)
+        {
+            if (lm.Level == level) returnMove = lm;
+        }
+        return returnMove;
+    }
+    public void LearnMove(LearnableMove moveToLearn)
+    {
+        if (Moves.Count > UnitBase.MaxNumOfMoves)
+            return;
+        Moves.Add(new Move(moveToLearn.Base));
     }
     public int MaxHP { get; private set; }
     public int Attack {

@@ -298,9 +298,23 @@ public class BattleSystem : MonoBehaviour
             while (playerUnit.Unit.CheckForLevelUp())
             {
                 playerUnit.Hud.SetLevel();
-                // 스킬 배우기
-                yield return playerUnit.Hud.SetExpSmooth(true);
                 yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 렙업했긴한데 사용하지 않는 코드다!!");
+                // 스킬 배우기
+                var newMove = playerUnit.Unit.GetLearnableMoveAtCurrLevel();
+                if (newMove != null)
+                {
+                    if (playerUnit.Unit.Moves.Count < UnitBase.MaxNumOfMoves)
+                    {
+                        playerUnit.Unit.LearnMove(newMove);
+                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 얻을 수 없는 스킬을 얻었다!");
+                        dialogBox.SetMoveNames(playerUnit.Unit.Moves);
+                    }
+                    else
+                    {
+                        // 기술 잊기
+                    }
+                }
+                yield return playerUnit.Hud.SetExpSmooth(true);
             }
         }
 
