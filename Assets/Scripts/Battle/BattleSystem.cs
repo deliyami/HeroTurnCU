@@ -35,6 +35,8 @@ public class BattleSystem : MonoBehaviour
     PlayerController player;
     TrainerController trainer;
 
+    int escapeAttempts;
+
     public void StartBattle(UnitParty playerParty, Unit wildUnit)
     {
         this.playerParty = playerParty;
@@ -101,7 +103,7 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"힘내, {firstHealthPlayerUnit.Base.Name}!");
             dialogBox.SetMoveNames(playerUnit.Unit.Moves);
         }
-
+        escapeAttempts = 0;
         partyScreen.Init();
         ActionSelection();
     }
@@ -193,6 +195,10 @@ public class BattleSystem : MonoBehaviour
             {
                 dialogBox.EnableActionSelector(false);
                 yield return ThrowBall();
+            }
+            else if (playerAction == BattleAction.Run)
+            {
+                yield return TryToEscape();
             }
 
             var enemyMove = enemyUnit.Unit.GetRandomMove();
@@ -430,6 +436,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 3)
             {
                 // run
+                StartCoroutine(RunTurns(BattleAction.Run));
             }
         }
     }
@@ -659,7 +666,7 @@ public class BattleSystem : MonoBehaviour
         // 독, 마비, 화상 상태에선 x1.5(3세대)
         // 수면 및 얼음 상태에선 ×2.5(5세대 이후)
         // float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * unit.Base.CatchRate * ConditionDB.GetStatusBonus(unit.Status));
-        float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * 100 * ConditionDB.GetStatusBonus(unit.Status));
+        float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * 255 * ConditionDB.GetStatusBonus(unit.Status));
 
         if (a >= 255) return 4;
 
@@ -676,5 +683,37 @@ public class BattleSystem : MonoBehaviour
         }
         // return shakeCount == -1?4:shakeCount;
         return 4;
+    }
+
+    IEnumerator TryToEscape()
+    {
+        state = BattleState.Busy;
+
+        if (isTrainerBattle)
+        {
+            yield return dialogBox.TypeDialog("도망 칠 순 없다!");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
+        ++escapeAttempts;
+
+        // 128×A÷B＋30×C
+        // (A는 나와있는 포켓몬의 스피드, B는 상대 포켓몬의 스피드, C는 도망을 시도한 횟수.)
+        // 를 256으로 나눈 나머지를 계산해서 0~255 사이의 난수를 생성해 계산값보다 작으면 도망갈 수 있다.
+        int playerSpeed = playerUnit.Unit.Speed;
+        int enemySpeed = enemyUnit.Unit.Speed;
+
+        float f = (128 * playerSpeed / enemySpeed + 30 * escapeAttempts) % 256;
+        if (f > UnityEngine.Random.Range(0, 255))
+        {
+            yield return dialogBox.TypeDialog("도망갔다!");
+            BattleOver(true);
+        }
+        else
+        {
+            yield return dialogBox.TypeDialog("도망갈 수 없다!");
+            state = BattleState.RunningTurn;
+        }
     }
 }
