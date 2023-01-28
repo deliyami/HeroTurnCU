@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/0_debug2_another.unity
     guid: 5bb099d01775f5b4db17b2e244dfd52e
+  - enabled: 1
+    path: Assets/Scene/0_debug1_1_house.unity
+    guid: 4fd14d51ffb8e224380d722b280d4360
+  - enabled: 1
+    path: Assets/Scene/0_debug3_farland.unity
+    guid: e095798a77acb7947a582d84305d1387
   m_configObjects: {}
