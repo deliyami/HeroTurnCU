@@ -3873,7 +3873,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1352905165}
   - component: {fileID: 1352905164}
-  - component: {fileID: 1352905166}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -3912,29 +3911,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1352905166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1352905163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b0221c6cd039b4397210b3734583ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wildUnits:
-  - _base: {fileID: 11400000, guid: d06841351a4eb2c409f5fedb65794ffa, type: 2}
-    level: 50
-    tribe: 190000000f0000001e00000007000000030000000c000000
-    effort: 78000000540000006c0000003e0000005400000034000000
-    personality: 0100000005000000
-  - _base: {fileID: 11400000, guid: 9a33def534605f949bde596cbabfc824, type: 2}
-    level: 50
-    tribe: 07000000050000000d000000160000001100000014000000
-    effort: 48000000640000005400000040000000540000006a000000
-    personality: 0500000001000000
 --- !u!1 &1415160006
 GameObject:
   m_ObjectHideFlags: 0
@@ -9916,6 +9892,10 @@ PrefabInstance:
     - target: {fileID: 5286086307996570637, guid: b35cb99e01abb3b4c95caad15eb611b6, type: 3}
       propertyPath: m_Name
       value: EssentialObjectLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 5286086307996570637, guid: b35cb99e01abb3b4c95caad15eb611b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5286086307996570638, guid: b35cb99e01abb3b4c95caad15eb611b6, type: 3}
       propertyPath: m_RootOrder

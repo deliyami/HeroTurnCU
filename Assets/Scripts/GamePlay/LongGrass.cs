@@ -8,12 +8,11 @@ public class LongGrass : MonoBehaviour, IPlayerTriggerable
     {
         // if (UnityEngine.Random.Range(1, 101) <= 10)
         // {
-        //     animator.SetBool("isMoving", false);
-        //     OnEncountered();
+        //     player.Character.Animator.IsMoving = false;
+        //     GameController.Instance.StartBattle();
         // }
         
         // 100% 만남
-        
         GameController.Instance.StartBattle();
     }
 }

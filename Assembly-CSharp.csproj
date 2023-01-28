@@ -124,6 +124,10 @@
      <Compile Include="Assets\Scripts\Core\Fader.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\SceneDetails.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\LocationPortal.cs" />
+     <Compile Include="Assets\Scripts\Core\InvisibleTilemap.cs" />
+     <Compile Include="Assets\Scripts\Saving\SavableEntity.cs" />
+     <Compile Include="Assets\Scripts\Saving\ISavable.cs" />
+     <Compile Include="Assets\Scripts\Saving\SavingSystem.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

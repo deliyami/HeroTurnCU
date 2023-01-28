@@ -30,11 +30,11 @@ MonoBehaviour:
   catchRate: 255
   ability: "\uBD80\uC720"
   learnableMoves:
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 4de22b962bcc80e49b2ba26bfbfb4c1e, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: b3b7aaf288af47846b5d23e3a2d4b213, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 05919e36f2dba9146bcef932aae305b3, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 3b7258cec208b8d498be20dd51b8dd8e, type: 2}
     level: 0

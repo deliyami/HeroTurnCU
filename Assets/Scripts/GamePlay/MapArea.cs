@@ -6,11 +6,14 @@ public class MapArea : MonoBehaviour
 {
     [SerializeField] List<Unit> wildUnits;
 
-    public Unit GetRadomWildUnit()
+    public Unit GetRandomWildUnit()
     {
         int randomInt = Random.Range(0, wildUnits.Count);
         var wildUnit =  wildUnits[randomInt];
         wildUnit.Init();
+        Debug.Log("유닛 생성중");
+        Debug.Log(wildUnit.Base.name);
+        Debug.Log(wildUnit.Level);
         return wildUnit;
     }
 }

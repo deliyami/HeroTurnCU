@@ -54,7 +54,8 @@ public class GameController : MonoBehaviour
         worldCamera.gameObject.SetActive(false);
 
         var playerParty = playerController.GetComponent<UnitParty>();
-        var wildUnit = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRadomWildUnit();
+        // var wildUnit = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildUnit();
+        var wildUnit = CurrentScene.GetComponent<MapArea>().GetRandomWildUnit();
 
         var wildUnitCopy = new Unit(wildUnit.Base, wildUnit.Level);
 

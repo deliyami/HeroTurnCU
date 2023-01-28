@@ -3,3 +3,4 @@ Assets/TextMesh*
 *.png
 Logs*
 Temp/*
+Assets/Scripts/Saving/*

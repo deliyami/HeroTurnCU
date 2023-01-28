@@ -30,11 +30,11 @@ MonoBehaviour:
   catchRate: 255
   ability: "\uC0AC\uC774\uCF54\uBA54\uC774"
   learnableMoves:
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 9f885ae3adeeeb64db026efe6019b6f5, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 8cb844e60edf69446b8ed4a0d1630bb7, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 5bf7e7eb800f6a449b157865e38f881a, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 547cfff5ec237cf47a2e86fdf31837ad, type: 2}
     level: 0
