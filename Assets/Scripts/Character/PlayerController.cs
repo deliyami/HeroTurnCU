@@ -8,9 +8,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] string name;
     [SerializeField] Sprite sprite;
     const float offsetY = 0.3f;
-    public event Action OnEncountered;
-    public event Action<Collider2D> OnEnterTrainersView;
-
 
     private Vector2 input;
     
@@ -67,34 +64,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnMoveOver()
     {
-        CheckForEncounters();
-        CheckIfInTrainersView();
-    }
+        var colliders = Physics2D.OverlapCircleAll(transform.position - new Vector3(0, offsetY), 0.2f, GameLayers.i.TriggerableLayer);
 
-    private void CheckForEncounters()
-    {
-        if(Physics2D.OverlapCircle(transform.position - new Vector3(0, offsetY), 0.2f, GameLayers.i.GrassLayer) != null)
+        foreach (var collider in colliders)
         {
-            // if (UnityEngine.Random.Range(1, 101) <= 10)
-            // {
-            //     animator.SetBool("isMoving", false);
-            //     OnEncountered();
-            // }
-            
-            // 100% 만남
-            character.Animator.IsMoving = false;
-            OnEncountered();
+            var triggerable = collider.GetComponent<IPlayerTriggerable>();
+            if (triggerable != null)
+            {
+                character.Animator.IsMoving = false;
+                triggerable.OnPlayerTriggered(this);
+                break;
+            }
         }
-    }
-
-    private void CheckIfInTrainersView()
-    {
-        var collider = Physics2D.OverlapCircle(transform.position - new Vector3(0, offsetY), 0.2f, GameLayers.i.FovLayer);
-        if(collider != null)
-        {
-            character.Animator.IsMoving = false;
-            OnEnterTrainersView?.Invoke(collider);
-        }
+        // CheckForEncounters();
+        // CheckIfInTrainersView();
     }
 
     // void FixedUpdate()
