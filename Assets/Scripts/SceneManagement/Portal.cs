@@ -21,6 +21,8 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
     {
         DontDestroyOnLoad(gameObject);
 
+        GameController.Instance.PauseGame(true);
+
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
         // Debug.Log("포탈 사용");
 
@@ -28,6 +30,9 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
 
         player.transform.position = destPortal.SpawnPoint.position;
         player.Character.SetPositionAndSnapToTile(destPortal.SpawnPoint.position);
+
+        GameController.Instance.PauseGame(false);
+
         Destroy(gameObject);
     }
 
