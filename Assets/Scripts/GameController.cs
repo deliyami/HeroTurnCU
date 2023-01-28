@@ -100,6 +100,15 @@ public class GameController : MonoBehaviour
         if (state == GameState.FreeRoam)
         {
             playerController.HandleUpdate();
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                SavingSystem.i.Save("yonggi");
+            }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                SavingSystem.i.Load("yonggi");
+            }
         }
         else if (state == GameState.Battle)
         {
