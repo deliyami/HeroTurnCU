@@ -7,7 +7,7 @@ using TMPro;
 public class MoveSelectionUI : MonoBehaviour
 {
     [SerializeField] List<TextMeshProUGUI> moveTexts;
-    [SerializeField] Color highlightedColor;
+    [SerializeField] Color highLightedColor;
     int currentSelection = 0;
 
     public void SetMoveData(List<MoveBase> currentMoves, MoveBase newMove)
@@ -22,9 +22,9 @@ public class MoveSelectionUI : MonoBehaviour
 
     public void HandleMoveSelection(Action<int> onSelected)
     {
-        if (Input.GetButtonDown("Down") || Input.GetKeyDown("S"))
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
             ++currentSelection;
-        else if (Input.GetButtonDown("Up") || Input.GetKeyDown("W"))
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             --currentSelection;
 
         currentSelection = Mathf.Clamp(currentSelection, 0, UnitBase.MaxNumOfMoves);
@@ -37,7 +37,7 @@ public class MoveSelectionUI : MonoBehaviour
         for (int i = 0; i < UnitBase.MaxNumOfMoves + 1; ++i)
         {
             if (i == selection)
-                moveTexts[i].color = highlightedColor;
+                moveTexts[i].color = highLightedColor;
             else
                 moveTexts[i].color = Color.white;
         }

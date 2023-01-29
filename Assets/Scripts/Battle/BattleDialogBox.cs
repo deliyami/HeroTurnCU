@@ -7,7 +7,6 @@ using TMPro;
 public class BattleDialogBox : MonoBehaviour
 {
     [SerializeField] int lettersPerSecond;
-    [SerializeField] Color highlightColor;
 
     [SerializeField] TextMeshProUGUI dialogText;
     [SerializeField] GameObject actionSelector;
@@ -24,7 +23,11 @@ public class BattleDialogBox : MonoBehaviour
     [SerializeField] TextMeshProUGUI noText;
     [SerializeField] BattleType typeSprite;
 
+    Color highLightedColor;
 
+    private void Start() {
+        highLightedColor = GlobalSettings.i.HighlightedColor;
+    }
 
     public void SetDialog(string dialog)
     {  
@@ -69,7 +72,7 @@ public class BattleDialogBox : MonoBehaviour
         for (int i = 0; i < actionTexts.Count; ++i)
         {
             if (i == selectedAction)
-                actionTexts[i].color = highlightColor;
+                actionTexts[i].color = highLightedColor;
             else
                 actionTexts[i].color = Color.white;
         }
@@ -79,7 +82,7 @@ public class BattleDialogBox : MonoBehaviour
         for (int i = 0; i < moveTexts.Count; ++i)
         {
             if (i == selectedMove)
-                moveTexts[i].color = highlightColor;
+                moveTexts[i].color = highLightedColor;
             else
                 moveTexts[i].color = Color.white;
         }
@@ -112,13 +115,13 @@ public class BattleDialogBox : MonoBehaviour
     {
         if (yesSelected)
         {
-            yesText.color = highlightColor;
+            yesText.color = highLightedColor;
             noText.color = Color.white;
         }
         else
         {
             yesText.color = Color.white;   
-            noText.color = highlightColor;
+            noText.color = highLightedColor;
         }
     }
 
