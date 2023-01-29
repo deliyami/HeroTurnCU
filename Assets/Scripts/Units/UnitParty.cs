@@ -9,6 +9,7 @@ public class UnitParty : MonoBehaviour
 
     public List<Unit> Units{
         get { return units; }
+        set { units = value; }
     }
 
     private void Start()

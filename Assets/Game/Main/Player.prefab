@@ -119,13 +119,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units:
-  - _base: {fileID: 11400000, guid: 43fda276d8bbf3f41aea04b77a52b81b, type: 2}
-    level: 50
+  - _base: {fileID: 11400000, guid: c2e817f126d11f543ab8cf7ef8f37641, type: 2}
+    level: 100
     tribe: 0f000000140000001100000015000000050000000a000000
     effort: 540000006000000066000000480000006000000040000000
     personality: 0200000003000000
-  - _base: {fileID: 11400000, guid: c2e817f126d11f543ab8cf7ef8f37641, type: 2}
-    level: 100
+  - _base: {fileID: 11400000, guid: 43fda276d8bbf3f41aea04b77a52b81b, type: 2}
+    level: 50
     tribe: 0f000000140000001100000015000000050000000a000000
     effort: 540000006000000066000000480000006000000040000000
     personality: 0200000003000000

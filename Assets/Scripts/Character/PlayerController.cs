@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ISavable
 {
-    [SerializeField] string name;
+    [SerializeField] new string name;
     [SerializeField] Sprite sprite;
 
     private Vector2 input;
@@ -80,14 +81,26 @@ public class PlayerController : MonoBehaviour, ISavable
 
     public object CaptureState()
     {
-        float[] position = new float[] { transform.position.x, transform.position.y };
-        return position;
+        var saveData = new PlayerSaveData()
+        {
+            position = new float[] { transform.position.x, transform.position.y },
+            units = GetComponent<UnitParty>().Units.Select(p => p.GetSaveData()).ToList(),
+        };
+
+        // float[] position = new float[] { transform.position.x, transform.position.y };
+        return saveData;
     }
 
     public void RestoreState(object state)
     {
-        var position = (float[])state;
+        var saveData = (PlayerSaveData)state;
+
+        // 위치 재생
+        var position = saveData.position;
         transform.position = new Vector3(position[0], position[1]);
+
+        // 유닛 재생
+        GetComponent<UnitParty>().Units = saveData.units.Select(s => new Unit(s)).ToList();
     }
 
     // void FixedUpdate()
@@ -114,4 +127,11 @@ public class PlayerController : MonoBehaviour, ISavable
     }
 
     public Character Character => character;
+}
+
+[Serializable]
+public class PlayerSaveData
+{
+    public float[] position;
+    public List<UnitSaveData> units;
 }

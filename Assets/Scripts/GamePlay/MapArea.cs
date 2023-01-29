@@ -12,7 +12,7 @@ public class MapArea : MonoBehaviour
         var wildUnit =  wildUnits[randomInt];
         wildUnit.Init();
         Debug.Log("유닛 생성중");
-        Debug.Log(wildUnit.Base.name);
+        Debug.Log(wildUnit.Base.Name);
         Debug.Log(wildUnit.Level);
         return wildUnit;
     }

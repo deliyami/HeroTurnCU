@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,9 +70,7 @@ public class Unit
     {
         // Base = uBase;
         // Level = uLevel;
-        // tribe = uTribe;
-        // effort = uEffort;
-        // personality = uPersonality;
+        
         moves = new List<Move>();
         foreach (var move in Base.LearnableMoves)
         {
@@ -84,6 +83,10 @@ public class Unit
 
         Exp = Base.GetExpForLevel(level);
 
+        // tribe = uTribe;
+        // effort = uEffort;
+        // personality = uPersonality;
+
         CalculateStats();
         HP = MaxHP;
 
@@ -91,6 +94,46 @@ public class Unit
         ResetStatBoost();
         Status = null;
         VolatileStatus = null;
+    }
+
+    public Unit(UnitSaveData saveData)
+    {
+        _base = UnitDB.GetUnitByName(saveData.name);
+        HP = saveData.hp;
+        level = saveData.level;
+        Exp = saveData.exp;
+        tribe = saveData.tribe;
+        effort = saveData.effort;
+        personality = saveData.personality;
+
+        if (saveData.statusId != null)
+            Status = ConditionDB.Conditions[saveData.statusId.Value];
+        else
+            Status = null;
+
+        moves = saveData.moves.Select(s => new Move(s)).ToList();
+
+        CalculateStats();
+        StatusChanges = new Queue<string>();
+        ResetStatBoost();
+        VolatileStatus = null;
+    }
+
+    public UnitSaveData GetSaveData()
+    {
+        var saveData = new UnitSaveData()
+        {
+            name = Base.Name,
+            hp = HP,
+            level = Level,
+            exp = Exp,
+            tribe = Tribe,
+            effort = Effort,
+            personality = Personality,
+            statusId = Status?.ID,
+            moves = Moves.Select(m => m.GetSaveData()).ToList(),
+        };
+        return saveData;
     }
 
     void CalculateStats()
@@ -351,4 +394,18 @@ public class DamageDetails
     public bool Fainted { get; set; }
     public float Critical { get; set; }
     public float TypeEffectiveness { get; set; }
+}
+
+[System.Serializable]
+public class UnitSaveData
+{
+    public string name;
+    public int hp;
+    public int level;
+    public int exp;
+    public int[] tribe;
+    public int[] effort;
+    public int[] personality;
+    public ConditionID? statusId;
+    public List<MoveSaveData> moves;
 }

@@ -87,9 +87,9 @@ public class BattleSystem : MonoBehaviour
             trainerImage.gameObject.SetActive(true);
             playerImage.sprite = player.Sprite;
             trainerImage.sprite = trainer.Sprite;
-            Debug.Log("Battlesystem: before trainer.name과의 전투");
+            Debug.Log("Battlesystem: before trainer.Name과의 전투");
             yield return dialogBox.TypeDialog($"{trainer.Name}와(과)의 전투가 시작된다!");
-            Debug.Log("Battlesystem: after trainer.name과의 전투");
+            Debug.Log("Battlesystem: after trainer.Name과의 전투");
 
             // 상대 전투 유닛 출동
             trainerImage.gameObject.SetActive(false);
@@ -675,12 +675,12 @@ public class BattleSystem : MonoBehaviour
 
         if (isTrainerBattle)
         {
-            if (enemyUnit.name == "로드")
+            if (enemyUnit.Unit.Base.Name == "로드")
             {
                 bool hasKarl = false;
                 // TODO: 로드에게 던졌을 때, 카를 격노 이벤트?
                 foreach(Unit u in trainerParty.Units)
-                    if(u.Base.name == "카를") hasKarl = true;
+                    if(u.Base.Name == "카를") hasKarl = true;
                 if (hasKarl)
                     yield return dialogBox.TypeDialog($"당신은 죄악이 등을 타고 오르는 것을 느꼈다.");
             }

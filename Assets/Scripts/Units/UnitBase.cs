@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Unit", menuName = "Unit/Create new unit")]
 public class UnitBase : ScriptableObject
 {
-    [SerializeField] new string name;
+    [SerializeField] string name;
 
     [TextArea]
     [SerializeField] string description;

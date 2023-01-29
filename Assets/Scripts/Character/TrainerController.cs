@@ -5,7 +5,7 @@ using UnityEngine;
 // TODO Trainer -> Combatant
 public class TrainerController : MonoBehaviour, Interactable, ISavable
 {
-    [SerializeField] string name;
+    [SerializeField] new string name;
     [SerializeField] Sprite sprite;
     [SerializeField] Dialog dialog;
     [SerializeField] Dialog dialogAfterBattle;

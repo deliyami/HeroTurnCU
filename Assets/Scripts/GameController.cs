@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        UnitDB.Init();
+        MoveDB.Init();
         ConditionDB.Init();
     }
 
