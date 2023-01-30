@@ -81,7 +81,15 @@ public class BattleHud : MonoBehaviour
 
     void SetStatusText()
     {
-        if (_unit.Status == null)
+        if (_unit.HP <= 0)
+        {
+            _unit.CureStatus();
+            statusSprite.color = new Color(1f, 1f, 1f, 1f);
+            statusText.color = new Color(0, 0, 0, 1f);
+            statusText.text = "기절";
+            statusSprite.sprite = statusSprites[ConditionID.slp];
+        }
+        else if (_unit.Status == null)
         {
             statusSprite.color = new Color(1f, 1f, 1f, 0f);
             statusText.text = "";
