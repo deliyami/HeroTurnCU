@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9212d13d547d34b9d89822477bcc75, type: 3}
+  m_Name: ColdWater
+  m_EditorClassIdentifier: 
+  name: "\uCC2C\uBB3C"
+  description: "[\uC218\uBA74 \uD68C\uBCF5]\n\uC7A0\uAE68\uC6B8 \uB550 \uB531\uC785\uB2C8\uB2E4."
+  icon: {fileID: 1354217475, guid: c018ca7fedb54cf4888acbfc87672d9b, type: 3}
+  hpAmount: 0
+  restoreMaxHP: 0
+  ppAmount: 0
+  restoreMaxPP: 0
+  status: 3
+  recoveryAllStatus: 0
+  revive: 0
+  maxRevive: 0
