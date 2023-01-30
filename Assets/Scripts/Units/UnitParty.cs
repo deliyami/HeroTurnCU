@@ -11,9 +11,11 @@ public class UnitParty : MonoBehaviour
 
     public List<Unit> Units{
         get { return units; }
-        set { units = value; }
+        set { 
+            units = value; 
+            OnUpdated?.Invoke();
+        }
     }
-
     private void Start()
     {
         foreach (var unit in units)
@@ -42,6 +44,8 @@ public class UnitParty : MonoBehaviour
     
     public static UnitParty GetPlayerParty()
     {
-        return FindObjectOfType<PlayerController>().GetComponent<UnitParty>();
+        var unitParty = FindObjectOfType<PlayerController>().GetComponent<UnitParty>();
+        // unitParty.Start();
+        return unitParty;
     }
 }

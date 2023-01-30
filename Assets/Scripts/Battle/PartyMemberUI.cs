@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyMemberUI : PlayerHud
+public class PartyMemberUI : BattleHud
 {
     [SerializeField] Image image;
     // Image image;
-    public override void SetData(Unit unit)
+    public void Init(Unit unit)
     {
         image.sprite = unit.Base.SmallSprite;
-        base.SetData(unit);
+        base.SetData(unit, false);
+        // unit.OnHPChanged += UpdateData;
     }
 
     public void SetSelected(bool selected)

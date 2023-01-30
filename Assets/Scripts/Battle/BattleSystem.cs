@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, PartyScreen, AboutToUse, MoveToForget, BattleOver }
+public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, Bag, PartyScreen, AboutToUse, MoveToForget, BattleOver }
 public enum BattleAction { Move, SwitchUnit, UseItem, Run }
 
 public class BattleSystem : MonoBehaviour
@@ -19,6 +19,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Image trainerImage;
     [SerializeField] GameObject ballSprite;
     [SerializeField] MoveSelectionUI moveSelectionUI;
+    [SerializeField] InventoryUI inventoryUI;
 
     public event Action<bool> OnBattleOver;
 
@@ -86,9 +87,7 @@ public class BattleSystem : MonoBehaviour
             trainerImage.gameObject.SetActive(true);
             playerImage.sprite = player.Sprite;
             trainerImage.sprite = trainer.Sprite;
-            Debug.Log("Battlesystem: before trainer.Name과의 전투");
             yield return dialogBox.TypeDialog($"{trainer.Name}와(과)의 전투가 시작된다!");
-            Debug.Log("Battlesystem: after trainer.Name과의 전투");
 
             // 상대 전투 유닛 출동
             trainerImage.gameObject.SetActive(false);
@@ -124,6 +123,12 @@ public class BattleSystem : MonoBehaviour
         // StartCoroutine(dialogBox.SetDialog("행동을 선택하세요."));
         dialogBox.SetDialog("행동을 선택하세요.");
         dialogBox.EnableActionSelector(true);
+    }
+
+    void OpenBag()
+    {
+        state = BattleState.Bag;
+        inventoryUI.gameObject.SetActive(true);
     }
 
     void OpenPartyScreen()
@@ -205,8 +210,8 @@ public class BattleSystem : MonoBehaviour
             }
             else if (playerAction == BattleAction.UseItem)
             {
+                // 아이템 창 탈출하고 적 턴을 실행해야함
                 dialogBox.EnableActionSelector(false);
-                yield return ThrowBall();
             }
             else if (playerAction == BattleAction.Run)
             {
@@ -229,7 +234,7 @@ public class BattleSystem : MonoBehaviour
         if(!canRunMove)
         {
             yield return ShowStatusChanges(sourceUnit.Unit);
-            yield return sourceUnit.Hud.UpdateHP();
+            yield return sourceUnit.Hud.WaitForHPUpdate();
             yield break;
         }
         yield return ShowStatusChanges(sourceUnit.Unit);
@@ -250,7 +255,7 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 var damageDetails = targetUnit.Unit.TakeDamage(move, sourceUnit.Unit);
-                yield return targetUnit.Hud.UpdateHP();
+                yield return targetUnit.Hud.WaitForHPUpdate();
                 yield return ShowDamageDetails(damageDetails);
             }
 
@@ -396,7 +401,7 @@ public class BattleSystem : MonoBehaviour
         // 상태이상으로 쓰러지는가?
         sourceUnit.Unit.OnAfterTurn();
         yield return ShowStatusChanges(sourceUnit.Unit);
-        yield return sourceUnit.Hud.UpdateHP();
+        yield return sourceUnit.Hud.WaitForHPUpdate();
 
         if (sourceUnit.Unit.HP <= 0)
         {
@@ -443,6 +448,21 @@ public class BattleSystem : MonoBehaviour
         else if (state == BattleState.PartyScreen)
         {
             HandlePartySelection();
+        }
+        else if (state == BattleState.Bag)
+        {
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+                state = BattleState.ActionSelection;
+            };
+            Action onItemHud = () =>
+            {
+                state = BattleState.Busy;
+                inventoryUI.gameObject.SetActive(false);
+                StartCoroutine(RunTurns(BattleAction.UseItem));
+            };
+            inventoryUI.HandleUpdate(onBack, onItemHud);
         }
         else if (state == BattleState.AboutToUse)
         {
@@ -499,7 +519,9 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // Bag
-                StartCoroutine(RunTurns(BattleAction.UseItem));
+                // StartCoroutine(RunTurns(BattleAction.UseItem));
+                OpenBag();
+
             }
             else if (currentAction == 2)
             {

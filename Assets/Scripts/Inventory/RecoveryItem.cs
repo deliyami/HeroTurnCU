@@ -20,4 +20,15 @@ public class RecoveryItem : ItemBase
     [Header("Revive")]
     [SerializeField] bool revive;
     [SerializeField] bool maxRevive;
+
+    public override bool Use(Unit unit)
+    {
+        if (hpAmount > 0)
+        {
+            if (unit.HP == unit.MaxHP || unit.HP <= 0)
+                return false;
+            unit.IncreaseHP(hpAmount);
+        }
+        return true;
+    }
 }

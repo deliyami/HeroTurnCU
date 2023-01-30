@@ -65,6 +65,7 @@ public class Unit
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
     public bool HPChanged { get; set; }
     public event System.Action OnStatusChanged;
+    public event System.Action OnHPChanged;
 
     public void Init()
     {
@@ -303,19 +304,22 @@ public class Unit
         // mod1 mod2 mod3다 해둬야 됨...
         float d = a * move.Base.Power * ((float)attack / defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
-        Debug.Log($"Name: {Base.Name}");
-        Debug.Log($"HP: {HP}");
-        Debug.Log($"Dmg: {damage}");
+        Debug.Log($"Name: {Base.Name}, HP: {HP}");
         
-        UpdateHP(damage);
+        DecreaseHP(damage);
 
         return damageDetails;
     }
-
-    public void UpdateHP(int damage)
+    public void IncreaseHP(int amount)
     {
+        HP = Mathf.Clamp(HP + amount, 0, MaxHP);
+        OnHPChanged?.Invoke();
+    }
+    public void DecreaseHP(int damage)
+    {
+        Debug.Log($"Dmg: {damage}");
         HP = Mathf.Clamp(HP - damage, 0, MaxHP);
-        HPChanged = true;
+        OnHPChanged?.Invoke();
     }
 
     public void SetStatus(ConditionID conditionID)

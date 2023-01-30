@@ -18,6 +18,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Image downArrow;
     [SerializeField] PartyScreen partyScreen;
 
+    Action onItemUsed;
+
     int selectedItem = 0;
 
     InventoryUIState state;
@@ -34,6 +36,8 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         UpdateItemList();
+
+        inventory.OnUpdated += UpdateItemList;
     }
     void UpdateItemList()
     {
@@ -52,8 +56,10 @@ public class InventoryUI : MonoBehaviour
 
         UpdateItemSelection();
     }
-    public void HandleUpdate(Action onBack)
+    public void HandleUpdate(Action onBack, Action onItemUsed = null)
     {
+        this.onItemUsed = onItemUsed;
+
         if (state == InventoryUIState.ItemSelection)
         {
             int prevSelection = selectedItem;
@@ -81,6 +87,7 @@ public class InventoryUI : MonoBehaviour
             Action onSelected = () =>
             {
                 // 아이템 사용하기
+                StartCoroutine(UseItem());
             };
             Action onBackPartyScreen = () =>
             {
@@ -89,6 +96,24 @@ public class InventoryUI : MonoBehaviour
             };
             partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
         }
+    }
+
+    IEnumerator UseItem()
+    {
+        state = InventoryUIState.Busy;
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+
+        if (usedItem != null)
+        {
+            yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
+            onItemUsed?.Invoke();
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
+        }
+
+        ClosePartyScreen();
     }
 
     void UpdateItemSelection()

@@ -37,7 +37,7 @@ public class PartyScreen : MonoBehaviour
             if (i < units.Count)
             {
                 memberSlots[i].gameObject.SetActive(true);
-                memberSlots[i].SetData(units[i]);
+                memberSlots[i].Init(units[i]);
             }
             else
                 memberSlots[i].gameObject.SetActive(false);

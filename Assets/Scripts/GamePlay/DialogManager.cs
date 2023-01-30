@@ -29,6 +29,21 @@ public class DialogManager : MonoBehaviour
     // TODO 유닛 portrait보이도록 하고 이름도 바꾸기, 포트레이트 감정표현도 0123으로 사용하기
     // 이름, 할 말, 표정 번호, 화면 좌우, 사진 뒤집기 onoff
     // string, string, int, string, bool
+
+    public IEnumerator ShowDialogText(string text, bool waitForInput = true)
+    {
+        IsShowing = true;
+        dialogBox.SetActive(true);
+
+        dialogName.text = "시스템";
+        yield return StartCoroutine(TypeDialog(text));
+        if (waitForInput)
+        {
+            yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
+        }
+        dialogBox.SetActive(false);
+        IsShowing = false;
+    }
     public IEnumerator ShowDialog(Dialog dialog, Action onFinished = null)
     {
         yield return new WaitForEndOfFrame();

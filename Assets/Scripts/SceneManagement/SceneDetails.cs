@@ -14,7 +14,7 @@ public class SceneDetails : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Debug.Log($"유저 들어옴{gameObject.name}");
+            Debug.Log($"맵 이동: {gameObject.name}");
             
             LoadScene();
             GameController.Instance.SetCurrentScene(this);

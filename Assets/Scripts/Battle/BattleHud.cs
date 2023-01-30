@@ -35,15 +35,17 @@ public class BattleHud : MonoBehaviour
         get { return nameText; }
     }
 
-    public virtual void SetData(Unit unit)
+    public virtual void SetData(Unit unit, bool parentComponent = true)
     {
-        _unit = unit;
+        if (_unit != null)
+        {
+            _unit.OnStatusChanged -= SetStatusText;
+            _unit.OnHPChanged -= parentComponent?UpdateHP:UpdateData;
+        }
 
-        nameText.text = unit.Base.Name;
-        SetLevel();
-        hpBar.SetHP((float) unit.HP / unit.MaxHP);
-        HPText.text = $"{unit.HP}";
-        MaxHPText.text = $"/{unit.MaxHP}";
+        _unit = unit;
+        UpdateData();
+        // Debug.Log($"여기는 battleHud {unit.Base.Name}: {unit.HP}/{unit.MaxHP}");
 
         statusColors = new Dictionary<ConditionID, Color>()
         {
@@ -65,6 +67,16 @@ public class BattleHud : MonoBehaviour
 
         SetStatusText();
         _unit.OnStatusChanged += SetStatusText;
+        _unit.OnHPChanged += parentComponent?UpdateHP:UpdateData;
+    }
+
+    protected void UpdateData()
+    {
+        nameText.text = _unit.Base.Name;
+        SetLevel();
+        hpBar.SetHP((float) _unit.HP / _unit.MaxHP);
+        HPText.text = $"{_unit.HP}";
+        MaxHPText.text = $"/{_unit.MaxHP}";
     }
 
     void SetStatusText()
@@ -116,13 +128,19 @@ public class BattleHud : MonoBehaviour
         float normalizedExp = (_unit.Exp -currLevelExp) / (nextLevelExp - currLevelExp);
         return Mathf.Clamp01(normalizedExp);
     }
-    public virtual IEnumerator UpdateHP()
+    public void UpdateHP()
     {
-        if (_unit.HPChanged)
-        {
-            yield return HPText.text = $"{_unit.HP}";
-            MaxHPText.text = $"/{_unit.MaxHP}";
-            yield return hpBar.SetHPSmooth((float) _unit.HP / _unit.MaxHP);
-        }
+        StartCoroutine(UpdateHPAsync());
+    }
+    public virtual IEnumerator UpdateHPAsync()
+    {
+        HPText.text = $"{_unit.HP}";
+        MaxHPText.text = $"/{_unit.MaxHP}";
+        yield return hpBar.SetHPSmooth((float) _unit.HP / _unit.MaxHP);
+    }
+
+    public IEnumerator WaitForHPUpdate()
+    {
+        yield return new WaitUntil(() => hpBar.IsUpdating == false);
     }
 }

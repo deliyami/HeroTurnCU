@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour
     {
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
-
         Instance = this;
 
         menuController = GetComponent<MenuController>();

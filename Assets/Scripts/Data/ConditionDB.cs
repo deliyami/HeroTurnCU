@@ -25,7 +25,7 @@ public class ConditionDB
                 StartMessage = "(은)는 중독되었다!",
                 OnAfterTurn = (Unit unit) => 
                 {
-                    unit.UpdateHP(unit.MaxHP / 8);
+                    unit.DecreaseHP(unit.MaxHP / 8);
                     unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 중독 데미지를 입고있다!");
                 }
             }
@@ -38,7 +38,7 @@ public class ConditionDB
                 StartMessage = "(은)는 화상을 입었다!",
                 OnAfterTurn = (Unit unit) => 
                 {
-                    unit.UpdateHP(unit.MaxHP / 16);
+                    unit.DecreaseHP(unit.MaxHP / 16);
                     unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 화상 데미지를 입고있다!");
                 }
             }
@@ -138,7 +138,7 @@ public class ConditionDB
                     if (value == 1)
                     {
                         unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 정신을 못차린다!");
-                        unit.UpdateHP(unit.MaxHP / 8);
+                        unit.DecreaseHP(unit.MaxHP / 8);
                         unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 영문도 모른채 자신을 공격했다!");
                         return false;
                     }
