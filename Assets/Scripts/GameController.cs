@@ -174,7 +174,6 @@ public class GameController : MonoBehaviour
         {
             // 유닛
             partyScreen.gameObject.SetActive(true);
-            partyScreen.SetPartyData(playerController.GetComponent<UnitParty>().Units);
             state = GameState.PartyScreen;
         }
         else if (selectedItem == 1)

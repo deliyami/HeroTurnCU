@@ -21,6 +21,6 @@ MonoBehaviour:
   ppAmount: 0
   restoreMaxPP: 0
   status: 0
-  recoveryAllStatus: 0
+  recoveryAllStatus: 1
   revive: 0
   maxRevive: 1

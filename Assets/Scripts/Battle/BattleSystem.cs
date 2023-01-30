@@ -130,7 +130,6 @@ public class BattleSystem : MonoBehaviour
     {
         partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
-        partyScreen.SetPartyData(playerParty.Units);
         partyScreen.gameObject.SetActive(true);
     }
 

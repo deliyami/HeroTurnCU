@@ -8,6 +8,7 @@ public class PartyScreen : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI messageText;
     List<Unit> units;
+    UnitParty party;
 
     int selection = 0;
     public Unit SelectedMember => units[selection];
@@ -21,11 +22,16 @@ public class PartyScreen : MonoBehaviour
     public void Init()
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
+
+        party = UnitParty.GetPlayerParty();
+        SetPartyData();
+
+        party.OnUpdated += SetPartyData;
     }
 
-    public void SetPartyData(List<Unit> units)
+    public void SetPartyData()
     {
-        this.units = units;
+        units = party.Units;
         for (int i = 0; i < memberSlots.Length; i++)
         {
             if (i < units.Count)
