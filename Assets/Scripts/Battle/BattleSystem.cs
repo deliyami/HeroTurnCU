@@ -23,10 +23,9 @@ public class BattleSystem : MonoBehaviour
     public event Action<bool> OnBattleOver;
 
     BattleState state;
-    BattleState? prevState;
+    
     int currentAction;
     int currentMove;
-    int currentMember;
     bool aboutToUseChoice = true;
 
     UnitParty playerParty;
@@ -129,6 +128,7 @@ public class BattleSystem : MonoBehaviour
 
     void OpenPartyScreen()
     {
+        partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
         partyScreen.SetPartyData(playerParty.Units);
         partyScreen.gameObject.SetActive(true);
@@ -200,7 +200,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (playerAction == BattleAction.SwitchUnit)
             {
-                var selectedUnit = playerParty.Units[currentMember];
+                var selectedUnit = partyScreen.SelectedMember;
                 state = BattleState.Busy;
                 yield return SwitchUnit(selectedUnit);
             }
@@ -505,7 +505,6 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 2)
             {
                 // Unit
-                prevState = state;
                 OpenPartyScreen();
             }
             else if (currentAction == 3)
@@ -549,22 +548,9 @@ public class BattleSystem : MonoBehaviour
     
     void HandlePartySelection()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            currentMember += 2;
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            currentMember -= 2;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            --currentMember;
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            ++currentMember;
-
-        currentMember = Mathf.Clamp(currentMember, 0, playerParty.Units.Count - 1);
-
-        partyScreen.UpdateMemberSelection(currentMember);
-
-        if (Input.GetButtonDown("Submit"))
+        Action onSelected = () =>
         {
-            var selectedMember = playerParty.Units[currentMember];
+            var selectedMember = partyScreen.SelectedMember;
             if (selectedMember.HP <= 0)
             {
                 partyScreen.SetMessageText("그 동료는 지쳤다!");
@@ -578,36 +564,41 @@ public class BattleSystem : MonoBehaviour
             // StartCoroutine(PerformPlayerMove());
             partyScreen.gameObject.SetActive(false);
 
-            if (prevState == BattleState.ActionSelection)
+            if (partyScreen.CalledFrom == BattleState.ActionSelection)
             {
-                prevState = null;
                 StartCoroutine(RunTurns(BattleAction.SwitchUnit));
             }
             else
             {
                 state = BattleState.Busy;
-                StartCoroutine(SwitchUnit(selectedMember));
+                bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
+                StartCoroutine(SwitchUnit(selectedMember, isTrainerAboutToUse));
             }
-        }
-        else if (Input.GetButtonDown("Cancel"))
+            partyScreen.CalledFrom = null;
+        };
+        Action onBack = () =>
         {
+            if (playerUnit.Unit.HP <= 0)
+            {
+                partyScreen.SetMessageText("전투를 계속하기 위해 팀원을 보내야합니다!");
+                return;
+            }
             partyScreen.gameObject.SetActive(false);
             ActionSelection();
-        }
+        };
+        partyScreen.HandleUpdate(onSelected, onBack);
     }
 
     void HandleAboutToUse()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
             aboutToUseChoice = !aboutToUseChoice;
-
         dialogBox.UpdateChoiceBox(aboutToUseChoice);
         if (Input.GetButtonDown("Submit"))
         {
             dialogBox.EnableChoiceBox(false);
             if (aboutToUseChoice == true)
             {
-                prevState = BattleState.AboutToUse;
                 OpenPartyScreen();
             }
             else
@@ -617,6 +608,7 @@ public class BattleSystem : MonoBehaviour
         }
         else if (Input.GetButtonDown("Cancel"))
         {
+            
             if (playerUnit.Unit.HP <= 0)
             {
                 partyScreen.SetMessageText("전투를 계속하기 위해 팀원을 보내야합니다!");
@@ -625,17 +617,17 @@ public class BattleSystem : MonoBehaviour
 
             dialogBox.EnableChoiceBox(false);
 
-            if (prevState == BattleState.AboutToUse)
+            if (partyScreen.CalledFrom == BattleState.AboutToUse)
             {
-                prevState = null;
                 StartCoroutine(SendNextTrainerUnit());
             }
             else
                 ActionSelection();
+            partyScreen.CalledFrom = null;
         }
     }
 
-    IEnumerator SwitchUnit(Unit newUnit)
+    IEnumerator SwitchUnit(Unit newUnit, bool isTrainerAboutToUse = false)
     {
         if (playerUnit.Unit.HP > 0)
         {
@@ -648,15 +640,10 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(newUnit.Moves);
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
-        if (prevState == null)
-        {
-            state = BattleState.RunningTurn;
-        }
-        else if (prevState == BattleState.AboutToUse)
-        {
-            prevState = null;
+        if (isTrainerAboutToUse)
             StartCoroutine(SendNextTrainerUnit());
-        }
+        else
+            state = BattleState.RunningTurn;
     }
 
     IEnumerator SendNextTrainerUnit()

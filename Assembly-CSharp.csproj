@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Units\Status\SPD.cs" />
+     <Compile Include="Assets\Scripts\Data\UnitDB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
      <Compile Include="Assets\Scripts\Saving\SavableEntity.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleUnit.cs" />
@@ -74,6 +75,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Units\UnitBase.cs" />
      <Compile Include="Assets\Scripts\Core\EssentialObjectSpawner.cs" />
+     <Compile Include="Assets\Scripts\UI\MenuController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
      <Compile Include="Assets\Scripts\Core\EssentialObject.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\SceneDetails.cs" />
@@ -92,12 +94,13 @@
      <Compile Include="Assets\Scripts\Units\Condition.cs" />
      <Compile Include="Assets\Scripts\Units\Type.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
-     <Compile Include="Assets\Scripts\Units\ItemBase.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemBase.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
      <Compile Include="Assets\Scripts\Saving\ISavable.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
      <Compile Include="Assets\Scripts\Units\Status\ATK.cs" />
      <Compile Include="Assets\Scripts\Units\Status\AllStat.cs" />
+     <Compile Include="Assets\Scripts\GamePlay\GlobalSettings.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleDialogBox.cs" />
      <Compile Include="Assets\Scripts\Units\Status\SPDEF.cs" />
@@ -116,6 +119,7 @@
      <Compile Include="Assets\Scripts\Units\Status\HP.cs" />
      <Compile Include="Assets\Scripts\Units\UnitParty.cs" />
      <Compile Include="Assets\Scripts\Character\NPCController.cs" />
+     <Compile Include="Assets\Scripts\Data\MoveDB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
@@ -128,10 +132,7 @@
      <Compile Include="Assets\Scripts\Units\ConditionBase.cs" />
      <Compile Include="Assets\Scripts\Units\Move.cs" />
      <Compile Include="Assets\Scripts\Units\Status\IStatInterface.cs" />
-     <Compile Include="Assets\Scripts\Data\UnitDB.cs" />
-     <Compile Include="Assets\Scripts\Data\MoveDB.cs" />
-     <Compile Include="Assets\Scripts\UI\MenuController.cs" />
-     <Compile Include="Assets\Scripts\GamePlay\GlobalSettings.cs" />
+     <Compile Include="Assets\Scripts\UI\InventoryUI.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

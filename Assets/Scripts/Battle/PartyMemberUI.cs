@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class PartyMemberUI : PlayerHud
 {
     [SerializeField] Image image;
-
-    [SerializeField] Color hightlightColor;
     // Image image;
     public override void SetData(Unit unit)
     {
@@ -18,7 +16,7 @@ public class PartyMemberUI : PlayerHud
     public void SetSelected(bool selected)
     {
         if (selected)
-            NameText.color = hightlightColor;
+            NameText.color = GlobalSettings.i.HighlightedColor;
         else
             NameText.color = Color.black;
     }
