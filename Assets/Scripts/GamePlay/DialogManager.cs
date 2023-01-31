@@ -19,11 +19,6 @@ public class DialogManager : MonoBehaviour
         Instance = this;
     }
 
-    Dialog dialog;
-    Action onDialogFinished;
-    int currentLine = 0;
-    bool isTyping;
-
     public bool IsShowing { get; private set; }
 
     // TODO 유닛 portrait보이도록 하고 이름도 바꾸기, 포트레이트 감정표현도 0123으로 사용하기
@@ -55,50 +50,36 @@ public class DialogManager : MonoBehaviour
         dialogBox.SetActive(false);
         IsShowing = false;
     }
-    public IEnumerator ShowDialog(Dialog dialog, Action onFinished = null)
+    public IEnumerator ShowDialog(Dialog dialog)
     {
         yield return new WaitForEndOfFrame();
         OnShowDialog?.Invoke();
-
         IsShowing = true;
-
-        this.dialog = dialog;
-        onDialogFinished = onFinished;
-
         dialogBox.SetActive(true);
         dialogName.text = dialog.Lines[0].Name;
-        StartCoroutine(TypeDialog(dialog.Lines[0].Text));
+
+        foreach (var line in dialog.Lines)
+        {
+            yield return TypeDialog(line.Text);
+            yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
+        }
+
+        dialogBox.SetActive(false);
+        IsShowing = false;
+        OnCloseDialog?.Invoke();
     }
 
     public void HandleUpdate()
     {
-        if (Input.GetButtonDown("Submit") && !isTyping)
-        {
-            ++currentLine;
-            if (currentLine < dialog.Lines.Count)
-            {
-                StartCoroutine(TypeDialog(dialog.Lines[currentLine].Text));
-            }
-            else
-            {
-                currentLine = 0;
-                IsShowing = false;
-                dialogBox.SetActive(false);
-                onDialogFinished?.Invoke();
-                OnCloseDialog?.Invoke();
-            }
-        }
     }
 
     public IEnumerator TypeDialog(string line)
     {
-        isTyping = true;
         dialogText.text = "";
         foreach (var letter in line.ToCharArray())
         {
             dialogText.text += letter;
             yield return new WaitForSeconds(1f / lettersPerSecond);
         }
-        isTyping = false;
     }
 }

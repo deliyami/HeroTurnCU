@@ -13,7 +13,7 @@ public class PartyMemberUI : BattleHud
     {
         image.sprite = unit.Base.SmallSprite;
         base.SetData(unit, false);
-        SetMessage("");
+        // SetMessage("");
         // unit.OnHPChanged += UpdateData;
     }
 

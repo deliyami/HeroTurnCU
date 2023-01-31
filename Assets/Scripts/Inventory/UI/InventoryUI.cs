@@ -185,7 +185,7 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            if (usedItem is RecoveryItem)
+            if (selectedCategory == (int)ItemCategory.Items)
                 yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
         }
 
@@ -209,22 +209,21 @@ public class InventoryUI : MonoBehaviour
         //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) 배울 수 없다!");
         //     yield break;
         // }
-
-        if (unit.Moves.Count < UnitBase.MaxNumOfMoves)
-        {
-            unit.LearnMove(tmItem.Move);
-            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배웠다!");
-            yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
-        }
-        else
-        {
-            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배우고 싶다!");
-            yield return DialogManager.Instance.ShowDialogText($"하지만 이미 배울 만큼 배웠다!");
-            yield return DialogManager.Instance.ShowDialogText($"기존 배우던 것을 잊어야 한다!");
-            yield return ChooseMoveToForget(unit, tmItem.Move);
-            yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
-            yield return new WaitForSeconds(2f);
-        }
+        // if (unit.Moves.Count < UnitBase.MaxNumOfMoves)
+        // {
+        //     unit.LearnMove(tmItem.Move);
+        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배웠다!");
+        //     yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
+        // }
+        // else
+        // {
+        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배우고 싶다!");
+        //     yield return DialogManager.Instance.ShowDialogText($"하지만 이미 배울 만큼 배웠다!");
+        //     yield return DialogManager.Instance.ShowDialogText($"기존 배우던 것을 잊어야 한다!");
+        //     yield return ChooseMoveToForget(unit, tmItem.Move);
+        //     yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
+        //     yield return new WaitForSeconds(2f);
+        // }
 
         yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Name}을(를) 사용하며 여유를 보냈다.");
         yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
