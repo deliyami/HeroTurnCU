@@ -16,12 +16,16 @@ public class UnitParty : MonoBehaviour
             OnUpdated?.Invoke();
         }
     }
-    private void Start()
+    private void Awake()
     {
         foreach (var unit in units)
         {
             unit.Init();
         }
+    }
+
+    private void Start() {
+        
     }
 
     public Unit GetHealtyhUnit()

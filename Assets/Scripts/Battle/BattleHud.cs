@@ -31,16 +31,19 @@ public class BattleHud : MonoBehaviour
     Dictionary<ConditionID, Color> statusColors;
     Dictionary<ConditionID, Sprite> statusSprites;
 
+    private bool isParentComponent;
+
     public TextMeshProUGUI NameText {
         get { return nameText; }
     }
 
-    public virtual void SetData(Unit unit, bool parentComponent = true)
+    public virtual void SetData(Unit unit, bool isParentComponent = true)
     {
+        this.isParentComponent = isParentComponent;
         if (_unit != null)
         {
             _unit.OnStatusChanged -= SetStatusText;
-            _unit.OnHPChanged -= parentComponent?UpdateHP:UpdateData;
+            _unit.OnHPChanged -= isParentComponent?UpdateHP:UpdateData;
         }
 
         _unit = unit;
@@ -67,7 +70,7 @@ public class BattleHud : MonoBehaviour
 
         SetStatusText();
         _unit.OnStatusChanged += SetStatusText;
-        _unit.OnHPChanged += parentComponent?UpdateHP:UpdateData;
+        _unit.OnHPChanged += isParentComponent?UpdateHP:UpdateData;
     }
 
     protected void UpdateData()
@@ -150,5 +153,14 @@ public class BattleHud : MonoBehaviour
     public IEnumerator WaitForHPUpdate()
     {
         yield return new WaitUntil(() => hpBar.IsUpdating == false);
+    }
+
+    public void ClearData()
+    {
+        if (_unit != null)
+        {
+            _unit.OnStatusChanged -= SetStatusText;
+            _unit.OnHPChanged -= isParentComponent?UpdateHP:UpdateData;
+        }
     }
 }

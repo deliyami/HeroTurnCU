@@ -51,20 +51,25 @@ public class RecoveryItem : ItemBase
         if (recoveryAllStatus || status != ConditionID.none)
         {
             if (unit.Status == null && unit.VolatileStatus == null)
-                return false;
-            if (recoveryAllStatus)
             {
-                unit.CureStatus();
-                unit.CureVolatileStatus();
+
             }
             else
             {
-                if (unit.Status.ID == status)
+                if (recoveryAllStatus)
+                {
                     unit.CureStatus();
-                else if (unit.VolatileStatus.ID == status)
                     unit.CureVolatileStatus();
+                }
                 else
-                    return false;
+                {
+                    if (unit.Status.ID == status)
+                        unit.CureStatus();
+                    else if (unit.VolatileStatus.ID == status)
+                        unit.CureVolatileStatus();
+                    else
+                        return false;
+                }
             }
         }
         // 기술 회복

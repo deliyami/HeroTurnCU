@@ -24,27 +24,29 @@ public class Inventory : MonoBehaviour
     {
         return allSlots[categoryIndex];
     }
-    public ItemBase UseItem (int itemIndex, Unit selectedUnit)
+    public ItemBase UseItem (int itemIndex, Unit selectedUnit, int selectedCategory)
     {
-        var item = slots[itemIndex].Item;
+        var currentSlots = GetSlotsByCategory(selectedCategory);
+        var item = currentSlots[itemIndex].Item;
         bool itemUsed = item.Use(selectedUnit);
         if (itemUsed)
         {
-            RemoveItem(item);
+            RemoveItem(item, selectedCategory);
             return item;
         }
         return null;
     }
 
-    public void RemoveItem(ItemBase item)
+    public void RemoveItem(ItemBase item, int category)
     {
-        var itemSlot = slots.First(slots => slots.Item == item);
+        var currentSlots = GetSlotsByCategory(category);
+        var itemSlot = currentSlots.First(slots => slots.Item == item);
         // 아이템 사용은 무제한, 사용 횟수에 따라 엔딩 패널티를 줄 것
         // 한 개 사용당 1턴으로 치고... 등등
         itemSlot.Count++;
         // itemSlot.Count--;
         // if (itemSlot.Count == 0)
-        //     slots.Remove(itemSlot);
+        //     currentSlots.Remove(itemSlot);
 
         OnUpdated?.Invoke();
     }
