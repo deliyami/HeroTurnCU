@@ -9,6 +9,7 @@ public enum InventoryUIState { ItemSelection, PartySelection, Busy }
 
 public class InventoryUI : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI categoryText;
     [SerializeField] GameObject itemList;
     [SerializeField] ItemSlotUI itemSlotUI;
     [SerializeField] Image itemIcon;
@@ -21,6 +22,7 @@ public class InventoryUI : MonoBehaviour
     Action onItemUsed;
 
     int selectedItem = 0;
+    int selectedCategory = 0;
 
     InventoryUIState state;
 
@@ -46,7 +48,7 @@ public class InventoryUI : MonoBehaviour
             Destroy(child.gameObject);
 
         slotUIList = new List<ItemSlotUI>();
-        foreach (var itemSlot in inventory.Slots)
+        foreach (var itemSlot in inventory.GetSlotsByCategory(selectedCategory))
         {
             var slotUIObj = Instantiate(itemSlotUI, itemList.transform);
             slotUIObj.SetData(itemSlot);
@@ -63,14 +65,32 @@ public class InventoryUI : MonoBehaviour
         if (state == InventoryUIState.ItemSelection)
         {
             int prevSelection = selectedItem;
+            int prevCategry = selectedCategory;
 
             if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
                 ++selectedItem;
             else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 --selectedItem;
-            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
-
-            if (prevSelection != selectedItem)
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                ++selectedCategory;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                --selectedCategory;
+            }
+            if (selectedCategory > Inventory.ItemCategories.Count - 1)
+                selectedCategory = 0;
+            else if (selectedCategory < 0)
+                selectedCategory = Inventory.ItemCategories.Count - 1;
+            // selectedCategory = Mathf.Clamp(selectedCategory, 0, Inventory.ItemCategories.Count - 1);
+            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
+            if (prevCategry != selectedCategory)
+            {
+                ResetSelection();
+                categoryText.text = Inventory.ItemCategories[selectedCategory];
+                UpdateItemList();
+            } else if (prevSelection != selectedItem)
                 UpdateItemSelection();
             if (Input.GetButtonDown("Submit"))
             {
@@ -118,6 +138,7 @@ public class InventoryUI : MonoBehaviour
 
     void UpdateItemSelection()
     {
+        var slots = inventory.GetSlotsByCategory(selectedCategory);
         for (int i = 0; i < slotUIList.Count; i++)
         {
             if (i == selectedItem)
@@ -126,12 +147,15 @@ public class InventoryUI : MonoBehaviour
                 slotUIList[i].NameText.color = Color.black;
         }
 
-        selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
+        selectedItem = Mathf.Clamp(selectedItem, 0, slots.Count - 1);
 
-        var item = inventory.Slots[selectedItem].Item;
-        itemIcon.sprite = item.Icon;
-        itemDescription.text = item.Description;
-        HandleScrolling();
+        if (slots.Count > 0)
+        {
+            var item = slots[selectedItem].Item;
+            itemIcon.sprite = item.Icon;
+            itemDescription.text = item.Description;
+            HandleScrolling();
+        }
     }
     void HandleScrolling()
     {
@@ -145,6 +169,15 @@ public class InventoryUI : MonoBehaviour
         upArrow.gameObject.SetActive(showUpArrow);
         bool showDownArrow = selectedItem + itemsInViewport / 2 < slotUIList.Count;
         downArrow.gameObject.SetActive(showDownArrow);
+    }
+    void ResetSelection()
+    {
+        selectedItem = 0;
+        upArrow.gameObject.SetActive(false);
+        downArrow.gameObject.SetActive(false);
+
+        itemIcon.sprite = null;
+        itemDescription.text = "";
     }
     void OpenPartyScreen()
     {

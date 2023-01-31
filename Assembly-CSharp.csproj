@@ -115,6 +115,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
      <Compile Include="Assets\Scripts\Character\TrainerFov.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+     <Compile Include="Assets\Scripts\Inventory\BallItem.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
      <Compile Include="Assets\Scripts\Units\Status\ParentStat.cs" />
      <Compile Include="Assets\Scripts\SceneManagement\LocationPortal.cs" />
