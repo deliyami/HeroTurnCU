@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemCategory { Items, Balls, Tms }
+public enum ItemCategory { None, Items, Balls, Tms }
 public class Inventory : MonoBehaviour
 {
     [SerializeField] List<ItemSlot> slots;
@@ -43,6 +43,26 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+    public void AddItem(ItemBase item, int count = 1)
+    {
+        int category = (int)GetCategoryFromItem(item);
+        var currentSlots = GetSlotsByCategory(category);
+
+        var itemSlot = currentSlots.FirstOrDefault(slot => slot.Item == item);
+        if (itemSlot != null)
+        {
+            itemSlot.Count += count;
+        }
+        else
+        {
+            currentSlots.Add(new ItemSlot()
+            {
+                Item = item,
+                Count = count
+            });
+        }
+        OnUpdated?.Invoke();
+    }
 
     public void RemoveItem(ItemBase item, int category)
     {
@@ -57,6 +77,16 @@ public class Inventory : MonoBehaviour
 
         OnUpdated?.Invoke();
     }
+    ItemCategory GetCategoryFromItem(ItemBase item)
+    {
+        if (item is RecoveryItem)
+            return ItemCategory.Items;
+        else if (item is BallItem)
+            return ItemCategory.Balls;
+        else if (item is TmItem)
+            return ItemCategory.Tms;
+        return ItemCategory.None;
+    }
 
     public static Inventory GetInventory()
     {
@@ -70,7 +100,10 @@ public class ItemSlot
     [SerializeField] ItemBase item;
     [SerializeField] int count;
 
-    public ItemBase Item => item;
+    public ItemBase Item {
+        get => item;
+        set => item = value;
+    }
     public int Count { 
         get => count;
         set => count = value;

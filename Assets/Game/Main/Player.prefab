@@ -277,8 +277,6 @@ MonoBehaviour:
     count: 99
   - item: {fileID: 11400000, guid: d7460011c594f7d41a1565125621cb02, type: 2}
     count: 4
-  - item: {fileID: 11400000, guid: d57f8446b9285c24cb37ffdf2d3705ff, type: 2}
-    count: 10
   ballSlots:
   - item: {fileID: 11400000, guid: 0e90e68798483fe4f90c06c20ec5627a, type: 2}
     count: 0
