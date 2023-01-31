@@ -323,7 +323,7 @@ public class BattleSystem : MonoBehaviour
                 {
                     if (playerUnit.Unit.Moves.Count < UnitBase.MaxNumOfMoves)
                     {
-                        playerUnit.Unit.LearnMove(newMove);
+                        playerUnit.Unit.LearnMove(newMove.Base);
                         yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 얻을 수 없는 스킬을 얻었다!");
                         dialogBox.SetMoveNames(playerUnit.Unit.Moves);
                     }

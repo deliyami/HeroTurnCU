@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scripts\Battle\BattleHud.cs" />
      <Compile Include="Assets\Scripts\Core\Fader.cs" />
      <Compile Include="Assets\Scripts\Battle\PlayerHud.cs" />
+     <Compile Include="Assets\Scripts\Inventory\TmItem.cs" />
      <Compile Include="Assets\Scripts\Data\ConditionDB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\Scripts\GamePlay\GameLayers.cs" />
@@ -137,7 +138,6 @@
      <Compile Include="Assets\Scripts\Units\ConditionBase.cs" />
      <Compile Include="Assets\Scripts\Units\Move.cs" />
      <Compile Include="Assets\Scripts\Units\Status\IStatInterface.cs" />
-     <Compile Include="Assets\Scripts\Inventory\TmItem.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

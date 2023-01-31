@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum InventoryUIState { ItemSelection, PartySelection, Busy }
+public enum InventoryUIState { ItemSelection, PartySelection, MoveToForget, Busy }
 
 public class InventoryUI : MonoBehaviour
 {
@@ -18,11 +19,14 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Image upArrow;
     [SerializeField] Image downArrow;
     [SerializeField] PartyScreen partyScreen;
+    [SerializeField] MoveSelectionUI moveSelectionUI;
 
     Action<ItemBase> onItemUsed;
 
     int selectedItem = 0;
     int selectedCategory = 0;
+
+    MoveBase moveToLearn;
 
     InventoryUIState state;
 
@@ -116,6 +120,14 @@ public class InventoryUI : MonoBehaviour
             };
             partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
         }
+        else if (state == InventoryUIState.MoveToForget)
+        {
+            Action<int> onMoveSelected = (int moveIndex) =>
+            {
+                StartCoroutine(OnMoveToForgetSelected(moveIndex));
+            };
+            moveSelectionUI.HandleMoveSelection(onMoveSelected);
+        }
     }
 
     void ItemSelected()
@@ -133,11 +145,13 @@ public class InventoryUI : MonoBehaviour
     IEnumerator UseItem()
     {
         state = InventoryUIState.Busy;
-        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
+        
+        yield return HandleTmItems();
 
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if (usedItem != null)
         {
-            if (!(usedItem is BallItem))
+            if (usedItem is RecoveryItem)
             {
                 yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
             }
@@ -149,6 +163,44 @@ public class InventoryUI : MonoBehaviour
         }
 
         ClosePartyScreen();
+    }
+
+    IEnumerator HandleTmItems()
+    {
+        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as TmItem;
+        if (tmItem == null)
+            yield break;
+        var unit = partyScreen.SelectedMember;
+
+        if (unit.Moves.Count < UnitBase.MaxNumOfMoves)
+        {
+            unit.LearnMove(tmItem.Move);
+            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}(은)는 {tmItem.Move.Name}을(를) 배웠다!");
+            yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}(은)는 {tmItem.Move.Name}을(를) 배우고 싶다!");
+            yield return DialogManager.Instance.ShowDialogText($"하지만 이미 배울 만큼 배웠다!");
+            yield return DialogManager.Instance.ShowDialogText($"기존 배우던 것을 잊어야 한다!");
+            yield return ChooseMoveToForget(unit, tmItem.Move);
+            yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
+            yield return new WaitForSeconds(2f);
+        }
+
+        yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}(은)는 {tmItem.Name}(을)를 사용하며 여유를 보냈다.");
+        yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
+    }
+
+    IEnumerator ChooseMoveToForget(Unit unit, MoveBase newMove)
+    {
+        state = InventoryUIState.Busy;
+        yield return DialogManager.Instance.ShowDialogText($"기술 배우는 창, 보인다면 버그입니다.", true, false);
+        moveSelectionUI.gameObject.SetActive(true);
+        moveSelectionUI.SetMoveData(unit.Moves.Select(x => x.Base).ToList(), newMove);
+        moveToLearn = newMove;
+
+        state = InventoryUIState.MoveToForget;
     }
 
     void UpdateItemSelection()
@@ -203,5 +255,27 @@ public class InventoryUI : MonoBehaviour
     {
         state = InventoryUIState.ItemSelection;
         partyScreen.gameObject.SetActive(false);
+    }
+
+    IEnumerator OnMoveToForgetSelected(int moveIndex)
+    {
+        var unit = partyScreen.SelectedMember;
+
+        DialogManager.Instance.CloseDialog();
+        moveSelectionUI.gameObject.SetActive(false);
+        if (moveIndex == UnitBase.MaxNumOfMoves)
+        {
+            // 배우지 않음
+            yield return DialogManager.Instance.ShowDialogText($"배우지 않는다. 이것도 보이면 버그다...");
+        }
+        else
+        {
+            // 새로운 스킬 배움
+            // var selectedMove = playerUnit.Unit.Moves[moveIndex].Base;
+            unit.Moves[moveIndex] = new Move(moveToLearn);
+            yield return DialogManager.Instance.ShowDialogText($"아님 핵을 썼던가...");
+        }
+        moveToLearn = null;
+        state = InventoryUIState.ItemSelection;
     }
 }

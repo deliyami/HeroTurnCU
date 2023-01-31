@@ -284,7 +284,19 @@ MonoBehaviour:
     count: 0
   - item: {fileID: 11400000, guid: 40df5533197ebb940b4ece313fb85aae, type: 2}
     count: 0
-  tmSlots: []
+  tmSlots:
+  - item: {fileID: 11400000, guid: 71fe06c84c641fd4fb1a21e861b7d085, type: 2}
+    count: 0
+  - item: {fileID: 11400000, guid: 271fdc106e319524f86f4d38a60f612a, type: 2}
+    count: 0
+  - item: {fileID: 11400000, guid: 95ab99bb0aff8c247816aeb4ce05bb35, type: 2}
+    count: 0
+  - item: {fileID: 11400000, guid: 93accec8fccfa164284fcf05f4b68385, type: 2}
+    count: 0
+  - item: {fileID: 11400000, guid: 8377c61053f3d5c44b658fe15e4d1ed9, type: 2}
+    count: 0
+  - item: {fileID: 11400000, guid: d40c73d3567371e41b5c9656042b9597, type: 2}
+    count: 0
 --- !u!1 &7140561385650133545
 GameObject:
   m_ObjectHideFlags: 0

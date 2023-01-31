@@ -250,11 +250,15 @@ public class Unit
         }
         return returnMove;
     }
-    public void LearnMove(LearnableMove moveToLearn)
+    public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > UnitBase.MaxNumOfMoves)
             return;
-        Moves.Add(new Move(moveToLearn.Base));
+        Moves.Add(new Move(moveToLearn));
+    }
+    public bool HasMove(MoveBase moveToCheck)
+    {
+        return Moves.Count(m => m.Base == moveToCheck) > 0;
     }
     public int MaxHP { get; private set; }
     public int Attack {

@@ -18,17 +18,22 @@ public class Inventory : MonoBehaviour
     }
     public static List<string> ItemCategories { get; set; } = new List<string>()
     {
-        "회복 아이템", "귀환 아이템", "기술"
+        "회복 아이템", "귀환 아이템", "즐길거리"
     };
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
     {
         return allSlots[categoryIndex];
     }
-    public ItemBase UseItem (int itemIndex, Unit selectedUnit, int selectedCategory)
+
+    public ItemBase GetItem(int itemIndex, int categoryIndex)
     {
-        var currentSlots = GetSlotsByCategory(selectedCategory);
-        var item = currentSlots[itemIndex].Item;
+        var currentSlots = GetSlotsByCategory(categoryIndex);
+        return currentSlots[itemIndex].Item;
+    }
+    public ItemBase UseItem(int itemIndex, Unit selectedUnit, int selectedCategory)
+    {
+        var item = GetItem(itemIndex, selectedCategory);
         bool itemUsed = item.Use(selectedUnit);
         if (itemUsed)
         {

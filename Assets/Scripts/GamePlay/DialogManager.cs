@@ -30,7 +30,7 @@ public class DialogManager : MonoBehaviour
     // 이름, 할 말, 표정 번호, 화면 좌우, 사진 뒤집기 onoff
     // string, string, int, string, bool
 
-    public IEnumerator ShowDialogText(string text, bool waitForInput = true)
+    public IEnumerator ShowDialogText(string text, bool waitForInput = true, bool autoClose = true)
     {
         IsShowing = true;
         dialogBox.SetActive(true);
@@ -41,6 +41,17 @@ public class DialogManager : MonoBehaviour
         {
             yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
         }
+        if (autoClose)
+        {
+            CloseDialog();
+        }
+        else
+        {
+
+        }
+    }
+    public void CloseDialog()
+    {
         dialogBox.SetActive(false);
         IsShowing = false;
     }
