@@ -52,7 +52,7 @@ public class RecoveryItem : ItemBase
         {
             if (unit.Status == null && unit.VolatileStatus == null)
             {
-
+                return false;
             }
             else
             {

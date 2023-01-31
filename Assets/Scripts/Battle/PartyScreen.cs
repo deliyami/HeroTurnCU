@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 
@@ -103,5 +104,12 @@ public class PartyScreen : MonoBehaviour
     public void SetMessageText(string message)
     {
         messageText.text = message;
+    }
+    public void UpdateStatusText()
+    {
+        for(int i = 0; i< units.Count; i++)
+        {
+            memberSlots[i].SetStatusText();
+        }
     }
 }

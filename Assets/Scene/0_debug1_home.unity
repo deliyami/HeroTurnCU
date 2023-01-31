@@ -3597,17 +3597,17 @@ MonoBehaviour:
     - name: "\uC0B4\uB77C\uB9CC\uB2E4"
       text: "\uBC18\uAC00\uC6CC!"
       expression: 0
-      leftRight: right
+      isLeft: 0
       imgReverse: 1
     - name: "\uC0B4\uB77C\uB9CC\uB2E4"
       text: "\uB0B4\uB294 \uD14C\uC2A4\uD2B8\uC5D0 \uC0B4\uB77C\uB9CC\uB2E4\uB2E4"
       expression: 0
-      leftRight: right
+      isLeft: 0
       imgReverse: 1
     - name: "\uC0B4\uB77C\uB9CC\uB2E4"
       text: "\uC798 \uD558\uACE0 \uC788\uADF8\uB808\uC774"
       expression: 0
-      leftRight: right
+      isLeft: 0
       imgReverse: 1
   movementPattern:
   - {x: -2, y: 0}
@@ -9755,6 +9755,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 894467a6e63833f4eb4f2d753cffe8bb, type: 2}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: count
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[0].name
+      value: "\uD14C\uC2A4\uD2B8\uC0B4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[0].text
+      value: "\uB0B4\uAC00 \uC8FC\uB294 \uC120\uBB3C\uC774\uB370\uC774"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[1].name
+      value: "\uD14C\uC2A4\uD2B8\uC0B4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[1].text
+      value: "\uC798 \uBC1B\uC544 \uB46C\uB77C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[0].leftRight
+      value: Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[1].leftRight
+      value: Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111079451523567886, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[0].expression
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8878564351186768310, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
       propertyPath: m_Name
       value: NPC2

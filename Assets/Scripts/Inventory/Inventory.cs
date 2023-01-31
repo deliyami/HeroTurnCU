@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemCategory { None, Items, Balls, Tms }
+public enum ItemCategory { Items, Balls, Tms }
 public class Inventory : MonoBehaviour
 {
     [SerializeField] List<ItemSlot> slots;
@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour
             return ItemCategory.Balls;
         else if (item is TmItem)
             return ItemCategory.Tms;
-        return ItemCategory.None;
+        return ItemCategory.Tms;
     }
 
     public static Inventory GetInventory()

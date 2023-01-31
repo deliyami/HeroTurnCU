@@ -21,7 +21,8 @@ public class DialogObject
     [SerializeField] string name;
     [SerializeField] string text;
     [SerializeField] int expression;
-    [SerializeField] string leftRight;
+    // 대화창에서 화면 왼쪽에 있는가?
+    [SerializeField] bool isLeft;
     [SerializeField] bool imgReverse;
 
     public string Name {
@@ -33,8 +34,8 @@ public class DialogObject
     public int Expression {
         get { return expression; }
     }
-    public string LeftRight {
-        get { return leftRight; }
+    public bool IsLeft {
+        get { return isLeft; }
     }
     public bool ImgReverse {
         get { return imgReverse; }

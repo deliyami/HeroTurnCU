@@ -138,6 +138,7 @@ public class BattleSystem : MonoBehaviour
         partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
         partyScreen.gameObject.SetActive(true);
+        partyScreen.UpdateStatusText();
     }
 
     void MoveSelection()

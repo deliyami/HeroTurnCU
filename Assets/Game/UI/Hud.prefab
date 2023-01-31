@@ -621,6 +621,7 @@ MonoBehaviour:
   HPText: {fileID: 6221805101168759910}
   MaxHPText: {fileID: 6221805100790942711}
   hpBar: {fileID: 6221805101371140177}
+  expBar: {fileID: 0}
   statusText: {fileID: 6221805100731017317}
   statusSprite: {fileID: 6221805100382129030}
   psnColor: {r: 0.5102067, g: 0, b: 0.764151, a: 1}

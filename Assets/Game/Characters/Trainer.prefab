@@ -360,19 +360,19 @@ MonoBehaviour:
     - name: "\uD14C\uC2A4\uD2B8\uC0B4"
       text: "\uC0B4\uB77C\uB9CC\uB2E4\uC785\uB2C8\uB2E4. \uD14C\uC2A4\uD2B8, \uC804\uD22C."
       expression: 3
-      leftRight: right
+      isLeft: 0
       imgReverse: 1
   dialogAfterBattle:
     lines:
     - name: "\uD14C\uC2A4\uD2B8\uC0B4"
       text: "\uD14C\uC2A4\uD2B8 \uC804\uD22C \uB05D\uB0AC\uC2B5\uB2C8\uB2E4."
       expression: 2
-      leftRight: left
+      isLeft: 1
       imgReverse: 0
     - name: "\uD14C\uC2A4\uD2B8\uC0B4"
       text: "\uC774\uAE30\uC168\uC2B5\uB2C8\uB2E4"
       expression: 1
-      leftRight: right
+      isLeft: 0
       imgReverse: 1
   exclamation: {fileID: 5673436149494636134}
   fov: {fileID: 5673436149429205329}

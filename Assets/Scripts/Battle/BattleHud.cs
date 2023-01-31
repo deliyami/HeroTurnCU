@@ -82,24 +82,22 @@ public class BattleHud : MonoBehaviour
         MaxHPText.text = $"/{_unit.MaxHP}";
     }
 
-    void SetStatusText()
+    public void SetStatusText()
     {
         if (_unit.HP <= 0)
         {
-            _unit.CureStatus();
-            statusSprite.color = new Color(1f, 1f, 1f, 1f);
             statusText.color = new Color(0, 0, 0, 1f);
             statusText.text = "기절";
             statusSprite.sprite = statusSprites[ConditionID.slp];
+            statusSprite.enabled = true;
         }
         else if (_unit.Status == null)
         {
-            statusSprite.color = new Color(1f, 1f, 1f, 0f);
             statusText.text = "";
+            statusSprite.enabled = false;
         }
         else
         {
-            statusSprite.color = new Color(1f, 1f, 1f, 1f);
             // switch(_unit.Status.ID.ToString()){
             //     case "none":
             //         break;
@@ -107,6 +105,7 @@ public class BattleHud : MonoBehaviour
             statusText.color = statusColors[_unit.Status.ID];
             statusText.text = ConditionDB.Conditions[_unit.Status.ID].Name;
             statusSprite.sprite = statusSprites[_unit.Status.ID];
+            statusSprite.enabled = true;
         }
     }
 
