@@ -8,7 +8,9 @@ using UnityEngine;
 public class TmItem : ItemBase
 {
     [SerializeField] MoveBase move;
+    [SerializeField] bool isHM;
 
+    // public override string Name => base.Name + $": {move.Name}";
 
     public override bool Use(Unit unit)
     {
@@ -16,6 +18,15 @@ public class TmItem : ItemBase
         // return unit.HasMove(move);
         return true;
     }
+    public bool CanBeTaught(Unit unit)
+    {
+        return unit.Base.LearnableByItems.Contains(move);
+    }
+    public override bool IsReusable => isHM;
+    public override bool CanBeUsedInBattle => false;
 
     public MoveBase Move => move;
+
+    // 비전 머신
+    public bool IsHM => isHM;
 }

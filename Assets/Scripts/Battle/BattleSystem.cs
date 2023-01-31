@@ -309,14 +309,14 @@ public class BattleSystem : MonoBehaviour
             // int expGain = Mathf.FloorToInt(expYield * enemyLevel * trainerBonus / 7);
             int expGain = 0;
             playerUnit.Unit.Exp += expGain;
-            yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 자세를 다잡는다!");
+            yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 자세를 다잡는다!");
             // yield return playerUnit.Hud.SetExpSmooth();
             // 레벨 업
 
             while (playerUnit.Unit.CheckForLevelUp())
             {
                 playerUnit.Hud.SetLevel();
-                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 렙업했긴한데 사용하지 않는 코드다!!");
+                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 렙업했긴한데 사용하지 않는 코드다!!");
                 // 스킬 배우기
                 var newMove = playerUnit.Unit.GetLearnableMoveAtCurrLevel();
                 if (newMove != null)
@@ -324,13 +324,13 @@ public class BattleSystem : MonoBehaviour
                     if (playerUnit.Unit.Moves.Count < UnitBase.MaxNumOfMoves)
                     {
                         playerUnit.Unit.LearnMove(newMove.Base);
-                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 얻을 수 없는 스킬을 얻었다!");
+                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 얻을 수 없는 스킬을 얻었다!");
                         dialogBox.SetMoveNames(playerUnit.Unit.Moves);
                     }
                     else
                     {
                         // 기술 잊기
-                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}(은)는 잊을 수 없는 스킬을 잊으려 한다!");
+                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 잊을 수 없는 스킬을 잊으려 한다!");
                         yield return ChooseMoveToForget(playerUnit.Unit, newMove.Base);
                         yield return new WaitUntil(() => state != BattleState.MoveToForget);
                         yield return new WaitForSeconds(2f);
@@ -732,11 +732,11 @@ public class BattleSystem : MonoBehaviour
         if (shakeCount == 4)
         {
             // unit 잡음
-            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(을)를 잡았다!");
+            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}을(를) 잡았다!");
             yield return ball.DOFade(0, 1.5f).WaitForCompletion();
 
             playerParty.AddUnit(enemyUnit.Unit);
-            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(을)를 겨우 잡았다.");
+            yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}을(를) 겨우 잡았다.");
 
 
             Destroy(ball);

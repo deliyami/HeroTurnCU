@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PartyMemberUI : BattleHud
 {
     [SerializeField] Image image;
+    [SerializeField] TextMeshProUGUI messageText;
     // Image image;
     public void Init(Unit unit)
     {
         image.sprite = unit.Base.SmallSprite;
         base.SetData(unit, false);
+        SetMessage("");
         // unit.OnHPChanged += UpdateData;
     }
 
@@ -20,6 +23,10 @@ public class PartyMemberUI : BattleHud
             NameText.color = GlobalSettings.i.HighlightedColor;
         else
             NameText.color = Color.black;
+    }
+    public void SetMessage(string message)
+    {
+        messageText.text = message;
     }
 }
 

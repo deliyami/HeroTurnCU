@@ -37,7 +37,8 @@ public class Inventory : MonoBehaviour
         bool itemUsed = item.Use(selectedUnit);
         if (itemUsed)
         {
-            RemoveItem(item, selectedCategory);
+            if (!item.IsReusable)
+                RemoveItem(item, selectedCategory);
             return item;
         }
         return null;

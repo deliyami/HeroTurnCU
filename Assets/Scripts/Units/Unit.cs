@@ -224,9 +224,9 @@ public class Unit
             }
 
             if (boost > 0)
-                StatusChanges.Enqueue($"{Base.Name}의 {statName}(은)는 증가했다!");
+                StatusChanges.Enqueue($"{Base.Name}의 {statName}은(는) 증가했다!");
             else
-                StatusChanges.Enqueue($"{Base.Name}의 {statName}(은)는 감소했다!");
+                StatusChanges.Enqueue($"{Base.Name}의 {statName}은(는) 감소했다!");
 
             Debug.Log($"{Base.Name}의 {stat}는 {StatBoosts[stat]}으로 됨...");
         }
@@ -332,7 +332,7 @@ public class Unit
         
         Status = ConditionDB.Conditions[conditionID];
         Status?.OnStart?.Invoke(this);
-        StatusChanges.Enqueue($"{Base.Name}(은)는 {Status.StartMessage}!!");
+        StatusChanges.Enqueue($"{Base.Name}은(는) {Status.StartMessage}!!");
 
         OnStatusChanged?.Invoke();
     }
@@ -350,7 +350,7 @@ public class Unit
         
         VolatileStatus = ConditionDB.Conditions[conditionID];
         VolatileStatus?.OnStart?.Invoke(this);
-        StatusChanges.Enqueue($"{Base.Name}(은)는 {VolatileStatus.StartMessage}!!");
+        StatusChanges.Enqueue($"{Base.Name}은(는) {VolatileStatus.StartMessage}!!");
     }
 
     public void CureVolatileStatus()

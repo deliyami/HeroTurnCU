@@ -8,9 +8,10 @@ public class BallItem : ItemBase
     [SerializeField] float catchRateModifier = 1;
     public override bool Use(Unit unit)
     {
-        if (GameController.Instance.State == GameState.Battle) return true;
-        return false;
+        return true;
     }
+
+    public override bool CanBeUsedOutsideBattle => false;
 
     public float CatchRateModifier => catchRateModifier;
 }

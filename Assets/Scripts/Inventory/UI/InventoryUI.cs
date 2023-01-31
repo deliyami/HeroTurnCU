@@ -98,7 +98,7 @@ public class InventoryUI : MonoBehaviour
                 UpdateItemSelection();
             if (Input.GetButtonDown("Submit"))
             {
-                ItemSelected();
+                StartCoroutine(ItemSelected());
             }
             else if (Input.GetButtonDown("Cancel"))
             {
@@ -130,8 +130,32 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void ItemSelected()
+    IEnumerator ItemSelected()
     {
+        state = InventoryUIState.Busy;
+
+        var item = inventory.GetItem(selectedItem, selectedCategory);
+        var cancelDialog = "여기서 쓰는 물건이 아니다!";
+        if (GameController.Instance.State == GameState.Battle)
+        {
+            // 전투에서
+            if (!item.CanBeUsedInBattle)
+            {
+                yield return DialogManager.Instance.ShowDialogText(cancelDialog);
+                state = InventoryUIState.ItemSelection;
+                yield break;
+            }
+        }
+        else
+        {
+            // 일반 메뉴
+            if (!item.CanBeUsedOutsideBattle)
+            {
+                yield return DialogManager.Instance.ShowDialogText(cancelDialog);                
+                state = InventoryUIState.ItemSelection;
+                yield break;
+            }
+        }
         if (selectedCategory == (int)ItemCategory.Balls)
         {
             StartCoroutine(UseItem());
@@ -139,6 +163,8 @@ public class InventoryUI : MonoBehaviour
         else
         {
             OpenPartyScreen();
+            // if (item is TmItem)
+            //     partyScreen.ShowIfTmIsUsable(item as TmItem);
         }
     }
 
@@ -159,7 +185,8 @@ public class InventoryUI : MonoBehaviour
         }
         else
         {
-            yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
+            if (usedItem is RecoveryItem)
+                yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
         }
 
         ClosePartyScreen();
@@ -172,15 +199,26 @@ public class InventoryUI : MonoBehaviour
             yield break;
         var unit = partyScreen.SelectedMember;
 
+        // if (unit.HasMove(tmItem.Move))
+        // {
+        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) 이미 알고있다!");
+        //     yield break;
+        // }
+        // if (tmItem.CanBeTaught(unit))
+        // {
+        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) 배울 수 없다!");
+        //     yield break;
+        // }
+
         if (unit.Moves.Count < UnitBase.MaxNumOfMoves)
         {
             unit.LearnMove(tmItem.Move);
-            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}(은)는 {tmItem.Move.Name}을(를) 배웠다!");
+            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배웠다!");
             yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
         }
         else
         {
-            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}(은)는 {tmItem.Move.Name}을(를) 배우고 싶다!");
+            yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배우고 싶다!");
             yield return DialogManager.Instance.ShowDialogText($"하지만 이미 배울 만큼 배웠다!");
             yield return DialogManager.Instance.ShowDialogText($"기존 배우던 것을 잊어야 한다!");
             yield return ChooseMoveToForget(unit, tmItem.Move);
@@ -188,7 +226,7 @@ public class InventoryUI : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}(은)는 {tmItem.Name}(을)를 사용하며 여유를 보냈다.");
+        yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Name}을(를) 사용하며 여유를 보냈다.");
         yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
     }
 
@@ -254,6 +292,8 @@ public class InventoryUI : MonoBehaviour
     void ClosePartyScreen()
     {
         state = InventoryUIState.ItemSelection;
+
+        // partyScreen.ClearMemberSlotMessages();
         partyScreen.gameObject.SetActive(false);
     }
 

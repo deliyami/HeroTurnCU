@@ -22,11 +22,11 @@ public class ConditionDB
             new Condition()
             {
                 Name = "중독",
-                StartMessage = "(은)는 중독되었다!",
+                StartMessage = "은(는) 중독되었다!",
                 OnAfterTurn = (Unit unit) => 
                 {
                     unit.DecreaseHP(unit.MaxHP / 8);
-                    unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 중독 데미지를 입고있다!");
+                    unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 중독 데미지를 입고있다!");
                 }
             }
         },
@@ -35,11 +35,11 @@ public class ConditionDB
             new Condition()
             {
                 Name = "화상",
-                StartMessage = "(은)는 화상을 입었다!",
+                StartMessage = "은(는) 화상을 입었다!",
                 OnAfterTurn = (Unit unit) => 
                 {
                     unit.DecreaseHP(unit.MaxHP / 16);
-                    unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 화상 데미지를 입고있다!");
+                    unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 화상 데미지를 입고있다!");
                 }
             }
         },
@@ -48,12 +48,12 @@ public class ConditionDB
             new Condition()
             {
                 Name = "마비",
-                StartMessage = "(은)는 마비에 걸렸다!",
+                StartMessage = "은(는) 마비에 걸렸다!",
                 OnBeforeMove = (Unit unit) => 
                 {
                     if (Random.Range(1, 5) == 1)
                     {
-                        unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 몸이 움직이지 않는다!");
+                        unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 몸이 움직이지 않는다!");
                         return false;
                     }
                     return true;
@@ -65,16 +65,16 @@ public class ConditionDB
             new Condition()
             {
                 Name = "냉동",
-                StartMessage = "(은)는 얼어붙었다!",
+                StartMessage = "은(는) 얼어붙었다!",
                 OnBeforeMove = (Unit unit) => 
                 {
                     if (Random.Range(1, 5) == 1)
                     {
-                        unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 녹았다!");
+                        unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 녹았다!");
                         unit.CureStatus();
                         return true;
                     }
-                    unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 얼어서 움직이지 못한다!");
+                    unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 얼어서 움직이지 못한다!");
                     return false;
                 }
             }
@@ -84,7 +84,7 @@ public class ConditionDB
             new Condition()
             {
                 Name = "수면",
-                StartMessage = "(은)는 골아떨어졌다!",
+                StartMessage = "은(는) 골아떨어졌다!",
                 OnStart = (Unit unit) =>
                 {
                     unit.StatusTime = 0;
@@ -104,11 +104,11 @@ public class ConditionDB
                     unit.StatusTime++;
                     if (awakeValue >= 1)
                     {
-                        unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 눈을 떴다!");
+                        unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 눈을 떴다!");
                         unit.CureStatus();
                         return true;
                     }
-                    unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 잠잔다!");
+                    unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 잠잔다!");
                     return false;
                 }
             }
@@ -120,7 +120,7 @@ public class ConditionDB
             new Condition()
             {
                 Name = "혼란",
-                StartMessage = "(은)는 혼란스럽다!",
+                StartMessage = "은(는) 혼란스럽다!",
                 OnStart = (Unit unit) =>
                 {
                     unit.VolatileStatusTime = Random.Range(1, 5);
@@ -129,7 +129,7 @@ public class ConditionDB
                 {
                     if (unit.VolatileStatusTime <= 0)
                     {
-                        unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 정신을 차렸다!");
+                        unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 정신을 차렸다!");
                         unit.CureVolatileStatus();
                         return true;
                     }
@@ -137,9 +137,9 @@ public class ConditionDB
                     int value = Random.Range(1, 4);
                     if (value == 1)
                     {
-                        unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 정신을 못차린다!");
+                        unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 정신을 못차린다!");
                         unit.DecreaseHP(unit.MaxHP / 8);
-                        unit.StatusChanges.Enqueue($"{unit.Base.Name}(은)는 영문도 모른채 자신을 공격했다!");
+                        unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 영문도 모른채 자신을 공격했다!");
                         return false;
                     }
                     return true;

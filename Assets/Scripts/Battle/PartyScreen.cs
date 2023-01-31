@@ -85,6 +85,21 @@ public class PartyScreen : MonoBehaviour
         }
     }
 
+    public void ShowIfTmIsUsable(TmItem tmItem)
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            string message = tmItem.CanBeTaught(units[i])?"배울 수 있다!":"배울 수 없다!";
+            memberSlots[i].SetMessage(message);
+        }
+    }
+    public void ClearMemberSlotMessages()
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            memberSlots[i].SetMessage("");
+        }
+    }
     public void SetMessageText(string message)
     {
         messageText.text = message;

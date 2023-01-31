@@ -33,6 +33,7 @@ public class UnitBase : ScriptableObject
     [SerializeField] string ability; // 특성
     
     [SerializeField] List<LearnableMove> learnableMoves;
+    [SerializeField] List<MoveBase> learnableByItems;
     public static int MaxNumOfMoves { get; set; } = 4;
 
     public int GetExpForLevel(int level)
@@ -100,6 +101,7 @@ public class UnitBase : ScriptableObject
     public List<LearnableMove> LearnableMoves{
         get { return learnableMoves; }
     }
+    public List<MoveBase> LearnableByItems => learnableByItems;
 }
 
 [System.Serializable]
