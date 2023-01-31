@@ -458,13 +458,11 @@ public class BattleSystem : MonoBehaviour
                 inventoryUI.gameObject.SetActive(false);
                 state = BattleState.ActionSelection;
             };
-            Action onItemHud = () =>
+            Action<ItemBase> onItemUsed = (ItemBase usedItem) =>
             {
-                state = BattleState.Busy;
-                inventoryUI.gameObject.SetActive(false);
-                StartCoroutine(RunTurns(BattleAction.UseItem));
+                StartCoroutine(OnItemUsed(usedItem));
             };
-            inventoryUI.HandleUpdate(onBack, onItemHud);
+            inventoryUI.HandleUpdate(onBack, onItemUsed);
         }
         else if (state == BattleState.AboutToUse)
         {
@@ -679,37 +677,52 @@ public class BattleSystem : MonoBehaviour
 
         state = BattleState.RunningTurn;
     }
-    IEnumerator ThrowBall()
+    IEnumerator OnItemUsed(ItemBase usedItem)
+    {
+        state = BattleState.Busy;
+        inventoryUI.gameObject.SetActive(false);
+
+        if (usedItem is BallItem)
+        {
+            yield return ThrowBall((BallItem)usedItem);
+        }
+        StartCoroutine(RunTurns(BattleAction.UseItem));
+    }
+    IEnumerator ThrowBall(BallItem ballItem)
     {
         state = BattleState.Busy;
 
         if (isTrainerBattle)
         {
+            bool hasKarlord = false;
             if (enemyUnit.Unit.Base.Name == "로드")
             {
-                bool hasKarl = false;
                 // TODO: 로드에게 던졌을 때, 카를 격노 이벤트?
-                foreach(Unit u in trainerParty.Units)
-                    if(u.Base.Name == "카를") hasKarl = true;
-                if (hasKarl)
-                    yield return dialogBox.TypeDialog($"당신은 죄악이 등을 타고 오르는 것을 느꼈다.");
+                var karl = trainerParty.Units.Find(u => u.Base.Name == "카를");
+                if (karl != null)
+                    hasKarlord = true;
             }
-            yield return dialogBox.TypeDialog($"이 녀석들에겐 통하지 않는다!");
+            if (hasKarlord)
+                yield return dialogBox.TypeDialog($"당신은 죄악이 등을 타고 오르는 것을 느꼈다.");
+            else
+                yield return dialogBox.TypeDialog($"이 녀석들에겐 통하지 않는다!");
             state = BattleState.RunningTurn;
             yield break;
         }
 
-        yield return dialogBox.TypeDialog("밧줄을 던졌다!");
+        yield return dialogBox.TypeDialog($"{ballItem.Name}을(를) 사용했다!");
+        yield return dialogBox.TypeDialog($"왕국으로 돌아가라!");
 
         var ballObj = Instantiate(ballSprite, playerUnit.transform.position - new Vector3(2, 0), Quaternion.identity);
         var ball =  ballObj.GetComponent<SpriteRenderer>();
+        ball.sprite = ballItem.Icon;
 
         // 애니메이션
         yield return ball.transform.DOJump(enemyUnit.transform.position + new Vector3(0, 1), 2f, 1, 1f).WaitForCompletion();
         yield return enemyUnit.PlayCaptureAnimation();
         yield return ball.transform.DOMoveY(enemyUnit.transform.position.y - 2, 0.5f).WaitForCompletion();
 
-        int shakeCount = TryToCatchUnit(enemyUnit.Unit);
+        int shakeCount = TryToCatchUnit(enemyUnit.Unit, ballItem);
         for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
         {
             yield return new WaitForSeconds(0.5f);
@@ -724,6 +737,7 @@ public class BattleSystem : MonoBehaviour
 
             playerParty.AddUnit(enemyUnit.Unit);
             yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}(을)를 겨우 잡았다.");
+
 
             Destroy(ball);
             BattleOver(true);
@@ -745,13 +759,13 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    int TryToCatchUnit(Unit unit)
+    int TryToCatchUnit(Unit unit, BallItem ballitem)
     {
         // a = [{1 - (2/3 × 현재HP/최대HP)} × 포획률 × 몬스터볼 보정 × 상태이상 보정 × (잡기파워 보정)] 잡기파워는 없을 예정
         // 독, 마비, 화상 상태에선 x1.5(3세대)
         // 수면 및 얼음 상태에선 ×2.5(5세대 이후)
-        // float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * unit.Base.CatchRate * ConditionDB.GetStatusBonus(unit.Status));
-        float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * 255 * ConditionDB.GetStatusBonus(unit.Status));
+        // float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * unit.Base.CatchRate * ballitem.CatchRateModifier * ConditionDB.GetStatusBonus(unit.Status));
+        float a = ((1 - (2/3 * unit.HP / unit.MaxHP)) * 255 * ballitem.CatchRateModifier * ConditionDB.GetStatusBonus(unit.Status));
 
         if (a >= 255) return 4;
 

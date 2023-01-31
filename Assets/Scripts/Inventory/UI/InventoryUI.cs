@@ -19,7 +19,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] Image downArrow;
     [SerializeField] PartyScreen partyScreen;
 
-    Action onItemUsed;
+    Action<ItemBase> onItemUsed;
 
     int selectedItem = 0;
     int selectedCategory = 0;
@@ -58,7 +58,7 @@ public class InventoryUI : MonoBehaviour
 
         UpdateItemSelection();
     }
-    public void HandleUpdate(Action onBack, Action onItemUsed = null)
+    public void HandleUpdate(Action onBack, Action<ItemBase> onItemUsed = null)
     {
         this.onItemUsed = onItemUsed;
 
@@ -94,7 +94,7 @@ public class InventoryUI : MonoBehaviour
                 UpdateItemSelection();
             if (Input.GetButtonDown("Submit"))
             {
-                OpenPartyScreen();
+                ItemSelected();
             }
             else if (Input.GetButtonDown("Cancel"))
             {
@@ -118,6 +118,18 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    void ItemSelected()
+    {
+        if (selectedCategory == (int)ItemCategory.Balls)
+        {
+            StartCoroutine(UseItem());
+        }
+        else
+        {
+            OpenPartyScreen();
+        }
+    }
+
     IEnumerator UseItem()
     {
         state = InventoryUIState.Busy;
@@ -125,8 +137,11 @@ public class InventoryUI : MonoBehaviour
 
         if (usedItem != null)
         {
-            yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
-            onItemUsed?.Invoke();
+            if (!(usedItem is BallItem))
+            {
+                yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
+            }
+            onItemUsed?.Invoke(usedItem);
         }
         else
         {

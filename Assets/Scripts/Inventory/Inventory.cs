@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum ItemCategory { Items, Balls, Tms }
 public class Inventory : MonoBehaviour
 {
     [SerializeField] List<ItemSlot> slots;
@@ -17,7 +18,7 @@ public class Inventory : MonoBehaviour
     }
     public static List<string> ItemCategories { get; set; } = new List<string>()
     {
-        "회복 아이템", "귀환 아이템", "중요한 물건"
+        "회복 아이템", "귀환 아이템", "기술"
     };
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
