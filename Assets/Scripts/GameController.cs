@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
         UnitDB.Init();
         MoveDB.Init();
         ConditionDB.Init();
+        ItemDB.Init();
     }
 
     private void Start()
@@ -42,7 +43,7 @@ public class GameController : MonoBehaviour
             prevState = state;
             state = GameState.Dialog;
         };
-        DialogManager.Instance.OnCloseDialog += () => 
+        DialogManager.Instance.OnDialogFinished += () => 
         {
             if (state == GameState.Dialog)
                 state = prevState;

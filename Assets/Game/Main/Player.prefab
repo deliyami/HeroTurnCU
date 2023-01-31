@@ -260,23 +260,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots:
   - item: {fileID: 11400000, guid: d57f8446b9285c24cb37ffdf2d3705ff, type: 2}
-    count: 10
+    count: 0
   - item: {fileID: 11400000, guid: 34b0ef7f91b4cf04bb4d55c8b0d0b97c, type: 2}
-    count: 7
+    count: 0
   - item: {fileID: 11400000, guid: fc839a16176fd6249826359f6709dd11, type: 2}
-    count: 5
+    count: 0
   - item: {fileID: 11400000, guid: 548d67d2f63c8bb4abf62d0877472a08, type: 2}
-    count: 12
+    count: 0
   - item: {fileID: 11400000, guid: 894467a6e63833f4eb4f2d753cffe8bb, type: 2}
-    count: 44
+    count: 0
   - item: {fileID: 11400000, guid: 6d5fdd171beb10f4dba850c61680c0e6, type: 2}
-    count: 12
+    count: 0
   - item: {fileID: 11400000, guid: d50b2b76430545847af25f4cb68abcfe, type: 2}
-    count: 57
+    count: 0
   - item: {fileID: 11400000, guid: 8c50c8edfecd2b8489b25925d29ae9b2, type: 2}
-    count: 99
+    count: 0
   - item: {fileID: 11400000, guid: d7460011c594f7d41a1565125621cb02, type: 2}
-    count: 4
+    count: 0
   ballSlots:
   - item: {fileID: 11400000, guid: 0e90e68798483fe4f90c06c20ec5627a, type: 2}
     count: 0

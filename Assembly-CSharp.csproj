@@ -140,6 +140,7 @@
      <Compile Include="Assets\Scripts\Units\Status\IStatInterface.cs" />
      <Compile Include="Assets\Scripts\Inventory\Pickup.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemGiver.cs" />
+     <Compile Include="Assets\Scripts\Data\ItemDB.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

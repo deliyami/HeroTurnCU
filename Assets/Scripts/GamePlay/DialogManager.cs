@@ -12,7 +12,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogName;
 
     public event Action OnShowDialog;
-    public event Action OnCloseDialog;
+    public event Action OnDialogFinished;
 
     public static DialogManager Instance { get; private set; }
     private void Awake() {
@@ -45,12 +45,12 @@ public class DialogManager : MonoBehaviour
         {
 
         }
+        OnDialogFinished?.Invoke();
     }
     public void CloseDialog()
     {
         dialogBox.SetActive(false);
         IsShowing = false;
-        OnCloseDialog?.Invoke();
     }
     public IEnumerator ShowDialog(Dialog dialog)
     {
@@ -68,7 +68,7 @@ public class DialogManager : MonoBehaviour
 
         dialogBox.SetActive(false);
         IsShowing = false;
-        OnCloseDialog?.Invoke();
+        OnDialogFinished?.Invoke();
     }
 
     public void HandleUpdate()
