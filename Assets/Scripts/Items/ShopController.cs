@@ -7,6 +7,7 @@ public enum ShopState { Menu, Buying, Selling, Busy }
 public class ShopController : MonoBehaviour
 {
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] WalletUI walletUI;
     public event Action OnStart;
     public event Action OnFinish;
     ShopState state;
@@ -72,6 +73,8 @@ public class ShopController : MonoBehaviour
             state = ShopState.Selling;
             yield break;
         }
+
+        // walletUI.Show();
         float sellingPrice = item.Price;
 
         int selectedChoice = 0;
@@ -81,8 +84,10 @@ public class ShopController : MonoBehaviour
             onChoiceSelected: choiceIndex => selectedChoice = choiceIndex );
         if (selectedChoice == 0)
         {
+            // Wallet.i.AddMoney(sellingPrice);
             inventory.RemoveItem(item);
         }
+        // walletUI.Close();
         state = ShopState.Selling;
     }
 }

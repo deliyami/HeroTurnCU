@@ -156,6 +156,9 @@
      <Compile Include="Assets\Scripts\Dialogues\ChoiceBox.cs" />
      <Compile Include="Assets\Scripts\Character\Merchant.cs" />
      <Compile Include="Assets\Scripts\Items\ShopController.cs" />
+     <Compile Include="Assets\Scripts\GamePlay\Wallet.cs" />
+     <Compile Include="Assets\Scripts\UI\WalletUI.cs" />
+     <Compile Include="Assets\Scripts\UI\CountSelectorUI.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
