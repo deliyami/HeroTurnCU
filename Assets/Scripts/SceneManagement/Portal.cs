@@ -17,6 +17,7 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
         this.player = player;
         StartCoroutine(SwitchScene());
     }
+    public bool TriggerRepeatedly => false;
     Fader fader;
     private void Start()
     {

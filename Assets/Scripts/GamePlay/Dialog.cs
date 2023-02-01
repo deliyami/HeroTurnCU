@@ -19,6 +19,7 @@ public class Dialog
 public class DialogObject
 {
     [SerializeField] string name;
+    [TextArea]
     [SerializeField] string text;
     [SerializeField] int expression;
     // 대화창에서 화면 왼쪽에 있는가?

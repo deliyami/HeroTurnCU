@@ -3745,6 +3745,118 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1980694424
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2259752085829295869, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: uniqueId
+      value: 558d666a-5713-4cb9-840d-5f17f0f49b4b
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768305, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: isMoveable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768305, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: questToComplete
+      value: 
+      objectReference: {fileID: 11400000, guid: 1fabb3152781f8d46933e15105d47a13, type: 2}
+    - target: {fileID: 8878564351186768305, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768305, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: dialog.lines.Array.data[0].text
+      value: "\uC720\uB2DB \uD14C\uC2A4\uD2B8 \uB05D"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768310, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_Name
+      value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -36.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878564351186768317, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+--- !u!1 &1980694425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8878564351186768310, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+  m_PrefabInstance: {fileID: 1980694424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1980694426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980694425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6adcaa4c01a8164b91361601d27051d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitToGive:
+    _base: {fileID: 11400000, guid: adcf2ed4cf08d8546a2b97a55aae1e7a, type: 2}
+    level: 12
+    tribe: 0a0000000a0000000a0000000a0000000a0000000a000000
+    effort: 0a0000000a0000000a0000000a0000000a0000000a000000
+    personality: 0100000002000000
+  dialog:
+    lines:
+    - name: "\uC720\uB2DB"
+      text: "\uC720\uB2DB \uC218\uC5EC \uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4."
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
+    - name: "\uC720\uB2DB"
+      text: "\uD655\uC778 \uBD80\uD0C1"
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
 --- !u!1 &2065767566
 GameObject:
   m_ObjectHideFlags: 0

@@ -2698,6 +2698,9 @@ MonoBehaviour:
   portalLayer:
     serializedVersion: 2
     m_Bits: 32768
+  triggerLayer:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!114 &7884547494724710402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4486,6 +4489,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5819739298811026906, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5927017610248503937, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5246,7 +5253,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -37.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5865591592814888928, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
 --- !u!114 &803049518816637709 stripped
 MonoBehaviour:

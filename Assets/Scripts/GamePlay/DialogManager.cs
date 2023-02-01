@@ -58,10 +58,10 @@ public class DialogManager : MonoBehaviour
         OnShowDialog?.Invoke();
         IsShowing = true;
         dialogBox.SetActive(true);
-        dialogName.text = dialog.Lines[0].Name;
 
         foreach (var line in dialog.Lines)
         {
+            dialogName.text = line.Name;
             yield return TypeDialog(line.Text);
             yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
         }

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344babc9f20c5e64184339662215df65, type: 3}
+  m_Name: NeedCooler
+  m_EditorClassIdentifier: 
+  name: FaintedUnit
+  description: 
+  startDialogue:
+    lines:
+    - name: "\uD018\uC2A4\uD2B8"
+      text: "\uD14C\uC2A4\uD2B8 \uD018\uC2A4\uD2B8 \uC785\uB2C8\uB2E4."
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
+    - name: "\uD018\uC2A4\uD2B8"
+      text: "\uD018\uC2A4\uD2B8 \uC2E4\uD589\uD558\uC138\uC694"
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
+  inProgressDialogue:
+    lines:
+    - name: "\uD018\uC2A4\uD2B8"
+      text: "\uC120\uD48D\uAE30 \uAC00\uC838\uB2E4\uC8FC\uC138\uC694."
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
+  completedDialogue:
+    lines:
+    - name: "\uD018\uC2A4\uD2B8"
+      text: "\uCD95\uD558\uD569\uB2C8\uB2E4!"
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
+    - name: "\uD018\uC2A4\uD2B8"
+      text: "\uD018\uC2A4\uD2B8 \uC644\uB8CC!"
+      expression: 0
+      isLeft: 0
+      imgReverse: 0
+  requiredItem: {fileID: 11400000, guid: 8cb544bf206fa1548accbde256d74f6a, type: 2}
+  rewardItem: {fileID: 11400000, guid: 34b0ef7f91b4cf04bb4d55c8b0d0b97c, type: 2}
