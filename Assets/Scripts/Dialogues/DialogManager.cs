@@ -7,6 +7,7 @@ using TMPro;
 public class DialogManager : MonoBehaviour
 {
     [SerializeField] GameObject dialogBox;
+    [SerializeField] ChoiceBox choiceBox;
     [SerializeField] TextMeshProUGUI dialogText;
     [SerializeField] int lettersPerSecond;
     [SerializeField] TextMeshProUGUI dialogName;
@@ -52,7 +53,8 @@ public class DialogManager : MonoBehaviour
         dialogBox.SetActive(false);
         IsShowing = false;
     }
-    public IEnumerator ShowDialog(Dialog dialog)
+    public IEnumerator ShowDialog(Dialog dialog, List<string> choices = null,
+        Action<int> onChoiceSelected = null)
     {
         yield return new WaitForEndOfFrame();
         OnShowDialog?.Invoke();
@@ -64,6 +66,11 @@ public class DialogManager : MonoBehaviour
             dialogName.text = line.Name;
             yield return TypeDialog(line.Text);
             yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
+        }
+
+        if (choices != null && choices.Count > 1)
+        {
+            yield return choiceBox.ShowChoices(choices, onChoiceSelected);
         }
 
         dialogBox.SetActive(false);
