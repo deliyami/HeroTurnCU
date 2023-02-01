@@ -23,6 +23,7 @@ public class DialogObject
     [SerializeField] string text;
     [SerializeField] int expression;
     // 대화창에서 화면 왼쪽에 있는가?
+    [SerializeField] bool isSystem;
     [SerializeField] bool isLeft;
     [SerializeField] bool imgReverse;
 

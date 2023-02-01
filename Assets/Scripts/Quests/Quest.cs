@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
 public class Quest
 {
     public QuestBase Base { get; private set; }
@@ -18,6 +19,9 @@ public class Quest
         Status = QuestStatus.Started;
 
         yield return DialogManager.Instance.ShowDialog(Base.StartDialogue);
+
+        var questList = QuestList.GetQuestList();
+        questList.AddQuest(this);
     }
 
     public IEnumerator CompletedQuest(Transform player)
@@ -39,6 +43,9 @@ public class Quest
             
             yield return DialogManager.Instance.ShowDialogText($"{Base.RewardItem.Name}을(를) 얻었다!");
         }
+
+        var questList = QuestList.GetQuestList();
+        questList.AddQuest(this);
     }
 
     public bool CanBeCompleted()
