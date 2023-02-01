@@ -56,6 +56,10 @@ public class UnitParty : MonoBehaviour
             }
         }
     }
+    public void PartyUpdated()
+    {
+        OnUpdated?.Invoke();
+    }
     
     public static UnitParty GetPlayerParty()
     {

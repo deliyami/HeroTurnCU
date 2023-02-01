@@ -150,7 +150,10 @@ public class Unit
         int oldMaxHP = MaxHP;
         MaxHP = CalculateBaseStats(Base.MaxHP, 0);
 
-        HP += MaxHP - oldMaxHP;
+        if (oldMaxHP != 0)
+        {
+            HP = Mathf.Clamp(HP + MaxHP - oldMaxHP, 0, MaxHP);
+        }
     }
 
     void ResetStatBoost()
@@ -277,6 +280,15 @@ public class Unit
     {
         _base = evolution.EvolvesInto;
         CalculateStats();
+    }
+    public void Heal()
+    {
+        HP = MaxHP;
+        foreach(var m in moves)
+        {
+            m.PP = m.Base.PP;
+        }
+        OnHPChanged?.Invoke();
     }
     public int MaxHP { get; private set; }
     public int Attack {

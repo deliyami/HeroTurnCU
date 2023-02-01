@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Healer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public IEnumerator Heal(Transform player, Dialog dialog)
     {
-        
-    }
+        yield return DialogManager.Instance.ShowDialog(dialog);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Fader.i.FadeIn(0.5f);
+
+        var playerParty = player.GetComponent<UnitParty>();
+        playerParty.Units.ForEach(p => p.Heal());
+        playerParty.PartyUpdated();
+
+        Fader.i.FadeOut(0.5f);
     }
 }
