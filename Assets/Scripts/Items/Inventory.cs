@@ -64,7 +64,18 @@ public class Inventory : MonoBehaviour, ISavable
         OnUpdated?.Invoke();
     }
 
-    public void RemoveItem(ItemBase item)
+    public int GetItemCount(ItemBase item)
+    {
+        int category = (int)GetCategoryFromItem(item);
+        var currentSlots = GetSlotsByCategory(category);
+
+        var itemSlot = currentSlots.FirstOrDefault(slot => slot.Item == item);
+        if (item != null)
+            return itemSlot.Count;
+        return 0;
+    }
+
+    public void RemoveItem(ItemBase item, int countToRemove = 1)
     {
         int category = (int)GetCategoryFromItem(item);
         var currentSlots = GetSlotsByCategory(category);
@@ -72,8 +83,8 @@ public class Inventory : MonoBehaviour, ISavable
         // 아이템 사용은 무제한, 사용 횟수에 따라 엔딩 패널티를 줄 것
         // 한 개 사용당 1턴으로 치고... 등등
         itemSlot.Count++;
-        // itemSlot.Count--;
-        // if (itemSlot.Count == 0)
+        // itemSlot.countToRemove--;
+        // if (itemSlot.countToRemove == 0)
         //     currentSlots.Remove(itemSlot);
 
         OnUpdated?.Invoke();

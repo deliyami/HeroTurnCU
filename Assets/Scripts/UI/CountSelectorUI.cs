@@ -1,18 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class CountSelectorUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] TextMeshProUGUI countText;
+    [SerializeField] TextMeshProUGUI priceText;
+    bool selected;
+    int currentCount;
 
-    // Update is called once per frame
-    void Update()
+    int maxCount;
+    float pricePerUnit;
+    public IEnumerator ShowSelector(int maxCount, float pricePerUnit,
+        Action<int> onCountSelected)
     {
-        
+        this.maxCount = maxCount;
+        this.pricePerUnit = pricePerUnit;
+        selected = false;
+        currentCount = 1;
+        gameObject.SetActive(true);
+        SetValues();
+        yield return new WaitUntil(() => selected == true);
+
+        onCountSelected?.Invoke(currentCount);
+        gameObject.SetActive(false);
+    }
+    private void Update()
+    {
+        int prevCount = currentCount;
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+            currentCount++;
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            currentCount--;
+
+        currentCount = Mathf.Clamp(currentCount, 1, maxCount);
+        if (currentCount != prevCount)
+            SetValues();
+        if (Input.GetButtonDown("Submit"))
+            selected = true;
+    }
+    void SetValues()
+    {
+        countText.text = "x " + currentCount;
+        priceText.text = "$ " + pricePerUnit * currentCount;
     }
 }

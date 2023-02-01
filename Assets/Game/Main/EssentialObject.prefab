@@ -2745,6 +2745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 803049518816637709}
   walletUI: {fileID: 8685177355627982910}
+  countSelectorUI: {fileID: 3851956775471049802}
 --- !u!114 &1784720951233497984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5349,6 +5350,17 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3851956775471049802 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1524722714936332396, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
+  m_PrefabInstance: {fileID: 2331740340243119142}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a20b0d497ec1ae4c9fd77f2530bf34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3896525002926755444 stripped

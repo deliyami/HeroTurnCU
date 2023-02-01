@@ -8,6 +8,7 @@ public class ShopController : MonoBehaviour
 {
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] WalletUI walletUI;
+    [SerializeField] CountSelectorUI countSelectorUI;
     public event Action OnStart;
     public event Action OnFinish;
     ShopState state;
@@ -76,6 +77,19 @@ public class ShopController : MonoBehaviour
 
         // walletUI.Show();
         float sellingPrice = item.Price;
+        int countToSell = 1;
+
+        int itemCount = inventory.GetItemCount(item);
+        if (itemCount > 1)
+        {
+            yield return DialogManager.Instance.ShowDialogText($"팔 가격, 보이면 버그!",
+                waitForInput: false, autoClose: false);
+            yield return countSelectorUI.ShowSelector(itemCount, sellingPrice,
+                (selectedCount) => countToSell = itemCount);
+            DialogManager.Instance.CloseDialog();
+        }
+
+        sellingPrice = sellingPrice * countToSell;
 
         int selectedChoice = 0;
         yield return DialogManager.Instance.ShowDialogText($"가격: {sellingPrice}",
@@ -85,7 +99,7 @@ public class ShopController : MonoBehaviour
         if (selectedChoice == 0)
         {
             // Wallet.i.AddMoney(sellingPrice);
-            inventory.RemoveItem(item);
+            inventory.RemoveItem(item, countToSell);
         }
         // walletUI.Close();
         state = ShopState.Selling;
