@@ -26,7 +26,8 @@ public class DialogManager : MonoBehaviour
     // 이름, 할 말, 표정 번호, 화면 좌우, 사진 뒤집기 onoff
     // string, string, int, string, bool
 
-    public IEnumerator ShowDialogText(string text, bool waitForInput = true, bool autoClose = true)
+    public IEnumerator ShowDialogText(string text, bool waitForInput = true, bool autoClose = true,
+        List<string> choices = null, Action<int> onChoiceSelected = null)
     {
         OnShowDialog?.Invoke();
         IsShowing = true;
@@ -38,13 +39,13 @@ public class DialogManager : MonoBehaviour
         {
             yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
         }
+        if (choices != null && choices.Count > 1)
+        {
+            yield return choiceBox.ShowChoices(choices, onChoiceSelected);
+        }
         if (autoClose)
         {
             CloseDialog();
-        }
-        else
-        {
-
         }
         OnDialogFinished?.Invoke();
     }

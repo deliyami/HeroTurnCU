@@ -288,6 +288,7 @@ public class Unit
         {
             m.PP = m.Base.PP;
         }
+        CureStatus();
         OnHPChanged?.Invoke();
     }
     public int MaxHP { get; private set; }

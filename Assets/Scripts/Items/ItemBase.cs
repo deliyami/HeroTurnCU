@@ -8,11 +8,15 @@ public class ItemBase : ScriptableObject
     [TextArea]
     [SerializeField] string description;
     [SerializeField] Sprite icon;
+    [SerializeField] float price = 1f;
+    [SerializeField] bool isSellable;
     public virtual string Name {
         get { return name; }
     }
     public string Description => description;
     public Sprite Icon => icon;
+    public float Price => price;
+    public bool IsSellable => isSellable;
 
     public virtual bool Use(Unit unit)
     {

@@ -22,12 +22,14 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
     ItemGiver itemGiver;
     UnitGiver unitGiver;
     Healer healer;
+    Merchant merchant;
 
     private void Awake() {
         character = GetComponent<Character>();
         itemGiver = GetComponent<ItemGiver>();
         unitGiver = GetComponent<UnitGiver>();
         healer = GetComponent<Healer>();
+        merchant = GetComponent<Merchant>();
     }
     public IEnumerator Interact(Transform initiator)
     {
@@ -79,6 +81,10 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
             else if (healer != null)
             {
                 yield return healer.Heal(initiator, dialog);
+            }
+            else if (merchant != null)
+            {
+                yield return merchant.Trade();
             }
             else
             {
