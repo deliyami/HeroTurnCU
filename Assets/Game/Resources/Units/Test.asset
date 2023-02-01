@@ -25,6 +25,9 @@ MonoBehaviour:
   spAttack: 10
   spDefense: 300
   speed: 5
+  expYield: 0
+  growthRate: 0
+  catchRate: 255
   ability: "\uD2C8\uC0C8\uD3EC\uCC29/\uD2C0\uAE68\uAE30/\uC704\uD611"
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: 67ff60295aa61ff45916475478593269, type: 2}
@@ -35,3 +38,8 @@ MonoBehaviour:
     level: 0
   - moveBase: {fileID: 11400000, guid: 142497b1f128fc645a2a2ef0831a6fe1, type: 2}
     level: 0
+  learnableByItems: []
+  evolutions:
+  - evolvesInto: {fileID: 11400000, guid: b6836e4823f92384c82b46b0b2bcdb2a, type: 2}
+    requiredLevel: 15
+    requireItem: {fileID: 0}

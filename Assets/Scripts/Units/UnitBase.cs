@@ -34,6 +34,7 @@ public class UnitBase : ScriptableObject
     
     [SerializeField] List<LearnableMove> learnableMoves;
     [SerializeField] List<MoveBase> learnableByItems;
+    [SerializeField] List<Evolution> evolutions;
     public static int MaxNumOfMoves { get; set; } = 4;
 
     public int GetExpForLevel(int level)
@@ -102,6 +103,7 @@ public class UnitBase : ScriptableObject
         get { return learnableMoves; }
     }
     public List<MoveBase> LearnableByItems => learnableByItems;
+    public List<Evolution> Evolutions => evolutions;
 }
 
 [System.Serializable]
@@ -115,6 +117,17 @@ public class LearnableMove
     public int Level { get { return level; }}
 }
 
+[System.Serializable]
+public class Evolution
+{
+    [SerializeField] UnitBase evolvesInto;
+    [SerializeField] int requiredLevel;
+    [SerializeField] EvolutionItem requireItem;
+
+    public UnitBase EvolvesInto => evolvesInto;
+    public int RequiredLevel => requiredLevel;
+    public EvolutionItem RequireItem => requireItem;
+}
 // public enum UnitType
 // {
 //     None,

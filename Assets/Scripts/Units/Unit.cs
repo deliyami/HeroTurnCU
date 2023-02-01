@@ -99,7 +99,7 @@ public class Unit
 
     public Unit(UnitSaveData saveData)
     {
-        _base = UnitDB.GetUnitByName(saveData.name);
+        _base = UnitDB.GetObjectByName(saveData.name);
         HP = saveData.hp;
         level = saveData.level;
         Exp = saveData.exp;
@@ -124,7 +124,7 @@ public class Unit
     {
         var saveData = new UnitSaveData()
         {
-            name = Base.Name,
+            name = Base.name,
             hp = HP,
             level = Level,
             exp = Exp,
@@ -146,7 +146,11 @@ public class Unit
         Stats.Add(Stat.SpAttack, CalculateBaseStats(Base.SpAttack, 3));
         Stats.Add(Stat.SpDefense, CalculateBaseStats(Base.SpDefense, 4));
         Stats.Add(Stat.Speed, CalculateBaseStats(Base.Speed, 5));
+
+        int oldMaxHP = MaxHP;
         MaxHP = CalculateBaseStats(Base.MaxHP, 0);
+
+        HP += MaxHP - oldMaxHP;
     }
 
     void ResetStatBoost()
@@ -235,7 +239,8 @@ public class Unit
     {
         if (Exp > Base.GetExpForLevel(level + 1))
         {
-            ++level;
+            level++;
+            CalculateStats();
             return true;
         }
         return false;
@@ -259,6 +264,19 @@ public class Unit
     public bool HasMove(MoveBase moveToCheck)
     {
         return Moves.Count(m => m.Base == moveToCheck) > 0;
+    }
+    public Evolution CheckForEvolution()
+    {
+        return Base.Evolutions.FirstOrDefault(e => e.RequiredLevel <= level);
+    }
+    public Evolution CheckForEvolution(ItemBase item)
+    {
+        return Base.Evolutions.FirstOrDefault(e => e.RequireItem == item);
+    }
+    public void Evolve(Evolution evolution)
+    {
+        _base = evolution.EvolvesInto;
+        CalculateStats();
     }
     public int MaxHP { get; private set; }
     public int Attack {

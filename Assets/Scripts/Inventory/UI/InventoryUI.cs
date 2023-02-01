@@ -174,6 +174,23 @@ public class InventoryUI : MonoBehaviour
         
         yield return HandleTmItems();
 
+        var item = inventory.GetItem(selectedItem, selectedCategory);
+        var unit = partyScreen.SelectedMember;
+
+        if (item is EvolutionItem)
+        {
+            var evolution = unit.CheckForEvolution(item);
+            if (evolution != null)
+            {
+                yield return EvolutionManager.i.Evolve(unit, evolution);
+            }
+            else
+            {
+                ClosePartyScreen();
+                yield break;
+            }
+        }
+
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if (usedItem != null)
         {

@@ -45,6 +45,17 @@ public class UnitParty : MonoBehaviour
             // TODO: 외부로 보낼 것
         }
     }
+    public IEnumerator CheckForEvolutions()
+    {
+        foreach (var unit in units)
+        {
+            var evolution = unit.CheckForEvolution();
+            if (evolution != null)
+            {
+                yield return EvolutionManager.i.Evolve(unit, evolution);
+            }
+        }
+    }
     
     public static UnitParty GetPlayerParty()
     {
