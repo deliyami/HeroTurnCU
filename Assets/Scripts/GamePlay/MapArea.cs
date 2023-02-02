@@ -6,10 +6,12 @@ using UnityEngine;
 public class MapArea : MonoBehaviour
 {
     [SerializeField] List<UnitEncounterRecord> wildUnits;
+    [HideInInspector]
+    [SerializeField] List<UnitEncounterRecord> findZeroChance;
+    [HideInInspector]
+    [SerializeField] int totalChance = 0;
 
-    private int totalChance;
-
-    private void Start()
+    private void OnValidate()
     {
         totalChance = 0;
         foreach (var record in wildUnits)    
@@ -19,6 +21,12 @@ public class MapArea : MonoBehaviour
 
             totalChance = totalChance + record.chancePercentage;
         }
+    }
+
+
+    private void Start()
+    {
+        findZeroChance = wildUnits;
     }
 
     public Unit GetRandomWildUnit()
