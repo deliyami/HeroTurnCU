@@ -24,7 +24,8 @@ public class BattleSystem : MonoBehaviour
     [Header("소리")]
     [SerializeField] AudioClip wildBattleMusic;
     [SerializeField] AudioClip trainerBattleMusic;
-    [SerializeField] AudioClip battleVictoryMusic;
+    [SerializeField] AudioClip wildBattleVictoryMusic;
+    [SerializeField] AudioClip trainerBattleVictoryMusic;
 
 
     public event Action<bool> OnBattleOver;
@@ -317,8 +318,10 @@ public class BattleSystem : MonoBehaviour
             bool battleWon = true;
             if (isTrainerBattle)
                 battleWon = trainerParty.GetHealtyhUnit() == null;
+
+            // TODO : 이거 노래 다 끝날 때 까지 움직이지 못하게 해야 함
             if (battleWon)
-                AudioManager.i.PlayMusic(battleVictoryMusic);
+                AudioManager.i.PlayMusic(isTrainerBattle?trainerBattleVictoryMusic:wildBattleVictoryMusic, loop: false);
             // exp 획득
             int expYield = faintedUnit.Unit.Base.ExpYield;
             int enemyLevel = faintedUnit.Unit.Level;
@@ -822,7 +825,7 @@ public class BattleSystem : MonoBehaviour
         int enemySpeed = enemyUnit.Unit.Speed;
 
         float f = (128 * playerSpeed / enemySpeed + 30 * escapeAttempts) % 256;
-        if (f > UnityEngine.Random.Range(0, 255))
+        if (playerSpeed > enemySpeed || f > UnityEngine.Random.Range(0, 255))
         {
             yield return dialogBox.TypeDialog("도망갔다!");
             BattleOver(true);

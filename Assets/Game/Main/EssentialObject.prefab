@@ -48,11 +48,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxList:
   - id: 0
-    clip: {fileID: 8300000, guid: 2c3ef39655c623945afc3c2060018ef3, type: 3}
+    clip: {fileID: 8300000, guid: c408dd227e8a08040ac273479ebb47e0, type: 3}
   - id: 1
-    clip: {fileID: 8300000, guid: fab385d636698fc4998a5737034eef2b, type: 3}
+    clip: {fileID: 8300000, guid: 8c13a4cc6ce14654983b78f4ba2ea8fa, type: 3}
   - id: 2
-    clip: {fileID: 8300000, guid: 05484d147aada144786b177364e9ed7e, type: 3}
+    clip: {fileID: 8300000, guid: 76b05c4f07085eb45a8b0d3eefe140e7, type: 3}
+  - id: 4
+    clip: {fileID: 8300000, guid: ee62a92ebb1680e4987d33cca4fe56c7, type: 3}
+  - id: 5
+    clip: {fileID: 8300000, guid: 272cea40fec002b4fadeb1422e275e51, type: 3}
   musicPlayer: {fileID: 3461309386327913304}
   sfxPlayer: {fileID: 6273194892113116095}
   fadeDuration: 0.75
@@ -2649,9 +2653,10 @@ MonoBehaviour:
   ballSprite: {fileID: 9185498378914581179, guid: ee73febc65e521f4d8211d280d2a2685, type: 3}
   moveSelectionUI: {fileID: 8115450737594885076}
   inventoryUI: {fileID: 822153354773239057}
-  wildBattleMusic: {fileID: 8300000, guid: 4b7cbedda75fa7f4ab576f818e0f137a, type: 3}
-  trainerBattleMusic: {fileID: 8300000, guid: cabc6f23fd4e4c54298af2513577e9b3, type: 3}
-  battleVictoryMusic: {fileID: 8300000, guid: 5b869068f84737f46bc1233c1c291896, type: 3}
+  wildBattleMusic: {fileID: 8300000, guid: 7fa7e465c294b6f418232036a60522a2, type: 3}
+  trainerBattleMusic: {fileID: 8300000, guid: 8af1c87b543902b4ca7af5c6d806ef1a, type: 3}
+  wildBattleVictoryMusic: {fileID: 8300000, guid: 685fcf9f615112c438158f7e1a9084af, type: 3}
+  trainerBattleVictoryMusic: {fileID: 8300000, guid: 98c15c088edde34468d235dc76f4bf17, type: 3}
 --- !u!1 &8115450738302411298
 GameObject:
   m_ObjectHideFlags: 0
@@ -2953,7 +2958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   evolutionUI: {fileID: 0}
   unitImage: {fileID: 0}
-  evolutionMusic: {fileID: 8300000, guid: 49a8c64a39616e543b3b211f80e4e138, type: 3}
+  evolutionMusic: {fileID: 0}
 --- !u!1 &8115450738478144625
 GameObject:
   m_ObjectHideFlags: 0

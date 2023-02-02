@@ -9,11 +9,11 @@ C:\Program Files\Unity\Hub\Editor\2021.3.5f1\Editor\Unity.exe
 -batchMode
 -noUpm
 -name
-AssetImportWorker2
+AssetImportWorker11
 -projectPath
 C:/Users/USER/HeroTurnCU
 -logFile
-Logs/AssetImportWorker2.log
+Logs/AssetImportWorker11.log
 -srvPort
 8100
 Successfully changed project path to: C:/Users/USER/HeroTurnCU
@@ -48,7 +48,7 @@ C:/Users/USER/HeroTurnCU
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
 Default GameObject BitMask: Player already registered
-Refreshing native plugins compatible for Editor in 146.96 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 142.44 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.5f1 (40eb3a945986)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/Resources/UnitySubsystems
@@ -64,50 +64,50 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56324
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56376
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.016164 seconds.
+Registered in 0.013888 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 131.30 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 129.59 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.722 seconds
+- Completed reload, in  0.734 seconds
 Domain Reload Profiling:
-	ReloadAssembly (722ms)
-		BeginReloadAssembly (101ms)
+	ReloadAssembly (734ms)
+		BeginReloadAssembly (96ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (494ms)
-			LoadAssemblies (97ms)
+		EndReloadAssembly (515ms)
+			LoadAssemblies (92ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (99ms)
+			SetupTypeCache (97ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (28ms)
-			SetupLoadedEditorAssemblies (305ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (321ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (10ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (131ms)
+				RefreshPlugins (130ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (114ms)
-				ProcessInitializeOnLoadMethodAttributes (48ms)
+				ProcessInitializeOnLoadAttributes (119ms)
+				ProcessInitializeOnLoadMethodAttributes (62ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.020500 seconds.
+Registered in 0.022499 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\USER\HeroTurnCU\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\USER\HeroTurnCU\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 137.38 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 118.95 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 System.Exception: Error! Visual Scripting: couldn't find visual scripting package
   at Unity.VisualScripting.PackageVersionUtility.get_version () [0x00043] in C:\Users\USER\HeroTurnCU\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Utilities\PackageVersionUtility.cs:31 
@@ -128,44 +128,44 @@ UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
 Package Manager log level set to [2]
 Mono: successfully reloaded assembly
-- Completed reload, in  1.826 seconds
+- Completed reload, in  1.652 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1827ms)
-		BeginReloadAssembly (136ms)
+	ReloadAssembly (1652ms)
+		BeginReloadAssembly (130ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (20ms)
-		EndReloadAssembly (1556ms)
-			LoadAssemblies (144ms)
+			CreateAndSetChildDomain (17ms)
+		EndReloadAssembly (1391ms)
+			LoadAssemblies (132ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (264ms)
+			SetupTypeCache (238ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (67ms)
-			SetupLoadedEditorAssemblies (1033ms)
+			RebuildScriptCaches (57ms)
+			SetupLoadedEditorAssemblies (924ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
+				InitializePlatformSupportModulesInManaged (6ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (137ms)
-				BeforeProcessingInitializeOnLoad (139ms)
-				ProcessInitializeOnLoadAttributes (622ms)
-				ProcessInitializeOnLoadMethodAttributes (111ms)
-				AfterProcessingInitializeOnLoad (16ms)
+				RefreshPlugins (119ms)
+				BeforeProcessingInitializeOnLoad (127ms)
+				ProcessInitializeOnLoadAttributes (561ms)
+				ProcessInitializeOnLoadMethodAttributes (96ms)
+				AfterProcessingInitializeOnLoad (15ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (9ms)
+			AwakeInstancesAfterBackupRestoration (8ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Default GameObject BitMask: Player already registered
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 1.99 ms, found 4 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 1.20 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 4760 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 75 unused Assets / (56.6 KB). Loaded Objects now: 5189.
 Memory consumption went from 180.9 MB to 180.9 MB.
-Total: 20.008000 ms (FindLiveObjects: 1.360500 ms CreateObjectMapping: 1.050100 ms MarkObjects: 17.366900 ms  DeleteObjects: 0.227500 ms)
+Total: 12.427200 ms (FindLiveObjects: 0.385300 ms CreateObjectMapping: 0.282800 ms MarkObjects: 11.630400 ms  DeleteObjects: 0.127100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -179,34 +179,22 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 8594.576784 seconds.
-  path: Assets/Audio/13. creepy-strange-music-loop.mp3.mp3
-  artifactKey: Guid(be076fa584c3dcc419e9022b2889aae6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Audio/13. creepy-strange-music-loop.mp3.mp3 using Guid(be076fa584c3dcc419e9022b2889aae6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f91313dc9a69ce8ae7613ce18d394102') in 0.128667 seconds 
+  Time since last request: 9511.632570 seconds.
+  path: Assets/Game/Main/Player.prefab
+  artifactKey: Guid(593c7da5d00d2704a9ac410ae29b5f89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Game/Main/Player.prefab using Guid(593c7da5d00d2704a9ac410ae29b5f89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2eba96b06c499a54b076465f43e3c968') in 0.130915 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000045 seconds.
-  path: Assets/Audio/화살표 성공.mp3
-  artifactKey: Guid(b2e74c0788d67cd4684f9f640b9d02ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Audio/화살표 성공.mp3 using Guid(b2e74c0788d67cd4684f9f640b9d02ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ead0f786c5e860d7736e2fe360d1865') in 0.013320 seconds 
+  Time since last request: 10.556550 seconds.
+  path: Assets/Game/Resources/Units/Ghost.asset
+  artifactKey: Guid(236fa546d65abfc44809a842fa1c140f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Game/Resources/Units/Ghost.asset using Guid(236fa546d65abfc44809a842fa1c140f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '51fc9d1e6a3144f95093ecf8d040297c') in 0.009315 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000022 seconds.
-  path: Assets/Audio/화살표 실패.mp3
-  artifactKey: Guid(bedc8a67d2220824a8cd879efbb64af5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Audio/화살표 실패.mp3 using Guid(bedc8a67d2220824a8cd879efbb64af5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1373d1e03b861cd09f2abb8a17706b8a') in 0.017318 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Audio/보스 근접 공격시전.mp3.mp3
-  artifactKey: Guid(b000e5609f539a441878ec1d4a8f666a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Audio/보스 근접 공격시전.mp3.mp3 using Guid(b000e5609f539a441878ec1d4a8f666a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '824491ea0ff454ea8e645e02576d7f30') in 0.027247 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000030 seconds.
-  path: Assets/Audio/stormy-wind.mp3
-  artifactKey: Guid(1db431295bed6c64bba9373cd51154da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Audio/stormy-wind.mp3 using Guid(1db431295bed6c64bba9373cd51154da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bf8198df911913f6211548aeb7c1234b') in 0.020703 seconds 
+  Time since last request: 0.000091 seconds.
+  path: Assets/Game/Resources/Units/It.asset
+  artifactKey: Guid(adcf2ed4cf08d8546a2b97a55aae1e7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Game/Resources/Units/It.asset using Guid(adcf2ed4cf08d8546a2b97a55aae1e7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d732ee97092abd1cb964cab86c0d1b3') in 0.007673 seconds 
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 AssetImportWorker is now disconnected from the server
 Process exiting

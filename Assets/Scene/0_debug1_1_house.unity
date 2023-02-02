@@ -826,7 +826,6 @@ GameObject:
   m_Component:
   - component: {fileID: 172679615}
   - component: {fileID: 172679614}
-  - component: {fileID: 172679613}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -834,29 +833,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &172679613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172679612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5b0221c6cd039b4397210b3734583ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wildUnits:
-  - _base: {fileID: 11400000, guid: d06841351a4eb2c409f5fedb65794ffa, type: 2}
-    level: 50
-    tribe: 190000000f0000001e00000007000000030000000c000000
-    effort: 78000000540000006c0000003e0000005400000034000000
-    personality: 0100000005000000
-  - _base: {fileID: 11400000, guid: 9a33def534605f949bde596cbabfc824, type: 2}
-    level: 50
-    tribe: 07000000050000000d000000160000001100000014000000
-    effort: 48000000640000005400000040000000540000006a000000
-    personality: 0500000001000000
 --- !u!156049354 &172679614
 Grid:
   m_ObjectHideFlags: 0
@@ -1691,6 +1667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f3c0e8445d7144184c63524791b43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableItems: []
 --- !u!1 &433335725
 GameObject:
   m_ObjectHideFlags: 0

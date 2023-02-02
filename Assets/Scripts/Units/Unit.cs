@@ -9,11 +9,14 @@ public class Unit
     [SerializeField] UnitBase _base;
     [SerializeField] int level;
 
-    public Unit(UnitBase pBase, int pLevel)
+    public Unit(UnitBase pBase, int pLevel, int[] tribe = null, int[] effort = null, int[] personality = null)
     {
         _base = pBase;
         level = pLevel;
 
+        if (tribe != null) this.tribe = tribe;
+        if (effort != null) this.effort = effort;
+        if (personality != null) this.personality = personality;
         // Init();
     }
 
@@ -172,6 +175,7 @@ public class Unit
 
     private int CalculateBaseStats(int stat, int statIndex) {
         int staticValue = statIndex == 0 ? (10 + Level) : 5;
+        Debug.Log($"스텟 계산 중... 이름:{Base.name}, level:{level}, stat/index:{stat}/{statIndex}");
         float personalityData = (1.0f + (Personality[0] == statIndex ? 0.1f : 0) - (Personality[1] == statIndex ? 0.1f : 0));
         return (int)((((stat * 2) + Tribe[statIndex] + (Effort[statIndex] / 4)) * Level / 100 + staticValue) * personalityData);
     }
