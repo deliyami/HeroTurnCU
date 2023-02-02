@@ -33,6 +33,8 @@ public class DialogManager : MonoBehaviour
         IsShowing = true;
         dialogBox.SetActive(true);
 
+        AudioManager.i.PlaySfx(AudioId.UISelect);
+
         dialogName.text = "시스템";
         yield return StartCoroutine(TypeDialog(text));
         if (waitForInput)
@@ -62,8 +64,10 @@ public class DialogManager : MonoBehaviour
         IsShowing = true;
         dialogBox.SetActive(true);
 
+
         foreach (var line in dialog.Lines)
         {
+            AudioManager.i.PlaySfx(AudioId.UISelect);
             dialogName.text = line.Name;
             yield return TypeDialog(line.Text);
             yield return new WaitUntil(() => Input.GetButtonDown("Submit"));

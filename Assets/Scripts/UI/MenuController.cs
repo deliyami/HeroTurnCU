@@ -8,6 +8,7 @@ using TMPro;
 public class MenuController : MonoBehaviour
 {
     [SerializeField] GameObject menu;
+    public static MenuController i;
     public event Action<int> onMenuSelected;
     public event Action onBack;
     List<TextMeshProUGUI> menuItems;
@@ -16,6 +17,7 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
+        i = this;
         menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
     }
     public void OpenMenu()

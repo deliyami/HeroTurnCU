@@ -17,6 +17,8 @@ public class UnitGiver : MonoBehaviour, ISavable
         player.GetComponent<UnitParty>().AddUnit(unitToGive);
 
         used = true;
+
+        AudioManager.i.PlaySfx(AudioId.UnitObtained, pauseMusic: true);
         
         yield return DialogManager.Instance.ShowDialogText($"{unitToGive.Base.Name}와(과) 동료가 되었다!");
     }

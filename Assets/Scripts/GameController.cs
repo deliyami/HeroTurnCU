@@ -49,11 +49,16 @@ public class GameController : MonoBehaviour
             if (state == GameState.Dialog)
                 state = prevState;
         };
-        menuController.onBack += () =>
+        MenuController.i.onBack += () =>
         {
             state = GameState.FreeRoam;
         };
-        menuController.onMenuSelected += OnMenuSelected;
+        MenuController.i.onMenuSelected += OnMenuSelected;
+        // menuController.onBack += () =>
+        // {
+        //     state = GameState.FreeRoam;
+        // };
+        // menuController.onMenuSelected += OnMenuSelected;
 
         EvolutionManager.i.OnStartEvolution += () => 
         {
@@ -64,6 +69,8 @@ public class GameController : MonoBehaviour
         {
             partyScreen.SetPartyData();
             state = GameState.FreeRoam;
+
+            AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
         ShopController.i.OnStart += () => { 
             state = GameState.Shop;
@@ -134,7 +141,12 @@ public class GameController : MonoBehaviour
         worldCamera.gameObject.SetActive(true);
 
         var playerParty = playerController.GetComponent<UnitParty>();
-        StartCoroutine(playerParty.CheckForEvolutions());
+        // bool hasEvolutions = playerParty.CheckForEvolution();
+        // if (hasEvolutions)
+        //     StartCoroutine(playerParty.RunEvolutions());
+        // else
+        //     AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
+        AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
     }
     private void Update()
     {
@@ -221,6 +233,15 @@ public class GameController : MonoBehaviour
             state = GameState.FreeRoam;
         }
         
+    }
+    public IEnumerator MoveCamera(Vector2 moveOffset, bool waitForFadeOut = false)
+    {
+        yield return Fader.i.FadeIn(0.5f);
+        worldCamera.transform.position += new Vector3(moveOffset.x, moveOffset.y);
+        if (waitForFadeOut)
+            yield return Fader.i.FadeOut(0.5f);
+        else
+            StartCoroutine(Fader.i.FadeOut(0.5f));
     }
     public GameState State => state;
 }

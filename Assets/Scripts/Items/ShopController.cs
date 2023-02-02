@@ -6,12 +6,16 @@ using UnityEngine;
 public enum ShopState { Menu, Buying, Selling, Busy }
 public class ShopController : MonoBehaviour
 {
+    [SerializeField] Vector2 shopCameraOffset;
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] ShopUI shopUI;
     [SerializeField] WalletUI walletUI;
     [SerializeField] CountSelectorUI countSelectorUI;
     public event Action OnStart;
     public event Action OnFinish;
     ShopState state;
+
+    Merchant merchant;
     public static ShopController i { get; private set; }
     private void Awake()
     {
@@ -24,6 +28,7 @@ public class ShopController : MonoBehaviour
     }
     public IEnumerator StartTrading(Merchant merchant)
     {
+        this.merchant = merchant;
         OnStart?.Invoke();
         yield return StartMenuState();
     }
@@ -38,6 +43,11 @@ public class ShopController : MonoBehaviour
             onChoiceSelected: choiceIndex => selectedChoice = choiceIndex );
         if (selectedChoice == 0)
         {
+            
+            yield return GameController.Instance.MoveCamera(shopCameraOffset);
+            walletUI.Show();
+            shopUI.Show(merchant.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
+                () => StartCoroutine(OnBackFromBuying()));
             state = ShopState.Buying;
         }
         else if (selectedChoice == 1)
@@ -56,6 +66,10 @@ public class ShopController : MonoBehaviour
         if (state == ShopState.Selling)
         {
             inventoryUI.HandleUpdate(onBackFromSelling, (selectedItem) => StartCoroutine(SellItem(selectedItem)));
+        }
+        else if (state == ShopState.Buying)
+        {
+            shopUI.HandleUpdate();
         }
     }
 
@@ -103,5 +117,47 @@ public class ShopController : MonoBehaviour
         }
         // walletUI.Close();
         state = ShopState.Selling;
+    }
+
+    IEnumerator BuyItem(ItemBase item)
+    {
+        state = ShopState.Busy;
+
+        yield return DialogManager.Instance.ShowDialogText($"보이면 버그",
+            waitForInput: false, autoClose: false);
+        int countToBuy = 1;
+        yield return countSelectorUI.ShowSelector(100, item.Price,
+            (selectCount) => countToBuy = selectCount);
+
+        DialogManager.Instance.CloseDialog();
+
+        float totalPrice = item.Price * countToBuy;
+
+        if (Wallet.i.HasMoney(totalPrice))
+        {
+            int selectedChoice = 0;
+            yield return DialogManager.Instance.ShowDialogText("사고 싶은게 있어?",
+                // waitForInput: false,
+                choices: new List<string>() { "사기", "팔기", "닫기" },
+                onChoiceSelected: choiceIndex => selectedChoice = choiceIndex );
+            if (selectedChoice == 0)
+            {
+                inventory.AddItem(item, countToBuy);
+                Wallet.i.TakeMoney(totalPrice);
+                yield return DialogManager.Instance.ShowDialogText($"보이면 버그 구매");
+            }
+        }
+        else
+        {
+            yield return DialogManager.Instance.ShowDialogText($"보이면 버그 돈이 부족");
+        }
+        state = ShopState.Buying;
+    }
+    IEnumerator OnBackFromBuying()
+    {
+        yield return GameController.Instance.MoveCamera(-shopCameraOffset);
+        shopUI.Close();
+        walletUI.Close();
+        StartCoroutine(StartMenuState());
     }
 }

@@ -73,4 +73,6 @@ ProjectVersion.txt
 # ====================== #
 
 # https://github.com/GameDevExperiments/SavingSystem #
-Assets/Scripts/Saving/*
+Assets/Scripts/Saving/
+
+Assets/Audio/

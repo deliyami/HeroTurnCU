@@ -45,7 +45,11 @@ public class UnitParty : MonoBehaviour
             // TODO: 외부로 보낼 것
         }
     }
-    public IEnumerator CheckForEvolutions()
+    public bool CheckForEvolution()
+    {
+        return units.Any(u => u.CheckForEvolution() != null);
+    }
+    public IEnumerator RunEvolutions()
     {
         foreach (var unit in units)
         {

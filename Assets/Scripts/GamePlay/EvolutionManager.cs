@@ -8,6 +8,7 @@ public class EvolutionManager : MonoBehaviour
 {
     [SerializeField] GameObject evolutionUI;
     [SerializeField] Image unitImage;
+    [SerializeField] AudioClip evolutionMusic;
 
     public event Action OnStartEvolution;
     public event Action OnCompleteEvolution;
@@ -22,6 +23,8 @@ public class EvolutionManager : MonoBehaviour
     {
         OnStartEvolution?.Invoke();
         evolutionUI.SetActive(true);
+
+        AudioManager.i.PlayMusic(evolutionMusic);
 
         unitImage.sprite = unit.Base.FrontSprite;
         yield return DialogManager.Instance.ShowDialogText($"보이면 안되는 창이야!");

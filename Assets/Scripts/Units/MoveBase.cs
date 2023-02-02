@@ -23,6 +23,8 @@ public class MoveBase : ScriptableObject
     [SerializeField] List<Secondaries> secondaries;
     [SerializeField] MoveTarget target;
 
+    [SerializeField] AudioClip sound;
+
     public string Name {
         get { return name; }
     }
@@ -63,6 +65,8 @@ public class MoveBase : ScriptableObject
     public int Priority {
         get { return priority; }
     }
+
+    public AudioClip Sound => sound;
 }
 
 [System.Serializable]

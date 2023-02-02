@@ -360,6 +360,7 @@ MonoBehaviour:
     - name: "\uD14C\uC2A4\uD2B8\uC0B4"
       text: "\uC0B4\uB77C\uB9CC\uB2E4\uC785\uB2C8\uB2E4. \uD14C\uC2A4\uD2B8, \uC804\uD22C."
       expression: 3
+      isSystem: 0
       isLeft: 0
       imgReverse: 1
   dialogAfterBattle:
@@ -367,15 +368,18 @@ MonoBehaviour:
     - name: "\uD14C\uC2A4\uD2B8\uC0B4"
       text: "\uD14C\uC2A4\uD2B8 \uC804\uD22C \uB05D\uB0AC\uC2B5\uB2C8\uB2E4."
       expression: 2
+      isSystem: 0
       isLeft: 1
       imgReverse: 0
     - name: "\uD14C\uC2A4\uD2B8\uC0B4"
       text: "\uC774\uAE30\uC168\uC2B5\uB2C8\uB2E4"
       expression: 1
+      isSystem: 0
       isLeft: 0
       imgReverse: 1
   exclamation: {fileID: 5673436149494636134}
   fov: {fileID: 5673436149429205329}
+  TrainerAppearsClip: {fileID: 8300000, guid: 013bf461c36fc5d45ae6f7e354e4e35f, type: 3}
 --- !u!114 &5673436149689442575
 MonoBehaviour:
   m_ObjectHideFlags: 0

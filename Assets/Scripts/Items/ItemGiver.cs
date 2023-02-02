@@ -16,7 +16,7 @@ public class ItemGiver : MonoBehaviour, ISavable
         player.GetComponent<Inventory>().AddItem(item, count);
 
         used = true;
-        
+        AudioManager.i.PlaySfx(AudioId.ItemObtained, pauseMusic: true);
         yield return DialogManager.Instance.ShowDialogText($"{item.Name}을(를) 받았다!");
     }
 

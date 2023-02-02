@@ -23,15 +23,21 @@ public class Character : MonoBehaviour
 
         transform.position = pos;
     }
-    public IEnumerator Move(Vector2 moreVec, Action OnMoveOver=null)
+    public IEnumerator Move(Vector2 moveVec, Action OnMoveOver=null)
     {
-        animator.MoveX = Mathf.Clamp(moreVec.x, -1f, 1f);
-        animator.MoveY = Mathf.Clamp(moreVec.y, -1f, 1f);
+        animator.MoveX = Mathf.Clamp(moveVec.x, -1f, 1f);
+        animator.MoveY = Mathf.Clamp(moveVec.y, -1f, 1f);
         
         var targetPos = transform.position;
-        targetPos.x += moreVec.x;
-        targetPos.y += moreVec.y;
+        targetPos.x += moveVec.x;
+        targetPos.y += moveVec.y;
 
+        var ledge = CheckForLedge(targetPos);
+        if (ledge != null)
+        {
+            if (ledge.TryToJump(this, moveVec))
+                yield break;
+        }
         // speed boots
         // if(Input.GetButton("Run") && this.moveSpeed == 3) this.moveSpeed = 5;
         // else if(!Input.GetButton("Run") && this.moveSpeed == 5) this.moveSpeed = 3;
@@ -77,6 +83,11 @@ public class Character : MonoBehaviour
             return false;
         }
         return true;
+    }
+    Ledge CheckForLedge(Vector3 targetPos)
+    {
+        var collider = Physics2D.OverlapCircle(targetPos, 0.15f, GameLayers.i.LedgeLayer);
+        return collider?.GetComponent<Ledge>();
     }
 
     public void LookTowards(Vector3 targetPos)
