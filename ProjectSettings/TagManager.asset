@@ -53,11 +53,11 @@ TagManager:
   - name: Player
     uniqueID: 2903174987
     locked: 0
-  - name: Battle
-    uniqueID: 688749637
-    locked: 0
   - name: Blind
     uniqueID: 1155575287
+    locked: 0
+  - name: Battle
+    uniqueID: 688749637
     locked: 0
   - name: UI
     uniqueID: 1035876711

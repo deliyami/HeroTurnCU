@@ -175,7 +175,6 @@ public class Unit
 
     private int CalculateBaseStats(int stat, int statIndex) {
         int staticValue = statIndex == 0 ? (10 + Level) : 5;
-        Debug.Log($"스텟 계산 중... 이름:{Base.name}, level:{level}, stat/index:{stat}/{statIndex}");
         float personalityData = (1.0f + (Personality[0] == statIndex ? 0.1f : 0) - (Personality[1] == statIndex ? 0.1f : 0));
         return (int)((((stat * 2) + Tribe[statIndex] + (Effort[statIndex] / 4)) * Level / 100 + staticValue) * personalityData);
     }

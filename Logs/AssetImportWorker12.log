@@ -2677,3 +2677,151 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 3617.245175 seconds.
+  path: Assets/Images/Sprites
+  artifactKey: Guid(7a52f72f95a6c4545b2ce64aaa40f4ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Sprites using Guid(7a52f72f95a6c4545b2ce64aaa40f4ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb598ebf90130abdec2d714d8639cbc3') in 0.011578 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 131.027999 seconds.
+  path: Assets/Images/Sprites/sprites_ghost.png
+  artifactKey: Guid(4ba3f7a08ccc24e4d9655a357f48106c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Sprites/sprites_ghost.png using Guid(4ba3f7a08ccc24e4d9655a357f48106c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08ecd5847923def8aeeffa06e3a412a1') in 0.112343 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Images/Sprites/sprites_treka.png
+  artifactKey: Guid(75a886bb2d8433e4fbd1c4e3c026ecec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Sprites/sprites_treka.png using Guid(75a886bb2d8433e4fbd1c4e3c026ecec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '894d0dab621e6fd6be846dc6f403683c') in 0.032961 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Images/RPGXPACE/Battlebacks2/Stone1.png
+  artifactKey: Guid(4515406074b621a438eff17d74afcfdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlebacks2/Stone1.png using Guid(4515406074b621a438eff17d74afcfdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b36dfeb88d2804e17040dfe13ebbea6') in 0.064756 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Images/RPGXPACE/Battlebacks2/Stone4.png
+  artifactKey: Guid(c93e197381429b94c87d810bc952ac8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlebacks2/Stone4.png using Guid(c93e197381429b94c87d810bc952ac8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '81a9301706d6ffa0e073eb88aa0df708') in 0.045483 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/Images/RPGXPACE/Animations/State3.png
+  artifactKey: Guid(3992e42ad48b5a64bb2eb4059c473ed2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Animations/State3.png using Guid(3992e42ad48b5a64bb2eb4059c473ed2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cce9dd36e48afa866f8f3b0041c8a976') in 0.060909 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Images/RPGXPACE/Battlebacks2/Stone3.png
+  artifactKey: Guid(6c0529b0268e84b4fb32600bb5bde53a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlebacks2/Stone3.png using Guid(6c0529b0268e84b4fb32600bb5bde53a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d3916f9aaffd1a4171739bf10823781') in 0.046692 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000045 seconds.
+  path: Assets/Images/RPGXPACE/Animations/State2.png
+  artifactKey: Guid(829c7ddf5ec5659449cda1ab0b1bc3a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Animations/State2.png using Guid(829c7ddf5ec5659449cda1ab0b1bc3a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f37c9ad4d51f4edc6f2a638cff0086b3') in 0.082552 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/Images/Sprites/sprites_violet_reverse.png
+  artifactKey: Guid(52194e9afc1438f4a84e8c12b83ad26e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Sprites/sprites_violet_reverse.png using Guid(52194e9afc1438f4a84e8c12b83ad26e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61c36b010eedad12a363ba0e2eb405b3') in 0.045398 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Images/Sprites/sprites_karl.png
+  artifactKey: Guid(0ed11fe672993924c8bcd5e84db958fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Sprites/sprites_karl.png using Guid(0ed11fe672993924c8bcd5e84db958fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb435e3e9299d8b9ce50d72af996fe65') in 0.036287 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Images/RPGXPACE/Battlebacks1/Stone1.png
+  artifactKey: Guid(fdb403fe2263b3441bc06eec53060f12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlebacks1/Stone1.png using Guid(fdb403fe2263b3441bc06eec53060f12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '644d7eeeed1d5adc60ece7eb0880cdff') in 0.057807 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/Images/RPGXPACE/Animations/State6.png
+  artifactKey: Guid(6cc8fd67410ecaf47ab53a39d27c5fa3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Animations/State6.png using Guid(6cc8fd67410ecaf47ab53a39d27c5fa3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '744c5525ec7558cc7fbc95498493b89c') in 0.081070 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Images/RPGXPACE/Battlebacks1/Stone2.png
+  artifactKey: Guid(caf1cb4b91ac80545afd3e59f8761c65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlebacks1/Stone2.png using Guid(caf1cb4b91ac80545afd3e59f8761c65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64e279c2d1283a8d4e5ecd0ed91308cc') in 0.047047 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Images/RPGXPACE/Battlers/Succubus.png
+  artifactKey: Guid(5f177a0259a009e4f90441a94730d16a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlers/Succubus.png using Guid(5f177a0259a009e4f90441a94730d16a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8169f746e6d60ba5652e9a6c76e5e646') in 0.036768 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Images/RPGXPACE/Battlebacks2/Stone5.png
+  artifactKey: Guid(c22bae7ae1a5ec74091fd95e7953e9f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/RPGXPACE/Battlebacks2/Stone5.png using Guid(c22bae7ae1a5ec74091fd95e7953e9f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f713395df6c413621419f77ffd1599a0') in 0.041254 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.197047 seconds.
+  path: Assets/Images/Sprites/sprite_controller_reverse.png
+  artifactKey: Guid(5c352c12cc0cad64897f4dfe83bfacbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Sprites/sprite_controller_reverse.png using Guid(5c352c12cc0cad64897f4dfe83bfacbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '37816edfa34ccf556764cf3647249837') in 0.025921 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.988130 seconds.
+  path: Assets/Images/Tiles/Basic color.prefab
+  artifactKey: Guid(a3090a381597c0940a4509a3586b6dfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/Basic color.prefab using Guid(a3090a381597c0940a4509a3586b6dfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a566fab6ee96bef6c86039221ba7b22') in 0.054365 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Images/Tiles/field_10.asset
+  artifactKey: Guid(ca2adcdd5f4a04e46a63cd105db2ce41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/field_10.asset using Guid(ca2adcdd5f4a04e46a63cd105db2ce41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27db074f0e5e9c526fddec93f6c683af') in 0.037465 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000058 seconds.
+  path: Assets/Images/Tiles/field_7.asset
+  artifactKey: Guid(1cbf9b6ac836b2c4c98af7eae603d75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/field_7.asset using Guid(1cbf9b6ac836b2c4c98af7eae603d75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a269ee23a5c304d2672921a5f17b0084') in 0.030030 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Images/Tiles/basic_colors_2.asset
+  artifactKey: Guid(3de93b65a1cbe9147b7a5f562385cd02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/basic_colors_2.asset using Guid(3de93b65a1cbe9147b7a5f562385cd02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4af2c948cfd0f2f20c7ab01de36cf9e2') in 0.019606 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Images/Tiles/field_18.asset
+  artifactKey: Guid(c7ad9840b869adf49a76a27d2db5422f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/field_18.asset using Guid(c7ad9840b869adf49a76a27d2db5422f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '29c535a841ff3f15598e559410094758') in 0.013670 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/Images/Tiles/field_6.asset
+  artifactKey: Guid(80b4ef70919b96c498d5d1cb0e6f43bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/field_6.asset using Guid(80b4ef70919b96c498d5d1cb0e6f43bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '745e66970b8698145d81c43ac36a555f') in 0.019480 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Images/Tiles/Field.png
+  artifactKey: Guid(c6f1eaacefd24c44284f8e6b83b6a6f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/Field.png using Guid(c6f1eaacefd24c44284f8e6b83b6a6f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '207bfaa3a93355bf4597e3b23e215b57') in 0.160093 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.535596 seconds.
+  path: Assets/Images/Tiles/surf_sprites.png
+  artifactKey: Guid(14ced2238d82c7149b8f5a0481222249) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Tiles/surf_sprites.png using Guid(14ced2238d82c7149b8f5a0481222249) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3756ee2e703472d3cfddd44be606e7c') in 0.040627 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
