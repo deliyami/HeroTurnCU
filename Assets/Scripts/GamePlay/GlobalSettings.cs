@@ -5,6 +5,9 @@ using UnityEngine;
 public class GlobalSettings : MonoBehaviour
 {
     [SerializeField] UIMode screenMode;
+
+    // TODO 글자 색, UI 전부 global세팅에 맞춰서
+    // 게임 내에서 옵션 창 누르면 UI 바꿀 수 있도록 해야 함
     [Header("글자 색")]
     [SerializeField] Color highLightedColor;
     [SerializeField] Color unchosenColor;

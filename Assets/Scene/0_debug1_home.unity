@@ -4856,7 +4856,7 @@ MonoBehaviour:
   actions:
   - rid: 622563350790799365
   - rid: 622563358411063296
-  - rid: 622563350790799366
+  - rid: 622563358411063302
   - rid: 622563352821366785
   - rid: 622563352821366786
   - rid: 622563358411063297
@@ -4879,19 +4879,6 @@ MonoBehaviour:
         - {x: 0, y: 1}
         - {x: 1, y: 0}
         - {x: 1, y: 0}
-    - rid: 622563350790799366
-      type: {class: DialogueAction, ns: , asm: Assembly-CSharp}
-      data:
-        name: DialogueAction
-        waitForCompletion: 1
-        dialog:
-          lines:
-          - name: "\uD14C\uC2A4\uD2B8"
-            text: "\uD14C\uC2A4\uD2B8 \uC774\uBCA4\uD2B8 \uC785\uB2C8\uB2E4"
-            expression: 0
-            isSystem: 0
-            isLeft: 0
-            imgReverse: 1
     - rid: 622563352821366785
       type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
       data:
@@ -4974,6 +4961,12 @@ MonoBehaviour:
         waitForCompletion: 1
         go: {fileID: 1562779168}
         position: {x: -6.5, y: 9.8}
+    - rid: 622563358411063302
+      type: {class: NPCInteractAction, ns: , asm: Assembly-CSharp}
+      data:
+        name: NPCInteractAction
+        waitForCompletion: 1
+        npc: {fileID: 8878564352051061368}
 --- !u!4 &1466329820
 Transform:
   m_ObjectHideFlags: 0
@@ -12261,5 +12254,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb9b0c8aa61b377488544b86065dc120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8878564352051061368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8878564351186768305, guid: 83cff82c844b8df47a5cb0500baeeab3, type: 3}
+  m_PrefabInstance: {fileID: 8878564352051061364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562779168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1defe9b3c1b9b4248899909f20918f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
