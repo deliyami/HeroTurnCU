@@ -6,33 +6,59 @@ using UnityEngine;
 public class MapArea : MonoBehaviour
 {
     [SerializeField] List<UnitEncounterRecord> wildUnits;
+    [SerializeField] List<UnitEncounterRecord> wildUnitsInWater;
     [HideInInspector]
     [SerializeField] List<UnitEncounterRecord> findZeroChance;
     [HideInInspector]
     [SerializeField] int totalChance = 0;
+    [HideInInspector]
+    [SerializeField] int totalChanceWater = 0;
 
     private void OnValidate()
     {
-        totalChance = 0;
-        foreach (var record in wildUnits)    
-        {
-            record.chanceLower = totalChance;
-            record.chanceUpper = totalChance + record.chancePercentage;
-
-            totalChance = totalChance + record.chancePercentage;
-        }
+        CalculateChancePercentage();
     }
 
 
     private void Start()
     {
         findZeroChance = wildUnits;
+        CalculateChancePercentage();
+    }
+    void CalculateChancePercentage()
+    {
+        totalChance = 0;
+        totalChanceWater = 0;
+        if (wildUnits.Count > 0)
+        {
+            totalChance = 0;
+            foreach (var record in wildUnits)    
+            {
+                record.chanceLower = totalChance;
+                record.chanceUpper = totalChance + record.chancePercentage;
+
+                totalChance = totalChance + record.chancePercentage;
+            }
+        }
+        if (wildUnitsInWater.Count > 0)
+        {
+            totalChanceWater = 0;
+            foreach (var record in wildUnitsInWater)    
+            {
+                record.chanceLower = totalChanceWater;
+                record.chanceUpper = totalChanceWater + record.chancePercentage;
+
+                totalChanceWater = totalChanceWater + record.chancePercentage;
+            }
+        }
     }
 
-    public Unit GetRandomWildUnit()
+    public Unit GetRandomWildUnit(BattleTrigger trigger)
     {
-        int randVal = Random.Range(0, totalChance + 1);
-        var unitRecord = wildUnits.First(u => randVal >= u.chanceLower && randVal <= u.chanceUpper);
+        var unitList = (trigger == BattleTrigger.LongGrass)? wildUnits:wildUnitsInWater;
+        int thisChance = (trigger == BattleTrigger.LongGrass)? totalChance: totalChanceWater;
+        int randVal = Random.Range(0, thisChance + 1);
+        var unitRecord = unitList.First(u => randVal >= u.chanceLower && randVal <= u.chanceUpper);
         var levelRange = unitRecord.LevelRange;
         int level = levelRange.y < levelRange.x?levelRange.x : Random.Range(levelRange.x, levelRange.y + 1);
 

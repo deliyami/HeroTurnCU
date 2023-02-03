@@ -17,6 +17,7 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.tag = "Menu";
         i = this;
         menuItems = menu.GetComponentsInChildren<TextMeshProUGUI>().ToList();
     }

@@ -18,13 +18,14 @@ public class GameController : MonoBehaviour
     public SceneDetails PrevScene { get; private set; }
     MenuController menuController;
     public static GameController Instance { get; private set; }
-
     private void Awake()
     {
         // Cursor.lockState = CursorLockMode.Locked;
         // Cursor.visible = false;
         Instance = this;
-        menuController = GetComponent<MenuController>();
+        // menuController = GetComponentInParent<MenuController>();
+        menuController = GameObject.FindWithTag("Menu").GetComponent<MenuController>();
+        // menuController = transform.Find("UI Canvas").GetComponent<MenuController>();
 
         UnitDB.Init();
         MoveDB.Init();
@@ -90,19 +91,20 @@ public class GameController : MonoBehaviour
             state = prevState;
         }
     }
-    public void StartBattle()
+    public void StartBattle(BattleTrigger trigger)
     {
+        
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
 
         var playerParty = playerController.GetComponent<UnitParty>();
         // var wildUnit = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildUnit();
-        var wildUnit = CurrentScene.GetComponent<MapArea>().GetRandomWildUnit();
+        var wildUnit = CurrentScene.GetComponent<MapArea>().GetRandomWildUnit(trigger);
 
         var wildUnitCopy = new Unit(wildUnit.Base, wildUnit.Level);
 
-        battleSystem.StartBattle(playerParty, wildUnit);
+        battleSystem.StartBattle(playerParty, wildUnit, trigger);
     }
 
     TrainerController trainer;

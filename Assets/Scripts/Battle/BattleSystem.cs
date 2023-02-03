@@ -8,6 +8,7 @@ using DG.Tweening;
 
 public enum BattleState { Start, ActionSelection, MoveSelection, RunningTurn, Busy, Bag, PartyScreen, AboutToUse, MoveToForget, BattleOver }
 public enum BattleAction { Move, SwitchUnit, UseItem, Run }
+public enum BattleTrigger { LongGrass, Water, Trainer }
 
 public class BattleSystem : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] AudioClip trainerBattleMusic;
     [SerializeField] AudioClip wildBattleVictoryMusic;
     [SerializeField] AudioClip trainerBattleVictoryMusic;
+
+    [Header("배경")]
+    [SerializeField] Image backgroundImage;
+    [SerializeField] Sprite grassBackground;
+    [SerializeField] Sprite waterBackground;
+    [SerializeField] Sprite trainerBackground;
 
 
     public event Action<bool> OnBattleOver;
@@ -47,8 +54,11 @@ public class BattleSystem : MonoBehaviour
     int escapeAttempts;
     MoveBase moveToLearn;
 
-    public void StartBattle(UnitParty playerParty, Unit wildUnit)
+    BattleTrigger battleTrigger;
+    public void StartBattle(UnitParty playerParty, Unit wildUnit,
+        BattleTrigger trigger = BattleTrigger.LongGrass)
     {
+        battleTrigger = trigger;
         this.playerParty = playerParty;
         this.wildUnit = wildUnit;
         player = playerParty.GetComponent<PlayerController>();
@@ -59,6 +69,7 @@ public class BattleSystem : MonoBehaviour
 
     public void StartTrainerBattle(UnitParty playerParty, UnitParty trainerParty)
     {
+        battleTrigger = BattleTrigger.Trainer;
         this.playerParty = playerParty;
         this.trainerParty = trainerParty;
 
@@ -73,6 +84,14 @@ public class BattleSystem : MonoBehaviour
     {
         playerUnit.Clear();
         enemyUnit.Clear();
+        Sprite selectedBackground;
+        if (battleTrigger == BattleTrigger.LongGrass)
+            selectedBackground = grassBackground;
+        else if (battleTrigger == BattleTrigger.Water)
+            selectedBackground = waterBackground;
+        else 
+            selectedBackground = trainerBackground;
+        backgroundImage.sprite = selectedBackground;
 
         if(!isTrainerBattle)
         {

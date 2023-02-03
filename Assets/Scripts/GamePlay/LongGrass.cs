@@ -6,14 +6,14 @@ public class LongGrass : MonoBehaviour, IPlayerTriggerable
 {
     public void OnPlayerTriggered(PlayerController player)
     {
-        // if (UnityEngine.Random.Range(1, 101) <= 10)
-        // {
+        if (UnityEngine.Random.Range(1, 101) <= 10)
+        {
             player.Character.Animator.IsMoving = false;
-        //     GameController.Instance.StartBattle();
-        // }
+            GameController.Instance.StartBattle(BattleTrigger.LongGrass);
+        }
         
         // 100% 만남
-        GameController.Instance.StartBattle();
+        // GameController.Instance.StartBattle();
     }
     public bool TriggerRepeatedly => true;
 }
