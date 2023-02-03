@@ -67,6 +67,11 @@ public class DialogManager : MonoBehaviour
 
         foreach (var line in dialog.Lines)
         {
+            // TODO, isSystem이라고 적혀있는게 있음
+            // system은 showDialogText를 쓰면 되는데 왜 굳이 여기로 들어오나?
+            // 이벤트라던가, 아이템 사용 등에서 이 showdailog를 사용하는 경우가 있어서
+            // 그 경우를 위해 isSystem이라는 변수가 dialog.lines의 line안에 들어가있음
+            // 그래서 그것을 여기서 처리해야 함
             AudioManager.i.PlaySfx(AudioId.UISelect);
             dialogName.text = line.Name;
             yield return TypeDialog(line.Text);
