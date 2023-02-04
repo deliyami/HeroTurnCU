@@ -28,10 +28,20 @@ public class UnitParty : MonoBehaviour
         
     }
 
-    public Unit GetHealtyhUnit()
+    public Unit GetHealtyhUnit(List<Unit> dontInclude = null)
     {
-        return units.Where(x => x.HP > 0).FirstOrDefault();
+        var healthyUnits = units.Where(x => x.HP > 0);
+        if (dontInclude != null)
+            healthyUnits = healthyUnits.Where(u => !dontInclude.Contains(u));
+        // TODO: 카를인 경우엔 적 타입보고 사용할 것
+        return healthyUnits.FirstOrDefault();
     }
+
+    public List<Unit> GetHealtyhUnits(int unitCount)
+    {
+        return units.Where(x => x.HP > 0).Take(unitCount).ToList();
+    }
+
 
     public void AddUnit(Unit newUnit)
     {

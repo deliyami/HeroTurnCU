@@ -48,7 +48,6 @@ public class BattleHud : MonoBehaviour
 
         _unit = unit;
         UpdateData();
-        // Debug.Log($"여기는 battleHud {unit.Base.Name}: {unit.HP}/{unit.MaxHP}");
 
         statusColors = new Dictionary<ConditionID, Color>()
         {

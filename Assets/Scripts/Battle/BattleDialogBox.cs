@@ -88,9 +88,9 @@ public class BattleDialogBox : MonoBehaviour
         }
 
         ppText.text = $"PP {move.PP}/ {move.Base.PP}";
-        typeText.text = move.Base.Type.ToString();
+        typeText.text = Type.GetType(move.Base.Type);
         // typeSprite.Type.Base.Courage
-        typeSprite.Setup(typeText.text);
+        typeSprite.Setup(move.Base.Type);
 
         if (move.PP == 0)
             ppText.color = Color.red;

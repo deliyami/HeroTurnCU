@@ -317,13 +317,16 @@ public class Unit
     // virtual public int SettingRealStat() {
     //     return (((STAT * 2) + tribe + (effort / 4)) * level / 100 + 5) * personality;
     // }
-    public DamageDetails TakeDamage(Move move, Unit attacker)
+    public DamageDetails TakeDamage(Move move, Unit attacker, Condition weather)
     {
         float critical = 1f;
         if (Random.value * 100f <= 6.25f)
             critical = 2f;
-        float typeEffectiveness = TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type1) * TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type2);
         critical = 2f;
+        float typeEffectiveness = TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type1) * TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type2);
+
+        float weatherMod = weather?.OnDamageModify?.Invoke(this, attacker, move) ?? 1f;
+
         var damageDetails = new DamageDetails()
         {
             TypeEffectiveness = typeEffectiveness,
@@ -335,7 +338,7 @@ public class Unit
         float defense = (move.Base.Category == MoveCategory.Special) ? SpDefense : Defense;
 
         // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3)
-        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical;
+        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod;
         // 데미지 = (레벨 × 2 + 10) ÷ 250
         float a = (2 * attacker.Level + 10) / 250f;
         // 위력 × (특수공격 ÷ 특수방어)) × Mod1) + 2)

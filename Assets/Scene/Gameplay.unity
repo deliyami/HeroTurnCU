@@ -3782,12 +3782,6 @@ MonoBehaviour:
     personality: 0000000000000000
     LevelRange: {x: 10, y: 0}
     chancePercentage: 30
-  - unit: {fileID: 11400000, guid: 9a33def534605f949bde596cbabfc824, type: 2}
-    tribe: 000000000000000000000000000000000000000000000000
-    effort: 000000000000000000000000000000000000000000000000
-    personality: 0000000000000000
-    LevelRange: {x: 10, y: 15}
-    chancePercentage: 70
   wildUnitsInWater:
   - unit: {fileID: 11400000, guid: 8e44d9d3ddb03614da43b0cfe7a1951d, type: 2}
     tribe: 000000000000000000000000000000000000000000000000
@@ -3796,7 +3790,7 @@ MonoBehaviour:
     LevelRange: {x: 15, y: 16}
     chancePercentage: 10
   findZeroChance: []
-  totalChance: 100
+  totalChance: 30
   totalChanceWater: 10
 --- !u!1001 &6865942915875788284
 PrefabInstance:

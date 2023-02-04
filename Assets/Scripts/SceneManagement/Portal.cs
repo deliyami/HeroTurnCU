@@ -32,7 +32,6 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
         yield return fader.FadeIn(0.5f);
 
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
-        // Debug.Log("포탈 사용");
 
         var destPortal = FindObjectsOfType<Portal>().First(x => x!= this && x.destinationPortal == this.destinationPortal);
 

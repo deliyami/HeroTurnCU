@@ -15,70 +15,47 @@ public class BattleType : MonoBehaviour
         get { return type; }
     }
 
-    public void Setup(string typeText)
+    public void Setup(UnitType unitType)
     {
         type = new Type(_base);
         // GetComponent<Image>().sprite = type.Base.Fire;
-
-        switch(typeText){
-            case "없음":
-                GetComponent<Image>().sprite = type.Base.Normal;
-                break;
-            case "불꽃":
-                GetComponent<Image>().sprite = type.Base.Fire;
-                break;
-            case "풀":
-                GetComponent<Image>().sprite = type.Base.Grass;
-                break;
-            case "물":
-                GetComponent<Image>().sprite = type.Base.Water;
-                break;
-            case "번개":
-                GetComponent<Image>().sprite = type.Base.Electric;
-                break;
-            case "얼음":
-                GetComponent<Image>().sprite = type.Base.Ice;
-                break;
-            case "용기":
-                GetComponent<Image>().sprite = type.Base.Courage;
-                break;
-            case "독":
-                GetComponent<Image>().sprite = type.Base.Poison;
-                break;
-            case "흙":
-                GetComponent<Image>().sprite = type.Base.Soil;
-                break;
-            case "하늘":
-                GetComponent<Image>().sprite = type.Base.Sky;
-                break;
-            case "마법":
-                GetComponent<Image>().sprite = type.Base.Psycho;
-                break;
-            case "바람":
-                GetComponent<Image>().sprite = type.Base.Wind;
-                break;
-            case "바위":
-                GetComponent<Image>().sprite = type.Base.Stone;
-                break;
-            case "유령":
-                GetComponent<Image>().sprite = type.Base.Ghost;
-                break;
-            case "용":
-                GetComponent<Image>().sprite = type.Base.Dragon;
-                break;
-            case "악마":
-                GetComponent<Image>().sprite = type.Base.Devil;
-                break;
-            case "강철":
-                GetComponent<Image>().sprite = type.Base.Steel;
-                break;
-            case "이상함":
-                GetComponent<Image>().sprite = type.Base.Strange;
-                break;
-            default:
-                GetComponent<Image>().sprite = type.Base.None;
-                break;
-        }
+        if (unitType == UnitType.Normal)
+            GetComponent<Image>().sprite = type.Base.Normal;
+        else if (unitType == UnitType.Fire)
+            GetComponent<Image>().sprite = type.Base.Fire;
+        else if (unitType == UnitType.Water)
+            GetComponent<Image>().sprite = type.Base.Water;
+        else if (unitType == UnitType.Grass)
+            GetComponent<Image>().sprite = type.Base.Grass;
+        else if (unitType == UnitType.Electric)
+            GetComponent<Image>().sprite = type.Base.Electric;
+        else if (unitType == UnitType.Ice)
+            GetComponent<Image>().sprite = type.Base.Ice;
+        else if (unitType == UnitType.Courage)
+            GetComponent<Image>().sprite = type.Base.Courage;
+        else if (unitType == UnitType.Poison)
+            GetComponent<Image>().sprite = type.Base.Poison;
+        else if (unitType == UnitType.Soil)
+            GetComponent<Image>().sprite = type.Base.Soil;
+        else if (unitType == UnitType.Sky)
+            GetComponent<Image>().sprite = type.Base.Sky;
+        else if (unitType == UnitType.Psycho)
+            GetComponent<Image>().sprite = type.Base.Psycho;
+        else if (unitType == UnitType.Wind)
+            GetComponent<Image>().sprite = type.Base.Wind;
+        else if (unitType == UnitType.Stone)
+            GetComponent<Image>().sprite = type.Base.Stone;
+        else if (unitType == UnitType.Ghost)
+            GetComponent<Image>().sprite = type.Base.Ghost;
+        else if (unitType == UnitType.Dragon)
+            GetComponent<Image>().sprite = type.Base.Dragon;
+        else if (unitType == UnitType.Devil)
+            GetComponent<Image>().sprite = type.Base.Devil;
+        else if (unitType == UnitType.Steel)
+            GetComponent<Image>().sprite = type.Base.Steel;
+        else if (unitType == UnitType.Strange)
+            GetComponent<Image>().sprite = type.Base.Strange;
+        else
+            GetComponent<Image>().sprite = type.Base.None;
     }
-
 }

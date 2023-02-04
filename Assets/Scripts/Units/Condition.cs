@@ -9,8 +9,11 @@ public class Condition
     public string Name { get; set; }
     public string Description { get; set; }
     public string StartMessage { get; set; }
+    public string EffectMessage { get; set; }
     
     public Action<Unit> OnStart { get; set; }
     public Func<Unit, bool> OnBeforeMove { get; set; }
     public Action<Unit> OnAfterTurn { get; set; }
+    public Action<Unit> OnWeather { get; set; }
+    public Func<Unit, Unit, Move, float> OnDamageModify { get; set; }
 }

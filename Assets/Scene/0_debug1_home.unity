@@ -10939,11 +10939,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: units.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: units.Array.data[0].level
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e44d9d3ddb03614da43b0cfe7a1951d, type: 2}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].level
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].tribe.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].tribe.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].tribe.Array.data[2]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].tribe.Array.data[3]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].tribe.Array.data[4]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].tribe.Array.data[5]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].personality.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[1].personality.Array.data[1]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442584, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: m_Name

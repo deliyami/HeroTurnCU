@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ConditionDB
@@ -146,6 +147,76 @@ public class ConditionDB
                 }
             }
         },
+        // 날씨
+        {
+            ConditionID.sunny,
+            new Condition()
+            {
+                Name = "쾌청",
+                StartMessage = "햇살이 강하다",
+                EffectMessage = "햇살이 내리쬔다",
+                OnDamageModify = (Unit source, Unit target, Move move) =>
+                {
+                    if (move.Base.Type == UnitType.Fire)
+                        return 1.5f;
+                    else if (move.Base.Type == UnitType.Water)
+                        return 0.5f;
+                    return 1f;
+                }
+            }
+        },
+        {
+            ConditionID.rain,
+            new Condition()
+            {
+                Name = "비",
+                StartMessage = "비가 내리기 시작했다",
+                EffectMessage = "비가 내린다",
+                OnDamageModify = (Unit source, Unit target, Move move) =>
+                {
+                    if (move.Base.Type == UnitType.Water)
+                        return 1.5f;
+                    else if (move.Base.Type == UnitType.Fire)
+                        return 0.5f;
+                    return 1f;
+                }
+            }
+        },
+        {
+            ConditionID.sandstorm,
+            new Condition()
+            {
+                Name = "모래바람",
+                StartMessage = "모래가 흩날리기 시작한다",
+                EffectMessage = "세찬 모래바람이 휘날린다",
+                OnWeather = (Unit unit) =>
+                {
+                    List<UnitType> checkType = new List<UnitType>(){UnitType.Soil, UnitType.Stone, UnitType.Steel};
+                    if (!(checkType.Any(type => type == unit.Base.Type1) || checkType.Any(type => type == unit.Base.Type2)))
+                    {
+                        unit.DecreaseHP(Mathf.RoundToInt((float)unit.MaxHP / 16f));
+                        unit.StatusChanges.Enqueue($"모래바람이 {unit.Base.Name}을(를) 덮친다!");
+                    }
+                }
+            }
+        },
+        {
+            ConditionID.hail,
+            new Condition()
+            {
+                Name = "싸라기눈",
+                StartMessage = "얼음 덩이가 떨어진다",
+                EffectMessage = "우박이 내리고 있다",
+                OnWeather = (Unit unit) =>
+                {
+                    if (!(UnitType.Ice == unit.Base.Type1 || UnitType.Ice == unit.Base.Type2))
+                    {
+                        unit.DecreaseHP(Mathf.RoundToInt((float)unit.MaxHP / 16f));
+                        unit.StatusChanges.Enqueue($"우박이 {unit.Base.Name}을(를) 덮친다!");
+                    }
+                }
+            }
+        },
     };
 
     public static float GetStatusBonus(Condition condition)
@@ -173,5 +244,6 @@ public enum ConditionID
         dpsn = 맹독 <= 구현 할 수 있을지 모르겠음
     */
     none, psn, brn, slp, par, frz, dpsn,
-    confusion
+    confusion,
+    sunny, rain, sandstorm, hail
 }

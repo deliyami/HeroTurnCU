@@ -22,8 +22,25 @@ public class MoveBase : ScriptableObject
     [SerializeField] MoveEffects effects;
     [SerializeField] List<Secondaries> secondaries;
     [SerializeField] MoveTarget target;
+    [SerializeField] Vector2Int hitRange;
 
     [SerializeField] AudioClip sound;
+
+    public int GetHitTimes()
+    {
+        if (hitRange == Vector2Int.zero)
+            return 1;
+        int hitCount = 1;
+        if (hitRange.y == 0)
+        {
+            hitCount = hitRange.x;
+        }
+        else
+        {
+            hitCount = Random.Range(hitRange.x, hitRange.y + 1);
+        }
+        return hitCount;
+    }
 
     public string Name {
         get { return name; }
@@ -75,6 +92,7 @@ public class MoveEffects
     [SerializeField] List<StatBoost> boosts;
     [SerializeField] ConditionID status;
     [SerializeField] ConditionID volatileStatus;
+    [SerializeField] ConditionID weather;
 
     public List<StatBoost> Boosts {
         get { return boosts; }
@@ -85,6 +103,9 @@ public class MoveEffects
     }
     public ConditionID VolatileStatus{
         get { return volatileStatus; }
+    }
+    public ConditionID Weather {
+        get { return weather; }
     }
 }
 

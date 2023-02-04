@@ -11,7 +11,6 @@ public class Healer : MonoBehaviour
             waitForInput: false,
             choices: new List<string>() { "네", "아니오" },
             onChoiceSelected: (choiceIndex) => selectedChoice = choiceIndex);
-        Debug.Log($"Selecte{selectedChoice}");
         if (selectedChoice == 0)
         {
             // 네

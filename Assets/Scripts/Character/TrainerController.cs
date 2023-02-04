@@ -6,6 +6,7 @@ using UnityEngine;
 public class TrainerController : MonoBehaviour, Interactable, ISavable
 {
     [SerializeField] new string name;
+    [SerializeField] int battleUnitCount = 1;
     [SerializeField] Sprite sprite;
     [SerializeField] Dialog dialog;
     [SerializeField] Dialog dialogAfterBattle;
@@ -38,7 +39,7 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
         {
             AudioManager.i.PlayMusic(TrainerAppearsClip);
             yield return DialogManager.Instance.ShowDialog(dialog);
-            GameController.Instance.StartTrainerBattle(this);
+            GameController.Instance.StartTrainerBattle(this, battleUnitCount);
         }
         else
         {
@@ -64,7 +65,7 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
 
         // 대화창 생성
         yield return DialogManager.Instance.ShowDialog(dialog);
-        GameController.Instance.StartTrainerBattle(this);
+        GameController.Instance.StartTrainerBattle(this, battleUnitCount);
     }
 
     public void BattleLost()

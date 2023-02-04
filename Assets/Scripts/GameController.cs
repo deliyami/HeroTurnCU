@@ -117,7 +117,7 @@ public class GameController : MonoBehaviour
 
     TrainerController trainer;
 
-    public void StartTrainerBattle(TrainerController trainer)
+    public void StartTrainerBattle(TrainerController trainer, int unitCount = 1)
     {
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
@@ -127,7 +127,7 @@ public class GameController : MonoBehaviour
         var playerParty = playerController.GetComponent<UnitParty>();
         var trainerParty = trainer.GetComponent<UnitParty>();
 
-        battleSystem.StartTrainerBattle(playerParty, trainerParty);
+        battleSystem.StartTrainerBattle(playerParty, trainerParty, unitCount);
     }
 
     public void OnEnterTrainersView(TrainerController trainer)
@@ -156,7 +156,7 @@ public class GameController : MonoBehaviour
         //     StartCoroutine(playerParty.RunEvolutions());
         // else
         //     AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
-        AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
+        AudioManager.i.PlayMusic(CurrentScene.SceneMusic, loop: false, fade: true);
     }
     private void Update()
     {

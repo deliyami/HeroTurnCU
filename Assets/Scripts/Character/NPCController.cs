@@ -42,7 +42,6 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
             {
                 var quest = new Quest(questToComplete);
                 yield return quest.CompletedQuest(initiator);
-                Debug.Log($"{questToComplete.Name}퀘스트 완료");
                 questToComplete = null;
 
             }
