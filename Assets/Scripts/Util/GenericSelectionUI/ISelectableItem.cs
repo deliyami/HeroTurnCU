@@ -3,5 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ISelectableItem {
+    void Init();
     void OnSelectionChange(bool selected);
 }

@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using GDEUtils.StateMachine;
+using System.Linq;
 
-public class MoveSelectionUI : MonoBehaviour
+public class MoveSelectionUI : SelectionUI<TextSlot>
 {
     [SerializeField] List<TextMeshProUGUI> moveTexts;
-    [SerializeField] Color highLightedColor;
-    int currentSelection = 0;
 
     public void SetMoveData(List<MoveBase> currentMoves, MoveBase newMove)
     {
@@ -18,30 +18,7 @@ public class MoveSelectionUI : MonoBehaviour
         }
 
         moveTexts[currentMoves.Count].text = newMove.Name;
+        SetItems(moveTexts.Select(m => m.GetComponent<TextSlot>()).ToList());
     }
 
-    public void HandleMoveSelection(Action<int> onSelected)
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            ++currentSelection;
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            --currentSelection;
-
-        currentSelection = Mathf.Clamp(currentSelection, 0, UnitBase.MaxNumOfMoves);
-        UpdateMoveSelection(currentSelection);
-        if (Input.GetButtonDown("Submit"))
-            onSelected?.Invoke(currentSelection);
-    }
-    public void UpdateMoveSelection(int selection)
-    {
-        for (int i = 0; i < UnitBase.MaxNumOfMoves + 1; ++i)
-        {
-            if (i == selection)
-                moveTexts[i].color = highLightedColor;
-            else
-                moveTexts[i].color = Color.white;
-        }
-
-        currentSelection = Mathf.Clamp(currentSelection, 0, UnitBase.MaxNumOfMoves);
-    }
 }

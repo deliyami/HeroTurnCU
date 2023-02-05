@@ -6,7 +6,7 @@ using TMPro;
 public class TextSlot : MonoBehaviour, ISelectableItem {
     [SerializeField] TextMeshProUGUI text;
     Color originalColor;
-    private void Awake() {
+    public void Init() {
         originalColor = text.color;
     }
     public void OnSelectionChange(bool selected) {

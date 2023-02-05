@@ -569,6 +569,7 @@ GameObject:
   - component: {fileID: 5324648148620086213}
   - component: {fileID: 5324648148620086212}
   - component: {fileID: 9142688414030552695}
+  - component: {fileID: 2107910875420939545}
   m_Layer: 0
   m_Name: PartyMember
   m_TagString: Untagged
@@ -674,6 +675,19 @@ MonoBehaviour:
   frzSprite: {fileID: -224207662, guid: 07348f4661ff5ed46bd804720466ae2c, type: 3}
   image: {fileID: 5324648147974667924}
   messageText: {fileID: 0}
+--- !u!114 &2107910875420939545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5324648148620086233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c002092a6788d934e92e61176ee14c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 5324648149164358575}
 --- !u!1 &5324648148972965522
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,6 +34,10 @@ public class Inventory : MonoBehaviour, ISavable
     public ItemBase UseItem(int itemIndex, Unit selectedUnit, int selectedCategory)
     {
         var item = GetItem(itemIndex, selectedCategory);
+        return UseItem(item, selectedUnit);
+    }
+    public ItemBase UseItem(ItemBase item, Unit selectedUnit)
+    {
         bool itemUsed = item.Use(selectedUnit);
         if (itemUsed)
         {
@@ -144,7 +148,7 @@ public class ItemSlot
     [SerializeField] int count;
     public ItemSlot()
     {
-        
+
     }
     public ItemSlot(ItemSaveData saveData)
     {
@@ -161,11 +165,13 @@ public class ItemSlot
         };
         return saveDate;
     }
-    public ItemBase Item {
+    public ItemBase Item
+    {
         get => item;
         set => item = value;
     }
-    public int Count { 
+    public int Count
+    {
         get => count;
         set => count = value;
     }

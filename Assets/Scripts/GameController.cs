@@ -43,18 +43,18 @@ public class GameController : MonoBehaviour
 
         partyScreen.Init();
 
-        DialogManager.Instance.OnShowDialog += () => 
+        DialogManager.Instance.OnShowDialog += () =>
         {
             prevState = state;
             state = GameState.Dialog;
         };
-        DialogManager.Instance.OnDialogFinished += () => 
+        DialogManager.Instance.OnDialogFinished += () =>
         {
             if (state == GameState.Dialog)
                 state = prevState;
         };
 
-        EvolutionManager.i.OnStartEvolution += () => 
+        EvolutionManager.i.OnStartEvolution += () =>
         {
             stateBeforeEvolution = state;
             state = GameState.Evolution;
@@ -66,7 +66,8 @@ public class GameController : MonoBehaviour
 
             AudioManager.i.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
-        ShopController.i.OnStart += () => { 
+        ShopController.i.OnStart += () =>
+        {
             state = GameState.Shop;
         };
         ShopController.i.OnFinish += () => { state = GameState.FreeRoam; };
@@ -94,7 +95,7 @@ public class GameController : MonoBehaviour
     }
     public void StartBattle(BattleTrigger trigger)
     {
-        
+
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
@@ -154,16 +155,6 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         StateMachine.Execute();
-        // if (state == GameState.FreeRoam)
-        // {
-        //     playerController.HandleUpdate();
-
-        //     if (Input.GetButtonDown("Cancel"))
-        //     {
-        //         menuController.OpenMenu();
-        //         state = GameState.Menu;
-        //     }
-        // }
         if (state == GameState.Cutscene)
         {
             playerController.Character.HandleUpdate();
@@ -175,28 +166,6 @@ public class GameController : MonoBehaviour
         else if (state == GameState.Dialog)
         {
             DialogManager.Instance.HandleUpdate();
-        }
-        else if (state == GameState.PartyScreen)
-        {
-            Action onSelected = () =>
-            {
-                
-            };
-            Action onBack = () =>
-            {
-                partyScreen.gameObject.SetActive(false);
-                state = GameState.FreeRoam;
-            };
-            partyScreen.HandleUpdate(onSelected, onBack);
-        }
-        else if (state == GameState.Bag)
-        {
-            Action onBack = () =>
-            {
-                inventoryUI.gameObject.SetActive(false);
-                state = GameState.FreeRoam;
-            };
-            inventoryUI.HandleUpdate(onBack);
         }
         else if (state == GameState.Shop)
         {
@@ -236,7 +205,7 @@ public class GameController : MonoBehaviour
             SavingSystem.i.Load("yonggi");
             state = GameState.FreeRoam;
         }
-        
+
     }
     public IEnumerator MoveCamera(Vector2 moveOffset, bool waitForFadeOut = false)
     {
@@ -247,11 +216,13 @@ public class GameController : MonoBehaviour
         else
             StartCoroutine(Fader.i.FadeOut(0.5f));
     }
-    private void OnGUI() {
+    private void OnGUI()
+    {
         var style = new GUIStyle();
         style.fontSize = 60;
         GUILayout.Label("STATE STACK", style);
-        foreach (var stat in StateMachine.StateStack) {
+        foreach (var stat in StateMachine.StateStack)
+        {
             GUILayout.Label(stat.GetType().ToString(), style);
         }
     }

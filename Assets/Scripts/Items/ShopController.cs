@@ -40,10 +40,10 @@ public class ShopController : MonoBehaviour
         yield return DialogManager.Instance.ShowDialogText("사고 싶은게 있어?",
             // waitForInput: false,
             choices: new List<string>() { "사기", "팔기", "닫기" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex );
+            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
         if (selectedChoice == 0)
         {
-            
+
             yield return GameController.Instance.MoveCamera(shopCameraOffset);
             walletUI.Show();
             shopUI.Show(merchant.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
@@ -65,7 +65,6 @@ public class ShopController : MonoBehaviour
     {
         if (state == ShopState.Selling)
         {
-            inventoryUI.HandleUpdate(onBackFromSelling, (selectedItem) => StartCoroutine(SellItem(selectedItem)));
         }
         else if (state == ShopState.Buying)
         {
@@ -109,7 +108,7 @@ public class ShopController : MonoBehaviour
         yield return DialogManager.Instance.ShowDialogText($"가격: {sellingPrice}",
             // waitForInput: false,
             choices: new List<string>() { "판다", "거절한다" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex );
+            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
         if (selectedChoice == 0)
         {
             // Wallet.i.AddMoney(sellingPrice);
@@ -139,7 +138,7 @@ public class ShopController : MonoBehaviour
             yield return DialogManager.Instance.ShowDialogText("사고 싶은게 있어?",
                 // waitForInput: false,
                 choices: new List<string>() { "사기", "팔기", "닫기" },
-                onChoiceSelected: choiceIndex => selectedChoice = choiceIndex );
+                onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
             if (selectedChoice == 0)
             {
                 inventory.AddItem(item, countToBuy);

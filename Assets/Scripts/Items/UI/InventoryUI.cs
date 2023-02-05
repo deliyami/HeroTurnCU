@@ -5,10 +5,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using GDEUtils.StateMachine;
 
-public enum InventoryUIState { ItemSelection, PartySelection, MoveToForget, Busy }
-
-public class InventoryUI : MonoBehaviour
+public class InventoryUI : SelectionUI<TextSlot>
 {
     [SerializeField] TextMeshProUGUI categoryText;
     [SerializeField] GameObject itemList;
@@ -18,23 +17,14 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] Image upArrow;
     [SerializeField] Image downArrow;
-    [SerializeField] PartyScreen partyScreen;
-    [SerializeField] MoveSelectionUI moveSelectionUI;
 
-    Action<ItemBase> onItemUsed;
-
-    int selectedItem = 0;
     int selectedCategory = 0;
-
-    MoveBase moveToLearn;
-
-    InventoryUIState state;
 
     const int itemsInViewport = 6;
     List<ItemSlotUI> slotUIList;
     Inventory inventory;
     RectTransform itemListRect;
-    private void Awake() 
+    private void Awake()
     {
         inventory = Inventory.GetInventory();
         itemListRect = itemList.GetComponent<RectTransform>();
@@ -60,223 +50,39 @@ public class InventoryUI : MonoBehaviour
             slotUIList.Add(slotUIObj);
         }
 
-        UpdateItemSelection();
+        SetItems(slotUIList.Select(s => s.GetComponent<TextSlot>()).ToList());
+
+        UpdateSelectionInUI();
     }
-    public void HandleUpdate(Action onBack, Action<ItemBase> onItemUsed = null)
+    public override void HandleUpdate()
     {
-        this.onItemUsed = onItemUsed;
+        int prevCategry = selectedCategory;
 
-        if (state == InventoryUIState.ItemSelection)
-        {
-            int prevSelection = selectedItem;
-            int prevCategry = selectedCategory;
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            selectedCategory++;
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            selectedCategory--;
 
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-                ++selectedItem;
-            else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-                --selectedItem;
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            {
-                ++selectedCategory;
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            {
-                --selectedCategory;
-            }
-            if (selectedCategory > Inventory.ItemCategories.Count - 1)
-                selectedCategory = 0;
-            else if (selectedCategory < 0)
-                selectedCategory = Inventory.ItemCategories.Count - 1;
-            // selectedCategory = Mathf.Clamp(selectedCategory, 0, Inventory.ItemCategories.Count - 1);
-            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
-            if (prevCategry != selectedCategory)
-            {
-                ResetSelection();
-                categoryText.text = Inventory.ItemCategories[selectedCategory];
-                UpdateItemList();
-            } else if (prevSelection != selectedItem)
-                UpdateItemSelection();
-            if (Input.GetButtonDown("Submit"))
-            {
-                StartCoroutine(ItemSelected());
-            }
-            else if (Input.GetButtonDown("Cancel"))
-            {
-                onBack?.Invoke();
-            }
-        }
-        else if (state == InventoryUIState.PartySelection)
+        if (selectedCategory > Inventory.ItemCategories.Count - 1)
+            selectedCategory = 0;
+        else if (selectedCategory < 0)
+            selectedCategory = Inventory.ItemCategories.Count - 1;
+
+        if (prevCategry != selectedCategory)
         {
-            // 파티 선택
-            Action onSelected = () =>
-            {
-                // 아이템 사용하기
-                StartCoroutine(UseItem());
-            };
-            Action onBackPartyScreen = () =>
-            {
-                // 뒤로 나가기
-                ClosePartyScreen();
-            };
-            partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
+            ResetSelection();
+            categoryText.text = Inventory.ItemCategories[selectedCategory];
+            UpdateItemList();
         }
-        else if (state == InventoryUIState.MoveToForget)
-        {
-            Action<int> onMoveSelected = (int moveIndex) =>
-            {
-                StartCoroutine(OnMoveToForgetSelected(moveIndex));
-            };
-            moveSelectionUI.HandleMoveSelection(onMoveSelected);
-        }
+
+        base.HandleUpdate();
     }
 
-    IEnumerator ItemSelected()
+    public override void UpdateSelectionInUI()
     {
-        state = InventoryUIState.Busy;
+        base.UpdateSelectionInUI();
 
-        var item = inventory.GetItem(selectedItem, selectedCategory);
-
-        if (GameController.Instance.State == GameState.Shop)
-        {
-            onItemUsed?.Invoke(item);
-            state = InventoryUIState.ItemSelection;
-            yield break;
-        }
-        var cancelDialog = "여기서 쓰는 물건이 아니다!";
-        if (GameController.Instance.State == GameState.Battle)
-        {
-            // 전투에서
-            if (!item.CanBeUsedInBattle)
-            {
-                yield return DialogManager.Instance.ShowDialogText(cancelDialog);
-                state = InventoryUIState.ItemSelection;
-                yield break;
-            }
-        }
-        else
-        {
-            // 일반 메뉴
-            if (!item.CanBeUsedOutsideBattle)
-            {
-                yield return DialogManager.Instance.ShowDialogText(cancelDialog);                
-                state = InventoryUIState.ItemSelection;
-                yield break;
-            }
-        }
-        if (selectedCategory == (int)ItemCategory.Balls)
-        {
-            StartCoroutine(UseItem());
-        }
-        else
-        {
-            OpenPartyScreen();
-            // if (item is TmItem)
-            //     partyScreen.ShowIfTmIsUsable(item as TmItem);
-        }
-    }
-
-    IEnumerator UseItem()
-    {
-        state = InventoryUIState.Busy;
-        
-        yield return HandleTmItems();
-
-        var item = inventory.GetItem(selectedItem, selectedCategory);
-        var unit = partyScreen.SelectedMember;
-
-        if (item is EvolutionItem)
-        {
-            var evolution = unit.CheckForEvolution(item);
-            if (evolution != null)
-            {
-                yield return EvolutionManager.i.Evolve(unit, evolution);
-            }
-            else
-            {
-                ClosePartyScreen();
-                yield break;
-            }
-        }
-
-        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
-        if (usedItem != null)
-        {
-            if (usedItem is RecoveryItem)
-            {
-                yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
-            }
-            onItemUsed?.Invoke(usedItem);
-        }
-        else
-        {
-            if (selectedCategory == (int)ItemCategory.Items)
-                yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
-        }
-
-        ClosePartyScreen();
-    }
-
-    IEnumerator HandleTmItems()
-    {
-        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as TmItem;
-        if (tmItem == null)
-            yield break;
-        var unit = partyScreen.SelectedMember;
-
-        // if (unit.HasMove(tmItem.Move))
-        // {
-        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) 이미 알고있다!");
-        //     yield break;
-        // }
-        // if (tmItem.CanBeTaught(unit))
-        // {
-        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) 배울 수 없다!");
-        //     yield break;
-        // }
-        // if (unit.Moves.Count < UnitBase.MaxNumOfMoves)
-        // {
-        //     unit.LearnMove(tmItem.Move);
-        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배웠다!");
-        //     yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
-        // }
-        // else
-        // {
-        //     yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Move.Name}을(를) 배우고 싶다!");
-        //     yield return DialogManager.Instance.ShowDialogText($"하지만 이미 배울 만큼 배웠다!");
-        //     yield return DialogManager.Instance.ShowDialogText($"기존 배우던 것을 잊어야 한다!");
-        //     yield return ChooseMoveToForget(unit, tmItem.Move);
-        //     yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
-        //     yield return new WaitForSeconds(2f);
-        // }
-
-        yield return DialogManager.Instance.ShowDialogText($"{unit.Base.Name}은(는) {tmItem.Name}을(를) 사용하며 여유를 보냈다.");
-        yield return DialogManager.Instance.ShowDialogText($"전투에는 전혀 도움 되지 않는다!");
-    }
-
-    IEnumerator ChooseMoveToForget(Unit unit, MoveBase newMove)
-    {
-        state = InventoryUIState.Busy;
-        yield return DialogManager.Instance.ShowDialogText($"기술 배우는 창, 보인다면 버그입니다.", true, false);
-        moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(unit.Moves.Select(x => x.Base).ToList(), newMove);
-        moveToLearn = newMove;
-
-        state = InventoryUIState.MoveToForget;
-    }
-
-    void UpdateItemSelection()
-    {
         var slots = inventory.GetSlotsByCategory(selectedCategory);
-        selectedItem = Mathf.Clamp(selectedItem, 0, slots.Count - 1);
-
-        for (int i = 0; i < slotUIList.Count; i++)
-        {
-            if (i == selectedItem)
-                slotUIList[i].NameText.color = GlobalSettings.i.HighlightedColor;
-            else
-                slotUIList[i].NameText.color = Color.black;
-        }
-
         if (slots.Count > 0)
         {
             var item = slots[selectedItem].Item;
@@ -288,7 +94,7 @@ public class InventoryUI : MonoBehaviour
     void HandleScrolling()
     {
         if (slotUIList.Count <= itemsInViewport) return;
-        
+
         float scrollPos = Mathf.Clamp(selectedItem - itemsInViewport / 2, 0, selectedItem) * slotUIList[0].Height;
         // itemList.GetComponent<RectTransform>();
         itemListRect.localPosition = new Vector2(itemListRect.localPosition.x, scrollPos);
@@ -307,38 +113,7 @@ public class InventoryUI : MonoBehaviour
         itemIcon.sprite = null;
         itemDescription.text = "";
     }
-    void OpenPartyScreen()
-    {
-        state = InventoryUIState.PartySelection;
-        partyScreen.gameObject.SetActive(true);
-    }
-    void ClosePartyScreen()
-    {
-        state = InventoryUIState.ItemSelection;
 
-        // partyScreen.ClearMemberSlotMessages();
-        partyScreen.gameObject.SetActive(false);
-    }
-
-    IEnumerator OnMoveToForgetSelected(int moveIndex)
-    {
-        var unit = partyScreen.SelectedMember;
-
-        DialogManager.Instance.CloseDialog();
-        moveSelectionUI.gameObject.SetActive(false);
-        if (moveIndex == UnitBase.MaxNumOfMoves)
-        {
-            // 배우지 않음
-            yield return DialogManager.Instance.ShowDialogText($"배우지 않는다. 이것도 보이면 버그다...");
-        }
-        else
-        {
-            // 새로운 스킬 배움
-            // var selectedMove = playerUnit.Unit.Moves[moveIndex].Base;
-            unit.Moves[moveIndex] = new Move(moveToLearn);
-            yield return DialogManager.Instance.ShowDialogText($"아님 핵을 썼던가...");
-        }
-        moveToLearn = null;
-        state = InventoryUIState.ItemSelection;
-    }
+    public ItemBase SelectedItem => inventory.GetItem(selectedItem, selectedCategory);
+    public int SelectedCategory => selectedCategory;
 }

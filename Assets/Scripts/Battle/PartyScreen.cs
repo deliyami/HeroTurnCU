@@ -4,25 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
+using GDEUtils.StateMachine;
 
-public class PartyScreen : MonoBehaviour
+public class PartyScreen : SelectionUI<TextSlot>
 {
     [SerializeField] TextMeshProUGUI messageText;
     List<Unit> units;
     UnitParty party;
-
-    int selection = 0;
-    public Unit SelectedMember => units[selection];
-    /// <summary>
-    /// partyscreen 다른 상황일떄 불린다?
-    /// </summary>
-    public BattleState? CalledFrom { get; set; }
+    public Unit SelectedMember => units[selectedItem];
 
     PartyMemberUI[] memberSlots;
 
     public void Init()
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
+        SetSelectionSetting(SelectionType.Grid, 2);
 
         party = UnitParty.GetPlayerParty();
         SetPartyData();
@@ -43,47 +39,10 @@ public class PartyScreen : MonoBehaviour
             else
                 memberSlots[i].gameObject.SetActive(false);
         }
-        UpdateMemberSelection(selection);
+        var textSlots = memberSlots.Select(m => m.GetComponent<TextSlot>());
+        SetItems(textSlots.Take(units.Count).ToList());
 
-        messageText.text = "동료를 고르세요!";
-    }
-
-    public void HandleUpdate(Action onSelected, Action onBack)
-    {
-        var prevSelection = selection;
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            selection += 2;
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            selection -= 2;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            --selection;
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            ++selection;
-
-        selection = Mathf.Clamp(selection, 0, units.Count - 1);
-
-        if (selection != prevSelection)
-            UpdateMemberSelection(selection);
-
-        if (Input.GetButtonDown("Submit"))
-        {
-            onSelected?.Invoke();
-        }
-        else if (Input.GetButtonDown("Cancel"))
-        {
-            onBack?.Invoke();
-        }
-    }
-
-    public void UpdateMemberSelection(int selectedMember)
-    {
-        for (int i = 0; i< units.Count; i++)
-        {
-            if (i == selectedMember)
-                memberSlots[i].SetSelected(true);
-            else
-                memberSlots[i].SetSelected(false);
-        }
+        messageText.text = "동료를 선택하세요!";
     }
 
     public void ShowIfTmIsUsable(TmItem tmItem)
