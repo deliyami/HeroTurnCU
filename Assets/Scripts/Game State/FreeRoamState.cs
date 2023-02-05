@@ -15,7 +15,7 @@ public class FreeRoamState : State<GameController> {
     public override void Execute() {
         PlayerController.i.HandleUpdate();
         
-        if (Input.GetButton("Cancel")) {
+        if (Input.GetButtonDown("Cancel")) {
             gc.StateMachine.Push(GameMenuState.i);
         }
     }

@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
     public StateMachine<GameController> StateMachine { get; private set; }
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
-    MenuController menuController;
     public static GameController Instance { get; private set; }
     private void Awake()
     {
@@ -27,7 +26,6 @@ public class GameController : MonoBehaviour
         // Cursor.visible = false;
         Instance = this;
         // menuController = GetComponentInParent<MenuController>();
-        menuController = GameObject.FindWithTag("Menu").GetComponent<MenuController>();
         // menuController = transform.Find("UI Canvas").GetComponent<MenuController>();
 
         UnitDB.Init();
@@ -55,16 +53,6 @@ public class GameController : MonoBehaviour
             if (state == GameState.Dialog)
                 state = prevState;
         };
-        MenuController.i.onBack += () =>
-        {
-            state = GameState.FreeRoam;
-        };
-        MenuController.i.onMenuSelected += OnMenuSelected;
-        // menuController.onBack += () =>
-        // {
-        //     state = GameState.FreeRoam;
-        // };
-        // menuController.onMenuSelected += OnMenuSelected;
 
         EvolutionManager.i.OnStartEvolution += () => 
         {
@@ -187,10 +175,6 @@ public class GameController : MonoBehaviour
         else if (state == GameState.Dialog)
         {
             DialogManager.Instance.HandleUpdate();
-        }
-        else if (state == GameState.Menu)
-        {
-            menuController.HandleUpdate();
         }
         else if (state == GameState.PartyScreen)
         {
