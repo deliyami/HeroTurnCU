@@ -3285,6 +3285,8 @@ GameObject:
   - component: {fileID: 432850775730210341}
   - component: {fileID: 906191807540441433}
   - component: {fileID: 1784720951233497984}
+  - component: {fileID: 3861373513322917665}
+  - component: {fileID: 5033069098209926470}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3439,6 +3441,30 @@ MonoBehaviour:
   evolutionUI: {fileID: 0}
   unitImage: {fileID: 0}
   evolutionMusic: {fileID: 0}
+--- !u!114 &3861373513322917665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738372076080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98dfd53ab9964744e8a49b888389b2a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5033069098209926470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738372076080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd2b4bc116fcac46a847384ef3886dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8115450738478144625
 GameObject:
   m_ObjectHideFlags: 0

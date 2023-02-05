@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class State : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+namespace GDEUtils.StateMachine {
+    public class State<T> : MonoBehaviour {
+        public virtual void Enter(T owner) {
+        }
+        public virtual void Execute() {
+        }
+        public virtual void Exit() {
+        }
     }
 }
