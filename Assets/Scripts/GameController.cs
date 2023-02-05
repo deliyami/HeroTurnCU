@@ -95,33 +95,17 @@ public class GameController : MonoBehaviour
     }
     public void StartBattle(BattleTrigger trigger)
     {
-
-        state = GameState.Battle;
-        battleSystem.gameObject.SetActive(true);
-        worldCamera.gameObject.SetActive(false);
-
-        var playerParty = playerController.GetComponent<UnitParty>();
-        // var wildUnit = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildUnit();
-        var wildUnit = CurrentScene.GetComponent<MapArea>().GetRandomWildUnit(trigger);
-
-        var wildUnitCopy = new Unit(wildUnit.Base, wildUnit.Level);
-
-        battleSystem.StartBattle(playerParty, wildUnit, trigger);
+        BattleState.i.trigger = trigger;
+        StateMachine.Push(BattleState.i);
     }
 
     TrainerController trainer;
 
     public void StartTrainerBattle(TrainerController trainer, int unitCount = 1)
     {
-        state = GameState.Battle;
-        battleSystem.gameObject.SetActive(true);
-        worldCamera.gameObject.SetActive(false);
-
-        this.trainer = trainer;
-        var playerParty = playerController.GetComponent<UnitParty>();
-        var trainerParty = trainer.GetComponent<UnitParty>();
-
-        battleSystem.StartTrainerBattle(playerParty, trainerParty, unitCount);
+        BattleState.i.trainer = trainer;
+        BattleState.i.unitCount = unitCount;
+        StateMachine.Push(BattleState.i);
     }
 
     public void OnEnterTrainersView(TrainerController trainer)
@@ -158,10 +142,6 @@ public class GameController : MonoBehaviour
         if (state == GameState.Cutscene)
         {
             playerController.Character.HandleUpdate();
-        }
-        else if (state == GameState.Battle)
-        {
-            battleSystem.HandleUpdate();
         }
         else if (state == GameState.Dialog)
         {
@@ -227,4 +207,6 @@ public class GameController : MonoBehaviour
         }
     }
     public GameState State => state;
+    public PlayerController PlayerController => playerController;
+    public Camera WorldCamera => worldCamera;
 }

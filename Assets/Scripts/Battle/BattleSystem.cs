@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public enum BattleState { Start, ActionSelection, MoveSelection, TargetSelection, RunningTurn, Busy, Bag, PartyScreen, AboutToUse, MoveToForget, BattleOver }
+
+public enum BattleStates { Start, ActionSelection, MoveSelection, TargetSelection, RunningTurn, Busy, Bag, PartyScreen, AboutToUse, MoveToForget, BattleOver }
 public enum BattleTrigger { LongGrass, Water, Trainer }
 
 public class BattleSystem : MonoBehaviour
@@ -48,7 +49,7 @@ public class BattleSystem : MonoBehaviour
 
     public event Action<bool> OnBattleOver;
 
-    BattleState state;
+    BattleStates state;
 
     int currentAction;
     int currentMove;
@@ -200,7 +201,7 @@ public class BattleSystem : MonoBehaviour
 
     void BattleOver(bool won)
     {
-        state = BattleState.BattleOver;
+        state = BattleStates.BattleOver;
         playerParty.Units.ForEach(unit => unit.OnBattleOver());
 
         playerUnits.ForEach(pu => pu.Hud.ClearData());
@@ -211,7 +212,7 @@ public class BattleSystem : MonoBehaviour
 
     void ActionSelection(int actionIndex)
     {
-        state = BattleState.ActionSelection;
+        state = BattleStates.ActionSelection;
         // StartCoroutine(dialogBox.SetDialog("행동을 선택하세요."));
         this.actionIndex = actionIndex;
         currentUnit = playerUnits[actionIndex];
@@ -223,47 +224,47 @@ public class BattleSystem : MonoBehaviour
 
     void OpenBag()
     {
-        state = BattleState.Bag;
+        state = BattleStates.Bag;
         inventoryUI.gameObject.SetActive(true);
     }
 
     void OpenPartyScreen()
     {
         // partyScreen.CalledFrom = state;
-        state = BattleState.PartyScreen;
+        state = BattleStates.PartyScreen;
         partyScreen.gameObject.SetActive(true);
         partyScreen.UpdateStatusText();
     }
 
     void MoveSelection()
     {
-        state = BattleState.MoveSelection;
+        state = BattleStates.MoveSelection;
         dialogBox.EnableActionSelector(false);
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
     }
     void TargetSelection()
     {
-        state = BattleState.TargetSelection;
+        state = BattleStates.TargetSelection;
         currentTarget = 0;
     }
     IEnumerator AboutToUse(Unit newUnit)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 준비중이다! 팀원을 교체하겠습니까?");
 
-        state = BattleState.AboutToUse;
+        state = BattleStates.AboutToUse;
         dialogBox.EnableChoiceBox(true);
     }
     IEnumerator ChooseMoveToForget(Unit unit, MoveBase newMove)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         yield return dialogBox.TypeDialog($"기술 배우는 창, 보인다면 버그입니다.");
         moveSelectionUI.gameObject.SetActive(true);
         moveSelectionUI.SetMoveData(unit.Moves.Select(x => x.Base).ToList(), newMove);
         moveToLearn = newMove;
 
-        state = BattleState.MoveToForget;
+        state = BattleStates.MoveToForget;
     }
     void AddBattleAction(BattleAction action)
     {
@@ -298,7 +299,7 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator RunTurns()
     {
-        state = BattleState.RunningTurn;
+        state = BattleStates.RunningTurn;
 
         foreach (var action in actions)
         {
@@ -307,11 +308,11 @@ public class BattleSystem : MonoBehaviour
             {
                 yield return RunMove(action.User, action.Target, action.Move);
                 yield return RunAfterTurn(action.User);
-                if (state == BattleState.BattleOver) yield break;
+                if (state == BattleStates.BattleOver) yield break;
             }
             else if (action.Type == ActionType.SwitchUnit)
             {
-                state = BattleState.Busy;
+                state = BattleStates.Busy;
                 yield return SwitchUnit(action.User, action.SelectedUnit);
             }
             else if (action.Type == ActionType.UseItem)
@@ -323,7 +324,7 @@ public class BattleSystem : MonoBehaviour
             {
                 yield return TryToEscape();
             }
-            if (state == BattleState.BattleOver) break;
+            if (state == BattleStates.BattleOver) break;
         }
 
         if (Field.Weather != null)
@@ -369,7 +370,7 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
-        if (state != BattleState.BattleOver)
+        if (state != BattleStates.BattleOver)
         {
             actions.Clear();
             ActionSelection(0);
@@ -514,7 +515,7 @@ public class BattleSystem : MonoBehaviour
                                 unitTryingToLearn = playerUnit;
                                 yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 잊을 수 없는 스킬을 잊으려 한다!");
                                 yield return ChooseMoveToForget(playerUnit.Unit, newMove.Base);
-                                yield return new WaitUntil(() => state != BattleState.MoveToForget);
+                                yield return new WaitUntil(() => state != BattleStates.MoveToForget);
                                 yield return new WaitForSeconds(2f);
                             }
                         }
@@ -631,8 +632,8 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator RunAfterTurn(BattleUnit sourceUnit)
     {
-        if (state == BattleState.BattleOver) yield break;
-        yield return new WaitUntil(() => state == BattleState.RunningTurn);
+        if (state == BattleStates.BattleOver) yield break;
+        yield return new WaitUntil(() => state == BattleStates.RunningTurn);
         // 상태이상으로 쓰러지는가?
         sourceUnit.Unit.OnAfterTurn();
         yield return ShowStatusChanges(sourceUnit.Unit);
@@ -642,7 +643,7 @@ public class BattleSystem : MonoBehaviour
         {
             // AudioManager.i.PlaySfx(AudioId.Faint);
             yield return HandleUnitFainted(sourceUnit);
-            yield return new WaitUntil(() => state == BattleState.RunningTurn);
+            yield return new WaitUntil(() => state == BattleStates.RunningTurn);
         }
     }
 
@@ -676,39 +677,39 @@ public class BattleSystem : MonoBehaviour
 
     public void HandleUpdate()
     {
-        if (state == BattleState.ActionSelection)
+        if (state == BattleStates.ActionSelection)
         {
             HandleActionSelection();
         }
-        else if (state == BattleState.MoveSelection)
+        else if (state == BattleStates.MoveSelection)
         {
             HandleMoveSelection();
         }
-        else if (state == BattleState.TargetSelection)
+        else if (state == BattleStates.TargetSelection)
         {
             HandleTargetSelection();
         }
-        else if (state == BattleState.PartyScreen)
+        else if (state == BattleStates.PartyScreen)
         {
             HandlePartySelection();
         }
-        else if (state == BattleState.Bag)
+        else if (state == BattleStates.Bag)
         {
             Action onBack = () =>
             {
                 inventoryUI.gameObject.SetActive(false);
-                state = BattleState.ActionSelection;
+                state = BattleStates.ActionSelection;
             };
             Action<ItemBase> onItemUsed = (ItemBase usedItem) =>
             {
                 StartCoroutine(OnItemUsed(usedItem));
             };
         }
-        else if (state == BattleState.AboutToUse)
+        else if (state == BattleStates.AboutToUse)
         {
             HandleAboutToUse();
         }
-        else if (state == BattleState.MoveToForget)
+        else if (state == BattleStates.MoveToForget)
         {
             Action<int> onMoveSelected = (int moveIndex) =>
             {
@@ -727,7 +728,7 @@ public class BattleSystem : MonoBehaviour
                 }
                 moveToLearn = null;
                 unitTryingToLearn = null;
-                state = BattleState.RunningTurn;
+                state = BattleStates.RunningTurn;
             };
             // TODO 배틀에서 선택하는거 처리해야함
             // moveSelectionUI.HandleMoveSelection(onMoveSelected);
@@ -905,7 +906,7 @@ public class BattleSystem : MonoBehaviour
             // StartCoroutine(PerformPlayerMove());
             partyScreen.gameObject.SetActive(false);
 
-            // if (partyScreen.CalledFrom == BattleState.ActionSelection) {
+            // if (partyScreen.CalledFrom == BattleStates.ActionSelection) {
             //     // StartCoroutine(RunTurns(ActionType.SwitchUnit));
             //     var action = new BattleAction()
             //     {
@@ -917,8 +918,8 @@ public class BattleSystem : MonoBehaviour
             // }
             // else
             // {
-            //     state = BattleState.Busy;
-            //     bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
+            //     state = BattleStates.Busy;
+            //     bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleStates.AboutToUse;
             //     StartCoroutine(SwitchUnit(unitToSwitch, selectedMember, isTrainerAboutToUse));
             //     unitToSwitch = null;
             // }
@@ -933,7 +934,7 @@ public class BattleSystem : MonoBehaviour
             }
             partyScreen.gameObject.SetActive(false);
 
-            // if (partyScreen.CalledFrom == BattleState.AboutToUse)
+            // if (partyScreen.CalledFrom == BattleStates.AboutToUse)
             //     StartCoroutine(SendNextTrainerUnit());
             // else
             //     ActionSelection(actionIndex);
@@ -982,12 +983,12 @@ public class BattleSystem : MonoBehaviour
         if (isTrainerAboutToUse)
             StartCoroutine(SendNextTrainerUnit());
         else
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
     }
 
     IEnumerator SendNextTrainerUnit()
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
 
         var faintedUnit = enemyUnits.First(u => u.Unit.HP == 0);
         var activeUnits = enemyUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
@@ -995,11 +996,11 @@ public class BattleSystem : MonoBehaviour
         faintedUnit.Setup(nextUnit);
         yield return dialogBox.TypeDialog($"{nextUnit.Base.Name}(이)가 교대로 나온다!");
 
-        state = BattleState.RunningTurn;
+        state = BattleStates.RunningTurn;
     }
     IEnumerator OnItemUsed(ItemBase usedItem)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         inventoryUI.gameObject.SetActive(false);
 
         if (usedItem is BallItem)
@@ -1015,7 +1016,7 @@ public class BattleSystem : MonoBehaviour
     }
     IEnumerator ThrowBall(BallItem ballItem)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
 
         if (isTrainerBattle)
         {
@@ -1031,7 +1032,7 @@ public class BattleSystem : MonoBehaviour
                 yield return dialogBox.TypeDialog($"당신은 죄악이 등을 타고 오르는 것을 느꼈다.");
             else
                 yield return dialogBox.TypeDialog($"이 녀석들에겐 통하지 않는다!");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
             yield break;
         }
         var playerUnit = playerUnits[0];
@@ -1082,7 +1083,7 @@ public class BattleSystem : MonoBehaviour
                 yield return dialogBox.TypeDialog($"녀석이 저항한다!");
 
             Destroy(ball);
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
         }
     }
 
@@ -1114,12 +1115,12 @@ public class BattleSystem : MonoBehaviour
 
     IEnumerator TryToEscape()
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
 
         if (isTrainerBattle)
         {
             yield return dialogBox.TypeDialog("도망 칠 순 없다!");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
             yield break;
         }
 
@@ -1140,7 +1141,7 @@ public class BattleSystem : MonoBehaviour
         else
         {
             yield return dialogBox.TypeDialog("도망갈 수 없다!");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
         }
     }
 }

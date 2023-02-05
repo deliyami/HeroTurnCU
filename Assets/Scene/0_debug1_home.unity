@@ -10889,6 +10889,10 @@ PrefabInstance:
       propertyPath: uniqueId
       value: 94d87eeb-979e-4800-a3bc-4bc849ff18aa
       objectReference: {fileID: 0}
+    - target: {fileID: 5673436149689442560, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: battleUnitCount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442561, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: m_RootOrder
       value: 4
