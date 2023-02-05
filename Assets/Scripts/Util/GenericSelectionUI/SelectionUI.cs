@@ -2,28 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 namespace GDEUtils.StateMachine {
     public class SelectionUI<T> : MonoBehaviour where T: ISelectableItem {
         List<T> items;
-        float selectedItem = 0;
+        int selectedItem = 0;
 
         float selectionTimer = 0;
 
         const float selectionSpeed = 5;
+
+        public event Action<int> OnSelected;
+        public event Action OnBack;
+
         public void SetItems(List<T> items) {
             this.items = items;
             UpdateSelectionInUI();
         }
         public void HandleUpdate() {
             UpdateSelectionTimer();
-            float prevSelection = selectedItem;
+            int prevSelection = selectedItem;
 
             HandleListSelection();
 
             selectedItem = Mathf.Clamp(selectedItem, 0, items.Count - 1);
 
             if (selectedItem != prevSelection) UpdateSelectionInUI();
+
+            if (Input.GetButtonDown("Submit"))
+                OnSelected?.Invoke(selectedItem);
+            else if (Input.GetButtonDown("Cancel"))
+                OnBack?.Invoke();
         }
         void HandleListSelection() {
             float v = Input.GetAxis("Vertical");

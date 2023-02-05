@@ -13,14 +13,22 @@ public class GameMenuState : State<GameController> {
     public override void Enter(GameController owner) {
         gc = owner;
         menuController.gameObject.SetActive(true);
+        menuController.OnSelected += OnMenuItemSelected;
+        menuController.OnBack += OnBack;
     }
     public override void Execute() {
         menuController.HandleUpdate();
-        if (Input.GetButtonDown("Cancel")) {
-            gc.StateMachine.Pop();
-        }
+        
     }
     public override void Exit() {
         menuController.gameObject.SetActive(false);
+        menuController.OnSelected -= OnMenuItemSelected;
+        menuController.OnBack -= OnBack;
+    }
+    void OnMenuItemSelected(int selection) {
+        Debug.Log($"메뉴 선택{selection}");
+    }
+    void OnBack() {
+        gc.StateMachine.Pop();
     }
 }
