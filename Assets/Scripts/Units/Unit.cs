@@ -9,49 +9,30 @@ public class Unit
     [SerializeField] UnitBase _base;
     [SerializeField] int level;
 
-    public Unit(UnitBase pBase, int pLevel, int[] tribe = null, int[] effort = null, int[] personality = null)
+    public Unit(UnitBase pBase, int pLevel)
     {
         _base = pBase;
         level = pLevel;
-
-        if (tribe != null) this.tribe = tribe;
-        if (effort != null) this.effort = effort;
-        if (personality != null) this.personality = personality;
         // Init();
     }
 
-    // 개체치 31 {HP, attack, defense, spAttack, spDefense, speed}
-    [SerializeField] int[] tribe;
-    // 노력치 0~252 {HP, attack, defense, spAttack, spDefense, speed} /4해서 더해야 하는데... 적혀있네
-    [SerializeField] int[] effort;
-    // 성격 int[] = {상승 스텟 index, 하락 스텟 index}
-    [SerializeField] int[] personality;
-    public UnitBase Base { 
-        get {
+
+    public UnitBase Base
+    {
+        get
+        {
             return _base;
         }
     }
-    public int Level { 
-        get {
+    public int Level
+    {
+        get
+        {
             return level;
-        } 
+        }
     }
 
-    public int[] Tribe{
-        get {
-            return tribe;
-        }
-    }
-    public int[] Effort{
-        get {
-            return effort;
-        }
-    }
-    public int[] Personality{
-        get {
-            return personality;
-        }
-    }
+
     public int Exp { get; set; }
     public int HP { get; set; }
     public List<Move> moves { get; set; }
@@ -74,13 +55,13 @@ public class Unit
     {
         // Base = uBase;
         // Level = uLevel;
-        
+
         moves = new List<Move>();
         foreach (var move in Base.LearnableMoves)
         {
             if (move.Level <= Level)
                 moves.Add(new Move(move.Base));
-            
+
             if (moves.Count >= UnitBase.MaxNumOfMoves)
                 break;
         }
@@ -106,9 +87,6 @@ public class Unit
         HP = saveData.hp;
         level = saveData.level;
         Exp = saveData.exp;
-        tribe = saveData.tribe;
-        effort = saveData.effort;
-        personality = saveData.personality;
 
         if (saveData.statusId != null)
             Status = ConditionDB.Conditions[saveData.statusId.Value];
@@ -131,9 +109,6 @@ public class Unit
             hp = HP,
             level = Level,
             exp = Exp,
-            tribe = Tribe,
-            effort = Effort,
-            personality = Personality,
             statusId = Status?.ID,
             moves = Moves.Select(m => m.GetSaveData()).ToList(),
         };
@@ -163,24 +138,25 @@ public class Unit
     {
         StatBoosts = new Dictionary<Stat, int>()
         {
-            {Stat.Attack, 0},
-            {Stat.Defense, 0},
-            {Stat.SpAttack, 0},
-            {Stat.SpDefense, 0},
-            {Stat.Speed, 0},
-            {Stat.Accuracy, 0},
-            {Stat.Evasion, 0},
+            { Stat.Attack, 0 },
+            { Stat.Defense, 0 },
+            { Stat.SpAttack, 0 },
+            { Stat.SpDefense, 0 },
+            { Stat.Speed, 0 },
+            { Stat.Accuracy, 0 },
+            { Stat.Evasion, 0 },
         };
     }
 
-    private int CalculateBaseStats(int stat, int statIndex) {
+    private int CalculateBaseStats(int stat, int statIndex)
+    {
         int staticValue = statIndex == 0 ? (10 + Level) : 5;
-        float personalityData = (1.0f + (Personality[0] == statIndex ? 0.1f : 0) - (Personality[1] == statIndex ? 0.1f : 0));
-        return (int)((((stat * 2) + Tribe[statIndex] + (Effort[statIndex] / 4)) * Level / 100 + staticValue) * personalityData);
+        float personalityData = (1.0f + (_base.Personality[0] == statIndex ? 0.1f : 0) - (_base.Personality[1] == statIndex ? 0.1f : 0));
+        return (int)((((stat * 2) + _base.Individual[statIndex] + (_base.Effort[statIndex] / 4)) * Level / 100 + staticValue) * personalityData);
     }
 
     int GetStat(Stat stat)
-    {  
+    {
         int statVal = Stats[stat];
 
         // TODO: Apply stat boost
@@ -207,7 +183,7 @@ public class Unit
             StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
 
             string statName = "";
-            
+
             switch (stat)
             {
                 case Stat.Attack:
@@ -255,7 +231,7 @@ public class Unit
     public LearnableMove GetLearnableMoveAtCurrLevel()
     {
         LearnableMove returnMove = null;
-        foreach(LearnableMove lm in Base.LearnableMoves)
+        foreach (LearnableMove lm in Base.LearnableMoves)
         {
             if (lm.Level == level) returnMove = lm;
         }
@@ -287,7 +263,7 @@ public class Unit
     public void Heal()
     {
         HP = MaxHP;
-        foreach(var m in moves)
+        foreach (var m in moves)
         {
             m.PP = m.Base.PP;
         }
@@ -295,22 +271,28 @@ public class Unit
         OnHPChanged?.Invoke();
     }
     public int MaxHP { get; private set; }
-    public int Attack {
-        get { return GetStat(Stat.Attack);}
+    public int Attack
+    {
+        get { return GetStat(Stat.Attack); }
     }
-    public int Defense {
-        get { return GetStat(Stat.Defense);}
+    public int Defense
+    {
+        get { return GetStat(Stat.Defense); }
     }
-    public int SpAttack {
-        get { return GetStat(Stat.SpAttack);}
+    public int SpAttack
+    {
+        get { return GetStat(Stat.SpAttack); }
     }
-    public int SpDefense {
-        get { return GetStat(Stat.SpDefense);}
+    public int SpDefense
+    {
+        get { return GetStat(Stat.SpDefense); }
     }
-    public int Speed {
-        get { return GetStat(Stat.Speed);}
+    public int Speed
+    {
+        get { return GetStat(Stat.Speed); }
     }
-    public List<Move> Moves {
+    public List<Move> Moves
+    {
         get { return moves; }
     }
 
@@ -346,7 +328,7 @@ public class Unit
         float d = a * move.Base.Power * ((float)attack / defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
         Debug.Log($"Name: {Base.Name}, HP: {HP}");
-        
+
         DecreaseHP(damage);
 
         return damageDetails;
@@ -366,7 +348,7 @@ public class Unit
     public void SetStatus(ConditionID conditionID)
     {
         if (Status != null) return;
-        
+
         Status = ConditionDB.Conditions[conditionID];
         Status?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{Base.Name}은(는) {Status.StartMessage}!!");
@@ -384,7 +366,7 @@ public class Unit
     public void SetVolatileStatus(ConditionID conditionID)
     {
         if (VolatileStatus != null) return;
-        
+
         VolatileStatus = ConditionDB.Conditions[conditionID];
         VolatileStatus?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{Base.Name}은(는) {VolatileStatus.StartMessage}!!");
@@ -400,7 +382,7 @@ public class Unit
         var movesWithPP = new List<Move>();
         foreach (Move m in Moves)
         {
-            if(m.PP > 0) movesWithPP.Add(m);
+            if (m.PP > 0) movesWithPP.Add(m);
         }
         int r = Random.Range(0, movesWithPP.Count);
         return movesWithPP[r];
@@ -411,12 +393,12 @@ public class Unit
         bool cnaRunningTurn = true;
         if (Status?.OnBeforeMove != null)
         {
-            if(!Status.OnBeforeMove(this))
+            if (!Status.OnBeforeMove(this))
                 cnaRunningTurn = false;
         }
         if (VolatileStatus?.OnBeforeMove != null)
         {
-            if(!VolatileStatus.OnBeforeMove(this))
+            if (!VolatileStatus.OnBeforeMove(this))
                 cnaRunningTurn = false;
         }
         return cnaRunningTurn;
@@ -448,9 +430,6 @@ public class UnitSaveData
     public int hp;
     public int level;
     public int exp;
-    public int[] tribe;
-    public int[] effort;
-    public int[] personality;
     public ConditionID? statusId;
     public List<MoveSaveData> moves;
 }

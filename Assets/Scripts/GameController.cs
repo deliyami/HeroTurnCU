@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using GDEUtils.StateMachine;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Dialog, Menu, PartyScreen, Bag, Cutscene, Paused, Evolution, Shop }
+public enum GameState { FreeRoam, Battle, Dialog, Menu, PartyScreen, Bag, Cutscene, Paused, Evolution, Shop, Dex }
 public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField] Camera worldCamera;
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] InventoryUI inventoryUI;
+    [SerializeField] DexUI dexUI;
     GameState state;
     GameState prevState;
     GameState stateBeforeEvolution;
@@ -33,6 +34,7 @@ public class GameController : MonoBehaviour
         ConditionDB.Init();
         ItemDB.Init();
         QuestDB.Init();
+        TypeDB.Init();
     }
 
     private void Start()
