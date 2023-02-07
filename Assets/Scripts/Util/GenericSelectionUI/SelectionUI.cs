@@ -10,7 +10,7 @@ namespace GDEUtils.StateMachine
     public class SelectionUI<T> : MonoBehaviour where T : ISelectableItem
     {
         List<T> items;
-        protected int selectedItem = 0;
+        public int selectedItem = 0;
         SelectionType selectionType;
         int gridWidth = 2;
 
@@ -50,7 +50,7 @@ namespace GDEUtils.StateMachine
             else if (Input.GetButtonDown("Cancel"))
                 OnBack?.Invoke();
         }
-        void HandleListSelection()
+        protected void HandleListSelection()
         {
             // TODO: 메뉴에는 이게 맞는데, 파티창같이 좌우로도 움직일 수 있는건 다른것으로 고쳐야 함
             float v = Input.GetAxis("Vertical");
@@ -81,7 +81,7 @@ namespace GDEUtils.StateMachine
                 items[i].OnSelectionChange(i == selectedItem);
             }
         }
-        void UpdateSelectionTimer()
+        protected void UpdateSelectionTimer()
         {
             if (selectionTimer > 0)
                 selectionTimer = Mathf.Clamp(selectionTimer - Time.deltaTime, 0, selectionTimer);

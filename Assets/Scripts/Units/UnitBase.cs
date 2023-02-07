@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Unit", menuName = "Unit/Create new unit")]
@@ -78,6 +79,7 @@ public class UnitBase : ScriptableObject
     {
         get { return smallSprite; }
     }
+    public Sprite PortraitSprite => portraitSprite;
     public UnitType Type1
     {
         get { return type1; }
@@ -264,6 +266,12 @@ public class IndividualChart
         new string[] { "물건을 잘 어지른다", "싸움을 좋아한다", "인내심이 강하다", "걱정거리가 많다", "지기 싫어한다", "우쭐댄다" },
         new string[] { "여유를 즐긴다", "혈기왕성하다", "잘 참는다", "매우 꼼꼼하다", "조금 고집불통이다", "발이 빠르다" }
     };
+    public static string GetIndividualText(int[] status)
+    {
+        // MathF.Max(status)
+        var max = status.Select((n, i) => (Number: n, Index: i)).Max();
+        return chart[max.Number][max.Index];
+    }
 }
 
 public class PersonalityChart
@@ -292,4 +300,15 @@ public class PersonalityChart
         new string[] { "하다", "하다", "하다", "스럽다", "지다" },
         new string[] { "같다", "하다", "하다", "하다", "하다" },
     };
+    public static string GetPersonalityText(int[] status)
+    {
+        return $"{chart[status[0]][status[1]]}{tailerWord[status[0]][status[1]]}";
+    }
+    public static string GetPersonalityClosingRemarks(int[] status)
+    {
+        return $"{chart[status[0]][status[1]]}{closingRemarks[status[0]][status[1]]}";
+    }
+    public static string[][] Chart => chart;
+    public static string[][] TailerWord => tailerWord;
+    public static string[][] ClosingRemarks => closingRemarks;
 }

@@ -130,5 +130,5 @@ public class DexUI : SelectionUI<TextSlot>
         typeText2.text = "";
     }
     // public UnitBase SelectedUnit => dex.GetItem(selectedItem, selectedCategory);
-    // public int SelectedCategory => selectedCategory;
+    public int SelectedCategory => selectedCategory;
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GDEUtils.StateMachine;
@@ -7,6 +8,9 @@ public class DexState : State<GameController>
 {
     [SerializeField] DexUI dexUI;
     public static DexState i { get; private set; }
+    UnitBase currentUnit;
+
+    public event Action DexDescriptionUIUpdate;
     private void Awake()
     {
         i = this;
@@ -31,11 +35,16 @@ public class DexState : State<GameController>
     }
     void OnDexSelected(int selection)
     {
-        // TODO: 유닛 상세보기 추가
-        // gc.StateMachine.Push();
+        // selection 
+        // currentUnit = Dex.GetDex().allSlots[dexUI.SelectedCategory][selection]; 현재 유닛
+        currentUnit = Dex.GetDex().GetItem(selection, dexUI.SelectedCategory);
+        Debug.Log($"here is dexState {currentUnit.Name}");
+        gc.StateMachine.Push(DexDescriptionState.i);
+        DexDescriptionUIUpdate?.Invoke();
     }
     void OnBack()
     {
         gc.StateMachine.Pop();
     }
+    public UnitBase CurrentUnit => currentUnit;
 }

@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] InventoryUI inventoryUI;
     [SerializeField] DexUI dexUI;
+    [SerializeField] DexDescriptionUI dexDescriptionUI;
     GameState state;
     GameState prevState;
     GameState stateBeforeEvolution;

@@ -11,6 +11,7 @@ public class Dex : MonoBehaviour
     [SerializeField] List<UnitBase> enemy;
     List<List<UnitBase>> allSlots;
     // public event Action OnUpdated;
+
     private void Awake()
     {
         allSlots = new List<List<UnitBase>>() { team, enemy };
