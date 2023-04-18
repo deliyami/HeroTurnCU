@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Treka
+  m_EditorClassIdentifier: 
+  name: "\uD2B8\uB808\uCE74"
+  description: "\uD2B8\uB808\uCE74?"
+  frontSprite: {fileID: 389173509, guid: 75a886bb2d8433e4fbd1c4e3c026ecec, type: 3}
+  reverseFrontSprite: {fileID: 0}
+  backSprite: {fileID: -1172122696, guid: 75a886bb2d8433e4fbd1c4e3c026ecec, type: 3}
+  smallSprite: {fileID: 1827363509, guid: b9891a3e1fc0f0d46ae4fc5f2daa74a8, type: 3}
+  portraitSprite:
+  - {fileID: -763264699, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  - {fileID: -1806769409, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  - {fileID: 620500350, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  - {fileID: 407439024, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  reversedPortraitSprite: []
+  type1: 17
+  type2: 12
+  maxHP: 70
+  attack: 130
+  defense: 80
+  spAttack: 25
+  spDefense: 65
+  speed: 130
+  expYield: 0
+  growthRate: 0
+  catchRate: 255
+  ability: "\uC0C9\uC548\uACBD/\uC801\uC751\uB825"
+  individual: 0d0000001400000016000000000000000700000017000000
+  effort: 5800000068000000400000000000000024000000a8000000
+  personality: 0400000005000000
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: 99ff83478c9368a4dba739289b07596f, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 5e70e66256168be45bfa6cf65055cd31, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: e31f98f2849b65f4b951ef44592e69cf, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 32f3d7d40c47a72479c0d41f9374d122, type: 2}
+    level: 0
+  learnableByItems: []
+  evolutions: []

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52194e9afc1438f4a84e8c12b83ad26e
+guid: ac30547b93f432549a81eeaae4fed129
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprites_violet_reverse_0
+      name: portrait_octa_reverse_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 64
-        height: 64
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b85c98978af97ce40bfc1de6df9c1b62
-      internalID: 1393998642
+      spriteID: 46b6be162fd97f24b8fe3a7bd6aa1695
+      internalID: 1376137996
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_violet_reverse_1
+      name: portrait_octa_reverse_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 64
-        height: 64
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,8 +139,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dc1eb228f5eaff4d9b09b749235c3ff
-      internalID: 478099536
+      spriteID: 0c398a293fa229544a3fbd8e48dfc674
+      internalID: -866766317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: portrait_octa_reverse_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9206abca343b47849b02d045b77fe90b
+      internalID: 1246621120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: portrait_octa_reverse_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea11ce11714c184d951ff96e6583ff0
+      internalID: -373834740
       vertices: []
       indices: 
       edges: []
@@ -156,8 +198,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sprites_violet_reverse_1: 478099536
-      sprites_violet_reverse_0: 1393998642
+      portrait_octa_reverse_2: 1246621120
+      portrait_octa_reverse_3: -373834740
+      portrait_octa_reverse_1: -866766317
+      portrait_octa_reverse_0: 1376137996
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

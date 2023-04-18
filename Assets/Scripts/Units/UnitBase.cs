@@ -8,19 +8,22 @@ using UnityEngine;
 public class UnitBase : ScriptableObject
 {
     [SerializeField] string name;
-
     [TextArea]
     [SerializeField] string description;
 
+    [Header("유닛 스프라이트")]
     [SerializeField] Sprite frontSprite;
+    [SerializeField] Sprite reverseFrontSprite;
     [SerializeField] Sprite backSprite;
     [SerializeField] Sprite smallSprite;
-    [SerializeField] Sprite portraitSprite;
+    [SerializeField] Sprite[] portraitSprite = new Sprite[4];
+    [SerializeField] Sprite[] reversedPortraitSprite;
 
     [SerializeField] UnitType type1;
     [SerializeField] UnitType type2;
 
     // Base Stats
+    [Header("유닛 종족값/스텟/특성")]
     [SerializeField] int maxHP;
     [SerializeField] int attack;
     [SerializeField] int defense;
@@ -33,13 +36,17 @@ public class UnitBase : ScriptableObject
     [SerializeField] int catchRate = 255;
 
     [SerializeField] string ability; // 특성
+    [Header("개체치")]
     // 개체치 31 {HP, attack, defense, spAttack, spDefense, speed}
     [SerializeField] int[] individual = new int[6];
+    [Header("노력치")]
     // // 노력치 0~252 {HP, attack, defense, spAttack, spDefense, speed} /4해서 더해야 하는데... 적혀있네
-    [SerializeField] int[] effort = new int[6];
+    [SerializeField] int[] effort = new int[] { 85, 85, 85, 85, 85, 85 };
+    [Header("성격 ")]
     // // 성격 int[] = {상승 스텟 index, 하락 스텟 index}
     [SerializeField] int[] personality = new int[2];
 
+    [Header("배울 수 있는 기술들")]
     [SerializeField] List<LearnableMove> learnableMoves;
     [SerializeField] List<MoveBase> learnableByItems;
     [SerializeField] List<Evolution> evolutions;
@@ -79,7 +86,7 @@ public class UnitBase : ScriptableObject
     {
         get { return smallSprite; }
     }
-    public Sprite PortraitSprite => portraitSprite;
+    public Sprite[] PortraitSprite => portraitSprite;
     public UnitType Type1
     {
         get { return type1; }
@@ -302,11 +309,11 @@ public class PersonalityChart
     };
     public static string GetPersonalityText(int[] status)
     {
-        return $"{chart[status[0]][status[1]]}{tailerWord[status[0]][status[1]]}";
+        return $"{chart[status[0] - 1][status[1] - 1]}{tailerWord[status[0] - 1][status[1] - 1]}";
     }
     public static string GetPersonalityClosingRemarks(int[] status)
     {
-        return $"{chart[status[0]][status[1]]}{closingRemarks[status[0]][status[1]]}";
+        return $"{chart[status[0] - 1][status[1] - 1]}{closingRemarks[status[0] - 1][status[1] - 1]}";
     }
     public static string[][] Chart => chart;
     public static string[][] TailerWord => tailerWord;

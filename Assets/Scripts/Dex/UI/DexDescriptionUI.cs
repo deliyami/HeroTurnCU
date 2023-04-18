@@ -56,7 +56,7 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
         unit = DexState.i.CurrentUnit;
         unitName.text = unit.Name;
         unitDescriptionText.text = unit.Description;
-        portraitSprite.sprite = unit.PortraitSprite;
+        portraitSprite.sprite = (unit.PortraitSprite == null && unit.PortraitSprite.Length > 0) ? null : unit.PortraitSprite[Random.Range(0, unit.PortraitSprite.Length - 1)];
         battleSprite.sprite = unit.FrontSprite;
 
         individualText.text = $"{unit.Name}은(는) {IndividualChart.GetIndividualText(unit.Individual)}.";

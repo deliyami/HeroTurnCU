@@ -17,6 +17,12 @@ MonoBehaviour:
   frontSprite: {fileID: 770637360, guid: d8e4478f93ae33a4d972bc4eb18db46d, type: 3}
   backSprite: {fileID: 921617451, guid: d8e4478f93ae33a4d972bc4eb18db46d, type: 3}
   smallSprite: {fileID: -480098491, guid: a4e8ad1ea77a0eb4a959c471972edeeb, type: 3}
+  portraitSprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  reversedPortraitSprite: []
   type1: 11
   type2: 5
   maxHP: 60
@@ -29,6 +35,9 @@ MonoBehaviour:
   growthRate: 0
   catchRate: 255
   ability: "\uC0AC\uC774\uCF54\uBA54\uC774"
+  individual: 14000000110000001a0000000d000000170000001b000000
+  effort: 680000002c00000059000000240000005700000090000000
+  personality: 0200000004000000
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: 9f885ae3adeeeb64db026efe6019b6f5, type: 2}
     level: 0
@@ -38,3 +47,5 @@ MonoBehaviour:
     level: 0
   - moveBase: {fileID: 11400000, guid: 547cfff5ec237cf47a2e86fdf31837ad, type: 2}
     level: 0
+  learnableByItems: []
+  evolutions: []

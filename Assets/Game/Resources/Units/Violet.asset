@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Violet
+  m_EditorClassIdentifier: 
+  name: "\uC5F0\uD654"
+  description: "\uB9C8\uBC95\uC0AC"
+  frontSprite: {fileID: 1272795334, guid: dbbfede201f1528469ed6ff1d7b5ac7f, type: 3}
+  reverseFrontSprite: {fileID: 1393998642, guid: 52194e9afc1438f4a84e8c12b83ad26e, type: 3}
+  backSprite: {fileID: -1632767598, guid: dbbfede201f1528469ed6ff1d7b5ac7f, type: 3}
+  smallSprite: {fileID: 0}
+  portraitSprite:
+  - {fileID: -79391, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: 1051045910, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: 1259411640, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: -14282188, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  reversedPortraitSprite:
+  - {fileID: -697719736, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: 1637074165, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: -131177741, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: 1273041206, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  type1: 11
+  type2: 16
+  maxHP: 60
+  attack: 70
+  defense: 65
+  spAttack: 125
+  spDefense: 105
+  speed: 90
+  expYield: 0
+  growthRate: 0
+  catchRate: 255
+  ability: "\uC2EC\uC220\uAFB8\uB7EC\uAE30"
+  individual: 0100000002000000030000001d0000001c00000003000000
+  effort: 010000000200000001000000fc000000fc00000001000000
+  personality: 0300000005000000
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: 334210ef0d79518448cb8b8a362f8500, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 4a3321644d3080445be8686cd526975a, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 5226ad57b71258e4c9a573a04aa2d0ff, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: d6e9ca17b55364e4897e2c47829e932e, type: 2}
+    level: 0
+  learnableByItems: []
+  evolutions: []

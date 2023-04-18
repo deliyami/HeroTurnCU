@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52194e9afc1438f4a84e8c12b83ad26e
+guid: 80b2c5c2ff9b9984aa47869e93eb3c65
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,7 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprites_violet_reverse_0
+      name: sprites_octa_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,29 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b85c98978af97ce40bfc1de6df9c1b62
-      internalID: 1393998642
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprites_violet_reverse_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dc1eb228f5eaff4d9b09b749235c3ff
-      internalID: 478099536
+      spriteID: 1cf8818e33226db44889115971882f75
+      internalID: 591147373
       vertices: []
       indices: 
       edges: []
@@ -156,8 +135,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sprites_violet_reverse_1: 478099536
-      sprites_violet_reverse_0: 1393998642
+      sprites_octa_0: 591147373
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

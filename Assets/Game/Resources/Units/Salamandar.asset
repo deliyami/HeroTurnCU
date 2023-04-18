@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Salamandar
+  m_EditorClassIdentifier: 
+  name: "\uC0B4\uB77C\uB9CC\uB2E4"
+  description: "\uC0D0\uB7EC\uB9E8\uB354"
+  frontSprite: {fileID: 44012437, guid: c6afe7c6d553cdb42b9e81f2121eb439, type: 3}
+  reverseFrontSprite: {fileID: 0}
+  backSprite: {fileID: -1623349794, guid: c6afe7c6d553cdb42b9e81f2121eb439, type: 3}
+  smallSprite: {fileID: -802687728, guid: ed6155e5775988a42829bfc3acee4a98, type: 3}
+  portraitSprite:
+  - {fileID: 1410530196, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  - {fileID: -90319447, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  - {fileID: -109435434, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  - {fileID: -1707604402, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  reversedPortraitSprite: []
+  type1: 15
+  type2: 2
+  maxHP: 91
+  attack: 114
+  defense: 95
+  spAttack: 120
+  spDefense: 100
+  speed: 80
+  expYield: 0
+  growthRate: 0
+  catchRate: 255
+  ability: "\uD0C0\uC624\uB974\uB294 \uBD88\uAF43, \uBD88\uAF43\uBAB8"
+  individual: 140000001a0000000f000000110000000700000010000000
+  effort: 4b000000a50000001e000000900000002300000037000000
+  personality: 0500000002000000
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: b3b7aaf288af47846b5d23e3a2d4b213, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: aebe90788e8ded242baf58b0ae116bc9, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 8fec8bf9a8e97384a97510ef2edff8db, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 8a66261f50469714082e53277a2d9a48, type: 2}
+    level: 0
+  learnableByItems: []
+  evolutions: []

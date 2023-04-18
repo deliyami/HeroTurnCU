@@ -17,6 +17,12 @@ MonoBehaviour:
   frontSprite: {fileID: 574177862, guid: 2b4dfc2cd6f4c69428b8941f4b394cdd, type: 3}
   backSprite: {fileID: -1215298691, guid: 2b4dfc2cd6f4c69428b8941f4b394cdd, type: 3}
   smallSprite: {fileID: -2133330632, guid: d4d300ceb938d10449da9c6ef2dc54ba, type: 3}
+  portraitSprite:
+  - {fileID: 514689016, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  - {fileID: 1240311327, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  - {fileID: 1770222067, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  - {fileID: -251645836, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  reversedPortraitSprite: []
   type1: 18
   type2: 10
   maxHP: 78
@@ -29,6 +35,9 @@ MonoBehaviour:
   growthRate: 0
   catchRate: 255
   ability: "\uD398\uC5B4\uB9AC\uC2A4\uD0A8?\uC2A4\uCE74\uC774\uC2A4\uD0A8?"
+  individual: 180000000f00000016000000150000001100000014000000
+  effort: 6a0000003e000000210000001b00000069000000a0000000
+  personality: 0500000004000000
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: 58f09562b14fdab47882a33425783b94, type: 2}
     level: 0
@@ -38,3 +47,5 @@ MonoBehaviour:
     level: 0
   - moveBase: {fileID: 11400000, guid: 80dc4e24d84b0874fa1815f112f33f5e, type: 2}
     level: 0
+  learnableByItems: []
+  evolutions: []

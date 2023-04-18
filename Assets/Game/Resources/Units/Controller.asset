@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
+  m_Name: Controller
+  m_EditorClassIdentifier: 
+  name: "\uCEE8\uD2B8\uB864\uB7EC"
+  description: "\uCEE8\uD2B8\uB864\uB7EC"
+  frontSprite: {fileID: 1574910151, guid: f3d1797f8b06d0042bd4526154fedd36, type: 3}
+  reverseFrontSprite: {fileID: 0}
+  backSprite: {fileID: 1917736407, guid: f3d1797f8b06d0042bd4526154fedd36, type: 3}
+  smallSprite: {fileID: -617747311, guid: 5ba416a1ab4734b4cab31d8d1578d01b, type: 3}
+  portraitSprite:
+  - {fileID: 1669614967, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  - {fileID: 1514197298, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  - {fileID: 948873770, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  - {fileID: -224267512, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  reversedPortraitSprite: []
+  type1: 10
+  type2: 13
+  maxHP: 80
+  attack: 90
+  defense: 65
+  spAttack: 105
+  spDefense: 75
+  speed: 100
+  expYield: 0
+  growthRate: 0
+  catchRate: 255
+  ability: "\uBA40\uD2F0\uC2A4\uCF00\uC77C/\uC639\uACE8"
+  individual: 140000001100000012000000040000001500000007000000
+  effort: 540000005400000054000000540000005400000054000000
+  personality: 0200000001000000
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: 46bd3775d9aed654fb8bd0125b0f6359, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: 295fb0dc8836e2148a88a7a9c26d3242, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: f6c92e69de34e1144916882d43e92a9d, type: 2}
+    level: 0
+  - moveBase: {fileID: 11400000, guid: c29a914940369a54f9834092c7a9b4ea, type: 2}
+    level: 0
+  learnableByItems: []
+  evolutions: []

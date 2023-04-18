@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 52194e9afc1438f4a84e8c12b83ad26e
+guid: c44dcc4935cb2c74eb5039cb7996f1cd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,13 +104,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprites_violet_reverse_0
+      name: portrait_violet_reverse_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 64
-        height: 64
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b85c98978af97ce40bfc1de6df9c1b62
-      internalID: 1393998642
+      spriteID: 034faf989c6378647abc46d521bf9424
+      internalID: -697719736
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_violet_reverse_1
+      name: portrait_violet_reverse_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 64
-        height: 64
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,8 +139,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dc1eb228f5eaff4d9b09b749235c3ff
-      internalID: 478099536
+      spriteID: dd6119b76d8cb1940a3b819a2de942ed
+      internalID: 1637074165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: portrait_violet_reverse_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f35c40dfa76f474681a8f44ca0e45af
+      internalID: -131177741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: portrait_violet_reverse_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfe6911212691ad4c9f2cff5461dffe9
+      internalID: 1273041206
       vertices: []
       indices: 
       edges: []
@@ -156,8 +198,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sprites_violet_reverse_1: 478099536
-      sprites_violet_reverse_0: 1393998642
+      portrait_violet_reverse_1: 1637074165
+      portrait_violet_reverse_0: -697719736
+      portrait_violet_reverse_2: -131177741
+      portrait_violet_reverse_3: 1273041206
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
