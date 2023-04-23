@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
-using GDEUtils.StateMachine;
+using GDE.GenericSelectionUI;
 
 public class PartyScreen : SelectionUI<TextSlot>
 {
@@ -18,7 +18,7 @@ public class PartyScreen : SelectionUI<TextSlot>
     public void Init()
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
-        SetSelectionSetting(SelectionType.Grid, 2);
+        SetSelectionSettings(SelectionType.Grid, 2);
 
         party = UnitParty.GetPlayerParty();
         SetPartyData();
@@ -49,7 +49,7 @@ public class PartyScreen : SelectionUI<TextSlot>
     {
         for (int i = 0; i < units.Count; i++)
         {
-            string message = tmItem.CanBeTaught(units[i])?"배울 수 있다!":"배울 수 없다!";
+            string message = tmItem.CanBeTaught(units[i]) ? "배울 수 있다!" : "배울 수 없다!";
             memberSlots[i].SetMessage(message);
         }
     }
@@ -66,7 +66,7 @@ public class PartyScreen : SelectionUI<TextSlot>
     }
     public void UpdateStatusText()
     {
-        for(int i = 0; i< units.Count; i++)
+        for (int i = 0; i < units.Count; i++)
         {
             memberSlots[i].SetStatusText();
         }

@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using GDEUtils.StateMachine;
+using GDE.GenericSelectionUI;
 using System.Linq;
 
-public class MoveSelectionUI : SelectionUI<TextSlot>
+public class MoveTOForgetSelectionUI : SelectionUI<TextSlot>
 {
     [SerializeField] List<TextMeshProUGUI> moveTexts;
 

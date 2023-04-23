@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using GDEUtils.StateMachine;
 
 
 public enum BattleStates { Start, ActionSelection, MoveSelection, TargetSelection, RunningTurn, Busy, Bag, PartyScreen, AboutToUse, MoveToForget, BattleOver }
@@ -38,6 +39,8 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Sprite waterBackground;
     [SerializeField] Sprite trainerBackground;
 
+    // 2vs2
+
     List<BattleUnit> playerUnits;
     List<BattleUnit> enemyUnits;
 
@@ -48,6 +51,8 @@ public class BattleSystem : MonoBehaviour
     BattleUnit currentUnit;
 
     public event Action<bool> OnBattleOver;
+
+    public StateMachine<BattleSystem> StateMachine { get; private set; }
 
     BattleStates state;
 
@@ -104,6 +109,9 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetupBattle()
     {
+        Debug.Log("wake up in setupbattle in battle system");
+        StateMachine = new StateMachine<BattleSystem>(this);
+
         singleBattleElements.SetActive(unitCount == 1);
         multiBattleElements.SetActive(unitCount > 1);
 
@@ -195,7 +203,8 @@ public class BattleSystem : MonoBehaviour
         partyScreen.Init();
 
         actions = new List<BattleAction>();
-        ActionSelection(0);
+        Debug.Log("wake up in before actionselection");
+        StateMachine.ChangeState(ActionSelectionState.i);
     }
 
 
@@ -261,7 +270,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleStates.Busy;
         yield return dialogBox.TypeDialog($"기술 배우는 창, 보인다면 버그입니다.");
         moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(unit.Moves.Select(x => x.Base).ToList(), newMove);
+        // moveSelectionUI.SetMoveData(unit.Moves.Select(x => x.Base).ToList(), newMove);
         moveToLearn = newMove;
 
         state = BattleStates.MoveToForget;
@@ -677,15 +686,9 @@ public class BattleSystem : MonoBehaviour
 
     public void HandleUpdate()
     {
-        if (state == BattleStates.ActionSelection)
-        {
-            HandleActionSelection();
-        }
-        else if (state == BattleStates.MoveSelection)
-        {
-            HandleMoveSelection();
-        }
-        else if (state == BattleStates.TargetSelection)
+        StateMachine.Execute();
+
+        if (state == BattleStates.TargetSelection)
         {
             HandleTargetSelection();
         }
@@ -1144,4 +1147,37 @@ public class BattleSystem : MonoBehaviour
             state = BattleStates.RunningTurn;
         }
     }
+
+    public BattleDialogBox DialogBox => dialogBox;
+
+    // public List<BattleUnit> PlayerUnits()
+    // {
+    //     List<BattleUnit> returnUnits;
+    //     if (unitCount == 1)
+    //     {
+    //         playerUnits = new List<BattleUnit>() { playerUnitSingle };
+    //         enemyUnits = new List<BattleUnit>() { enemyUnitSingle };
+    //     }
+    //     else
+    //     {
+    //         playerUnits = playerUnitsMulti.GetRange(0, playerUnitsMulti.Count);
+    //         enemyUnits = enemyUnitsMulti.GetRange(0, enemyUnitsMulti.Count);
+    //     }
+    //     return playerUnits;
+    //     // return returnUnits;
+    // }
+
+    // public List<BattleUnit> PlayerUnits =>
+    //     unitCount == 1 ?
+    //         new List<BattleUnit>() 
+
+    // public List<BattleUnit> EnemyUnits =>
+    //     unitCount == 1 ?
+    //         new List<BattleUnit>() { enemyUnitSingle } :
+    //         enemyUnitsMulti.GetRange(0, enemyUnitsMulti.Count);
+
+    public List<BattleUnit> PlayerUnits => playerUnits;
+    public List<BattleUnit> EnemyUnits => enemyUnits;
+
+    public int ActionIndex => actionIndex;
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using GDEUtils.StateMachine;
+using GDE.GenericSelectionUI;
 
 public class InventoryUI : SelectionUI<TextSlot>
 {

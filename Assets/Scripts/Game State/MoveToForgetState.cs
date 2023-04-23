@@ -23,7 +23,7 @@ public class MoveToForgetState : State<GameController>
         Selection = 0;
 
         moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(CurrentMoves, NewMove);
+        // moveSelectionUI.SetMoveData(CurrentMoves, NewMove);
         moveSelectionUI.OnSelected += OnMoveSelected;
         moveSelectionUI.OnBack += OnBack;
     }

@@ -12,11 +12,13 @@ public class BattleState : State<GameController>
     public int unitCount { get; set; }
     private void Awake()
     {
+        Debug.Log("wake up in battlestate");
         i = this;
     }
     GameController gc;
     public override void Enter(GameController owner)
     {
+        Debug.Log("wake up in battlestate enter");
         gc = owner;
 
         battleSystem.gameObject.SetActive(true);

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GDEUtils.StateMachine;
+using GDE.GenericSelectionUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

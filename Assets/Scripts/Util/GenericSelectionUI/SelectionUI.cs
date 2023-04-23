@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-namespace GDEUtils.StateMachine
+namespace GDE.GenericSelectionUI
 {
     public enum SelectionType { List, Grid }
     public class SelectionUI<T> : MonoBehaviour where T : ISelectableItem
@@ -20,7 +20,7 @@ namespace GDEUtils.StateMachine
 
         public event Action<int> OnSelected;
         public event Action OnBack;
-        public void SetSelectionSetting(SelectionType selectionType, int gridWidth)
+        public void SetSelectionSettings(SelectionType selectionType, int gridWidth)
         {
             this.selectionType = selectionType;
             this.gridWidth = gridWidth;

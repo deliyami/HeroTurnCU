@@ -76,3 +76,5 @@ ProjectVersion.txt
 Assets/Scripts/Saving/
 
 Assets/Audio/
+
+*.log
