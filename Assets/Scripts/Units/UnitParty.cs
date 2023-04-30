@@ -9,10 +9,12 @@ public class UnitParty : MonoBehaviour
     [SerializeField] List<Unit> units;
     public event Action OnUpdated;
 
-    public List<Unit> Units{
+    public List<Unit> Units
+    {
         get { return units; }
-        set { 
-            units = value; 
+        set
+        {
+            units = value;
             OnUpdated?.Invoke();
         }
     }
@@ -24,11 +26,12 @@ public class UnitParty : MonoBehaviour
         }
     }
 
-    private void Start() {
-        
+    private void Start()
+    {
+
     }
 
-    public Unit GetHealtyhUnit(List<Unit> dontInclude = null)
+    public Unit GetHealthyUnit(List<Unit> dontInclude = null)
     {
         var healthyUnits = units.Where(x => x.HP > 0);
         if (dontInclude != null)
@@ -37,7 +40,7 @@ public class UnitParty : MonoBehaviour
         return healthyUnits.FirstOrDefault();
     }
 
-    public List<Unit> GetHealtyhUnits(int unitCount)
+    public List<Unit> GetHealthyUnits(int unitCount)
     {
         return units.Where(x => x.HP > 0).Take(unitCount).ToList();
     }
@@ -74,7 +77,7 @@ public class UnitParty : MonoBehaviour
     {
         OnUpdated?.Invoke();
     }
-    
+
     public static UnitParty GetPlayerParty()
     {
         var unitParty = FindObjectOfType<PlayerController>().GetComponent<UnitParty>();

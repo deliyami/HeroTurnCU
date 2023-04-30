@@ -3193,6 +3193,7 @@ GameObject:
   - component: {fileID: 8115450738294819061}
   - component: {fileID: 8497548780655264943}
   - component: {fileID: 892812786778576716}
+  - component: {fileID: 1341359234847111783}
   m_Layer: 0
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -3281,6 +3282,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionUI: {fileID: 8005146894643656814}
   moveDetailsUI: {fileID: 8115450738243535831}
+--- !u!114 &1341359234847111783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738294819059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d04e859125d55439e4401f16f9327d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8115450738302411298
 GameObject:
   m_ObjectHideFlags: 0

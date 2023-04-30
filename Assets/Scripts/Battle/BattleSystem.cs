@@ -46,11 +46,13 @@ public class BattleSystem : MonoBehaviour
 
     List<BattleAction> actions;
 
-    int unitCount = 1;
+    public int UnitCount { get; private set; } = 1;
     int actionIndex = 0;
     BattleUnit currentUnit;
 
     public event Action<bool> OnBattleOver;
+
+    public bool IsbattleOver { get; private set; }
 
     public StateMachine<BattleSystem> StateMachine { get; private set; }
 
@@ -61,12 +63,12 @@ public class BattleSystem : MonoBehaviour
     int currentTarget;
     bool aboutToUseChoice = true;
 
-    UnitParty playerParty;
-    UnitParty trainerParty;
-    Unit wildUnit;
+    public UnitParty PlayerParty { get; private set; }
+    public UnitParty TrainerParty { get; private set; }
+    public Unit WildUnit { get; private set; }
     public Field Field { get; private set; }
 
-    bool isTrainerBattle = false;
+    public bool IsTrainerBattle { get; private set; } = false;
     PlayerController player;
     TrainerController trainer;
 
@@ -77,33 +79,33 @@ public class BattleSystem : MonoBehaviour
     BattleUnit unitToSwitch;
 
     BattleTrigger battleTrigger;
-    public void StartBattle(UnitParty playerParty, Unit wildUnit,
+    public void StartBattle(UnitParty PlayerParty, Unit WildUnit,
         BattleTrigger trigger = BattleTrigger.LongGrass)
     {
         battleTrigger = trigger;
-        this.playerParty = playerParty;
-        this.wildUnit = wildUnit;
-        player = playerParty.GetComponent<PlayerController>();
-        isTrainerBattle = false;
+        this.PlayerParty = PlayerParty;
+        this.WildUnit = WildUnit;
+        player = PlayerParty.GetComponent<PlayerController>();
+        IsTrainerBattle = false;
 
-        unitCount = 1;
+        UnitCount = 1;
 
         AudioManager.i.PlayMusic(wildBattleMusic);
         StartCoroutine(SetupBattle());
     }
 
-    public void StartTrainerBattle(UnitParty playerParty, UnitParty trainerParty,
-        int unitCount = 1)
+    public void StartTrainerBattle(UnitParty PlayerParty, UnitParty TrainerParty,
+        int UnitCount = 1)
     {
         battleTrigger = BattleTrigger.Trainer;
-        this.playerParty = playerParty;
-        this.trainerParty = trainerParty;
+        this.PlayerParty = PlayerParty;
+        this.TrainerParty = TrainerParty;
 
-        isTrainerBattle = true;
-        player = playerParty.GetComponent<PlayerController>();
-        trainer = trainerParty.GetComponent<TrainerController>();
+        IsTrainerBattle = true;
+        player = PlayerParty.GetComponent<PlayerController>();
+        trainer = TrainerParty.GetComponent<TrainerController>();
         AudioManager.i.PlayMusic(trainerBattleMusic);
-        this.unitCount = unitCount;
+        this.UnitCount = UnitCount;
         StartCoroutine(SetupBattle());
     }
 
@@ -112,10 +114,10 @@ public class BattleSystem : MonoBehaviour
         Debug.Log("wake up in setupbattle in battle system");
         StateMachine = new StateMachine<BattleSystem>(this);
 
-        singleBattleElements.SetActive(unitCount == 1);
-        multiBattleElements.SetActive(unitCount > 1);
+        singleBattleElements.SetActive(UnitCount == 1);
+        multiBattleElements.SetActive(UnitCount > 1);
 
-        if (unitCount == 1)
+        if (UnitCount == 1)
         {
             playerUnits = new List<BattleUnit>() { playerUnitSingle };
             enemyUnits = new List<BattleUnit>() { enemyUnitSingle };
@@ -143,11 +145,11 @@ public class BattleSystem : MonoBehaviour
             selectedBackground = trainerBackground;
         backgroundImage.sprite = selectedBackground;
 
-        if (!isTrainerBattle)
+        if (!IsTrainerBattle)
         {
             // 야생 전투
-            playerUnits[0].Setup(playerParty.GetHealtyhUnit());
-            enemyUnits[0].Setup(wildUnit);
+            playerUnits[0].Setup(PlayerParty.GetHealthyUnit());
+            enemyUnits[0].Setup(WildUnit);
 
             dialogBox.SetMoveNames(playerUnits[0].Unit.Moves);
             yield return dialogBox.TypeDialog($"{enemyUnits[0].Unit.Base.Name}(이)가 나타났다!");
@@ -174,8 +176,8 @@ public class BattleSystem : MonoBehaviour
 
             // 상대 전투 유닛 출동
             trainerImage.gameObject.SetActive(false);
-            var healthEnemyUnits = trainerParty.GetHealtyhUnits(unitCount);
-            for (int i = 0; i < unitCount; i++)
+            var healthEnemyUnits = TrainerParty.GetHealthyUnits(UnitCount);
+            for (int i = 0; i < UnitCount; i++)
             {
                 enemyUnits[i].gameObject.SetActive(true);
                 enemyUnits[i].Setup(healthEnemyUnits[i]);
@@ -185,8 +187,8 @@ public class BattleSystem : MonoBehaviour
 
             // 팀 전투 유닛 출동
             playerImage.gameObject.SetActive(false);
-            var healthPlayerUnits = playerParty.GetHealtyhUnits(unitCount);
-            for (int i = 0; i < unitCount; i++)
+            var healthPlayerUnits = PlayerParty.GetHealthyUnits(UnitCount);
+            for (int i = 0; i < UnitCount; i++)
             {
                 playerUnits[i].gameObject.SetActive(true);
                 playerUnits[i].Setup(healthPlayerUnits[i]);
@@ -194,6 +196,7 @@ public class BattleSystem : MonoBehaviour
             names = String.Join("와(과) ", healthPlayerUnits.Select(u => u.Base.Name));
             yield return dialogBox.TypeDialog($"힘내, {names}!");
         }
+        IsbattleOver = false;
         escapeAttempts = 0;
         Field = new Field();
 
@@ -208,10 +211,10 @@ public class BattleSystem : MonoBehaviour
     }
 
 
-    void BattleOver(bool won)
+    public void BattleOver(bool won)
     {
-        state = BattleStates.BattleOver;
-        playerParty.Units.ForEach(unit => unit.OnBattleOver());
+        IsbattleOver = true;
+        PlayerParty.Units.ForEach(unit => unit.OnBattleOver());
 
         playerUnits.ForEach(pu => pu.Hud.ClearData());
         enemyUnits.ForEach(eu => eu.Hud.ClearData());
@@ -219,7 +222,7 @@ public class BattleSystem : MonoBehaviour
         OnBattleOver(won);
     }
 
-    void ActionSelection(int actionIndex)
+    void ActionSelection(int actionIndex = 0)
     {
         state = BattleStates.ActionSelection;
         // StartCoroutine(dialogBox.SetDialog("행동을 선택하세요."));
@@ -275,12 +278,12 @@ public class BattleSystem : MonoBehaviour
 
         state = BattleStates.MoveToForget;
     }
-    void AddBattleAction(BattleAction action)
+    public void AddBattleAction(BattleAction action)
     {
         actions.Add(action);
 
         // 유저에게 설택된 것 확인
-        if (actions.Count == unitCount)
+        if (actions.Count == UnitCount)
         {
             // 적 유닛 확인
             foreach (var enemyUnit in enemyUnits)
@@ -299,389 +302,12 @@ public class BattleSystem : MonoBehaviour
             actions = actions.OrderByDescending(a => a.Priority)
                 .ThenByDescending(a => a.User.Unit.Speed).ToList();
 
-            StartCoroutine(RunTurns());
+            // StartCoroutine(RunTurns());
         }
         else
         {
             ActionSelection(actionIndex + 1);
         }
-    }
-    IEnumerator RunTurns()
-    {
-        state = BattleStates.RunningTurn;
-
-        foreach (var action in actions)
-        {
-            if (action.IsInvalid) continue;
-            if (action.Type == ActionType.Move)
-            {
-                yield return RunMove(action.User, action.Target, action.Move);
-                yield return RunAfterTurn(action.User);
-                if (state == BattleStates.BattleOver) yield break;
-            }
-            else if (action.Type == ActionType.SwitchUnit)
-            {
-                state = BattleStates.Busy;
-                yield return SwitchUnit(action.User, action.SelectedUnit);
-            }
-            else if (action.Type == ActionType.UseItem)
-            {
-                // 아이템 창 탈출하고 적 턴을 실행해야함
-                dialogBox.EnableActionSelector(false);
-            }
-            else if (action.Type == ActionType.Run)
-            {
-                yield return TryToEscape();
-            }
-            if (state == BattleStates.BattleOver) break;
-        }
-
-        if (Field.Weather != null)
-        {
-            yield return dialogBox.TypeDialog(Field.Weather.EffectMessage);
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                var pu = playerUnits[i];
-                Field.Weather.OnWeather?.Invoke(pu.Unit);
-                yield return ShowStatusChanges(pu.Unit);
-                if (pu.Unit.HPChanged) pu.PlayerHitAnimation();
-                pu.Hud.UpdateHP();
-                if (pu.Unit.HP <= 0)
-                {
-                    yield return dialogBox.TypeDialog($"{pu.Unit.Base.Name}은(는) 쓰러졌다!");
-                    yield return HandleUnitFainted(pu);
-                    yield break;
-                }
-            }
-            for (int i = 0; i < playerUnits.Count; i++)
-            {
-                var eu = enemyUnits[i];
-                Field.Weather.OnWeather?.Invoke(eu.Unit);
-                yield return ShowStatusChanges(eu.Unit);
-                if (eu.Unit.HPChanged) eu.PlayerHitAnimation();
-                eu.Hud.UpdateHP();
-                if (eu.Unit.HP <= 0)
-                {
-                    yield return dialogBox.TypeDialog($"{eu.Unit.Base.Name}은(는) 쓰러졌다!");
-                    yield return HandleUnitFainted(eu);
-                    yield break;
-                }
-            }
-            if (Field.WeatherDuration != null)
-            {
-                Field.WeatherDuration--;
-                if (Field.WeatherDuration == 0)
-                {
-                    Field.Weather = null;
-                    Field.WeatherDuration = null;
-                    yield return dialogBox.TypeDialog("날씨가 원래대로 되돌아왔다!");
-                }
-            }
-        }
-
-        if (state != BattleStates.BattleOver)
-        {
-            actions.Clear();
-            ActionSelection(0);
-        }
-    }
-    IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
-    {
-        bool canRunMove = sourceUnit.Unit.OnBeforeMove();
-
-        if (!canRunMove)
-        {
-            yield return ShowStatusChanges(sourceUnit.Unit);
-            yield return sourceUnit.Hud.WaitForHPUpdate();
-            yield break;
-        }
-        yield return ShowStatusChanges(sourceUnit.Unit);
-
-        move.PP--;
-        yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
-
-        if (CheckIfMoveHits(move, sourceUnit.Unit, targetUnit.Unit))
-        {
-            int hitTimes = move.Base.GetHitTimes();
-            float typeEffectiveness = 1f;
-            int hit = 1;
-            for (int i = 1; i <= hitTimes; i++)
-            {
-                sourceUnit.PlayAttackAnimation();
-                if (move.Base.Sound != null)
-                    AudioManager.i.PlaySfx(move.Base.Sound);
-
-                yield return new WaitForSeconds(1f);
-                targetUnit.PlayerHitAnimation();
-                AudioManager.i.PlaySfx(AudioId.Hit);
-
-                if (move.Base.Category == MoveCategory.Status)
-                {
-                    yield return RunMoveEffect(move.Base.Effects, sourceUnit.Unit, targetUnit.Unit, move.Base.Target);
-                }
-                else
-                {
-                    var damageDetails = targetUnit.Unit.TakeDamage(move, sourceUnit.Unit, Field.Weather);
-                    yield return targetUnit.Hud.WaitForHPUpdate();
-                    yield return ShowDamageDetails(damageDetails);
-                    typeEffectiveness = damageDetails.TypeEffectiveness;
-                }
-
-                if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targetUnit.Unit.HP > 0)
-                {
-                    foreach (var secondary in move.Base.Secondaries)
-                    {
-                        var rnd = UnityEngine.Random.Range(1, 101);
-                        if (rnd <= secondary.Chance)
-                            yield return RunMoveEffect(secondary, sourceUnit.Unit, targetUnit.Unit, secondary.Target);
-                    }
-                }
-                hit = i;
-                if (targetUnit.Unit.HP <= 0)
-                    break;
-            }
-            yield return ShowEffectiveness(typeEffectiveness);
-            if (hitTimes > 1)
-                yield return dialogBox.TypeDialog($"{hit}번 공격했다!");
-
-            if (targetUnit.Unit.HP <= 0)
-            {
-                // AudioManager.i.PlaySfx(AudioId.Faint);
-                yield return HandleUnitFainted(targetUnit);
-            }
-        }
-        else
-        {
-            yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
-        }
-    }
-
-
-    IEnumerator ShowStatusChanges(Unit unit)
-    {
-        while (unit.StatusChanges.Count > 0)
-        {
-            var message = unit.StatusChanges.Dequeue();
-            yield return dialogBox.TypeDialog(message);
-        }
-    }
-
-    IEnumerator HandleUnitFainted(BattleUnit faintedUnit)
-    {
-        AudioManager.i.PlaySfx(AudioId.Faint);
-        yield return dialogBox.TypeDialog($"{faintedUnit.Unit.Base.Name}(이)가 쓰러졌다!");
-        faintedUnit.PlayFaintAnimation();
-
-        yield return new WaitForSeconds(2f);
-        yield return HandleExpGain(faintedUnit);
-
-        NextStepsAfterFainting(faintedUnit);
-    }
-    IEnumerator HandleExpGain(BattleUnit faintedUnit)
-    {
-        if (!faintedUnit.IsPlayerUnit)
-        {
-            bool battleWon = true;
-            if (isTrainerBattle)
-                battleWon = trainerParty.GetHealtyhUnit() == null;
-
-            // TODO : 이거 노래 다 끝날 때 까지 움직이지 못하게 해야 함
-            if (battleWon)
-                AudioManager.i.PlayMusic(isTrainerBattle ? trainerBattleVictoryMusic : wildBattleVictoryMusic, loop: false);
-            // exp 획득
-            int expYield = faintedUnit.Unit.Base.ExpYield;
-            int enemyLevel = faintedUnit.Unit.Level;
-            float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
-
-            // int expGain = Mathf.FloorToInt(expYield * enemyLevel * trainerBonus / 7);
-            int expGain = 0;
-            if (expGain != 0)
-                for (int i = 0; i < unitCount; i++)
-                {
-                    var playerUnit = playerUnits[i];
-                    yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 자세를 다잡는다!");
-                    playerUnit.Unit.Exp += expGain;
-                    // yield return playerUnit.Hud.SetExpSmooth();
-                    // 레벨 업
-
-                    while (playerUnit.Unit.CheckForLevelUp())
-                    {
-                        playerUnit.Hud.SetLevel();
-                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 렙업했긴한데 사용하지 않는 코드다!!");
-                        // 스킬 배우기
-                        var newMove = playerUnit.Unit.GetLearnableMoveAtCurrLevel();
-                        if (newMove != null)
-                        {
-                            if (playerUnit.Unit.Moves.Count < UnitBase.MaxNumOfMoves)
-                            {
-                                playerUnit.Unit.LearnMove(newMove.Base);
-                                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 얻을 수 없는 스킬을 얻었다!");
-                                dialogBox.SetMoveNames(playerUnit.Unit.Moves);
-                            }
-                            else
-                            {
-                                // 기술 잊기
-                                unitTryingToLearn = playerUnit;
-                                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 잊을 수 없는 스킬을 잊으려 한다!");
-                                yield return ChooseMoveToForget(playerUnit.Unit, newMove.Base);
-                                yield return new WaitUntil(() => state != BattleStates.MoveToForget);
-                                yield return new WaitForSeconds(2f);
-                            }
-                        }
-                        yield return playerUnit.Hud.SetExpSmooth(true);
-                    }
-                }
-            yield return new WaitForSeconds(1f);
-        }
-    }
-    void NextStepsAfterFainting(BattleUnit faintedUnit)
-    {
-        var actionToRemove = actions.FirstOrDefault(a => a.User == faintedUnit);
-        if (actionToRemove != null)
-            actionToRemove.IsInvalid = true;
-        if (faintedUnit.IsPlayerUnit)
-        {
-            var activeUnits = playerUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
-            var nextUnit = playerParty.GetHealtyhUnit(activeUnits);
-
-            if (activeUnits.Count == 0 && nextUnit == null)
-            {
-                BattleOver(false);
-            }
-            else if (nextUnit != null)
-            {
-                unitToSwitch = faintedUnit;
-                OpenPartyScreen();
-            }
-            else if (nextUnit == null && activeUnits.Count > 0)
-            {
-                // 더이상의 적은 없지만 전투는 계속 됨
-                playerUnits.Remove(faintedUnit);
-                faintedUnit.Hud.gameObject.SetActive(false);
-
-                var actionsToChange = actions.Where(a => a.Target == faintedUnit).ToList();
-                actionsToChange.ForEach(a => a.Target = playerUnits.First());
-            }
-        }
-        else
-        {
-            if (!isTrainerBattle)
-            {
-                BattleOver(true);
-                return;
-            }
-            // var nextUnit = trainerParty.GetHealtyhUnit();
-            // if (nextUnit != null)
-            //     StartCoroutine(AboutToUse(nextUnit));
-            // else
-            //     BattleOver(true);
-            var activeUnits = enemyUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
-            var nextUnit = trainerParty.GetHealtyhUnit(activeUnits);
-
-            if (activeUnits.Count == 0 && nextUnit == null)
-            {
-                BattleOver(true);
-            }
-            else if (nextUnit != null)
-            {
-                if (unitCount == 1)
-                {
-                    unitToSwitch = playerUnits[0];
-                    StartCoroutine(AboutToUse(nextUnit));
-                }
-                else
-                    StartCoroutine(SendNextTrainerUnit());
-            }
-            else if (nextUnit == null && activeUnits.Count > 0)
-            {
-                // 더이상의 적은 없지만 전투는 계속 됨
-                enemyUnits.Remove(faintedUnit);
-                faintedUnit.Hud.gameObject.SetActive(false);
-
-                var actionsToChange = actions.Where(a => a.Target == faintedUnit).ToList();
-                actionsToChange.ForEach(a => a.Target = enemyUnits.First());
-            }
-        }
-    }
-
-    IEnumerator RunMoveEffect(MoveEffects effects, Unit source, Unit target, MoveTarget moveTarget)
-    {
-        // stat 증가
-        if (effects.Boosts != null)
-        {
-            if (moveTarget == MoveTarget.Self)
-                source.ApplyBoosts(effects.Boosts);
-            else
-                target.ApplyBoosts(effects.Boosts);
-        }
-
-        // status 이상
-        if (effects.Status != ConditionID.none)
-        {
-            target.SetStatus(effects.Status);
-        }
-        if (effects.VolatileStatus != ConditionID.none)
-        {
-            target.SetVolatileStatus(effects.VolatileStatus);
-        }
-
-        // 날씨 변경
-        if (effects.Weather != ConditionID.none)
-        {
-            Field.SetWeather(effects.Weather);
-            Field.WeatherDuration = 5;
-            yield return dialogBox.TypeDialog(Field.Weather.StartMessage);
-        }
-
-        // dialog 박스 변경
-        // playerUnit.Hud.UpdateStatus();
-
-        yield return ShowStatusChanges(source);
-        yield return ShowStatusChanges(target);
-    }
-    IEnumerator RunAfterTurn(BattleUnit sourceUnit)
-    {
-        if (state == BattleStates.BattleOver) yield break;
-        yield return new WaitUntil(() => state == BattleStates.RunningTurn);
-        // 상태이상으로 쓰러지는가?
-        sourceUnit.Unit.OnAfterTurn();
-        yield return ShowStatusChanges(sourceUnit.Unit);
-        yield return sourceUnit.Hud.WaitForHPUpdate();
-
-        if (sourceUnit.Unit.HP <= 0)
-        {
-            // AudioManager.i.PlaySfx(AudioId.Faint);
-            yield return HandleUnitFainted(sourceUnit);
-            yield return new WaitUntil(() => state == BattleStates.RunningTurn);
-        }
-    }
-
-    bool CheckIfMoveHits(Move move, Unit source, Unit target)
-    {
-        if (move.Base.AlwaysHits) return true;
-
-        float moveAccuracy = move.Base.Accuracy;
-
-        int accuracy = source.StatBoosts[Stat.Accuracy];
-        int evasion = target.StatBoosts[Stat.Evasion];
-
-        // statVal = Mathf.FloorToInt(statVal * (2f + max(0, boost)) / (2f - min(0, boost)))
-        moveAccuracy *= (3f + Math.Max(0, accuracy - evasion)) / (3f - Math.Min(0, accuracy - evasion));
-
-        return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
-    }
-
-    IEnumerator ShowDamageDetails(DamageDetails damageDetails)
-    {
-        if (damageDetails.Critical > 1f)
-            yield return dialogBox.TypeDialog("치명타가 적중했다!");
-    }
-    IEnumerator ShowEffectiveness(float typeEffectiveness)
-    {
-        if (typeEffectiveness > 1f)
-            yield return dialogBox.TypeDialog("효과가 굉장한 듯 하다!");
-        else if (typeEffectiveness < 1f)
-            yield return dialogBox.TypeDialog("효과가 별로인 듯 하다...");
     }
 
     public void HandleUpdate()
@@ -765,7 +391,6 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // Bag
-                // StartCoroutine(RunTurns(ActionType.UseItem));
                 OpenBag();
 
             }
@@ -777,7 +402,6 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 3)
             {
                 // run
-                // StartCoroutine(RunTurns(ActionType.Run));
                 var action = new BattleAction()
                 {
                     Type = ActionType.Run,
@@ -855,14 +479,14 @@ public class BattleSystem : MonoBehaviour
             }
         else
         {
-            for (int i = 0; i < unitCount; i++)
+            for (int i = 0; i < UnitCount; i++)
             {
                 playerUnits[i].SetSelected(false);
             }
         }
         if (Input.GetButtonDown("Submit"))
         {
-            for (int i = 0; i < unitCount; i++)
+            for (int i = 0; i < UnitCount; i++)
             {
                 enemyUnits[i].SetSelected(false);
                 playerUnits[i].SetSelected(false);
@@ -883,7 +507,7 @@ public class BattleSystem : MonoBehaviour
         }
         else if (Input.GetButtonDown("Cancel"))
         {
-            for (int i = 0; i < unitCount; i++)
+            for (int i = 0; i < UnitCount; i++)
             {
                 enemyUnits[i].SetSelected(false);
                 playerUnits[i].SetSelected(false);
@@ -906,27 +530,7 @@ public class BattleSystem : MonoBehaviour
                 partyScreen.SetMessageText("그 동료는 싸우고 있다!");
                 return;
             }
-            // StartCoroutine(PerformPlayerMove());
             partyScreen.gameObject.SetActive(false);
-
-            // if (partyScreen.CalledFrom == BattleStates.ActionSelection) {
-            //     // StartCoroutine(RunTurns(ActionType.SwitchUnit));
-            //     var action = new BattleAction()
-            //     {
-            //         Type = ActionType.SwitchUnit,
-            //         User = currentUnit,
-            //         SelectedUnit = selectedMember
-            //     };
-            //     AddBattleAction(action);
-            // }
-            // else
-            // {
-            //     state = BattleStates.Busy;
-            //     bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleStates.AboutToUse;
-            //     StartCoroutine(SwitchUnit(unitToSwitch, selectedMember, isTrainerAboutToUse));
-            //     unitToSwitch = null;
-            // }
-            // partyScreen.CalledFrom = null;
         };
         Action onBack = () =>
         {
@@ -936,14 +540,7 @@ public class BattleSystem : MonoBehaviour
                 return;
             }
             partyScreen.gameObject.SetActive(false);
-
-            // if (partyScreen.CalledFrom == BattleStates.AboutToUse)
-            //     StartCoroutine(SendNextTrainerUnit());
-            // else
-            //     ActionSelection(actionIndex);
-            // partyScreen.CalledFrom = null;
         };
-        // partyScreen.HandleUpdate(onSelected, onBack);
     }
 
     void HandleAboutToUse()
@@ -995,7 +592,7 @@ public class BattleSystem : MonoBehaviour
 
         var faintedUnit = enemyUnits.First(u => u.Unit.HP == 0);
         var activeUnits = enemyUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
-        var nextUnit = trainerParty.GetHealtyhUnit(activeUnits);
+        var nextUnit = TrainerParty.GetHealthyUnit(activeUnits);
         faintedUnit.Setup(nextUnit);
         yield return dialogBox.TypeDialog($"{nextUnit.Base.Name}(이)가 교대로 나온다!");
 
@@ -1021,13 +618,13 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleStates.Busy;
 
-        if (isTrainerBattle)
+        if (IsTrainerBattle)
         {
             bool hasKarlord = false;
             if (enemyUnits.Any(u => u.Unit.Base.Name == "로드"))
             {
                 // TODO: 로드에게 던졌을 때, 카를 격노 이벤트?
-                var karl = trainerParty.Units.Any(u => u.Base.Name == "카를");
+                var karl = TrainerParty.Units.Any(u => u.Base.Name == "카를");
                 if (karl)
                     hasKarlord = true;
             }
@@ -1066,7 +663,7 @@ public class BattleSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}을(를) 잡았다!");
             yield return ball.DOFade(0, 1.5f).WaitForCompletion();
 
-            playerParty.AddUnit(enemyUnit.Unit);
+            PlayerParty.AddUnit(enemyUnit.Unit);
             yield return dialogBox.TypeDialog($"{enemyUnit.Unit.Base.Name}을(를) 겨우 잡았다.");
 
 
@@ -1116,44 +713,13 @@ public class BattleSystem : MonoBehaviour
         return 4;
     }
 
-    IEnumerator TryToEscape()
-    {
-        state = BattleStates.Busy;
-
-        if (isTrainerBattle)
-        {
-            yield return dialogBox.TypeDialog("도망 칠 순 없다!");
-            state = BattleStates.RunningTurn;
-            yield break;
-        }
-
-        escapeAttempts++;
-
-        // 128×A÷B＋30×C
-        // (A는 나와있는 포켓몬의 스피드, B는 상대 포켓몬의 스피드, C는 도망을 시도한 횟수.)
-        // 를 256으로 나눈 나머지를 계산해서 0~255 사이의 난수를 생성해 계산값보다 작으면 도망갈 수 있다.
-        int playerSpeed = playerUnits[0].Unit.Speed;
-        int enemySpeed = enemyUnits[0].Unit.Speed;
-
-        float f = (128 * playerSpeed / enemySpeed + 30 * escapeAttempts) % 256;
-        if (playerSpeed > enemySpeed || f > UnityEngine.Random.Range(0, 255))
-        {
-            yield return dialogBox.TypeDialog("도망갔다!");
-            BattleOver(true);
-        }
-        else
-        {
-            yield return dialogBox.TypeDialog("도망갈 수 없다!");
-            state = BattleStates.RunningTurn;
-        }
-    }
-
     public BattleDialogBox DialogBox => dialogBox;
+    public PartyScreen PartyScreen => partyScreen;
 
     // public List<BattleUnit> PlayerUnits()
     // {
     //     List<BattleUnit> returnUnits;
-    //     if (unitCount == 1)
+    //     if (UnitCount == 1)
     //     {
     //         playerUnits = new List<BattleUnit>() { playerUnitSingle };
     //         enemyUnits = new List<BattleUnit>() { enemyUnitSingle };
@@ -1168,11 +734,11 @@ public class BattleSystem : MonoBehaviour
     // }
 
     // public List<BattleUnit> PlayerUnits =>
-    //     unitCount == 1 ?
+    //     UnitCount == 1 ?
     //         new List<BattleUnit>() 
 
     // public List<BattleUnit> EnemyUnits =>
-    //     unitCount == 1 ?
+    //     UnitCount == 1 ?
     //         new List<BattleUnit>() { enemyUnitSingle } :
     //         enemyUnitsMulti.GetRange(0, enemyUnitsMulti.Count);
 
@@ -1180,4 +746,9 @@ public class BattleSystem : MonoBehaviour
     public List<BattleUnit> EnemyUnits => enemyUnits;
 
     public int ActionIndex => actionIndex;
+
+    public List<BattleAction> Actions => actions;
+
+    public AudioClip WildBattleVictoryMusic => wildBattleVictoryMusic;
+    public AudioClip TrainerBattleVictoryMusic => trainerBattleVictoryMusic;
 }

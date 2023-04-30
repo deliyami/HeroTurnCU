@@ -36,7 +36,7 @@ public class ActionSelectionState : State<BattleSystem>
 
     public override void Exit()
     {
-        selectionUI.gameObject.SetActive(true);
+        selectionUI.gameObject.SetActive(false);
         selectionUI.OnSelected -= OnActionSelected;
     }
 
@@ -44,7 +44,20 @@ public class ActionSelectionState : State<BattleSystem>
     {
         if (selection == 0)
         {
+
             // fight TODO 이거 2번 연속으로 싸우는 경우도 생각해야 됨
+            // 이거 다른데서 하자... runturnstate에서 하는게 처리하는게 편하다\
+            // 밑에 런이라던가 그런것들도 마찬가지. 여기서 처리하면 battle system에서 처리하는거랑 마찬가지이므로
+            // 여기서는 다른 state로 이동하는 것만 처리
+            // 다른 state에서 어떠한 액션이 들어가는지 처리
+            // var action = new BattleAction()
+            // {
+            //     Type = ActionType.Move,
+            //     User = currentUnit,
+            //     Target = enemyUnits[0],
+            //     Move = move
+            // }
+            // bs.AddBattleAction(action);
             Debug.Log("here is ActionSelectionState");
             Debug.Log(bs.ActionIndex);
             Debug.Log(MoveSelectionState.i);
@@ -54,6 +67,23 @@ public class ActionSelectionState : State<BattleSystem>
             // MoveSelectionState.i.Moves = bs.PlayerUnits[bs.ActionIndex].Unit.Moves;
             // 순서 변경좀;
             bs.StateMachine.ChangeState(MoveSelectionState.i);
+        }
+        else if (selection == 2)
+        {
+            // item
+        }
+        else if (selection == 3)
+        {
+            // unit
+        }
+        else
+        {
+            // run
+            var action = new BattleAction()
+            {
+                Type = ActionType.Run
+            };
+            bs.AddBattleAction(action);
         }
     }
 }

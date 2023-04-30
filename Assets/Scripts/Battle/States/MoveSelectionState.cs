@@ -53,7 +53,21 @@ public class MoveSelectionState : State<BattleSystem>
 
     void OnMoveSelected(int selection)
     {
-
+        // TODO 이거 수정 할 필요가 있음
+        // state저장을 프리롬 -> 전투 -> 행동(전투, 아이템, 유닛) 선택 -> 스킬 선택 -> 적 유닛 선택(2번 반복) -> 전투 -> 반복...으로
+        // 1대1은 그냥 밑처럼 쓰면 되는데
+        // 2대2는 선택된 적 아군 유닛 구별 할 필요가 있음
+        var action = new BattleAction()
+        {
+            Type = ActionType.Move,
+            // 선택된 아군 유닛
+            User = bs.PlayerUnits[0],
+            // 선택된 적 유닛
+            Target = bs.EnemyUnits[0],
+            Move = Moves[selection]
+        };
+        bs.AddBattleAction(action);
+        bs.StateMachine.ChangeState(RunTurnState.i);
     }
 
     void OnBack()
