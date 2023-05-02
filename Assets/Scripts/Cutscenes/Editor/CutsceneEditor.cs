@@ -10,7 +10,7 @@ public class CutsceneEditor : Editor
     {
         var cutscene = target as Cutscene;
 
-        using(var scope = new GUILayout.HorizontalScope())
+        using (var scope = new GUILayout.HorizontalScope())
         {
 
             if (GUILayout.Button("대화 이벤트"))
@@ -20,7 +20,7 @@ public class CutsceneEditor : Editor
             else if (GUILayout.Button("회전 이벤트"))
                 cutscene.AddAction(new TurnActorAction());
         }
-        using(var scope = new GUILayout.HorizontalScope())
+        using (var scope = new GUILayout.HorizontalScope())
         {
             if (GUILayout.Button("순간이동 이벤트"))
                 cutscene.AddAction(new TeleportObjectAction());
@@ -29,7 +29,7 @@ public class CutsceneEditor : Editor
             else if (GUILayout.Button("객체 disable 이벤트"))
                 cutscene.AddAction(new DisableObjectAction());
         }
-        using(var scope = new GUILayout.HorizontalScope())
+        using (var scope = new GUILayout.HorizontalScope())
         {
             if (GUILayout.Button("NPC interact 이벤트"))
                 cutscene.AddAction(new NPCInteractAction());
@@ -37,6 +37,13 @@ public class CutsceneEditor : Editor
                 cutscene.AddAction(new FadeInAction());
             else if (GUILayout.Button("Fadeout 이벤트"))
                 cutscene.AddAction(new FadeOutAction());
+        }
+        using (var scope = new GUILayout.HorizontalScope())
+        {
+            if (GUILayout.Button("Player Invisible 이벤트"))
+                cutscene.AddAction(new PlayerUnitInvisible());
+            else if (GUILayout.Button("Player Visible 이벤트"))
+                cutscene.AddAction(new PlayerUnitVisible());
         }
         base.OnInspectorGUI();
     }

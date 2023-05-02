@@ -28,6 +28,7 @@ namespace GDEUtils.StateMachine
         }
         public void Pop()
         {
+            Debug.Log("popping in state machin");
             StateStack.Pop();
             CurrentState.Exit();
             CurrentState = StateStack.Peek();

@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour, ISavable
     public static PlayerController i { get; private set; }
     private Character character;
 
+    SpriteRenderer spriteRenderer;
+    private float transparency = 1f;
+
     void Awake()
     {
         i = this;
         character = GetComponent<Character>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void HandleUpdate()
@@ -45,7 +49,7 @@ public class PlayerController : MonoBehaviour, ISavable
         // {
         //     manager.Action(scanObject);
         // }
-        if(Input.GetButtonDown("Submit"))
+        if (Input.GetButtonDown("Submit"))
             StartCoroutine(Interact());
     }
 
@@ -75,6 +79,7 @@ public class PlayerController : MonoBehaviour, ISavable
                 if (triggerable == currentlyInTrigger && !triggerable.TriggerRepeatedly)
                     break;
                 triggerable.OnPlayerTriggered(this);
+                // GameController.Instance.StartCutsceneState(this);
                 currentlyInTrigger = triggerable;
                 break;
             }
@@ -111,6 +116,19 @@ public class PlayerController : MonoBehaviour, ISavable
         GetComponent<UnitParty>().Units = saveData.units.Select(s => new Unit(s)).ToList();
     }
 
+    public IEnumerator Visible()
+    {
+        transparency = 1f;
+        var col = spriteRenderer.material.color;
+        yield return col.a = transparency;
+    }
+    public IEnumerator Invisible()
+    {
+        transparency = 0f;
+        var col = spriteRenderer.material.color;
+        yield return col.a = transparency;
+    }
+
     // void FixedUpdate()
     // {
     //     // Move
@@ -126,11 +144,13 @@ public class PlayerController : MonoBehaviour, ISavable
     //     }
     //     else scanObject = null;
     // }
-    public string Name {
+    public string Name
+    {
         get => name;
-    }    
+    }
 
-    public Sprite Sprite {
+    public Sprite Sprite
+    {
         get => sprite;
     }
 

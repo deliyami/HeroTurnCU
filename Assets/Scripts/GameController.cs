@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using GDEUtils.StateMachine;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Dialog, Menu, PartyScreen, Bag, Cutscene, Paused, Evolution, Shop, Dex }
+public enum GameState { FreeRoam, Busy, Battle, Dialog, Menu, PartyScreen, Bag, Cutscene, Paused, Evolution, Shop, Dex }
 public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
@@ -90,7 +90,10 @@ public class GameController : MonoBehaviour
     }
     public void StartCutsceneState()
     {
+        Debug.Log("gamecontroller cutscene push");
         state = GameState.Cutscene;
+        StateMachine.Push(CutsceneState.i);
+        // cutscene.OnPlayerTriggered(PlayerController.i);
     }
     public void StartFreeRoamState()
     {

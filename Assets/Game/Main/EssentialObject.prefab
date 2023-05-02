@@ -3469,6 +3469,8 @@ GameObject:
   - component: {fileID: 8775269348849941912}
   - component: {fileID: 8366687780079437109}
   - component: {fileID: 4260439020040258635}
+  - component: {fileID: 5264330289171562915}
+  - component: {fileID: 1034923018671345855}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3759,6 +3761,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dexDescriptionUI: {fileID: 9049009687415073720}
+--- !u!114 &5264330289171562915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738372076080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42675245e0a49c41802e231a3330b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1034923018671345855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738372076080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75aa987ecc9a4d409422934ad3522dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneController: {fileID: 5264330289171562915}
 --- !u!1 &8115450738478144625
 GameObject:
   m_ObjectHideFlags: 0

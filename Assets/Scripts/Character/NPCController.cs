@@ -23,13 +23,16 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
     UnitGiver unitGiver;
     Healer healer;
     Merchant merchant;
+    Cutscene cutscene;
 
-    private void Awake() {
+    private void Awake()
+    {
         character = GetComponent<Character>();
         itemGiver = GetComponent<ItemGiver>();
         unitGiver = GetComponent<UnitGiver>();
         healer = GetComponent<Healer>();
         merchant = GetComponent<Merchant>();
+        cutscene = GetComponent<Cutscene>();
     }
     public IEnumerator Interact(Transform initiator)
     {
@@ -85,6 +88,11 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
             {
                 yield return merchant.Trade();
             }
+            else if (cutscene != null)
+            {
+                cutscene.OnPlayerTriggered(PlayerController.i);
+                // GameController.Instance.StartCutsceneState(cutscene);
+            }
             else
             {
                 yield return DialogManager.Instance.ShowDialog(dialog);
@@ -98,13 +106,14 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
 
     private void Update()
     {
-        if (state == NPCState.Idle )
+        if (state == NPCState.Idle)
         {
             idleTimer += Time.deltaTime;
             if (idleTimer > timeBetweenPattern)
             {
                 idleTimer = 0f;
-                if (isMoveable){
+                if (isMoveable)
+                {
                     if (movementPattern.Count > 0)
                     {
                         StartCoroutine(Walk());
@@ -112,12 +121,12 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
                     else
                     {
                         state = NPCState.Walking;
-                        float plusMinus = Random.Range(-1f, 1f)>0?1:-1;
+                        float plusMinus = Random.Range(-1f, 1f) > 0 ? 1 : -1;
                         float horizon = Random.Range(0, 1f);
                         float vertical = Random.Range(0, 1f);
                         StartCoroutine(character.Move(new Vector2(
-                            horizon>vertical?plusMinus:0,
-                            horizon<=vertical?plusMinus:0)));
+                            horizon > vertical ? plusMinus : 0,
+                            horizon <= vertical ? plusMinus : 0)));
                         state = NPCState.Idle;
                     }
                 }
@@ -158,11 +167,18 @@ public class NPCController : MonoBehaviour, Interactable, ISavable
         var saveData = state as NPCQuestSaveData;
         if (saveData != null)
         {
-            activeQuest = (saveData.activeQuest != null)?new Quest(saveData.activeQuest):null;
-            questToStart = (saveData.questToStart != null)?new Quest(saveData.questToStart).Base:null;
-            questToComplete = (saveData.questToComplete != null)?new Quest(saveData.questToComplete).Base:null;
+            activeQuest = (saveData.activeQuest != null) ? new Quest(saveData.activeQuest) : null;
+            questToStart = (saveData.questToStart != null) ? new Quest(saveData.questToStart).Base : null;
+            questToComplete = (saveData.questToComplete != null) ? new Quest(saveData.questToComplete).Base : null;
         }
     }
+
+    public void SetState(NPCState newState)
+    {
+        state = newState;
+    }
+
+    NPCState State => state;
 }
 [System.Serializable]
 public class NPCQuestSaveData

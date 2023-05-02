@@ -12,7 +12,11 @@ public class Character : MonoBehaviour
     public float OffsetY { get; private set; } = 0.3f;
 
     CharacterAnimator animator;
-    private void Awake() {
+    public Character i { get; private set; }
+    public Vector3 testDiff;
+    private void Awake()
+    {
+        i = this;
         animator = GetComponent<CharacterAnimator>();
         SetPositionAndSnapToTile(transform.position);
     }
@@ -27,7 +31,7 @@ public class Character : MonoBehaviour
     {
         animator.MoveX = Mathf.Clamp(moveVec.x, -1f, 1f);
         animator.MoveY = Mathf.Clamp(moveVec.y, -1f, 1f);
-        
+
         var targetPos = transform.position;
         targetPos.x += moveVec.x;
         targetPos.y += moveVec.y;
@@ -59,7 +63,7 @@ public class Character : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
-        
+
         IsMoving = false;
 
         OnMoveOver?.Invoke();
@@ -112,7 +116,8 @@ public class Character : MonoBehaviour
             Debug.LogError("보는 방향 버그: 당신은 그 방향으로 대화를 걸 수 없습니다.");
     }
 
-    public CharacterAnimator Animator {
+    public CharacterAnimator Animator
+    {
         get => animator;
     }
 }
