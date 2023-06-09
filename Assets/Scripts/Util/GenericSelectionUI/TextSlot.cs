@@ -11,6 +11,10 @@ public class TextSlot : MonoBehaviour, ISelectableItem
     {
         originalColor = text.color;
     }
+    public void Clear()
+    {
+        text.color = originalColor;
+    }
     public void OnSelectionChange(bool selected)
     {
         // text.color = (selected)?GlobalSettings.i.HighlightedColor:GlobalSettings.i.UnchosenColor;

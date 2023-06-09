@@ -282,7 +282,7 @@ public class BattleSystem : MonoBehaviour
     {
         actions.Add(action);
 
-        // 유저에게 설택된 것 확인
+        // 유저에게 선택된 것 확인
         if (actions.Count == UnitCount)
         {
             // 적 유닛 확인
@@ -567,7 +567,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    IEnumerator SwitchUnit(BattleUnit unitToSwitch, Unit newUnit, bool isTrainerAboutToUse = false)
+    public IEnumerator SwitchUnit(BattleUnit unitToSwitch, Unit newUnit)
     {
         if (unitToSwitch.Unit.HP > 0)
         {
@@ -580,10 +580,10 @@ public class BattleSystem : MonoBehaviour
         dialogBox.SetMoveNames(newUnit.Moves);
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
-        if (isTrainerAboutToUse)
-            StartCoroutine(SendNextTrainerUnit());
-        else
-            state = BattleStates.RunningTurn;
+        // if (isTrainerAboutToUse)
+        //     StartCoroutine(SendNextTrainerUnit());
+        // else
+        //     state = BattleStates.RunningTurn;
     }
 
     IEnumerator SendNextTrainerUnit()

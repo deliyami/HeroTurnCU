@@ -34,7 +34,7 @@ public class GameMenuState : State<GameController>
     {
         Debug.Log($"메뉴 선택{selection}");
         if (selection == 0) // 유닛 선택
-            gc.StateMachine.Push(GamePartyState.i);
+            gc.StateMachine.Push(PartyState.i);
         else if (selection == 1) // 아이템 선택
             gc.StateMachine.Push(InventoryState.i);
         else if (selection == 4) // 원래는 도감, 이제는 인물? 확인하는거

@@ -61,7 +61,7 @@ public class RunTurnState : State<BattleSystem>
             }
             else if (action.Type == ActionType.SwitchUnit)
             {
-                // yield return SwitchUnit(action.User, action.SelectedUnit);
+                yield return bs.SwitchUnit(action.User, action.SelectedUnit);
             }
             else if (action.Type == ActionType.UseItem)
             {
@@ -230,7 +230,7 @@ public class RunTurnState : State<BattleSystem>
         yield return new WaitForSeconds(2f);
         yield return HandleExpGain(faintedUnit);
 
-        NextStepsAfterFainting(faintedUnit);
+        yield return NextStepsAfterFainting(faintedUnit);
     }
     IEnumerator HandleExpGain(BattleUnit faintedUnit)
     {
@@ -288,7 +288,7 @@ public class RunTurnState : State<BattleSystem>
             yield return new WaitForSeconds(1f);
         }
     }
-    void NextStepsAfterFainting(BattleUnit faintedUnit)
+    IEnumerator NextStepsAfterFainting(BattleUnit faintedUnit)
     {
         var actionToRemove = actions.FirstOrDefault(a => a.User == faintedUnit);
         if (actionToRemove != null)
@@ -307,7 +307,9 @@ public class RunTurnState : State<BattleSystem>
                 // TODO change unit
                 // unitToSwitch = faintedUnit;
                 // OpenPartyScreen();
-                return; // return remove
+                yield return GameController.Instance.StateMachine.PushAndWait(PartyState.i);
+                yield return bs.SwitchUnit(bs.PlayerUnits[bs.ActionIndex], PartyState.i.SelectedUnit);
+                // return; // return remove
             }
             else if (nextUnit == null && activeUnits.Count > 0)
             {
@@ -324,7 +326,7 @@ public class RunTurnState : State<BattleSystem>
             if (!bs.IsTrainerBattle)
             {
                 bs.BattleOver(true);
-                return;
+                yield break;
             }
             var activeUnits = enemyUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
             var nextUnit = trainerParty.GetHealthyUnit(activeUnits);
@@ -344,7 +346,7 @@ public class RunTurnState : State<BattleSystem>
                 // else
                 // TODO Change Unit
                 // StartCoroutine(SendNextTrainerUnit());
-                return; // return remove
+                yield break; // return remove
             }
             else if (nextUnit == null && activeUnits.Count > 0)
             {

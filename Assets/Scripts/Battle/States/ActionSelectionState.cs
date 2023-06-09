@@ -68,22 +68,42 @@ public class ActionSelectionState : State<BattleSystem>
             // 순서 변경좀;
             bs.StateMachine.ChangeState(MoveSelectionState.i);
         }
-        else if (selection == 2)
+        else if (selection == 1)
         {
             // item
         }
-        else if (selection == 3)
+        else if (selection == 2)
         {
             // unit
+            StartCoroutine(GoToPartyState());
         }
         else
         {
             // run
             var action = new BattleAction()
             {
-                Type = ActionType.Run
+                Type = ActionType.Run,
+                User = bs.PlayerUnits[bs.ActionIndex]
             };
             bs.AddBattleAction(action);
+            bs.StateMachine.ChangeState(RunTurnState.i);
+        }
+    }
+
+    IEnumerator GoToPartyState()
+    {
+        yield return GameController.Instance.StateMachine.PushAndWait(PartyState.i);
+        var selectedUnit = PartyState.i.SelectedUnit;
+        if (selectedUnit != null)
+        {
+            var action = new BattleAction()
+            {
+                Type = ActionType.SwitchUnit,
+                User = bs.PlayerUnits[bs.ActionIndex],
+                SelectedUnit = selectedUnit
+            };
+            bs.AddBattleAction(action);
+            bs.StateMachine.ChangeState(RunTurnState.i);
         }
     }
 }
