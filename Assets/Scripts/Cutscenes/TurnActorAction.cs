@@ -8,7 +8,7 @@ public class TurnActorAction : CutsceneAction
     [SerializeField] FacingDirection direction;
     public override IEnumerator Play()
     {
-        actor.GetCharacter().Animator.SetFacingDirection(direction);
+        actor.GetCharacter().Animator.SetFacingDirection(direction, true);
         yield break;
     }
 }

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5f5b7068b16874f95a934f8cfcd735, type: 3}
   m_Name: Krabe
   m_EditorClassIdentifier: 
-  name: "\uBBF8\uB974"
-  description: "\uBBF8\uB974\uBBF8\uB974\uBBF8\uB974\uBBF8\uB974"
+  name: "\uD06C\uB77C\uBCA0"
+  description: "\uAC8C\uC790\uB9AC"
   frontSprite: {fileID: -584214328, guid: 8f79c115e3be6d74eaac3c2ed3f16dc8, type: 3}
+  reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: -789219770, guid: 8f79c115e3be6d74eaac3c2ed3f16dc8, type: 3}
   smallSprite: {fileID: -906818864, guid: 7529adb2a0e53ad46a84153daebf6883, type: 3}
   portraitSprite:
@@ -23,8 +24,8 @@ MonoBehaviour:
   - {fileID: -1828001330, guid: 343c8a6c2911ee64c9992a39dfb06444, type: 3}
   - {fileID: 1585114889, guid: 343c8a6c2911ee64c9992a39dfb06444, type: 3}
   reversedPortraitSprite: []
-  type1: 15
-  type2: 4
+  type1: 13
+  type2: 18
   maxHP: 90
   attack: 100
   defense: 80

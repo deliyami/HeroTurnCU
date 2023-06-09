@@ -11,7 +11,7 @@ public class SpriteAnimator : MonoBehaviour
     int currentFrame;
     float timer;
 
-    public SpriteAnimator(List<Sprite> frames, SpriteRenderer spriteRenderer, float frameRate=0.16f)
+    public SpriteAnimator(List<Sprite> frames, SpriteRenderer spriteRenderer, float frameRate = 0.16f)
     {
         this.frames = frames;
         this.spriteRenderer = spriteRenderer;
@@ -22,6 +22,13 @@ public class SpriteAnimator : MonoBehaviour
     {
         currentFrame = 0;
         timer = 0f;
+        spriteRenderer.sprite = frames[0];
+    }
+
+    public void Finish()
+    {
+        currentFrame = 0;
+        timer = frameRate;
         spriteRenderer.sprite = frames[0];
     }
 
@@ -36,7 +43,8 @@ public class SpriteAnimator : MonoBehaviour
         }
     }
 
-    public List<Sprite> Frames {
+    public List<Sprite> Frames
+    {
         get { return frames; }
     }
 }

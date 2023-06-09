@@ -26,11 +26,16 @@ public class CharacterAnimator : MonoBehaviour
 
     SpriteAnimator currentAnim;
     bool wasPreviouslyMoving;
+    bool isCutsceneEvent;
+    Character character;
 
     // References
     SpriteRenderer spriteRenderer;
-
-    private void Start() 
+    private void Awake()
+    {
+        character = GetComponent<Character>();
+    }
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         walkDownAnim = new SpriteAnimator(walkDownSprites, spriteRenderer);
@@ -42,7 +47,7 @@ public class CharacterAnimator : MonoBehaviour
         currentAnim = walkDownAnim;
     }
 
-    private void Update() 
+    private void Update()
     {
         var prevAnim = currentAnim;
         if (MoveX == 1)
@@ -54,21 +59,26 @@ public class CharacterAnimator : MonoBehaviour
         else if (MoveY == -1)
             currentAnim = walkDownAnim;
 
-        if (currentAnim != prevAnim || IsMoving != wasPreviouslyMoving)
+        // if (currentAnim != prevAnim || IsMoving != wasPreviouslyMoving)
+        if (currentAnim != prevAnim || IsMoving != wasPreviouslyMoving || isCutsceneEvent)
         {
+            if (isCutsceneEvent)
+                Debug.Log("siubla");
+            isCutsceneEvent = false;
             currentAnim.Start();
         }
         if (IsJumping)
             spriteRenderer.sprite = currentAnim.Frames[currentAnim.Frames.Count - 1];
         else if (IsMoving)
             currentAnim.HandleUpdate();
+        // Debug.Log("this is animator");
         else
             spriteRenderer.sprite = currentAnim.Frames[0];
 
         wasPreviouslyMoving = IsMoving;
     }
 
-    public void SetFacingDirection(FacingDirection dir)
+    public void SetFacingDirection(FacingDirection dir, bool cutsceneEvent = false)
     {
         MoveX = 0;
         MoveY = 0;
@@ -80,9 +90,16 @@ public class CharacterAnimator : MonoBehaviour
             MoveY = 1;
         else if (dir == FacingDirection.Down)
             MoveY = -1;
+
+        if (cutsceneEvent)
+            isCutsceneEvent = cutsceneEvent;
+        // currentAnim = walkUpAnim;
+        // currentAnim.HandleUpdate();
+        // character.HandleUpdate();
     }
 
-    public FacingDirection DefaultDirection {
+    public FacingDirection DefaultDirection
+    {
         get => defaultDirection;
     }
 }
