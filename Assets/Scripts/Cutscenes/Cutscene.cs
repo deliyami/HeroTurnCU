@@ -13,6 +13,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public IEnumerator Play()
     {
+        GameController.Instance.StateMachine.Push(CutsceneState.i);
         foreach (var action in actions)
         {
             if (action.WaitForCompletion)
@@ -22,10 +23,10 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
             else
                 StartCoroutine(action.Play());
         }
-        // GameController.Instance.StartFreeRoamState();
+        GameController.Instance.StateMachine.Pop();
         Debug.Log("cutscene pop");
         // CutsceneController.i.FinishCutscene();
-        GameController.Instance.StateMachine.Pop();
+        // GameController.Instance.StateMachine.Pop();
     }
     public void AddAction(CutsceneAction action)
     {
@@ -38,7 +39,6 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public void OnPlayerTriggered(PlayerController player)
     {
-        GameController.Instance.StartCutsceneState();
         StartCoroutine(Play());
     }
 }

@@ -48,13 +48,11 @@ public class GameController : MonoBehaviour
 
         DialogManager.Instance.OnShowDialog += () =>
         {
-            prevState = state;
-            state = GameState.Dialog;
+            StateMachine.Push(DialogueState.i);
         };
         DialogManager.Instance.OnDialogFinished += () =>
         {
-            if (state == GameState.Dialog)
-                state = prevState;
+            StateMachine.Pop();
         };
 
         EvolutionManager.i.OnStartEvolution += () =>
@@ -88,17 +86,6 @@ public class GameController : MonoBehaviour
             state = prevState;
         }
     }
-    public void StartCutsceneState()
-    {
-        Debug.Log("gamecontroller cutscene push");
-        state = GameState.Cutscene;
-        StateMachine.Push(CutsceneState.i);
-        // cutscene.OnPlayerTriggered(PlayerController.i);
-    }
-    public void StartFreeRoamState()
-    {
-        state = GameState.FreeRoam;
-    }
     public void StartBattle(BattleTrigger trigger)
     {
         BattleState.i.trigger = trigger;
@@ -116,7 +103,7 @@ public class GameController : MonoBehaviour
 
     public void OnEnterTrainersView(TrainerController trainer)
     {
-        state = GameState.Cutscene;
+
         StartCoroutine(trainer.TriggerTrainerBattle(playerController));
     }
 

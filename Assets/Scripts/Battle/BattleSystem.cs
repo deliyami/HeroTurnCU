@@ -69,8 +69,8 @@ public class BattleSystem : MonoBehaviour
     public Field Field { get; private set; }
 
     public bool IsTrainerBattle { get; private set; } = false;
-    PlayerController player;
-    TrainerController trainer;
+    public PlayerController Player { get; private set; }
+    public TrainerController Trainer { get; private set; }
 
     int escapeAttempts;
     MoveBase moveToLearn;
@@ -85,7 +85,7 @@ public class BattleSystem : MonoBehaviour
         battleTrigger = trigger;
         this.PlayerParty = PlayerParty;
         this.WildUnit = WildUnit;
-        player = PlayerParty.GetComponent<PlayerController>();
+        Player = PlayerParty.GetComponent<PlayerController>();
         IsTrainerBattle = false;
 
         UnitCount = 1;
@@ -102,8 +102,8 @@ public class BattleSystem : MonoBehaviour
         this.TrainerParty = TrainerParty;
 
         IsTrainerBattle = true;
-        player = PlayerParty.GetComponent<PlayerController>();
-        trainer = TrainerParty.GetComponent<TrainerController>();
+        Player = PlayerParty.GetComponent<PlayerController>();
+        Trainer = TrainerParty.GetComponent<TrainerController>();
         AudioManager.i.PlayMusic(trainerBattleMusic);
         this.UnitCount = UnitCount;
         StartCoroutine(SetupBattle());
@@ -170,9 +170,9 @@ public class BattleSystem : MonoBehaviour
 
             playerImage.gameObject.SetActive(true);
             trainerImage.gameObject.SetActive(true);
-            playerImage.sprite = player.Sprite;
-            trainerImage.sprite = trainer.Sprite;
-            yield return dialogBox.TypeDialog($"{trainer.Name}을 쓰러트리기 위한 전투가 시작된다!");
+            playerImage.sprite = Player.Sprite;
+            trainerImage.sprite = Trainer.Sprite;
+            yield return dialogBox.TypeDialog($"{Trainer.Name}을 쓰러트리기 위한 전투가 시작된다!");
 
             // 상대 전투 유닛 출동
             trainerImage.gameObject.SetActive(false);
@@ -586,7 +586,7 @@ public class BattleSystem : MonoBehaviour
         //     state = BattleStates.RunningTurn;
     }
 
-    IEnumerator SendNextTrainerUnit()
+    public IEnumerator SendNextTrainerUnit()
     {
         state = BattleStates.Busy;
 

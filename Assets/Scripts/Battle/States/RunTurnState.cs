@@ -328,29 +328,34 @@ public class RunTurnState : State<BattleSystem>
                 bs.BattleOver(true);
                 yield break;
             }
+            Debug.Log("트레이너 전투다!");
             var activeUnits = enemyUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
             var nextUnit = trainerParty.GetHealthyUnit(activeUnits);
 
             if (activeUnits.Count == 0 && nextUnit == null)
             {
+                Debug.Log("트레이너 전투다!, 모든 유닛 패배!");
                 bs.BattleOver(true);
             }
             else if (nextUnit != null)
             {
+                Debug.Log("트레이너 전투다!, 교체 유닛이 있다!");
                 if (unitCount == 1)
                 {
                     // TODO change unit
                     // unitToSwitch = playerUnits[0];
                     // StartCoroutine(AboutToUse(nextUnit));
                 }
+                AboutToUseState.i.NewUnit = nextUnit;
+                yield return bs.StateMachine.PushAndWait(AboutToUseState.i);
                 // else
                 // TODO Change Unit
                 // StartCoroutine(SendNextTrainerUnit());
-                yield break; // return remove
             }
             else if (nextUnit == null && activeUnits.Count > 0)
             {
                 // 더이상의 적은 없지만 전투는 계속 됨
+                Debug.Log("트레이너 전투다!, 교체유닛은 없지만 싸우고 있는 유닛은 있다!");
                 enemyUnits.Remove(faintedUnit);
                 faintedUnit.Hud.gameObject.SetActive(false);
 

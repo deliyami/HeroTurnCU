@@ -24,11 +24,13 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
         character = GetComponent<Character>();
     }
 
-    private void Start() {
+    private void Start()
+    {
         SetFovRotation(character.Animator.DefaultDirection);
     }
 
-    private void Update() {
+    private void Update()
+    {
         character.HandleUpdate();
     }
 
@@ -49,6 +51,7 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
+        GameController.Instance.StateMachine.Push(CutsceneState.i);
         AudioManager.i.PlayMusic(TrainerAppearsClip);
 
         // 머리 위 상태 느낌표
@@ -59,12 +62,14 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
         // player까지 걸어감
         var diff = player.transform.position - transform.position;
         var moveVec = diff - diff.normalized;
-        moveVec = new Vector2(Mathf.Round(moveVec.x), Mathf.Round(moveVec.y)); 
+        moveVec = new Vector2(Mathf.Round(moveVec.x), Mathf.Round(moveVec.y));
 
         yield return character.Move(moveVec);
 
         // 대화창 생성
         yield return DialogManager.Instance.ShowDialog(dialog);
+        GameController.Instance.StateMachine.Pop();
+
         GameController.Instance.StartTrainerBattle(this, battleUnitCount);
     }
 
@@ -83,7 +88,7 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
             angle = 180f;
         else if (dir == FacingDirection.Left)
             angle = 270f;
-        
+
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
     }
 
@@ -101,11 +106,13 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
         }
     }
 
-    public string Name {
+    public string Name
+    {
         get => name;
-    }    
+    }
 
-    public Sprite Sprite {
+    public Sprite Sprite
+    {
         get => sprite;
     }
 }

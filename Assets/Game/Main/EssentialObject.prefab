@@ -3194,6 +3194,7 @@ GameObject:
   - component: {fileID: 8497548780655264943}
   - component: {fileID: 892812786778576716}
   - component: {fileID: 1341359234847111783}
+  - component: {fileID: 484239121871964420}
   m_Layer: 0
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -3292,6 +3293,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75d04e859125d55439e4401f16f9327d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &484239121871964420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738294819059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8addc950758cc41bede5c4aae99142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8115450738302411298
@@ -3469,9 +3482,9 @@ GameObject:
   - component: {fileID: 8775269348849941912}
   - component: {fileID: 8366687780079437109}
   - component: {fileID: 4260439020040258635}
-  - component: {fileID: 5264330289171562915}
   - component: {fileID: 1034923018671345855}
   - component: {fileID: 6747926344196821763}
+  - component: {fileID: 8118968529948888920}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3762,18 +3775,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dexDescriptionUI: {fileID: 9049009687415073720}
---- !u!114 &5264330289171562915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8115450738372076080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f42675245e0a49c41802e231a3330b68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1034923018671345855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3786,7 +3787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75aa987ecc9a4d409422934ad3522dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutsceneController: {fileID: 5264330289171562915}
 --- !u!114 &6747926344196821763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3800,6 +3800,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedItem: 0
+--- !u!114 &8118968529948888920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115450738372076080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcdf53fe1e67f8478852e5f1bd26b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8115450738478144625
 GameObject:
   m_ObjectHideFlags: 0

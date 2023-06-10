@@ -25,12 +25,13 @@ public class BattleDialogBox : MonoBehaviour
 
     Color highLightedColor;
 
-    private void Start() {
+    private void Start()
+    {
         highLightedColor = GlobalSettings.i.HighlightedColor;
     }
 
     public void SetDialog(string dialog)
-    {  
+    {
         dialogText.text = dialog;
     }
 
@@ -66,6 +67,7 @@ public class BattleDialogBox : MonoBehaviour
         choiceBox.SetActive(enabled);
     }
 
+    public bool IsChoiceBoxEnabled => choiceBox.activeSelf;
 
     public void UpdateActionSelection(int selectedAction)
     {
@@ -94,7 +96,7 @@ public class BattleDialogBox : MonoBehaviour
 
         if (move.PP == 0)
             ppText.color = Color.red;
-        else if((float)move.PP / (float)move.Base.PP < 0.5f)
+        else if ((float)move.PP / (float)move.Base.PP < 0.5f)
             ppText.color = new Color(1f, 0.6f, 0.2f, 1f);
         else
             ppText.color = Color.white;
@@ -120,7 +122,7 @@ public class BattleDialogBox : MonoBehaviour
         }
         else
         {
-            yesText.color = Color.white;   
+            yesText.color = Color.white;
             noText.color = highLightedColor;
         }
     }
