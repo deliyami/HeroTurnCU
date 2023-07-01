@@ -10,6 +10,5 @@ public class ActionSelectionUI : SelectionUI<TextSlot>
     {
         SetSelectionSettings(SelectionType.Grid, 2);
         SetItems(GetComponentsInChildren<TextSlot>().ToList());
-
     }
 }

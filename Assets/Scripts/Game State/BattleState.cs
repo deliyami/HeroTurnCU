@@ -9,7 +9,7 @@ public class BattleState : State<GameController>
     public static BattleState i { get; private set; }
     public TrainerController trainer { get; set; }
     public BattleTrigger trigger { get; set; }
-    public int unitCount { get; set; }
+    public int unitCount { get; set; } = 1;
     private void Awake()
     {
         Debug.Log("wake up in battlestate");

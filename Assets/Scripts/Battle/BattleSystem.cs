@@ -62,7 +62,6 @@ public class BattleSystem : MonoBehaviour
     int currentMove;
     int currentTarget;
     bool aboutToUseChoice = true;
-
     public UnitParty PlayerParty { get; private set; }
     public UnitParty TrainerParty { get; private set; }
     public Unit WildUnit { get; private set; }
@@ -614,10 +613,8 @@ public class BattleSystem : MonoBehaviour
         };
         AddBattleAction(action);
     }
-    IEnumerator ThrowBall(BallItem ballItem)
+    public IEnumerator ThrowBall(BallItem ballItem)
     {
-        state = BattleStates.Busy;
-
         if (IsTrainerBattle)
         {
             bool hasKarlord = false;
@@ -683,7 +680,6 @@ public class BattleSystem : MonoBehaviour
                 yield return dialogBox.TypeDialog($"녀석이 저항한다!");
 
             Destroy(ball);
-            state = BattleStates.RunningTurn;
         }
     }
 
@@ -744,6 +740,7 @@ public class BattleSystem : MonoBehaviour
 
     public List<BattleUnit> PlayerUnits => playerUnits;
     public List<BattleUnit> EnemyUnits => enemyUnits;
+    public BattleUnit CurrentUnit => currentUnit;
 
     public int ActionIndex => actionIndex;
 

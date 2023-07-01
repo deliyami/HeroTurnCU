@@ -42,44 +42,57 @@ public class MoveBase : ScriptableObject
         return hitCount;
     }
 
-    public string Name {
+    public string Name
+    {
         get { return name; }
     }
-    public string Description {
+    public string Description
+    {
         get { return description; }
     }
-    public UnitType Type {
+    public UnitType Type
+    {
         get { return type; }
     }
-    public int StatIndex {
+    public int StatIndex
+    {
         get { return statIndex; }
     }
-    public int Power {
+    public int Power
+    {
         get { return power; }
     }
-    public int Accuracy {
+    public int Accuracy
+    {
         get { return accuracy; }
     }
-    public bool AlwaysHits {
+    public bool AlwaysHits
+    {
         get { return alwaysHits; }
     }
-    public int PP {
+    public int PP
+    {
         get { return pp; }
     }
-    public MoveCategory Category {
+    public MoveCategory Category
+    {
         get { return category; }
     }
-    public MoveEffects Effects {
+    public MoveEffects Effects
+    {
         get { return effects; }
     }
-    public List<Secondaries> Secondaries {
+    public List<Secondaries> Secondaries
+    {
         get { return secondaries; }
     }
-    public MoveTarget Target {
+    public MoveTarget Target
+    {
         get { return target; }
     }
     // 우선도
-    public int Priority {
+    public int Priority
+    {
         get { return priority; }
     }
 
@@ -94,17 +107,21 @@ public class MoveEffects
     [SerializeField] ConditionID volatileStatus;
     [SerializeField] ConditionID weather;
 
-    public List<StatBoost> Boosts {
+    public List<StatBoost> Boosts
+    {
         get { return boosts; }
     }
 
-    public ConditionID Status {
+    public ConditionID Status
+    {
         get { return status; }
     }
-    public ConditionID VolatileStatus{
+    public ConditionID VolatileStatus
+    {
         get { return volatileStatus; }
     }
-    public ConditionID Weather {
+    public ConditionID Weather
+    {
         get { return weather; }
     }
 }
@@ -115,12 +132,14 @@ public class Secondaries : MoveEffects
     [SerializeField] int chance;
     [SerializeField] MoveTarget target;
 
-    public int Chance {
-        get {return chance; }
+    public int Chance
+    {
+        get { return chance; }
     }
 
-    public MoveTarget Target {
-        get {return target; }
+    public MoveTarget Target
+    {
+        get { return target; }
     }
 }
 
@@ -138,5 +157,5 @@ public enum MoveCategory
 
 public enum MoveTarget
 {
-    Foe, Self
+    Another, FoeAll, Self, TeamAll, All
 }

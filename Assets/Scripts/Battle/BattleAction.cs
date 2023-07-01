@@ -11,8 +11,9 @@ public class BattleAction
 
     public Move Move { get; set; } // performing moves
     public Unit SelectedUnit { get; set; } // 스위칭
+    public ItemBase SelectedItem { get; set; } // item
 
     public bool IsInvalid { get; set; }
 
-    public int Priority => (Type == ActionType.Move)?Move.Base.Priority:99;
+    public int Priority => (Type == ActionType.Move) ? Move.Base.Priority : 99;
 }

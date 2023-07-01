@@ -8,6 +8,9 @@ public class UseItemState : State<GameController>
 {
     [SerializeField] PartyScreen partyScreen;
     [SerializeField] InventoryUI inventoryUI;
+
+    //  output
+    public bool ItemUsed { get; private set; }
     public static UseItemState i { get; private set; }
     Inventory inventory;
     private void Awake()
@@ -19,6 +22,7 @@ public class UseItemState : State<GameController>
     public override void Enter(GameController owner)
     {
         gc = owner;
+        ItemUsed = false;
         StartCoroutine(UseItem());
     }
 
@@ -49,6 +53,7 @@ public class UseItemState : State<GameController>
             var usedItem = inventory.UseItem(item, partyScreen.SelectedMember);
             if (usedItem != null)
             {
+                ItemUsed = true;
                 if (usedItem is RecoveryItem)
                     yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
                 // onItemUsed?.Invoke(usedItem);

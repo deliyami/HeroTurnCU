@@ -11,11 +11,13 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] bool isPlayerUnit;
     [SerializeField] BattleHud hud;
 
-    public bool IsPlayerUnit {
-        get { return isPlayerUnit;}
+    public bool IsPlayerUnit
+    {
+        get { return isPlayerUnit; }
     }
 
-    public BattleHud Hud {
+    public BattleHud Hud
+    {
         get { return hud; }
     }
 
@@ -35,7 +37,7 @@ public class BattleUnit : MonoBehaviour
     private void Awake()
     {
         image = GetComponent<Image>();
-        originalPos = image.transform.localPosition; 
+        originalPos = image.transform.localPosition;
         originalColor = image.color;
     }
     public void Setup(Unit unit)
@@ -58,8 +60,10 @@ public class BattleUnit : MonoBehaviour
     {
         hud.gameObject.SetActive(false);
     }
-    public void SetSelected(bool selected) {
-        image.color = selected?GlobalSettings.i.HighlightedColor:originalColor;
+    public void SetSelected(bool selected)
+    {
+        Debug.Log($"hahaha {selected}");
+        image.color = selected ? GlobalSettings.i.HighlightedColor : originalColor;
     }
 
     public void PlayEnterAnimation()
@@ -69,7 +73,7 @@ public class BattleUnit : MonoBehaviour
             image.transform.localPosition = new Vector3(-600f, originalPos.y);
         else
             image.transform.localPosition = new Vector3(600f, originalPos.y);
-            // image.transform.DOLocalMoveX(200f, 1f);
+        // image.transform.DOLocalMoveX(200f, 1f);
 
         image.transform.DOLocalMoveX(originalPos.x, 1f);
     }
@@ -88,7 +92,8 @@ public class BattleUnit : MonoBehaviour
     public void PlayerHitAnimation()
     {
         var sequence = DOTween.Sequence();
-        for(int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++)
+        {
             sequence.Append(image.DOColor(Color.gray, 0.1f));
             sequence.Append(image.DOColor(originalColor, 0.1f));
         }

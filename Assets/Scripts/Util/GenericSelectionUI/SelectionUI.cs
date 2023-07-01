@@ -34,7 +34,7 @@ namespace GDE.GenericSelectionUI
             UpdateSelectionInUI();
         }
 
-        public void ClearItems()
+        public virtual void ClearItems()
         {
             items.ForEach(i => i.Clear());
             this.items = null;
@@ -52,9 +52,17 @@ namespace GDE.GenericSelectionUI
             if (selectedItem != prevSelection) UpdateSelectionInUI();
 
             if (Input.GetButtonDown("Submit"))
-                OnSelected?.Invoke(selectedItem);
+                HandleSubmit();
             else if (Input.GetButtonDown("Cancel"))
-                OnBack?.Invoke();
+                HandleCancel();
+        }
+        protected void HandleSubmit()
+        {
+            OnSelected?.Invoke(selectedItem);
+        }
+        protected void HandleCancel()
+        {
+            OnBack?.Invoke();
         }
         protected void HandleListSelection()
         {

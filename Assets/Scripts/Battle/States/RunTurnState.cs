@@ -66,7 +66,16 @@ public class RunTurnState : State<BattleSystem>
             else if (action.Type == ActionType.UseItem)
             {
                 // 아이템 창 탈출하고 적 턴을 실행해야함
-                dialogBox.EnableActionSelector(false);
+                // dialogBox.EnableActionSelector(false);
+                if (action.SelectedItem is BallItem)
+                {
+                    yield return bs.ThrowBall(action.SelectedItem as BallItem);
+                    if (bs.IsbattleOver) yield break;
+                }
+                else
+                {
+
+                }
             }
             else if (action.Type == ActionType.Run)
             {

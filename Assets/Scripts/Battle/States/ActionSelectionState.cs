@@ -42,6 +42,7 @@ public class ActionSelectionState : State<BattleSystem>
 
     void OnActionSelected(int selection)
     {
+        // 1. 버튼 누름 -> actionselectionUI->selectionUI의 public virtual void HandleUpdate()를 이용해 이 메소드에 들어옴, 각자의 state로 변경
         if (selection == 0)
         {
 
@@ -58,7 +59,6 @@ public class ActionSelectionState : State<BattleSystem>
             //     Move = move
             // }
             // bs.AddBattleAction(action);
-            Debug.Log("here is ActionSelectionState");
             Debug.Log(bs.ActionIndex);
             Debug.Log(MoveSelectionState.i);
             Debug.Log(MoveSelectionState.i.Moves);
@@ -71,6 +71,7 @@ public class ActionSelectionState : State<BattleSystem>
         else if (selection == 1)
         {
             // item
+            StartCoroutine(GoToInventoryState());
         }
         else if (selection == 2)
         {
@@ -101,6 +102,26 @@ public class ActionSelectionState : State<BattleSystem>
                 Type = ActionType.SwitchUnit,
                 User = bs.PlayerUnits[bs.ActionIndex],
                 SelectedUnit = selectedUnit
+            };
+            bs.AddBattleAction(action);
+            bs.StateMachine.ChangeState(RunTurnState.i);
+        }
+    }
+
+    IEnumerator GoToInventoryState()
+    {
+        yield return GameController.Instance.StateMachine.PushAndWait(InventoryState.i);
+
+        var selectedItem = InventoryState.i.SelectedItem;
+        if (selectedItem != null)
+        {
+            // TODO: need to change action turn new BATTLEACTION
+            var action = new BattleAction()
+            {
+                Type = ActionType.UseItem,
+                User = bs.PlayerUnits[bs.ActionIndex],
+                SelectedUnit = PartyState.i.SelectedUnit,
+                SelectedItem = selectedItem
             };
             bs.AddBattleAction(action);
             bs.StateMachine.ChangeState(RunTurnState.i);
