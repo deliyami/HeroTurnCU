@@ -8,7 +8,7 @@ public class RecoveryItem : ItemBase
     [Header("HP")]
     [SerializeField] int hpAmount;
     [SerializeField] bool restoreMaxHP;
-    
+
     [Header("PP")]
     [SerializeField] int ppAmount;
     [SerializeField] bool restoreMaxPP;
@@ -28,7 +28,7 @@ public class RecoveryItem : ItemBase
         {
             if (unit.HP <= 0)
             {
-                unit.IncreaseHP(revive?unit.MaxHP / 2:unit.MaxHP);
+                unit.IncreaseHP(revive ? unit.MaxHP / 2 : unit.MaxHP);
 
                 unit.CureStatus();
             }
@@ -63,9 +63,9 @@ public class RecoveryItem : ItemBase
                 }
                 else
                 {
-                    if (unit.Status.ID == status)
+                    if (unit.Status?.ID == status)
                         unit.CureStatus();
-                    else if (unit.VolatileStatus.ID == status)
+                    else if (unit.VolatileStatus?.ID == status)
                         unit.CureVolatileStatus();
                     else
                         return false;

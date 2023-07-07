@@ -273,7 +273,7 @@ public class Unit
     public int MaxHP { get; private set; }
     public int Attack
     {
-        get { return GetStat(Stat.Attack); }
+        get { return GetStat(Stat.Attack) / ((Status?.ID == ConditionID.brn) ? 2 : 1); }
     }
     public int Defense
     {
@@ -289,7 +289,7 @@ public class Unit
     }
     public int Speed
     {
-        get { return GetStat(Stat.Speed); }
+        get { return GetStat(Stat.Speed) / ((Status?.ID == ConditionID.par) ? 2 : 1); }
     }
     public List<Move> Moves
     {

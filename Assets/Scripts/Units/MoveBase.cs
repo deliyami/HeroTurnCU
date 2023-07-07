@@ -106,6 +106,8 @@ public class MoveEffects
     [SerializeField] ConditionID status;
     [SerializeField] ConditionID volatileStatus;
     [SerializeField] ConditionID weather;
+    [SerializeField] ConditionID room;
+    [SerializeField] ConditionID field;
 
     public List<StatBoost> Boosts
     {
@@ -123,6 +125,14 @@ public class MoveEffects
     public ConditionID Weather
     {
         get { return weather; }
+    }
+    public ConditionID Room
+    {
+        get { return room; }
+    }
+    public ConditionID Field
+    {
+        get { return field; }
     }
 }
 

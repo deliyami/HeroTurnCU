@@ -216,20 +216,75 @@ public class ConditionDB
             }
         },
         {
-            ConditionID.hail,
+            ConditionID.trickRoom,
             new Condition()
             {
-                Name = "싸라기눈",
-                StartMessage = "얼음 덩이가 떨어진다",
-                EffectMessage = "우박이 내리고 있다",
-                OnWeather = (Unit unit) =>
-                {
-                    if (!(UnitType.Ice == unit.Base.Type1 || UnitType.Ice == unit.Base.Type2))
-                    {
-                        unit.DecreaseHP(Mathf.RoundToInt((float)unit.MaxHP / 16f));
-                        unit.StatusChanges.Enqueue($"우박이 {unit.Base.Name}을(를) 덮친다!");
-                    }
-                }
+                Name = "트릭룸",
+                StartMessage = "트릭룸 시작",
+                EffectMessage = "트릭룸 발동중"
+            }
+        },
+        {
+            ConditionID.gravity,
+            new Condition()
+            {
+                Name = "중력",
+                StartMessage = "중력 시작",
+                EffectMessage = "중력 발동중"
+            }
+        },
+        {
+            ConditionID.wonderRoom,
+            new Condition()
+            {
+                Name = "원더룸",
+                StartMessage = "원더룸 시작",
+                EffectMessage = "원더룸 발동중"
+            }
+        },
+        {
+            ConditionID.magicRoom,
+            new Condition()
+            {
+                Name = "매직룸",
+                StartMessage = "매직룸 시작",
+                EffectMessage = "매직룸 발동중"
+            }
+        },
+        {
+            ConditionID.grassyTerrain,
+            new Condition()
+            {
+                Name = "그래스필드",
+                StartMessage = "그래스필드 시작",
+                EffectMessage = "그래스필드 발동중"
+            }
+        },
+        {
+            ConditionID.mistyTerrain,
+            new Condition()
+            {
+                Name = "미스트필드",
+                StartMessage = "미스트필드 시작",
+                EffectMessage = "미스트필드 발동중"
+            }
+        },
+        {
+            ConditionID.psychicTerrain,
+            new Condition()
+            {
+                Name = "사이코필드",
+                StartMessage = "사이코필드 시작",
+                EffectMessage = "사이코필드 발동중"
+            }
+        },
+        {
+            ConditionID.electricTerrain,
+            new Condition()
+            {
+                Name = "일렉트릭필드",
+                StartMessage = "일렉트릭필드 시작",
+                EffectMessage = "일렉트릭필드 발동중"
             }
         },
     };
@@ -260,5 +315,7 @@ public enum ConditionID
     */
     none, psn, brn, slp, par, frz, dpsn,
     confusion, flinch,
-    sunny, rain, sandstorm, hail
+    sunny, rain, sandstorm, hail,
+    trickRoom, gravity, wonderRoom, magicRoom,
+    grassyTerrain, mistyTerrain, psychicTerrain, electricTerrain
 }

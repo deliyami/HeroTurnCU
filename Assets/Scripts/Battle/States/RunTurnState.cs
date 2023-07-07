@@ -56,8 +56,14 @@ public class RunTurnState : State<BattleSystem>
     IEnumerator RunTurns()
     {
         // sort Actions
-        List<BattleAction> actions = bs.Actions.OrderByDescending(a => a.Priority)
-            .ThenByDescending(a => a.User.Unit.Speed).ToList();
+        IOrderedEnumerable<BattleAction> ac = bs.Actions.OrderByDescending(a => a.Priority);
+        List<BattleAction> actions;
+
+        if (bs?.Field?.Room?.ID == ConditionID.trickRoom)
+            actions = ac.ThenBy(a => a.User.Unit.Speed).ToList();
+        else
+            actions = ac.ThenByDescending(a => a.User.Unit.Speed).ToList();
+
         foreach (var action in actions)
         {
             if (action.IsInvalid) continue;
@@ -424,7 +430,7 @@ public class RunTurnState : State<BattleSystem>
 
     IEnumerator RunMoveEffect(MoveEffects effects, Unit source, Unit target, MoveTarget moveTarget)
     {
-        // stat 증가
+        // stat 증가 TODO 여러명 때리는 경우에 셀프 스텟 증가하면 2번 3번 중첩되는 문제가 생김
         if (effects.Boosts != null)
         {
             if (moveTarget == MoveTarget.Self)
@@ -449,6 +455,22 @@ public class RunTurnState : State<BattleSystem>
             Field.SetWeather(effects.Weather);
             Field.WeatherDuration = 5;
             yield return dialogBox.TypeDialog(Field.Weather.StartMessage);
+        }
+
+        // 공간 변경
+        if (effects.Room != ConditionID.none)
+        {
+            Field.SetRoom(effects.Room);
+            Field.RoomDuration = 5;
+            yield return dialogBox.TypeDialog(Field.Room.StartMessage);
+        }
+
+        // 필드 변경
+        if (effects.Field != ConditionID.none)
+        {
+            Field.SetField(effects.Field);
+            Field.FieldDuration = 5;
+            yield return dialogBox.TypeDialog(Field.field.StartMessage);
         }
 
         // dialog 박스 변경
