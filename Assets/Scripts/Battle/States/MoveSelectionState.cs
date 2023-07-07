@@ -76,8 +76,8 @@ public class MoveSelectionState : State<BattleSystem>
         // bs.StateMachine.ChangeState(RunTurnState.i);
         currentMove = selection;
 
-        var testValue = bs.PlayerUnits[bs.ActionIndex].Unit.Moves;
-        UnitSelectionState.i.Moves = testValue;
+        var move = bs.PlayerUnits[bs.ActionIndex].Unit.Moves[currentMove];
+        UnitSelectionState.i.Move = move;
         bs.StateMachine.ChangeState(UnitSelectionState.i);
     }
 

@@ -15,7 +15,8 @@ public class GlobalSettings : MonoBehaviour
     public Color HighlightedColor => highLightedColor;
     public Color UnchosenColor => unchosenColor;
     public static GlobalSettings i { get; private set; }
-    private void Awake() {
+    private void Awake()
+    {
         i = this;
     }
 }

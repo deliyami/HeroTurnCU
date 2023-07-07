@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e712be12a733e43acf24e6ff77e8d4, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
-  name: "\uBC14\uC704"
+  name: "\uBCC4"
   unitType: 13
   sprite: {fileID: 1181928151, guid: 07348f4661ff5ed46bd804720466ae2c, type: 3}

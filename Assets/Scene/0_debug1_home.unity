@@ -11384,16 +11384,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
+      propertyPath: units.Array.data[0]._base
+      value: 
+      objectReference: {fileID: 11400000, guid: cb0103109d2e7f74e8c4e8225ebf23e0, type: 2}
+    - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: units.Array.data[0].level
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: units.Array.data[1]._base
       value: 
-      objectReference: {fileID: 11400000, guid: 8e44d9d3ddb03614da43b0cfe7a1951d, type: 2}
+      objectReference: {fileID: 11400000, guid: b7865c78cd4ee72458c28f4260d93f62, type: 2}
     - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: units.Array.data[1].level
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5673436149689442575, guid: fd1234c2f8144024bbbd4ceb070fc4b9, type: 3}
       propertyPath: units.Array.data[1].tribe.Array.data[0]

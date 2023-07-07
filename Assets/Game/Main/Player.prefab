@@ -124,24 +124,12 @@ MonoBehaviour:
   units:
   - _base: {fileID: 11400000, guid: c2e817f126d11f543ab8cf7ef8f37641, type: 2}
     level: 100
-    tribe: 0f000000140000001100000015000000050000000a000000
-    effort: 540000006000000066000000480000006000000040000000
-    personality: 0200000003000000
-  - _base: {fileID: 11400000, guid: 43fda276d8bbf3f41aea04b77a52b81b, type: 2}
-    level: 50
-    tribe: 0f000000140000001100000015000000050000000a000000
-    effort: 540000006000000066000000480000006000000040000000
-    personality: 0200000003000000
+  - _base: {fileID: 11400000, guid: 257874bc41b07044d8281f2a0e874e42, type: 2}
+    level: 30
   - _base: {fileID: 11400000, guid: d06841351a4eb2c409f5fedb65794ffa, type: 2}
     level: 2
-    tribe: 190000000f0000001e00000007000000030000000c000000
-    effort: 78000000540000006c0000003e0000005400000034000000
-    personality: 0100000005000000
   - _base: {fileID: 11400000, guid: 9a33def534605f949bde596cbabfc824, type: 2}
     level: 80
-    tribe: 07000000050000000d000000160000001100000014000000
-    effort: 48000000640000005400000040000000540000006a000000
-    personality: 0500000001000000
 --- !u!114 &7140561383682980584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +162,7 @@ MonoBehaviour:
   - {fileID: 1723123995, guid: 85f733a4b3a390f41a46bcb0971dcb09, type: 3}
   - {fileID: -1065741017, guid: 85f733a4b3a390f41a46bcb0971dcb09, type: 3}
   - {fileID: -606041963, guid: 85f733a4b3a390f41a46bcb0971dcb09, type: 3}
+  surfSprites: []
   defaultDirection: 1
 --- !u!114 &7140561383682980585
 MonoBehaviour:
@@ -188,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  testDiff: {x: 0, y: 0, z: 0}
 --- !u!50 &7140561383682980583
 Rigidbody2D:
   serializedVersion: 4

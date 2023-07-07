@@ -390,18 +390,18 @@ public class Unit
 
     public bool OnBeforeMove()
     {
-        bool cnaRunningTurn = true;
+        bool canRunningTurn = true;
         if (Status?.OnBeforeMove != null)
         {
             if (!Status.OnBeforeMove(this))
-                cnaRunningTurn = false;
+                canRunningTurn = false;
         }
         if (VolatileStatus?.OnBeforeMove != null)
         {
             if (!VolatileStatus.OnBeforeMove(this))
-                cnaRunningTurn = false;
+                canRunningTurn = false;
         }
-        return cnaRunningTurn;
+        return canRunningTurn;
     }
     public void OnAfterTurn()
     {
@@ -413,6 +413,12 @@ public class Unit
     {
         CureVolatileStatus();
         ResetStatBoost();
+    }
+
+    public bool isMovable()
+    {
+        if (Status.Name == "수면" || Status.Name == "냉동") return false;
+        return true;
     }
 }
 

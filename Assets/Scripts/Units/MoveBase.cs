@@ -157,5 +157,14 @@ public enum MoveCategory
 
 public enum MoveTarget
 {
-    Another, FoeAll, Self, TeamAll, All
+    // Foe: 적 하나
+    // FoeAll: 적 전부
+    // Team: 팀하나
+    // TeamAnother: 또 다른 팀
+    // TeamAll: 팀 전부
+    // Self: 자기자신
+    // Another: 다른녀석
+    // AnotherAll: 다른녀석 전부
+    // All: 전부
+    Foe, FoeAll, Team, TeamAnother, TeamAll, Self, Another, AnotherAll, All
 }

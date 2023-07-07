@@ -15,7 +15,7 @@ public class UnitSelectionState : State<BattleSystem>
     [SerializeField] UnitSelectionUI selectionUI;
     List<BattleUnit> playerUnits;
     List<BattleUnit> enemyUnits;
-    public List<Move> Moves { get; set; }
+    public Move Move { get; set; }
 
     public static UnitSelectionState i { get; private set; }
 
@@ -58,9 +58,15 @@ public class UnitSelectionState : State<BattleSystem>
 
         // MoveSelectionState전부 옮겨서 if문으로 나눠서 스킬 타입별 선택 할 수 있는거 정해야 할 듯
         var currentUnit = bs.PlayerUnits[bs.ActionIndex];
+
+        var checkPlayerUnit = playerUnits.FirstOrDefault(u => u.Unit.Base.Name != currentUnit.Unit.Base.Name);
+        BattleUnit playerUnit = checkPlayerUnit is BattleUnit ? checkPlayerUnit : playerUnits.First();
+
+        var enemyUnit = enemyUnits.Count < bs.UnitCount ? enemyUnits.First() : enemyUnits[selection];
+
         var targetedUnit = selection >= enemyUnits.Count ?
-                playerUnits.First(u => u.Unit.Base.Name != currentUnit.Unit.Base.Name) :
-                enemyUnits[selection];
+                playerUnit :
+                enemyUnit;
 
         var action = new BattleAction()
         {
@@ -69,8 +75,9 @@ public class UnitSelectionState : State<BattleSystem>
             User = currentUnit,
             // 선택된 적 유닛
             Target = targetedUnit,
-            Move = Moves[MoveSelectionState.i.currentMove]
+            Move = Move
         };
+        selectionUI.ClearItems();
         bs.AddBattleAction(action);
         Debug.Log("use submit");
         bs.StateMachine.ChangeState(RunTurnState.i);

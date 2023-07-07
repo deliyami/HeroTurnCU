@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Move
 {
-    public MoveBase Base {get; set; }
-    public int PP { get; set;}
+    public MoveBase Base { get; set; }
+    public int PP { get; set; }
 
-    public Move (MoveBase uBase)
+    public Move(MoveBase uBase)
     {
         Base = uBase;
         PP = uBase.PP;
     }
 
-    public Move (MoveSaveData saveData)
+    public Move(MoveSaveData saveData)
     {
         Base = MoveDB.GetObjectByName(saveData.name);
         PP = saveData.pp;

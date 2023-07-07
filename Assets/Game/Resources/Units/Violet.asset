@@ -17,7 +17,7 @@ MonoBehaviour:
   frontSprite: {fileID: 1272795334, guid: dbbfede201f1528469ed6ff1d7b5ac7f, type: 3}
   reverseFrontSprite: {fileID: 1393998642, guid: 52194e9afc1438f4a84e8c12b83ad26e, type: 3}
   backSprite: {fileID: -1632767598, guid: dbbfede201f1528469ed6ff1d7b5ac7f, type: 3}
-  smallSprite: {fileID: 0}
+  smallSprite: {fileID: -2141927124, guid: 03125010db0e1914dbba7fdc59d964c8, type: 3}
   portraitSprite:
   - {fileID: -79391, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
   - {fileID: 1051045910, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}

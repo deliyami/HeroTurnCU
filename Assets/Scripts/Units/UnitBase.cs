@@ -277,7 +277,8 @@ public class IndividualChart
     {
         // MathF.Max(status)
         var max = status.Select((n, i) => (Number: n, Index: i)).Max();
-        return chart[max.Number][max.Index];
+        Debug.Log($"here is unitbase {max.Number}, {max.Index}");
+        return chart[max.Number % 6][max.Index];
     }
 }
 

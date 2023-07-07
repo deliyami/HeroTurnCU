@@ -10,24 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
-  m_Name: test1
+  m_Name: iceBeam
   m_EditorClassIdentifier: 
-  name: test1
-  description: "\uACF5\uACA9"
-  type: 1
+  name: "\uB0C9\uB3D9\uBE54"
+  description: "10% \uC0C1\uB300 \uC5BC\uC74C"
+  type: 6
   statIndex: 0
-  power: 5
+  power: 90
   accuracy: 100
-  alwaysHits: 1
-  pp: 5
-  priority: 2
-  category: 0
+  alwaysHits: 0
+  pp: 10
+  priority: 0
+  category: 1
   effects:
     boosts: []
     status: 0
     volatileStatus: 0
     weather: 0
-  secondaries: []
+  secondaries:
+  - boosts: []
+    status: 5
+    volatileStatus: 0
+    weather: 0
+    chance: 10
+    target: 0
   target: 0
   hitRange: {x: 0, y: 0}
-  sound: {fileID: 8300000, guid: 4c732de425afe1047a24ae5ced3cc752, type: 3}
+  sound: {fileID: 0}

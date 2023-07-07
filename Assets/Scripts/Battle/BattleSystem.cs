@@ -47,7 +47,7 @@ public class BattleSystem : MonoBehaviour
     List<BattleAction> actions;
 
     public int UnitCount { get; private set; } = 1;
-    int actionIndex = 0;
+    public int ActionIndex { get; private set; } = 0;
     BattleUnit currentUnit;
 
     public event Action<bool> OnBattleOver;
@@ -225,7 +225,7 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleStates.ActionSelection;
         // StartCoroutine(dialogBox.SetDialog("행동을 선택하세요."));
-        this.actionIndex = actionIndex;
+        this.ActionIndex = actionIndex;
         currentUnit = playerUnits[actionIndex];
         // 유저의 스킬을 넣어야 함
         dialogBox.SetMoveNames(currentUnit.Unit.Moves);
@@ -280,9 +280,9 @@ public class BattleSystem : MonoBehaviour
     public void AddBattleAction(BattleAction action)
     {
         actions.Add(action);
-
+        Debug.Log($"here is battlesystem{actions.Count == UnitCount}, {actions.Count}, {UnitCount}");
         // 유저에게 선택된 것 확인
-        if (actions.Count == UnitCount)
+        if (actions.Count == UnitCount || PlayerParty.CheckHealthyUnits() == 1)
         {
             // 적 유닛 확인
             foreach (var enemyUnit in enemyUnits)
@@ -297,15 +297,11 @@ public class BattleSystem : MonoBehaviour
                 actions.Add(randAction);
             }
 
-            // sort Actions
-            actions = actions.OrderByDescending(a => a.Priority)
-                .ThenByDescending(a => a.User.Unit.Speed).ToList();
-
             // StartCoroutine(RunTurns());
         }
         else
         {
-            ActionSelection(actionIndex + 1);
+            ActionSelection(ActionIndex + 1);
         }
     }
 
@@ -453,7 +449,7 @@ public class BattleSystem : MonoBehaviour
         {
             dialogBox.EnableMoveSelector(false);
             dialogBox.EnableDialogText(true);
-            ActionSelection(actionIndex);
+            ActionSelection(ActionIndex);
         }
     }
     void HandleTargetSelection()
@@ -709,6 +705,12 @@ public class BattleSystem : MonoBehaviour
         return 4;
     }
 
+    public void ResetActions()
+    {
+        this.ActionIndex = 0;
+        actions.Clear();
+    }
+
     public BattleDialogBox DialogBox => dialogBox;
     public PartyScreen PartyScreen => partyScreen;
 
@@ -741,8 +743,6 @@ public class BattleSystem : MonoBehaviour
     public List<BattleUnit> PlayerUnits => playerUnits;
     public List<BattleUnit> EnemyUnits => enemyUnits;
     public BattleUnit CurrentUnit => currentUnit;
-
-    public int ActionIndex => actionIndex;
 
     public List<BattleAction> Actions => actions;
 

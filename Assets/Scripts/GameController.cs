@@ -31,7 +31,6 @@ public class GameController : MonoBehaviour
         // menuController = transform.Find("UI Canvas").GetComponent<MenuController>();
 
         UnitDB.Init();
-        MoveDB.Init();
         ConditionDB.Init();
         ItemDB.Init();
         QuestDB.Init();

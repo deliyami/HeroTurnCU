@@ -6,6 +6,7 @@ using UnityEngine;
 public class ActionSelectionState : State<BattleSystem>
 {
     [SerializeField] ActionSelectionUI selectionUI;
+    [SerializeField] List<ActiveUnitArrow> arrow;
 
     public static ActionSelectionState i { get; private set; }
 
@@ -26,6 +27,9 @@ public class ActionSelectionState : State<BattleSystem>
 
         // TODO unit의 이름까지 넘겨야함
         bs.DialogBox.SetDialog($"행동을 선택하세요.");
+
+        arrow[bs.ActionIndex].gameObject.SetActive(true);
+        // bs.PlayerUnits[bs.ActionIndex].SetSelected(true);
         // bs.DialogBox.SetDialog($"{currentUnit.Unit.Base.Name}의 행동을 선택하세요.");
     }
 
@@ -127,4 +131,6 @@ public class ActionSelectionState : State<BattleSystem>
             bs.StateMachine.ChangeState(RunTurnState.i);
         }
     }
+
+    public List<ActiveUnitArrow> Arrow => arrow;
 }
