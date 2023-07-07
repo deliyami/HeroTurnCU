@@ -45,7 +45,7 @@ public class UnitSelectionUI : SelectionUI<TextSlot>
         {
             if (Move.Base.Target == MoveTarget.Foe || Move.Base.Target == MoveTarget.FoeAll || Move.Base.Target == MoveTarget.Another || Move.Base.Target == MoveTarget.AnotherAll) selectedItem = 0;
             if (Move.Base.Target == MoveTarget.Team || Move.Base.Target == MoveTarget.TeamAll || Move.Base.Target == MoveTarget.Self) selectedItem = 1;
-            if (Move.Base.Target == MoveTarget.All) selectedItem = 99;
+            if (Move.Base.Target == MoveTarget.All) selectedItem = 0;
             if (Move.Base.Target == MoveTarget.TeamAnother) selectedItem = -1;
             HandleSubmit();
             return;
@@ -77,7 +77,7 @@ public class UnitSelectionUI : SelectionUI<TextSlot>
         }
     }
     // Foe, FoeAll, Team, TeamAnother, TeamAll, Self, Another, AnotherAll, All
-    // 2이상 선택하는 것은 99로 정하고 나머지는 선택하는 것 하자... 무조건실패는 -1
+    // 2이상 선택하는 것은 99로 정하려고 했는데 UnitSelectionState에서 인덱스 값 확인하니까 이건 0으로 해야겠다 나머지는 선택하는 것 하자... 무조건실패는 -1
     void selectFoeUnit()
     {
         // 적이 한명만 남았을 때 예외처리
@@ -89,7 +89,7 @@ public class UnitSelectionUI : SelectionUI<TextSlot>
     }
     void selectFoeAllUnit()
     {
-        selectedItem = 99;
+        selectedItem = 0;
         enemyUnits.ForEach(e => e.SetSelected(true));
     }
     void selectTeamUnit()
@@ -116,7 +116,7 @@ public class UnitSelectionUI : SelectionUI<TextSlot>
     }
     void selectTeamAllUnit()
     {
-        selectedItem = 99;
+        selectedItem = 0;
         playerUnits.ForEach(e => e.SetSelected(true));
     }
     void selectSelfUnit()
@@ -174,7 +174,7 @@ public class UnitSelectionUI : SelectionUI<TextSlot>
     }
     void selectAnotherAllUnit()
     {
-        selectedItem = 99;
+        selectedItem = 0;
         enemyUnits.ForEach(e => e.SetSelected(true));
         for (int i = 0; i < playerUnits.Count; i++)
         {
@@ -183,7 +183,7 @@ public class UnitSelectionUI : SelectionUI<TextSlot>
     }
     void selectAllUnit()
     {
-        selectedItem = 99;
+        selectedItem = 0;
         enemyUnits.ForEach(e => e.SetSelected(true));
         playerUnits.ForEach(e => e.SetSelected(true));
     }

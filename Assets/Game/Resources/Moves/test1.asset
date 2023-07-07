@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
   m_Name: test1
   m_EditorClassIdentifier: 
-  name: test1
+  name: "\uC801\uC804\uCCB4\uACF5\uACA9test"
   description: "\uACF5\uACA9"
   type: 1
   statIndex: 0
@@ -28,6 +28,6 @@ MonoBehaviour:
     volatileStatus: 0
     weather: 0
   secondaries: []
-  target: 0
+  target: 1
   hitRange: {x: 0, y: 0}
   sound: {fileID: 8300000, guid: 4c732de425afe1047a24ae5ced3cc752, type: 3}

@@ -12,22 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
   m_Name: test3
   m_EditorClassIdentifier: 
-  name: "2\uC5F0\uC18D\uACF5\uACA9\uD14C\uC2A4\uD2B8"
+  name: "\uD300\uC804\uCCB4\uBC84\uD504test"
   description: "\uD14C\uC2A4\uD2B8\uC6A9"
-  type: 2
+  type: 14
   statIndex: 0
-  power: 10
-  accuracy: 90
+  power: 0
+  accuracy: 100
   alwaysHits: 0
   pp: 20
   priority: 0
-  category: 0
+  category: 2
   effects:
-    boosts: []
+    boosts:
+    - stat: 0
+      boost: 2
+    - stat: 1
+      boost: 2
+    - stat: 4
+      boost: 2
     status: 0
     volatileStatus: 0
     weather: 0
   secondaries: []
-  target: 0
-  hitRange: {x: 2, y: 0}
+  target: 4
+  hitRange: {x: 0, y: 0}
   sound: {fileID: 0}

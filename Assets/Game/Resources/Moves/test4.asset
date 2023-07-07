@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
   m_Name: test4
   m_EditorClassIdentifier: 
-  name: "\uD14C\uC2A4\uD2B8 \uB0A0\uC528"
+  name: "\uB0A0\uC528\uD14C\uC2A4\uD2B8"
   description: "\uD14C\uC2A4\uD2B8\uC6A9"
   type: 2
   statIndex: 0
@@ -29,4 +29,5 @@ MonoBehaviour:
     weather: 8
   secondaries: []
   target: 0
+  hitRange: {x: 0, y: 0}
   sound: {fileID: 0}

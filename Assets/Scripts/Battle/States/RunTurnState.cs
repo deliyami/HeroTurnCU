@@ -160,84 +160,89 @@ public class RunTurnState : State<BattleSystem>
 
         // 여기서 맞을 친구들 정하기
         // targetUnit.Unit
-        List<Unit> targetedUnits = new List<Unit>();
+        List<BattleUnit> targetedUnits = new List<BattleUnit>();
 
         List<BattleUnit> sourceUnits = sourceUnit.IsPlayerUnit ? playerUnits : enemyUnits;
         List<BattleUnit> targetUnits = targetUnit.IsPlayerUnit ? playerUnits : enemyUnits;
 
-        if (move.Base.Target == MoveTarget.Foe || move.Base.Target == MoveTarget.Team || move.Base.Target == MoveTarget.TeamAnother || move.Base.Target == MoveTarget.Self || move.Base.Target == MoveTarget.Another) targetedUnits.Add(targetUnit.Unit);
+        if (move.Base.Target == MoveTarget.Foe || move.Base.Target == MoveTarget.Team || move.Base.Target == MoveTarget.TeamAnother || move.Base.Target == MoveTarget.Self || move.Base.Target == MoveTarget.Another) targetedUnits.Add(targetUnit);
         if (move.Base.Target == MoveTarget.FoeAll)
         {
-            targetUnits.ForEach(t => targetedUnits.Add(t.Unit));
+            targetUnits.ForEach(t =>
+            {
+                Debug.Log($"여기는 run turn state{t.Unit.Base.Name}");
+                targetedUnits.Add(t);
+            });
         }
         if (move.Base.Target == MoveTarget.TeamAll)
         {
-            sourceUnits.ForEach(s => targetedUnits.Add(s.Unit));
+            sourceUnits.ForEach(s => targetedUnits.Add(s));
         }
         if (move.Base.Target == MoveTarget.AnotherAll)
         {
             sourceUnits.ForEach(s =>
             {
-                if (s.Unit.Base.Name != sourceUnit.Unit.Base.Name) targetedUnits.Add(s.Unit);
+                if (s.Unit.Base.Name != sourceUnit.Unit.Base.Name) targetedUnits.Add(s);
             });
-            targetUnits.ForEach(t => targetedUnits.Add(t.Unit));
+            targetUnits.ForEach(t => targetedUnits.Add(t));
         }
         if (move.Base.Target == MoveTarget.All)
         {
-            sourceUnits.ForEach(s => targetedUnits.Add(s.Unit));
-            targetUnits.ForEach(t => targetedUnits.Add(t.Unit));
+            sourceUnits.ForEach(s => targetedUnits.Add(s));
+            targetUnits.ForEach(t => targetedUnits.Add(t));
         }
-
+        if (move.Base.Category != MoveCategory.Status)
+            sourceUnit.PlayAttackAnimation();
         foreach (var targeted in targetedUnits)
         {
-            if (CheckIfMoveHits(move, sourceUnit.Unit, targeted))
+            if (CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit))
             {
                 int hitTimes = move.Base.GetHitTimes();
                 float typeEffectiveness = 1f;
                 int hit = 1;
                 for (int i = 1; i <= hitTimes; i++)
                 {
-                    sourceUnit.PlayAttackAnimation();
                     if (move.Base.Sound != null)
                         AudioManager.i.PlaySfx(move.Base.Sound);
 
                     yield return new WaitForSeconds(1f);
-                    targetUnit.PlayerHitAnimation();
+                    if (move.Base.Category != MoveCategory.Status)
+                        targeted.PlayerHitAnimation();
                     AudioManager.i.PlaySfx(AudioId.Hit);
 
                     if (move.Base.Category == MoveCategory.Status)
                     {
-                        yield return RunMoveEffect(move.Base.Effects, sourceUnit.Unit, targeted, move.Base.Target);
+                        yield return RunMoveEffect(move.Base.Effects, sourceUnit.Unit, targeted.Unit, move.Base.Target);
                     }
                     else
                     {
-                        var damageDetails = targeted.TakeDamage(move, sourceUnit.Unit, Field.Weather);
-                        yield return targetUnit.Hud.WaitForHPUpdate();
+                        var damageDetails = targeted.Unit.TakeDamage(move, sourceUnit.Unit, Field.Weather);
+                        yield return targeted.Hud.WaitForHPUpdate();
                         yield return ShowDamageDetails(damageDetails);
                         typeEffectiveness = damageDetails.TypeEffectiveness;
                     }
 
-                    if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targeted.HP > 0)
+                    if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targeted.Unit.HP > 0)
                     {
                         foreach (var secondary in move.Base.Secondaries)
                         {
                             var rnd = UnityEngine.Random.Range(1, 101);
                             if (rnd <= secondary.Chance)
-                                yield return RunMoveEffect(secondary, sourceUnit.Unit, targeted, secondary.Target);
+                                yield return RunMoveEffect(secondary, sourceUnit.Unit, targeted.Unit, secondary.Target);
                         }
                     }
                     hit = i;
-                    if (targeted.HP <= 0)
+                    if (targeted.Unit.HP <= 0)
                         break;
                 }
                 yield return ShowEffectiveness(typeEffectiveness);
                 if (hitTimes > 1)
                     yield return dialogBox.TypeDialog($"{hit}번 공격했다!");
 
-                if (targeted.HP <= 0)
+                if (targeted.Unit.HP <= 0)
                 {
                     // AudioManager.i.PlaySfx(AudioId.Faint);
-                    yield return HandleUnitFainted(targetUnit);
+                    yield return HandleUnitFainted(targeted);
                 }
             }
             else
