@@ -121,10 +121,10 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
             unitDescription.SetActive(false);
             moveDescription.SetActive(false);
             toolDescription.SetActive(true);
-            ability.text = unit.Ability;
-            abilityDescription.text = unit.AbilityDescription;
-            secondAbility.text = unit.SecondAbility;
-            secondAbilityDescription.text = unit.SecondAbilityDescription;
+            ability.text = unit.Ability.Name;
+            abilityDescription.text = unit.Ability.Description;
+            secondAbility.text = unit.SecondAbility.Name;
+            secondAbilityDescription.text = unit.SecondAbility.Description;
         }
     }
     public override void HandleUpdate()

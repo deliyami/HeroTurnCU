@@ -36,12 +36,8 @@ public class UnitBase : ScriptableObject
     [SerializeField] int catchRate = 255;
     [Header("특성")]
 
-    [SerializeField] string ability; // 특성
-    [TextArea]
-    [SerializeField] string abilityDescription; // 특성
-    [SerializeField] string secondAbility; // 특성
-    [TextArea]
-    [SerializeField] string secondAbilityDescription; // 특성
+    [SerializeField] AbilityBase ability; // 특성1
+    [SerializeField] AbilityBase secondAbility; // 특성2
     [Header("개체치")]
     // 개체치 31 {HP, attack, defense, spAttack, spDefense, speed}
     [SerializeField] int[] individual = new int[6];
@@ -131,21 +127,13 @@ public class UnitBase : ScriptableObject
     public int CatchRate => catchRate;
     public int ExpYield => expYield;
     public GrowthRate GrowthRate => growthRate;
-    public string Ability
+    public AbilityBase Ability
     {
         get { return ability; }
     }
-    public string AbilityDescription
-    {
-        get { return abilityDescription; }
-    }
-    public string SecondAbility
+    public AbilityBase SecondAbility
     {
         get { return secondAbility; }
-    }
-    public string SecondAbilityDescription
-    {
-        get { return secondAbilityDescription; }
     }
     public int[] Individual => individual;
     public int[] Effort => effort;
