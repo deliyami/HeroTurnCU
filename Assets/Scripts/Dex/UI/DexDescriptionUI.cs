@@ -24,8 +24,13 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
     [SerializeField] DexMoveSlotUI dexMoveSlotUI;
     [Header("도구 설명창")]
     [SerializeField] GameObject toolDescription;
+    [SerializeField] TextMeshProUGUI ability; // 특성
+    [SerializeField] TextMeshProUGUI abilityDescription; // 특성
+    [SerializeField] TextMeshProUGUI secondAbility; // 특성
+    [SerializeField] TextMeshProUGUI secondAbilityDescription; // 특성
 
     public int selectedCategory = 0;
+    public static DexDescriptionUI i { get; private set; }
 
     // 스킬 저장하는 곳
     List<DexMoveSlotUI> slotUIList;
@@ -36,6 +41,8 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
         dexDescription = DexDescription.GetDexDescription();
 
         categoryText.text = DexDescription.DexDescriptionCategories[selectedCategory];
+
+        i = this;
     }
     private void Start()
     {
@@ -43,6 +50,10 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
         // 도구 설명
         UpdateDexDescripon();
         DexState.i.DexDescriptionUIUpdate += OnUpdated;
+    }
+    private void OnDestroy()
+    {
+        DexState.i.DexDescriptionUIUpdate -= OnUpdated;
     }
     private void OnUpdated()
     {
@@ -79,6 +90,7 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
         slotUIList = new List<DexMoveSlotUI>();
         foreach (var itemSlot in unit.LearnableMoves)
         {
+            Debug.Log($"this is dex description ui {itemSlot?.Base?.Name}");
             var slotUIObj = Instantiate(dexMoveSlotUI, itemList.transform);
             slotUIObj.SetData(itemSlot.Base);
 
@@ -104,11 +116,15 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
             moveDescription.SetActive(true);
             toolDescription.SetActive(false);
         }
-        else if (selectedCategory == 2)
+        else
         {
             unitDescription.SetActive(false);
             moveDescription.SetActive(false);
             toolDescription.SetActive(true);
+            ability.text = unit.Ability;
+            abilityDescription.text = unit.AbilityDescription;
+            secondAbility.text = unit.SecondAbility;
+            secondAbilityDescription.text = unit.SecondAbilityDescription;
         }
     }
     public override void HandleUpdate()

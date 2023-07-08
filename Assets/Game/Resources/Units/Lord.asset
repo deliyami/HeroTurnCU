@@ -15,6 +15,7 @@ MonoBehaviour:
   name: "\uB85C\uB4DC"
   description: "\uB85C\uB4DC"
   frontSprite: {fileID: 1817327747, guid: b9bcd4f4ad9211a42ac616eb7af0041c, type: 3}
+  reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: 887971906, guid: b9bcd4f4ad9211a42ac616eb7af0041c, type: 3}
   smallSprite: {fileID: -1669930542, guid: 9cbc9dadff37dd945b1e838c883086eb, type: 3}
   portraitSprite:
@@ -41,7 +42,7 @@ MonoBehaviour:
   ability: "\uBA39\uBCF4"
   individual: 0a000000030000000e000000040000000d00000003000000
   effort: 6d00000020000000ac0000000d000000a000000016000000
-  personality: 0400000001000000
+  personality: 0300000000000000
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: 87e262a956dedd443ba84119757e1dea, type: 2}
     level: 0

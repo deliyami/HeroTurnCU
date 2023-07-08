@@ -15,6 +15,7 @@ MonoBehaviour:
   name: "\uCE74\uB97C"
   description: "\uC74C \uCE74\uB97C"
   frontSprite: {fileID: 1585365406, guid: 0ed11fe672993924c8bcd5e84db958fe, type: 3}
+  reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: 2125151407, guid: 0ed11fe672993924c8bcd5e84db958fe, type: 3}
   smallSprite: {fileID: -77766418, guid: 9af17589438ba6c43b52d77e9c115e20, type: 3}
   portraitSprite:
@@ -37,7 +38,7 @@ MonoBehaviour:
   ability: "\uC790\uAE30\uACFC\uC2E0, \uC2B9\uAE30, \uC624\uAE30"
   individual: 140000001c000000070000001e000000030000001d000000
   effort: 34000000dc00000003000000980000001b00000034000000
-  personality: 0400000004000000
+  personality: 0300000003000000
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: a814970ed22977742a88b3200eb692e6, type: 2}
     level: 0
@@ -45,7 +46,7 @@ MonoBehaviour:
     level: 0
   - moveBase: {fileID: 11400000, guid: 5e961e32e661f4044b4d54e1e9616fab, type: 2}
     level: 0
-  - moveBase: {fileID: 0}
+  - moveBase: {fileID: 11400000, guid: 5c2635935b036324180d514149c31b5f, type: 2}
     level: 0
   learnableByItems: []
   evolutions: []

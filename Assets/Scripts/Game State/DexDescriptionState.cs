@@ -17,6 +17,7 @@ public class DexDescriptionState : State<GameController>
         gc = owner;
         dexDescriptionUI.gameObject.SetActive(true);
         dexDescriptionUI.OnBack += OnBack;
+        dexDescriptionUI.selectedCategory = 0;
     }
     public override void Execute()
     {

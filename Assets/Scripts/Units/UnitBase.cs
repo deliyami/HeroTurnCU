@@ -34,8 +34,14 @@ public class UnitBase : ScriptableObject
     [SerializeField] GrowthRate growthRate;
 
     [SerializeField] int catchRate = 255;
+    [Header("특성")]
 
     [SerializeField] string ability; // 특성
+    [TextArea]
+    [SerializeField] string abilityDescription; // 특성
+    [SerializeField] string secondAbility; // 특성
+    [TextArea]
+    [SerializeField] string secondAbilityDescription; // 특성
     [Header("개체치")]
     // 개체치 31 {HP, attack, defense, spAttack, spDefense, speed}
     [SerializeField] int[] individual = new int[6];
@@ -128,6 +134,18 @@ public class UnitBase : ScriptableObject
     public string Ability
     {
         get { return ability; }
+    }
+    public string AbilityDescription
+    {
+        get { return abilityDescription; }
+    }
+    public string SecondAbility
+    {
+        get { return secondAbility; }
+    }
+    public string SecondAbilityDescription
+    {
+        get { return secondAbilityDescription; }
     }
     public int[] Individual => individual;
     public int[] Effort => effort;
@@ -277,8 +295,8 @@ public class IndividualChart
     {
         // MathF.Max(status)
         var max = status.Select((n, i) => (Number: n, Index: i)).Max();
-        Debug.Log($"here is unitbase {max.Number}, {max.Index}");
-        return chart[max.Number % 6][max.Index];
+        Debug.Log($"here is unitbase individual {max.Number}, {max.Index}");
+        return chart[max.Number % 5][max.Index];
     }
 }
 
@@ -310,11 +328,12 @@ public class PersonalityChart
     };
     public static string GetPersonalityText(int[] status)
     {
-        return $"{chart[status[0] - 1][status[1] - 1]}{tailerWord[status[0] - 1][status[1] - 1]}";
+        Debug.Log($"here is personality {status[0]}, {status[1]}");
+        return $"{chart[status[0]][status[1]]}{tailerWord[status[0]][status[1]]}";
     }
     public static string GetPersonalityClosingRemarks(int[] status)
     {
-        return $"{chart[status[0] - 1][status[1] - 1]}{closingRemarks[status[0] - 1][status[1] - 1]}";
+        return $"{chart[status[0]][status[1]]}{closingRemarks[status[0]][status[1]]}";
     }
     public static string[][] Chart => chart;
     public static string[][] TailerWord => tailerWord;

@@ -38,7 +38,7 @@ MonoBehaviour:
   ability: "\uBA40\uD2F0\uC2A4\uCF00\uC77C/\uC639\uACE8"
   individual: 140000001100000012000000040000001500000007000000
   effort: 540000005400000054000000540000005400000054000000
-  personality: 0200000001000000
+  personality: 0100000000000000
   learnableMoves:
   - moveBase: {fileID: 11400000, guid: 46bd3775d9aed654fb8bd0125b0f6359, type: 2}
     level: 0
