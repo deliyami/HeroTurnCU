@@ -66,6 +66,9 @@ public class RunTurnState : State<BattleSystem>
 
         foreach (var action in actions)
         {
+            // 특성
+            action.User.Unit.Base.Ability.BeforeRunTurn();
+            action.User.Unit.Base.SecondAbility.BeforeRunTurn();
             if (action.IsInvalid) continue;
             if (action.Type == ActionType.Move)
             {
@@ -164,6 +167,10 @@ public class RunTurnState : State<BattleSystem>
         move.PP--;
         yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
 
+        // 특성
+        sourceUnit.Unit.Base.Ability.BeforeAttack();
+        sourceUnit.Unit.Base.SecondAbility.BeforeAttack();
+
         // 여기서 맞을 친구들 정하기
         // targetUnit.Unit
         List<BattleUnit> targetedUnits = new List<BattleUnit>();
@@ -250,6 +257,14 @@ public class RunTurnState : State<BattleSystem>
                     // AudioManager.i.PlaySfx(AudioId.Faint);
                     yield return HandleUnitFainted(targeted);
                 }
+                else
+                {
+                    // 특성
+                    sourceUnit.Unit.Base.Ability.AfterAttack();
+                    sourceUnit.Unit.Base.SecondAbility.AfterAttack();
+                    targeted.Unit.Base.Ability.AfterAttack();
+                    targeted.Unit.Base.SecondAbility.AfterAttack();
+                }
             }
             else
             {
@@ -271,6 +286,9 @@ public class RunTurnState : State<BattleSystem>
     IEnumerator RunAfterTurn(BattleUnit sourceUnit)
     {
         if (bs.IsbattleOver) yield break;
+        // 특성
+        sourceUnit.Unit.Base.Ability.AfterRunTurn();
+        sourceUnit.Unit.Base.SecondAbility.AfterRunTurn();
         // 상태이상으로 쓰러지는가?
         sourceUnit.Unit.OnAfterTurn();
         yield return ShowStatusChanges(sourceUnit.Unit);

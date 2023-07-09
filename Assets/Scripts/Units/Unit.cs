@@ -319,8 +319,8 @@ public class Unit
         float attack = (move.Base.Category == MoveCategory.Special) ? attacker.SpAttack : attacker.Attack;
         float defense = (move.Base.Category == MoveCategory.Special) ? SpDefense : Defense;
 
-        // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3)
-        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod;
+        // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3 x 특성)
+        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod * attacker.Base.Ability.OnAttack() * attacker.Base.SecondAbility.OnAttack();
         // 데미지 = (레벨 × 2 + 10) ÷ 250
         float a = (2 * attacker.Level + 10) / 250f;
         // 위력 × (특수공격 ÷ 특수방어)) × Mod1) + 2)

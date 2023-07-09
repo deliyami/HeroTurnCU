@@ -39,7 +39,8 @@ MonoBehaviour:
   expYield: 0
   growthRate: 0
   catchRate: 255
-  ability: "\uC774\uC0C1\uD55C\uBE44\uB298"
+  ability: {fileID: -5765893718146715232, guid: eff7cffe5e2b05146883c90ae03254ff, type: 3}
+  secondAbility: {fileID: -5765893718146715232, guid: bf52e3f0f7afac949ae6a8ee7cd51f02, type: 3}
   individual: 1b0000000c000000180000001a0000001700000007000000
   effort: 6f0000000b0000000b0000006f0000006f0000000b000000
   personality: 0000000001000000

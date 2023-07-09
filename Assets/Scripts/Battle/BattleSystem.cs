@@ -194,6 +194,17 @@ public class BattleSystem : MonoBehaviour
             }
             names = String.Join("와(과) ", healthPlayerUnits.Select(u => u.Base.Name));
             yield return dialogBox.TypeDialog($"힘내, {names}!");
+
+            // 특성
+            List<BattleUnit> allOfUnits = Enumerable.Concat(playerUnits, enemyUnits)
+                                            .OrderByDescending(u => u.Unit.Speed)
+                                            .ToList();
+
+            allOfUnits.ForEach(u =>
+            {
+                u.Unit.Base.Ability.BeforeRunTurn();
+                u.Unit.Base.SecondAbility.BeforeRunTurn();
+            });
         }
         IsbattleOver = false;
         escapeAttempts = 0;
@@ -574,6 +585,10 @@ public class BattleSystem : MonoBehaviour
         unitToSwitch.Setup(newUnit);
         dialogBox.SetMoveNames(newUnit.Moves);
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
+
+        // 특성
+        newUnit.Base.Ability.BeforeRunTurn();
+        newUnit.Base.SecondAbility.BeforeRunTurn();
 
         // if (isTrainerAboutToUse)
         //     StartCoroutine(SendNextTrainerUnit());
