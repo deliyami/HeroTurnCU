@@ -287,6 +287,24 @@ public class ConditionDB
                 EffectMessage = "일렉트릭필드 발동중"
             }
         },
+        {
+            ConditionID.reflect,
+            new Condition()
+            {
+                Name = "리플렉터",
+                StartMessage = "리플렉터 시작",
+                EffectMessage = "리플렉터 발동중"
+            }
+        },
+        {
+            ConditionID.lightScreen,
+            new Condition()
+            {
+                Name = "빛의 장막",
+                StartMessage = "빛의 장막 시작",
+                EffectMessage = "빛의 장막 발동중"
+            }
+        },
     };
 
     public static float GetStatusBonus(Condition condition)
@@ -317,5 +335,6 @@ public enum ConditionID
     confusion, flinch,
     sunny, rain, sandstorm, hail,
     trickRoom, gravity, wonderRoom, magicRoom,
-    grassyTerrain, mistyTerrain, psychicTerrain, electricTerrain
+    grassyTerrain, mistyTerrain, psychicTerrain, electricTerrain,
+    reflect, lightScreen
 }

@@ -4,30 +4,23 @@ using UnityEngine;
 
 public class Field
 {
-    public Condition Weather { get; set; }
-    public int? WeatherDuration { get; set; }
-    public void SetWeather(ConditionID conditionID)
-    {
-        Weather = ConditionDB.Conditions[conditionID];
-        Weather.ID = conditionID;
-        Weather.OnStart?.Invoke(null);
-    }
+    public FieldBase Weather { get; set; } = new FieldBase();
+    public FieldBase Room { get; set; } = new FieldBase();
 
-    public Condition Room { get; set; }
-    public int? RoomDuration { get; set; }
-    public void SetRoom(ConditionID conditionID)
-    {
-        Room = ConditionDB.Conditions[conditionID];
-        Room.ID = conditionID;
-        Room.OnStart?.Invoke(null);
-    }
+    public FieldBase field { get; set; } = new FieldBase();
 
-    public Condition field { get; set; }
-    public int? FieldDuration { get; set; }
-    public void SetField(ConditionID conditionID)
+    public FieldBase Reflect { get; set; } = new FieldBase();
+    public FieldBase LightScreen { get; set; } = new FieldBase();
+}
+
+public class FieldBase
+{
+    public Condition condition { get; set; }
+    public int? duration { get; set; }
+    public void SetCondition(ConditionID conditionID)
     {
-        field = ConditionDB.Conditions[conditionID];
-        field.ID = conditionID;
-        field.OnStart?.Invoke(null);
+        condition = ConditionDB.Conditions[conditionID];
+        condition.ID = conditionID;
+        condition.OnStart?.Invoke(null);
     }
 }

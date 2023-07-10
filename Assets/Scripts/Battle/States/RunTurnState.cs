@@ -56,19 +56,24 @@ public class RunTurnState : State<BattleSystem>
     IEnumerator RunTurns()
     {
         // sort Actions
+        foreach (var action in bs.Actions)
+        {
+            RunChangeTurn(action.User);
+            yield return RunBeforeTurn(action.User);
+        }
         IOrderedEnumerable<BattleAction> ac = bs.Actions.OrderByDescending(a => a.Priority);
         List<BattleAction> actions;
 
-        if (bs?.Field?.Room?.ID == ConditionID.trickRoom)
+
+        if (bs?.Field?.Room?.condition?.ID == ConditionID.trickRoom)
             actions = ac.ThenBy(a => a.User.Unit.Speed).ToList();
         else
             actions = ac.ThenByDescending(a => a.User.Unit.Speed).ToList();
 
+
         foreach (var action in actions)
         {
-            // 특성
-            action.User.Unit.Base.Ability.BeforeRunTurn();
-            action.User.Unit.Base.SecondAbility.BeforeRunTurn();
+
             if (action.IsInvalid) continue;
             if (action.Type == ActionType.Move)
             {
@@ -102,11 +107,11 @@ public class RunTurnState : State<BattleSystem>
 
         if (Field.Weather != null)
         {
-            yield return dialogBox.TypeDialog(Field.Weather.EffectMessage);
+            yield return dialogBox.TypeDialog(Field.Weather.condition.EffectMessage);
             for (int i = 0; i < playerUnits.Count; i++)
             {
                 var pu = playerUnits[i];
-                Field.Weather.OnWeather?.Invoke(pu.Unit);
+                Field.Weather.condition.OnWeather?.Invoke(pu.Unit);
                 yield return ShowStatusChanges(pu.Unit);
                 if (pu.Unit.HPChanged) pu.PlayerHitAnimation();
                 pu.Hud.UpdateHP();
@@ -120,7 +125,7 @@ public class RunTurnState : State<BattleSystem>
             for (int i = 0; i < playerUnits.Count; i++)
             {
                 var eu = enemyUnits[i];
-                Field.Weather.OnWeather?.Invoke(eu.Unit);
+                Field.Weather.condition.OnWeather?.Invoke(eu.Unit);
                 yield return ShowStatusChanges(eu.Unit);
                 if (eu.Unit.HPChanged) eu.PlayerHitAnimation();
                 eu.Hud.UpdateHP();
@@ -131,17 +136,73 @@ public class RunTurnState : State<BattleSystem>
                     yield break;
                 }
             }
-            if (Field.WeatherDuration != null)
+            if (Field.Weather.duration != null)
             {
-                Field.WeatherDuration--;
-                if (Field.WeatherDuration == 0)
+                Field.Weather.duration--;
+                if (Field.Weather.duration == 0)
                 {
                     Field.Weather = null;
-                    Field.WeatherDuration = null;
+                    Field.Weather.duration = null;
                     yield return dialogBox.TypeDialog("날씨가 원래대로 되돌아왔다!");
                 }
             }
         }
+        FinishTurnCheckField(Field.Room, "공간이 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.field, "필드가 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.Reflect, "분위기가 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.LightScreen, "위화감이 원래대로 되돌아왔다!");
+        // if (Field.Room != null)
+        // {
+        //     if (Field.Room.duration != null)
+        //     {
+        //         Field.Room.duration--;
+        //         if (Field.Room.duration == 0)
+        //         {
+        //             Field.Room = null;
+        //             Field.Room.duration = null;
+        //             yield return dialogBox.TypeDialog("공간이 원래대로 되돌아왔다!");
+        //         }
+        //     }
+        // }
+        // if (Field.field != null)
+        // {
+        //     if (Field.field.duration != null)
+        //     {
+        //         Field.field.duration--;
+        //         if (Field.field.duration == 0)
+        //         {
+        //             Field.field = null;
+        //             Field.field.duration = null;
+        //             yield return dialogBox.TypeDialog("필드가 원래대로 되돌아왔다!");
+        //         }
+        //     }
+        // }
+        // if (Field.Reflect != null)
+        // {
+        //     if (Field.Reflect.duration != null)
+        //     {
+        //         Field.Reflect.duration--;
+        //         if (Field.Reflect.duration == 0)
+        //         {
+        //             Field.Reflect = null;
+        //             Field.Reflect.duration = null;
+        //             yield return dialogBox.TypeDialog("분위기가 원래대로 되돌아왔다!");
+        //         }
+        //     }
+        // }
+        // if (Field.LightScreen != null)
+        // {
+        //     if (Field.LightScreen.duration != null)
+        //     {
+        //         Field.LightScreen.duration--;
+        //         if (Field.LightScreen.duration == 0)
+        //         {
+        //             Field.LightScreen = null;
+        //             Field.LightScreen.duration = null;
+        //             yield return dialogBox.TypeDialog("위화감이 원래대로 되돌아왔다!");
+        //         }
+        //     }
+        // }
 
         foreach (var action in actions)
             yield return RunAfterTurn(action.User);
@@ -150,6 +211,22 @@ public class RunTurnState : State<BattleSystem>
         {
             bs.ResetActions();
             bs.StateMachine.ChangeState(ActionSelectionState.i);
+        }
+    }
+    IEnumerator FinishTurnCheckField(FieldBase fieldBase, string returnMessage)
+    {
+        if (fieldBase != null)
+        {
+            if (fieldBase.duration != null)
+            {
+                fieldBase.duration--;
+                if (fieldBase.duration == 0)
+                {
+                    fieldBase = null;
+                    fieldBase.duration = null;
+                    yield return dialogBox.TypeDialog(returnMessage);
+                }
+            }
         }
     }
     IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
@@ -208,11 +285,13 @@ public class RunTurnState : State<BattleSystem>
             sourceUnit.PlayAttackAnimation();
         foreach (var targeted in targetedUnits)
         {
-            if (CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit))
+            bool checkDefenseAbility = targeted.Unit.Base.Ability.BeforeDefense(targeted, move) && targeted.Unit.Base.SecondAbility.BeforeDefense(targeted, move);
+            if (CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit) && checkDefenseAbility)
             {
                 int hitTimes = move.Base.GetHitTimes();
                 float typeEffectiveness = 1f;
                 int hit = 1;
+                int damage = 0;
                 for (int i = 1; i <= hitTimes; i++)
                 {
                     if (move.Base.Sound != null)
@@ -220,8 +299,10 @@ public class RunTurnState : State<BattleSystem>
 
                     yield return new WaitForSeconds(1f);
                     if (move.Base.Category != MoveCategory.Status)
+                    {
                         targeted.PlayerHitAnimation();
-                    AudioManager.i.PlaySfx(AudioId.Hit);
+                        AudioManager.i.PlaySfx(AudioId.Hit);
+                    }
 
                     if (move.Base.Category == MoveCategory.Status)
                     {
@@ -229,7 +310,8 @@ public class RunTurnState : State<BattleSystem>
                     }
                     else
                     {
-                        var damageDetails = targeted.Unit.TakeDamage(move, sourceUnit.Unit, Field.Weather);
+                        var damageDetails = targeted.Unit.TakeDamage(move, sourceUnit.Unit, Field);
+                        damage = damageDetails.Damage;
                         yield return targeted.Hud.WaitForHPUpdate();
                         yield return ShowDamageDetails(damageDetails);
                         typeEffectiveness = damageDetails.TypeEffectiveness;
@@ -252,23 +334,59 @@ public class RunTurnState : State<BattleSystem>
                 if (hitTimes > 1)
                     yield return dialogBox.TypeDialog($"{hit}번 공격했다!");
 
+                if ((move.Base.Rebound.x != 0 && move.Base.Rebound.y != 0) || move.Base.Rebound.z != 0)
+                {
+                    sourceUnit.PlayerHitAnimation();
+                    AudioManager.i.PlaySfx(AudioId.Hit);
+                    sourceUnit.Unit.ReboundTakeDamage(move.Base.Rebound, damage);
+                    yield return targeted.Hud.WaitForHPUpdate();
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}은(는) 반동피해를 입었다!");
+                }
+
                 if (targeted.Unit.HP <= 0)
                 {
+                    if (sourceUnit.Unit.HP > 0)
+                    {
+                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.Ability.OnFinish());
+                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.SecondAbility.OnFinish());
+                    }
                     // AudioManager.i.PlaySfx(AudioId.Faint);
                     yield return HandleUnitFainted(targeted);
+                }
+                else if (sourceUnit.Unit.HP <= 0)
+                {
+                    yield return HandleUnitFainted(sourceUnit);
+                    break;
                 }
                 else
                 {
                     // 특성
-                    sourceUnit.Unit.Base.Ability.AfterAttack();
-                    sourceUnit.Unit.Base.SecondAbility.AfterAttack();
-                    targeted.Unit.Base.Ability.AfterAttack();
-                    targeted.Unit.Base.SecondAbility.AfterAttack();
+                    var abilityCondition = sourceUnit.Unit.Base.Ability.AfterAttack(sourceUnit, targeted, move);
+                    var secondAbilityCondition = sourceUnit.Unit.Base.SecondAbility.AfterAttack(sourceUnit, targeted, move);
+                    if (abilityCondition != null)
+                    {
+                        yield return RunAbilityEffect(abilityCondition[0], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
+                        yield return RunAbilityVolatileStatusEffect(abilityCondition[1], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
+                    }
+                    if (secondAbilityCondition != null)
+                    {
+                        yield return RunAbilityEffect(secondAbilityCondition[0], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
+                        yield return RunAbilityVolatileStatusEffect(secondAbilityCondition[1], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
+                    }
+                    targeted.Unit.Base.Ability.AfterDefense(targeted, move);
+                    targeted.Unit.Base.SecondAbility.AfterDefense(targeted, move);
                 }
             }
             else
             {
-                yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
+                if (checkDefenseAbility)
+                {
+                    yield return dialogBox.TypeDialog($"{targeted.Unit.Base.Name}에게는 효과가 듣지 않는 것 같다!");
+                }
+                else
+                {
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
+                }
             }
         }
     }
@@ -282,13 +400,30 @@ public class RunTurnState : State<BattleSystem>
             yield return dialogBox.TypeDialog(message);
         }
     }
-
+    void RunChangeTurn(BattleUnit sourceUnit)
+    {
+        int ability = sourceUnit.Unit.Base.Ability.BeforeTurnChange(sourceUnit);
+        int secondAbility = sourceUnit.Unit.Base.SecondAbility.BeforeTurnChange(sourceUnit);
+        if (ability + secondAbility != 0)
+        {
+            foreach (var a in bs.Actions)
+                if (a.User.Unit.Base.Name == sourceUnit.Unit.Base.Name)
+                    a.Move.Base.AddPriority(ability + secondAbility);
+        }
+    }
+    IEnumerator RunBeforeTurn(BattleUnit sourceUnit)
+    {
+        // 특성
+        yield return sourceUnit.Unit.Base.Ability.BeforeRunTurn(Field);
+        yield return sourceUnit.Unit.Base.SecondAbility.BeforeRunTurn(Field);
+    }
     IEnumerator RunAfterTurn(BattleUnit sourceUnit)
     {
         if (bs.IsbattleOver) yield break;
         // 특성
-        sourceUnit.Unit.Base.Ability.AfterRunTurn();
-        sourceUnit.Unit.Base.SecondAbility.AfterRunTurn();
+        sourceUnit.Unit.Base.Ability.AfterRunTurn(sourceUnit);
+        sourceUnit.Unit.Base.SecondAbility.AfterRunTurn(sourceUnit);
+        yield return sourceUnit.Hud.WaitForHPUpdate();
         // 상태이상으로 쓰러지는가?
         sourceUnit.Unit.OnAfterTurn();
         yield return ShowStatusChanges(sourceUnit.Unit);
@@ -470,29 +605,64 @@ public class RunTurnState : State<BattleSystem>
         // 날씨 변경
         if (effects.Weather != ConditionID.none)
         {
-            Field.SetWeather(effects.Weather);
-            Field.WeatherDuration = 5;
-            yield return dialogBox.TypeDialog(Field.Weather.StartMessage);
+            Field.Weather.SetCondition(effects.Weather);
+            Field.Weather.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            yield return dialogBox.TypeDialog(Field.Weather.condition.StartMessage);
         }
 
         // 공간 변경
         if (effects.Room != ConditionID.none)
         {
-            Field.SetRoom(effects.Room);
-            Field.RoomDuration = 5;
-            yield return dialogBox.TypeDialog(Field.Room.StartMessage);
+            Field.Room.SetCondition(effects.Room);
+            Field.Room.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            yield return dialogBox.TypeDialog(Field.Room.condition.StartMessage);
         }
 
         // 필드 변경
         if (effects.Field != ConditionID.none)
         {
-            Field.SetField(effects.Field);
-            Field.FieldDuration = 5;
-            yield return dialogBox.TypeDialog(Field.field.StartMessage);
+            Field.field.SetCondition(effects.Field);
+            Field.field.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
+        }
+
+        // 리플렉터, 빛의 장막
+        if (effects.Reflect != ConditionID.none)
+        {
+            Field.Reflect.SetCondition(effects.Reflect);
+            Field.Reflect.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
+        }
+        if (effects.Reflect != ConditionID.none)
+        {
+            Field.LightScreen.SetCondition(effects.LightScreen);
+            Field.LightScreen.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
         }
 
         // dialog 박스 변경
         // playerUnit.Hud.UpdateStatus();
+
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
+    }
+    // 살아있으면 상대에게 상태이성을 걸음
+    IEnumerator RunAbilityEffect(ConditionID condition, Unit source, Unit target, MoveTarget moveTarget)
+    {
+        if (condition != ConditionID.none)
+        {
+            target.SetStatus(condition);
+        }
+
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
+    }
+    IEnumerator RunAbilityVolatileStatusEffect(ConditionID condition, Unit source, Unit target, MoveTarget moveTarget)
+    {
+        if (condition != ConditionID.none)
+        {
+            target.SetVolatileStatus(condition);
+        }
 
         yield return ShowStatusChanges(source);
         yield return ShowStatusChanges(target);

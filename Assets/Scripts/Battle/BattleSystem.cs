@@ -70,7 +70,7 @@ public class BattleSystem : MonoBehaviour
     public bool IsTrainerBattle { get; private set; } = false;
     public PlayerController Player { get; private set; }
     public TrainerController Trainer { get; private set; }
-
+    public static BattleSystem i { get; private set; }
     int escapeAttempts;
     MoveBase moveToLearn;
     BattleUnit unitTryingToLearn;
@@ -81,6 +81,7 @@ public class BattleSystem : MonoBehaviour
     public void StartBattle(UnitParty PlayerParty, Unit WildUnit,
         BattleTrigger trigger = BattleTrigger.LongGrass)
     {
+        i = this;
         battleTrigger = trigger;
         this.PlayerParty = PlayerParty;
         this.WildUnit = WildUnit;
@@ -115,6 +116,9 @@ public class BattleSystem : MonoBehaviour
 
         singleBattleElements.SetActive(UnitCount == 1);
         multiBattleElements.SetActive(UnitCount > 1);
+        IsbattleOver = false;
+        escapeAttempts = 0;
+        Field = new Field();
 
         if (UnitCount == 1)
         {
@@ -202,13 +206,11 @@ public class BattleSystem : MonoBehaviour
 
             allOfUnits.ForEach(u =>
             {
-                u.Unit.Base.Ability.BeforeRunTurn();
-                u.Unit.Base.SecondAbility.BeforeRunTurn();
+                u.Unit.Base.Ability.BeforeRunTurn(Field);
+                u.Unit.Base.SecondAbility.BeforeRunTurn(Field);
             });
         }
-        IsbattleOver = false;
-        escapeAttempts = 0;
-        Field = new Field();
+
 
         // 시작하자마자 날씨적용
         // Field.SetWeather(ConditionID.sandstorm);
@@ -587,8 +589,8 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
         // 특성
-        newUnit.Base.Ability.BeforeRunTurn();
-        newUnit.Base.SecondAbility.BeforeRunTurn();
+        newUnit.Base.Ability.BeforeRunTurn(Field);
+        newUnit.Base.SecondAbility.BeforeRunTurn(Field);
 
         // if (isTrainerAboutToUse)
         //     StartCoroutine(SendNextTrainerUnit());

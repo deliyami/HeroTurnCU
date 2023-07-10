@@ -19,12 +19,17 @@ public class MoveBase : ScriptableObject
     [SerializeField] int pp;
     [SerializeField] int priority; // 선공기
     [SerializeField] MoveCategory category;
+    [Header("확정 스텟/날씨")]
     [SerializeField] MoveEffects effects;
-    [SerializeField] List<Secondaries> secondaries;
     [SerializeField] MoveTarget target;
     [SerializeField] Vector2Int hitRange;
+    // n / 3
+    [SerializeField] Vector3Int rebound;
 
     [SerializeField] AudioClip sound;
+    [Header("확률 스텟/날씨")]
+    // secondaries
+    [SerializeField] List<Secondaries> secondaries;
 
     public int GetHitTimes()
     {
@@ -40,6 +45,11 @@ public class MoveBase : ScriptableObject
             hitCount = Random.Range(hitRange.x, hitRange.y + 1);
         }
         return hitCount;
+    }
+
+    public void AddPriority(int priority)
+    {
+        this.priority += priority;
     }
 
     public string Name
@@ -96,6 +106,7 @@ public class MoveBase : ScriptableObject
         get { return priority; }
     }
 
+    public Vector3Int Rebound => rebound;
     public AudioClip Sound => sound;
 }
 
@@ -108,6 +119,8 @@ public class MoveEffects
     [SerializeField] ConditionID weather;
     [SerializeField] ConditionID room;
     [SerializeField] ConditionID field;
+    [SerializeField] ConditionID reflect;
+    [SerializeField] ConditionID lightScreen;
 
     public List<StatBoost> Boosts
     {
@@ -133,6 +146,14 @@ public class MoveEffects
     public ConditionID Field
     {
         get { return field; }
+    }
+    public ConditionID Reflect
+    {
+        get { return reflect; }
+    }
+    public ConditionID LightScreen
+    {
+        get { return lightScreen; }
     }
 }
 

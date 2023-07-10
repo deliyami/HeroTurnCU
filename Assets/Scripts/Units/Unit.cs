@@ -179,6 +179,7 @@ public class Unit
         {
             var stat = statBoost.stat;
             var boost = statBoost.boost;
+            if (boost == 0) continue;
 
             StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
 
@@ -299,28 +300,34 @@ public class Unit
     // virtual public int SettingRealStat() {
     //     return (((STAT * 2) + tribe + (effort / 4)) * level / 100 + 5) * personality;
     // }
-    public DamageDetails TakeDamage(Move move, Unit attacker, Condition weather)
+    public DamageDetails TakeDamage(Move move, Unit attacker, Field field)
     {
         float critical = 1f;
         if (Random.value * 100f <= 6.25f)
             critical = 2f;
+        // 
         critical = 2f;
         float typeEffectiveness = TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type1) * TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type2);
 
-        float weatherMod = weather?.OnDamageModify?.Invoke(this, attacker, move) ?? 1f;
-
-        var damageDetails = new DamageDetails()
-        {
-            TypeEffectiveness = typeEffectiveness,
-            Critical = critical,
-            Fainted = false,
-        };
+        float weatherMod = field.Weather?.condition?.OnDamageModify?.Invoke(this, attacker, move) ?? 1f;
 
         float attack = (move.Base.Category == MoveCategory.Special) ? attacker.SpAttack : attacker.Attack;
         float defense = (move.Base.Category == MoveCategory.Special) ? SpDefense : Defense;
 
+        float reflectLightScreen = 1f;
+        if (move.Base.Category == MoveCategory.Special)
+        {
+            if (field.Reflect != null) reflectLightScreen = BattleSystem.i.UnitCount == 1 ? 0.5f : 2 / 3f;
+        }
+        else if (field.LightScreen != null) reflectLightScreen = BattleSystem.i.UnitCount == 1 ? 0.5f : 2 / 3f;
+
         // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3 x 특성)
-        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod * attacker.Base.Ability.OnAttack() * attacker.Base.SecondAbility.OnAttack();
+        float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod
+                                * attacker.Base.Ability.OnAttack(move)
+                                * attacker.Base.SecondAbility.OnAttack(move)
+                                * Base.Ability.OnDefense(this, typeEffectiveness)
+                                * Base.SecondAbility.OnDefense(this, typeEffectiveness)
+                                * reflectLightScreen;
         // 데미지 = (레벨 × 2 + 10) ÷ 250
         float a = (2 * attacker.Level + 10) / 250f;
         // 위력 × (특수공격 ÷ 특수방어)) × Mod1) + 2)
@@ -331,8 +338,40 @@ public class Unit
 
         DecreaseHP(damage);
 
+        var damageDetails = new DamageDetails()
+        {
+            TypeEffectiveness = typeEffectiveness,
+            Critical = critical,
+            Fainted = false,
+            Damage = damage
+        };
+
         return damageDetails;
     }
+    public DamageDetails ReboundTakeDamage(Vector3Int rebound, int damage)
+    {
+        float typeEffectiveness = TypeChart.GetEffectiveness(UnitType.None, UnitType.None);
+
+        float reboundPercentage = 0f;
+        if (rebound.x != 0 && rebound.y != 0)
+        {
+            reboundPercentage = rebound.x / rebound.y;
+        }
+
+        DecreaseHP(Mathf.FloorToInt(damage * reboundPercentage + rebound.z));
+
+        var damageDetails = new DamageDetails()
+        {
+            TypeEffectiveness = typeEffectiveness,
+            Critical = 1f,
+            Fainted = false,
+            Damage = damage
+        };
+
+        return damageDetails;
+    }
+
+
     public void IncreaseHP(int amount)
     {
         HP = Mathf.Clamp(HP + amount, 0, MaxHP);
@@ -427,6 +466,7 @@ public class DamageDetails
     public bool Fainted { get; set; }
     public float Critical { get; set; }
     public float TypeEffectiveness { get; set; }
+    public int Damage { get; set; }
 }
 
 [System.Serializable]
