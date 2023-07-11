@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Field
 {
-    public FieldBase Weather { get; set; } = new FieldBase();
-    public FieldBase Room { get; set; } = new FieldBase();
-
-    public FieldBase field { get; set; } = new FieldBase();
-
-    public FieldBase Reflect { get; set; } = new FieldBase();
-    public FieldBase LightScreen { get; set; } = new FieldBase();
+    public FieldBase Weather { get; set; }
+    public FieldBase Room { get; set; }
+    public FieldBase field { get; set; }
+    public FieldBase Reflect { get; set; }
+    public FieldBase LightScreen { get; set; }
 }
 
 public class FieldBase

@@ -55,6 +55,7 @@ public class RunTurnState : State<BattleSystem>
 
     IEnumerator RunTurns()
     {
+        // var changedAction;
         // sort Actions
         foreach (var action in bs.Actions)
         {
@@ -245,8 +246,8 @@ public class RunTurnState : State<BattleSystem>
         yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
 
         // 특성
-        sourceUnit.Unit.Base.Ability.BeforeAttack();
-        sourceUnit.Unit.Base.SecondAbility.BeforeAttack();
+        sourceUnit.Unit.Base.Ability?.BeforeAttack(sourceUnit, move);
+        sourceUnit.Unit.Base.SecondAbility?.BeforeAttack(sourceUnit, move);
 
         // 여기서 맞을 친구들 정하기
         // targetUnit.Unit
@@ -285,7 +286,7 @@ public class RunTurnState : State<BattleSystem>
             sourceUnit.PlayAttackAnimation();
         foreach (var targeted in targetedUnits)
         {
-            bool checkDefenseAbility = targeted.Unit.Base.Ability.BeforeDefense(targeted, move) && targeted.Unit.Base.SecondAbility.BeforeDefense(targeted, move);
+            bool checkDefenseAbility = (targeted.Unit.Base.Ability?.BeforeDefense(targeted, move) ?? true) && (targeted.Unit.Base.SecondAbility?.BeforeDefense(targeted, move) ?? true);
             if (CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit) && checkDefenseAbility)
             {
                 int hitTimes = move.Base.GetHitTimes();
@@ -328,7 +329,12 @@ public class RunTurnState : State<BattleSystem>
                     }
                     hit = i;
                     if (targeted.Unit.HP <= 0)
-                        break;
+                    {
+                        bool abilityFocusSash = targeted.Unit.Base.Ability.isFocusSash();
+                        bool secondAbilityFocusSash = targeted.Unit.Base.Ability.isFocusSash();
+                        if (abilityFocusSash || secondAbilityFocusSash) targeted.Unit.SetHP(1);
+                        else break;
+                    }
                 }
                 yield return ShowEffectiveness(typeEffectiveness);
                 if (hitTimes > 1)
@@ -347,8 +353,8 @@ public class RunTurnState : State<BattleSystem>
                 {
                     if (sourceUnit.Unit.HP > 0)
                     {
-                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.Ability.OnFinish());
-                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.SecondAbility.OnFinish());
+                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.Ability?.OnFinish());
+                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.SecondAbility?.OnFinish());
                     }
                     // AudioManager.i.PlaySfx(AudioId.Faint);
                     yield return HandleUnitFainted(targeted);
@@ -361,31 +367,27 @@ public class RunTurnState : State<BattleSystem>
                 else
                 {
                     // 특성
-                    var abilityCondition = sourceUnit.Unit.Base.Ability.AfterAttack(sourceUnit, targeted, move);
-                    var secondAbilityCondition = sourceUnit.Unit.Base.SecondAbility.AfterAttack(sourceUnit, targeted, move);
-                    if (abilityCondition != null)
-                    {
-                        yield return RunAbilityEffect(abilityCondition[0], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
-                        yield return RunAbilityVolatileStatusEffect(abilityCondition[1], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
-                    }
-                    if (secondAbilityCondition != null)
-                    {
-                        yield return RunAbilityEffect(secondAbilityCondition[0], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
-                        yield return RunAbilityVolatileStatusEffect(secondAbilityCondition[1], sourceUnit.Unit, targeted.Unit, MoveTarget.Self);
-                    }
-                    targeted.Unit.Base.Ability.AfterDefense(targeted, move);
-                    targeted.Unit.Base.SecondAbility.AfterDefense(targeted, move);
+                    var abilityConditionObject = sourceUnit.Unit.Base.Ability?.AfterAttack(sourceUnit, targeted, move);
+                    var secondAbilityConditionObject = sourceUnit.Unit.Base.SecondAbility?.AfterAttack(sourceUnit, targeted, move);
+                    // 맞는 녀석 상태이상 특성
+                    var targetedAbilityConditionObject = targeted.Unit.Base.Ability?.AfterDefense(sourceUnit, targeted, move);
+                    var targetedSecondAbilityConditionObject = targeted.Unit.Base.SecondAbility?.AfterDefense(sourceUnit, targeted, move);
+                    yield return RunAbilityAfterAttack(abilityConditionObject, sourceUnit.Unit, targeted.Unit);
+                    yield return RunAbilityAfterAttack(secondAbilityConditionObject, sourceUnit.Unit, targeted.Unit);
+                    yield return RunAbilityAfterAttack(targetedAbilityConditionObject, sourceUnit.Unit, targeted.Unit);
+                    yield return RunAbilityAfterAttack(targetedSecondAbilityConditionObject, sourceUnit.Unit, targeted.Unit);
+
                 }
             }
             else
             {
                 if (checkDefenseAbility)
                 {
-                    yield return dialogBox.TypeDialog($"{targeted.Unit.Base.Name}에게는 효과가 듣지 않는 것 같다!");
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
                 }
                 else
                 {
-                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
+                    yield return dialogBox.TypeDialog($"{targeted.Unit.Base.Name}에게는 효과가 듣지 않는 것 같다!");
                 }
             }
         }
@@ -402,8 +404,8 @@ public class RunTurnState : State<BattleSystem>
     }
     void RunChangeTurn(BattleUnit sourceUnit)
     {
-        int ability = sourceUnit.Unit.Base.Ability.BeforeTurnChange(sourceUnit);
-        int secondAbility = sourceUnit.Unit.Base.SecondAbility.BeforeTurnChange(sourceUnit);
+        int ability = sourceUnit.Unit.Base.Ability?.BeforeTurnChange(sourceUnit) ?? 0;
+        int secondAbility = sourceUnit.Unit.Base.SecondAbility?.BeforeTurnChange(sourceUnit) ?? 0;
         if (ability + secondAbility != 0)
         {
             foreach (var a in bs.Actions)
@@ -414,15 +416,15 @@ public class RunTurnState : State<BattleSystem>
     IEnumerator RunBeforeTurn(BattleUnit sourceUnit)
     {
         // 특성
-        yield return sourceUnit.Unit.Base.Ability.BeforeRunTurn(Field);
-        yield return sourceUnit.Unit.Base.SecondAbility.BeforeRunTurn(Field);
+        yield return sourceUnit.Unit.Base.Ability?.BeforeRunTurn(Field, sourceUnit.Unit);
+        yield return sourceUnit.Unit.Base.SecondAbility?.BeforeRunTurn(Field, sourceUnit.Unit);
     }
     IEnumerator RunAfterTurn(BattleUnit sourceUnit)
     {
         if (bs.IsbattleOver) yield break;
         // 특성
-        sourceUnit.Unit.Base.Ability.AfterRunTurn(sourceUnit);
-        sourceUnit.Unit.Base.SecondAbility.AfterRunTurn(sourceUnit);
+        sourceUnit.Unit.Base.Ability?.AfterRunTurn(sourceUnit);
+        sourceUnit.Unit.Base.SecondAbility?.AfterRunTurn(sourceUnit);
         yield return sourceUnit.Hud.WaitForHPUpdate();
         // 상태이상으로 쓰러지는가?
         sourceUnit.Unit.OnAfterTurn();
@@ -593,7 +595,7 @@ public class RunTurnState : State<BattleSystem>
         }
 
         // status 이상
-        if (effects.Status != ConditionID.none)
+        if (effects.Status != ConditionID.none && target.Status == null)
         {
             target.SetStatus(effects.Status);
         }
@@ -606,7 +608,7 @@ public class RunTurnState : State<BattleSystem>
         if (effects.Weather != ConditionID.none)
         {
             Field.Weather.SetCondition(effects.Weather);
-            Field.Weather.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            Field.Weather.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
             yield return dialogBox.TypeDialog(Field.Weather.condition.StartMessage);
         }
 
@@ -614,7 +616,7 @@ public class RunTurnState : State<BattleSystem>
         if (effects.Room != ConditionID.none)
         {
             Field.Room.SetCondition(effects.Room);
-            Field.Room.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            Field.Room.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
             yield return dialogBox.TypeDialog(Field.Room.condition.StartMessage);
         }
 
@@ -622,7 +624,7 @@ public class RunTurnState : State<BattleSystem>
         if (effects.Field != ConditionID.none)
         {
             Field.field.SetCondition(effects.Field);
-            Field.field.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            Field.field.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
             yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
         }
 
@@ -630,13 +632,13 @@ public class RunTurnState : State<BattleSystem>
         if (effects.Reflect != ConditionID.none)
         {
             Field.Reflect.SetCondition(effects.Reflect);
-            Field.Reflect.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            Field.Reflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
             yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
         }
         if (effects.Reflect != ConditionID.none)
         {
             Field.LightScreen.SetCondition(effects.LightScreen);
-            Field.LightScreen.duration = (int)(5 * source.Base.Ability.OnField() * source.Base.SecondAbility.OnField());
+            Field.LightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
             yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
         }
 
@@ -646,12 +648,41 @@ public class RunTurnState : State<BattleSystem>
         yield return ShowStatusChanges(source);
         yield return ShowStatusChanges(target);
     }
-    // 살아있으면 상대에게 상태이성을 걸음
+    // 특성 보고 변경
+    IEnumerator RunAbilityAfterAttack((ConditionID, ConditionID, Stat, int, MoveTarget)? ability, Unit sourceUnit, Unit targetUnit)
+    {
+        if (ability != null)
+        {
+            ConditionID abilityCondition = ability.Value.Item1;
+            ConditionID abilityVolatileCondition = ability.Value.Item2;
+            Stat stat = ability.Value.Item3;
+            int statBoost = ability.Value.Item4;
+            MoveTarget moveTarget = ability.Value.Item5;
+            yield return RunAbilityStatBoost(stat, statBoost, sourceUnit, targetUnit, moveTarget);
+            yield return RunAbilityEffect(abilityCondition, sourceUnit, targetUnit, moveTarget);
+            yield return RunAbilityVolatileStatusEffect(abilityVolatileCondition, sourceUnit, targetUnit, moveTarget);
+        }
+    }
+    // 살아있으면 대상에게 능력치 부스트
+    IEnumerator RunAbilityStatBoost(Stat stat, int statBoost, Unit source, Unit target, MoveTarget moveTarget)
+    {
+        if (statBoost != 0)
+        {
+            List<StatBoost> newStat = new List<StatBoost>() { new StatBoost() { stat = stat, boost = statBoost } };
+            if (moveTarget == MoveTarget.Self) source.ApplyBoosts(newStat);
+            else target.ApplyBoosts(newStat);
+        }
+
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
+    }
+    // 살아있으면 대상에게 상태이성을 걸음
     IEnumerator RunAbilityEffect(ConditionID condition, Unit source, Unit target, MoveTarget moveTarget)
     {
         if (condition != ConditionID.none)
         {
-            target.SetStatus(condition);
+            if (moveTarget == MoveTarget.Self) source.SetStatus(condition);
+            else target.SetStatus(condition);
         }
 
         yield return ShowStatusChanges(source);
@@ -659,9 +690,10 @@ public class RunTurnState : State<BattleSystem>
     }
     IEnumerator RunAbilityVolatileStatusEffect(ConditionID condition, Unit source, Unit target, MoveTarget moveTarget)
     {
-        if (condition != ConditionID.none)
+        if (condition != ConditionID.none && target.Status == null)
         {
-            target.SetVolatileStatus(condition);
+            if (moveTarget == MoveTarget.Self) source.SetVolatileStatus(condition);
+            else target.SetVolatileStatus(condition);
         }
 
         yield return ShowStatusChanges(source);

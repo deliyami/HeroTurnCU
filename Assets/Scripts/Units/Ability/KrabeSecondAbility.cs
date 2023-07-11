@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KrabeSecondAbility : AbilityBase
 {
-    public override float OnDefense(Unit defender, float type)
+    public override float OnDefense(Unit defender, float type, MoveCategory moveCategory)
     {
         if (isActivatableAbiility && type > 1.0f)
         {

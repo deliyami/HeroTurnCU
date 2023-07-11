@@ -206,8 +206,8 @@ public class BattleSystem : MonoBehaviour
 
             allOfUnits.ForEach(u =>
             {
-                u.Unit.Base.Ability.BeforeRunTurn(Field);
-                u.Unit.Base.SecondAbility.BeforeRunTurn(Field);
+                u.Unit.Base.Ability?.BeforeRunTurn(Field, u.Unit);
+                u.Unit.Base.SecondAbility?.BeforeRunTurn(Field, u.Unit);
             });
         }
 
@@ -589,8 +589,8 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
         // 특성
-        newUnit.Base.Ability.BeforeRunTurn(Field);
-        newUnit.Base.SecondAbility.BeforeRunTurn(Field);
+        newUnit.Base.Ability.BeforeRunTurn(Field, newUnit);
+        newUnit.Base.SecondAbility.BeforeRunTurn(Field, newUnit);
 
         // if (isTrainerAboutToUse)
         //     StartCoroutine(SendNextTrainerUnit());

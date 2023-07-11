@@ -144,6 +144,15 @@ public class UnitBase : ScriptableObject
     }
     public List<MoveBase> LearnableByItems => learnableByItems;
     public List<Evolution> Evolutions => evolutions;
+
+    public void SetType1(UnitType type)
+    {
+        this.type1 = type;
+    }
+    public void SetType2(UnitType type)
+    {
+        this.type2 = type;
+    }
 }
 
 [System.Serializable]

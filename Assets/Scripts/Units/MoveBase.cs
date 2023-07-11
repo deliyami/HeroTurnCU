@@ -16,6 +16,10 @@ public class MoveBase : ScriptableObject
     [SerializeField] int power;
     [SerializeField] int accuracy;
     [SerializeField] bool alwaysHits;
+    // todo 교체랑 첫턴 공격 구현해야함
+    [SerializeField] bool changeUnit;
+    [SerializeField] bool firstTurnChance = false;
+
     [SerializeField] int pp;
     [SerializeField] int priority; // 선공기
     [SerializeField] MoveCategory category;
@@ -51,6 +55,10 @@ public class MoveBase : ScriptableObject
     {
         this.priority += priority;
     }
+    public void SetMoveType(UnitType type)
+    {
+        this.type = type;
+    }
 
     public string Name
     {
@@ -79,6 +87,10 @@ public class MoveBase : ScriptableObject
     public bool AlwaysHits
     {
         get { return alwaysHits; }
+    }
+    public bool ChangeUnit
+    {
+        get { return changeUnit; }
     }
     public int PP
     {

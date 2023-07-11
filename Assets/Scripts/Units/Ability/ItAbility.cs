@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItAbility : AbilityBase
 {
-    public override IEnumerator BeforeRunTurn(Field field)
+    public override IEnumerator BeforeRunTurn(Field field, Unit sourceUnit)
     {
         if (isActivatableAbiility)
         {

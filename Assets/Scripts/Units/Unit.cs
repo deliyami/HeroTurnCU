@@ -323,10 +323,10 @@ public class Unit
 
         // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3 x 특성)
         float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod
-                                * attacker.Base.Ability.OnAttack(move)
-                                * attacker.Base.SecondAbility.OnAttack(move)
-                                * Base.Ability.OnDefense(this, typeEffectiveness)
-                                * Base.SecondAbility.OnDefense(this, typeEffectiveness)
+                                * attacker.Base.Ability?.OnAttack(move) ?? 1f
+                                * attacker.Base.SecondAbility?.OnAttack(move) ?? 1f
+                                * Base.Ability?.OnDefense(this, typeEffectiveness, move.Base.Category) ?? 1f
+                                * Base.SecondAbility?.OnDefense(this, typeEffectiveness, move.Base.Category) ?? 1f
                                 * reflectLightScreen;
         // 데미지 = (레벨 × 2 + 10) ÷ 250
         float a = (2 * attacker.Level + 10) / 250f;
@@ -371,7 +371,11 @@ public class Unit
         return damageDetails;
     }
 
-
+    public void SetHP(int amount)
+    {
+        HP = amount;
+        OnHPChanged?.Invoke();
+    }
     public void IncreaseHP(int amount)
     {
         HP = Mathf.Clamp(HP + amount, 0, MaxHP);
