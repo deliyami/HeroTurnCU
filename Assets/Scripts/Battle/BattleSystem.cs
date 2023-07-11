@@ -728,6 +728,8 @@ public class BattleSystem : MonoBehaviour
         actions.Clear();
     }
 
+    public List<BattleUnit> PlayerUnitsMulti => playerUnitsMulti;
+    public List<BattleUnit> EnemyUnitsMulti => enemyUnitsMulti;
     public BattleDialogBox DialogBox => dialogBox;
     public PartyScreen PartyScreen => partyScreen;
 

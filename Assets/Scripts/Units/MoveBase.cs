@@ -17,7 +17,7 @@ public class MoveBase : ScriptableObject
     [SerializeField] int accuracy;
     [SerializeField] bool alwaysHits;
     // todo 교체랑 첫턴 공격 구현해야함
-    [SerializeField] bool changeUnit;
+    [SerializeField] bool isChangeUnit;
     [SerializeField] bool firstTurnChance = false;
 
     [SerializeField] int pp;
@@ -88,9 +88,13 @@ public class MoveBase : ScriptableObject
     {
         get { return alwaysHits; }
     }
-    public bool ChangeUnit
+    public bool FirstTurnChance
     {
-        get { return changeUnit; }
+        get { return firstTurnChance; }
+    }
+    public bool IsChangeUnit
+    {
+        get { return isChangeUnit; }
     }
     public int PP
     {

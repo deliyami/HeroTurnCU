@@ -287,7 +287,8 @@ public class RunTurnState : State<BattleSystem>
         foreach (var targeted in targetedUnits)
         {
             bool checkDefenseAbility = (targeted.Unit.Base.Ability?.BeforeDefense(targeted, move) ?? true) && (targeted.Unit.Base.SecondAbility?.BeforeDefense(targeted, move) ?? true);
-            if (CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit) && checkDefenseAbility)
+            bool accuracyHit = CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit);
+            if (accuracyHit && checkDefenseAbility && (!move.Base.FirstTurnChance || move.IsActivitable))
             {
                 int hitTimes = move.Base.GetHitTimes();
                 float typeEffectiveness = 1f;
@@ -381,16 +382,27 @@ public class RunTurnState : State<BattleSystem>
             }
             else
             {
-                if (checkDefenseAbility)
-                {
-                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
-                }
-                else
+                if (!checkDefenseAbility)
                 {
                     yield return dialogBox.TypeDialog($"{targeted.Unit.Base.Name}에게는 효과가 듣지 않는 것 같다!");
                 }
+                else if (!accuracyHit)
+                {
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 공격이 빗나갔다!");
+                }
+                else if (!move.IsActivitable)
+                {
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(은)는 공격을 실패했다!");
+                }
             }
         }
+        // 교체 기술 사용
+        int sourceUnitCount = sourceUnit.IsPlayerUnit ? bs.PlayerUnitsMulti.Count : bs.EnemyUnitsMulti.Count;
+        if (sourceUnit.Unit.HP > 0 && move.Base.IsChangeUnit && sourceUnitCount > 2)
+        {
+            HandleChangeMove(sourceUnit);
+        }
+        move.IsActivitable = false;
     }
 
 
@@ -449,6 +461,16 @@ public class RunTurnState : State<BattleSystem>
 
         yield return NextStepsAfterFainting(faintedUnit);
     }
+    IEnumerator HandleChangeMove(BattleUnit sourceUnit)
+    {
+        yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 전투에서 빠진다!");
+        sourceUnit.PlayFaintAnimation();
+
+        yield return new WaitForSeconds(2f);
+
+        yield return NextStepsAfterFainting(sourceUnit);
+    }
+
     IEnumerator HandleExpGain(BattleUnit faintedUnit)
     {
         if (!faintedUnit.IsPlayerUnit)
