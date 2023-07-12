@@ -15,14 +15,16 @@ public class MoveBase : ScriptableObject
     // 0 = 일반, 1 공, 2 방, 3 특공, 4 특방, 5 스피드
     [SerializeField] int power;
     [SerializeField] int accuracy;
+
+    [SerializeField] int priority; // 선공기
+    [SerializeField] int pp;
+    [SerializeField] MoveCategory category;
+    [Header("특수한 기술")]
     [SerializeField] bool alwaysHits;
     // todo 교체랑 첫턴 공격 구현해야함
     [SerializeField] bool isChangeUnit;
     [SerializeField] bool firstTurnChance = false;
 
-    [SerializeField] int pp;
-    [SerializeField] int priority; // 선공기
-    [SerializeField] MoveCategory category;
     [Header("확정 스텟/날씨")]
     [SerializeField] MoveEffects effects;
     [SerializeField] MoveTarget target;
@@ -137,6 +139,7 @@ public class MoveEffects
     [SerializeField] ConditionID field;
     [SerializeField] ConditionID reflect;
     [SerializeField] ConditionID lightScreen;
+    [SerializeField] bool protect = false;
 
     public List<StatBoost> Boosts
     {
@@ -170,6 +173,10 @@ public class MoveEffects
     public ConditionID LightScreen
     {
         get { return lightScreen; }
+    }
+    public bool Protect
+    {
+        get { return protect; }
     }
 }
 

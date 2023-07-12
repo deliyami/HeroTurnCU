@@ -45,6 +45,9 @@ public class Unit
     public Condition VolatileStatus { get; private set; }
     public int VolatileStatusTime { get; set; }
 
+    public bool IsProtectActivative { get; private set; } = false;
+    public int ProtectUseTurn { get; private set; } = 0;
+
 
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
     public bool HPChanged { get; set; }
@@ -217,6 +220,26 @@ public class Unit
 
             Debug.Log($"{Base.Name}의 {stat}는 {StatBoosts[stat]}으로 됨...");
         }
+    }
+
+    public bool UseProtect()
+    {
+        // (100 / (ProtectUseTurn + 1) <= rand) return false;
+        int rand = UnityEngine.Random.Range(0, 100);
+        int cycle = Mathf.Clamp(ProtectUseTurn, 0, 3);
+        float divideValue = 100f;
+        for (int i = 0; i < cycle; i++)
+        {
+            divideValue = divideValue / 2;
+        }
+        IsProtectActivative = !(divideValue <= rand);
+
+        ProtectUseTurn++;
+        return IsProtectActivative;
+    }
+    public void SetProtect(bool activative)
+    {
+        this.IsProtectActivative = activative;
     }
     public bool CheckForLevelUp()
     {

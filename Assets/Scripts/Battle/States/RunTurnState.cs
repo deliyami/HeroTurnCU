@@ -288,7 +288,7 @@ public class RunTurnState : State<BattleSystem>
         {
             bool checkDefenseAbility = (targeted.Unit.Base.Ability?.BeforeDefense(targeted, move) ?? true) && (targeted.Unit.Base.SecondAbility?.BeforeDefense(targeted, move) ?? true);
             bool accuracyHit = CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit);
-            if (accuracyHit && checkDefenseAbility && (!move.Base.FirstTurnChance || move.IsActivitable))
+            if (accuracyHit && checkDefenseAbility && (!move.Base.FirstTurnChance || move.IsActivitable) && !targeted.Unit.IsProtectActivative)
             {
                 int hitTimes = move.Base.GetHitTimes();
                 float typeEffectiveness = 1f;
@@ -365,7 +365,7 @@ public class RunTurnState : State<BattleSystem>
                     yield return HandleUnitFainted(sourceUnit);
                     break;
                 }
-                else
+                else if (move.Base.Category == MoveCategory.Status)
                 {
                     // 특성
                     var abilityConditionObject = sourceUnit.Unit.Base.Ability?.AfterAttack(sourceUnit, targeted, move);
@@ -393,6 +393,10 @@ public class RunTurnState : State<BattleSystem>
                 else if (!move.IsActivitable)
                 {
                     yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(은)는 공격을 실패했다!");
+                }
+                else if (targeted.Unit.IsProtectActivative)
+                {
+                    yield return dialogBox.TypeDialog($"{targeted.Unit.Base.Name}(은)는 몸을 지키고 있다!");
                 }
             }
         }
@@ -434,6 +438,8 @@ public class RunTurnState : State<BattleSystem>
     IEnumerator RunAfterTurn(BattleUnit sourceUnit)
     {
         if (bs.IsbattleOver) yield break;
+        // 방어 제거
+        sourceUnit.Unit.SetProtect(false);
         // 특성
         sourceUnit.Unit.Base.Ability?.AfterRunTurn(sourceUnit);
         sourceUnit.Unit.Base.SecondAbility?.AfterRunTurn(sourceUnit);
@@ -662,6 +668,17 @@ public class RunTurnState : State<BattleSystem>
             Field.LightScreen.SetCondition(effects.LightScreen);
             Field.LightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
             yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
+        }
+
+        // 방어
+        if (effects.Protect)
+        {
+            bool success = false;
+            if (moveTarget == MoveTarget.Self)
+                success = source.UseProtect();
+            else
+                success = target.UseProtect();
+            yield return dialogBox.TypeDialog(success ? "몸을 지키기 시작했다!" : "몸을 지키는데 실패했다!");
         }
 
         // dialog 박스 변경
