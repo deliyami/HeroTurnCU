@@ -13,14 +13,21 @@ public class DexUI : SelectionUI<TextSlot>
     [SerializeField] DexSlotUI dexSlotUI;
     [SerializeField] Image battleSprite;
     [SerializeField] Image fieldSprite;
-    [SerializeField] Image typeSprite1;
-    [SerializeField] TextMeshProUGUI typeText1;
-    [SerializeField] Image typeSprite2;
-    [SerializeField] TextMeshProUGUI typeText2;
+    [SerializeField] RectTransform typeContainer;
+    [SerializeField] GameObject typeObject1;
+    [SerializeField] GameObject typeObject2;
     [SerializeField] TextMeshProUGUI unitDescription;
 
     [SerializeField] Image upArrow;
     [SerializeField] Image downArrow;
+
+    private Image typeSprite1;
+    private TextMeshProUGUI typeText1;
+    private Image typeSprite2;
+    private TextMeshProUGUI typeText2;
+
+    private const int TYPE_OBJECT_WIDTH = 200;
+    private const int TYPE_OBJECT_SPACE = 15;
 
     int selectedCategory = 0;
 
@@ -33,6 +40,11 @@ public class DexUI : SelectionUI<TextSlot>
     {
         dex = Dex.GetDex();
         dexListRect = itemList.GetComponent<RectTransform>();
+
+        typeSprite1 = typeObject1.GetComponent<Image>();
+        typeText1 = typeObject1.GetComponentInChildren<TextMeshProUGUI>();
+        typeSprite2 = typeObject2.GetComponent<Image>();
+        typeText2 = typeObject2.GetComponentInChildren<TextMeshProUGUI>();
     }
     private void Start()
     {
@@ -95,8 +107,24 @@ public class DexUI : SelectionUI<TextSlot>
             fieldSprite.sprite = unit.SmallSprite;
             typeSprite1.sprite = type1.Sprite;
             typeText1.text = type1.Name;
-            typeSprite2.sprite = type2.Sprite;
-            typeText2.text = type2.Name;
+            var sd = typeContainer.sizeDelta;
+            if (type2.UnitType == UnitType.None)
+            {
+                if (typeObject2.activeSelf) typeObject2.SetActive(false);
+
+                sd.x = TYPE_OBJECT_WIDTH;
+                typeContainer.sizeDelta = sd;
+            }
+            else
+            {
+                if (!typeObject2.activeSelf) typeObject2.SetActive(true);
+
+                sd.x = TYPE_OBJECT_WIDTH * 2 + TYPE_OBJECT_SPACE;
+                typeContainer.sizeDelta = sd;
+
+                typeSprite2.sprite = type2.Sprite;
+                typeText2.text = type2.Name;
+            }
             unitDescription.text = unit.Description;
         }
         HandleScrolling();

@@ -32,9 +32,15 @@ public class UnitSelectionState : State<BattleSystem>
         playerUnits = bs.PlayerUnits;
         enemyUnits = bs.EnemyUnits;
 
+        if (bs.UnitCount == 1)
+        {
+            OnUnitSelected(Move.Base.Target == MoveTarget.Self || Move.Base.Target == MoveTarget.Team || Move.Base.Target == MoveTarget.TeamAll ? 1 : 0);
+            return;
+        }
+
         UnitSelectionUI.i.progressState();
 
-        selectionUI.OnSelected += OnUnitSeleted;
+        selectionUI.OnSelected += HandleSubmit;
         selectionUI.OnBack += OnBack;
     }
     public override void Execute()
@@ -43,10 +49,16 @@ public class UnitSelectionState : State<BattleSystem>
     }
     public override void Exit()
     {
-        selectionUI.OnSelected -= OnUnitSeleted;
+        selectionUI.OnSelected -= HandleSubmit;
         selectionUI.OnBack -= OnBack;
     }
-    void OnUnitSeleted(int selection)
+    void HandleSubmit(int selection)
+    {
+        selectionUI.ClearItems();
+        OnUnitSelected(selection);
+        Debug.Log("use submit");
+    }
+    void OnUnitSelected(int selection)
     {
         // 3. 결정키를 눌렀을 때.
         // 여기서 액션 추가하는게 더 나을까?
@@ -77,9 +89,8 @@ public class UnitSelectionState : State<BattleSystem>
             Target = targetedUnit,
             Move = Move
         };
-        selectionUI.ClearItems();
+
         bs.AddBattleAction(action);
-        Debug.Log("use submit");
         bs.StateMachine.ChangeState(RunTurnState.i);
     }
     void OnBack()

@@ -19,6 +19,10 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
     [SerializeField] TextMeshProUGUI personalityText;
     [Header("스킬 설명창")]
     [SerializeField] GameObject moveDescription;
+    [SerializeField] TextMeshProUGUI power;
+    [SerializeField] TextMeshProUGUI accuracy;
+    [SerializeField] TextMeshProUGUI category;
+    [SerializeField] TextMeshProUGUI pp;
     [SerializeField] TextMeshProUGUI moveDescriptionText;
     [SerializeField] GameObject itemList;
     [SerializeField] DexMoveSlotUI dexMoveSlotUI;
@@ -152,7 +156,12 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
 
         if (selectedCategory == 1)
         {
+            MoveBase move = unit.LearnableMoves[selectedItem].Base;
             moveDescriptionText.text = unit.LearnableMoves[selectedItem].Base.Description;
+            power.text = move.Category == MoveCategory.Status || move.Power <= 0 ? "-" : move.Power.ToString();
+            accuracy.text = move.AlwaysHits ? "-" : move.Accuracy.ToString();
+            category.text = move.Category == MoveCategory.Physical ? "물리" : move.Category == MoveCategory.Special ? "마법" : "특수";
+            pp.text = move.PP.ToString();
         }
     }
 

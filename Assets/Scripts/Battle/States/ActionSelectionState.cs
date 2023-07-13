@@ -29,7 +29,7 @@ public class ActionSelectionState : State<BattleSystem>
         // TODO unit의 이름까지 넘겨야함
         bs.DialogBox.SetDialog($"행동을 선택하세요.");
 
-        arrow[bs.ActionIndex].gameObject.SetActive(true);
+        if (bs.UnitCount != 1) arrow[bs.ActionIndex].gameObject.SetActive(true);
         // bs.PlayerUnits[bs.ActionIndex].SetSelected(true);
         // bs.DialogBox.SetDialog($"{currentUnit.Unit.Base.Name}의 행동을 선택하세요.");
     }
