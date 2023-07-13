@@ -9,6 +9,8 @@ public class Field
     public FieldBase field { get; set; }
     public FieldBase Reflect { get; set; }
     public FieldBase LightScreen { get; set; }
+    public FieldBase PlayerTailwind { get; set; }
+    public FieldBase EnemyTailwind { get; set; }
 }
 
 public class FieldBase

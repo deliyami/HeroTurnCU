@@ -305,6 +305,15 @@ public class ConditionDB
                 EffectMessage = "빛의 장막 발동중"
             }
         },
+        {
+            ConditionID.tailwind,
+            new Condition()
+            {
+                Name = "순풍",
+                StartMessage = "순풍 시작",
+                EffectMessage = "순풍 발동중"
+            }
+        },
     };
 
     public static float GetStatusBonus(Condition condition)
@@ -336,5 +345,6 @@ public enum ConditionID
     sunny, rain, sandstorm, hail,
     trickRoom, gravity, wonderRoom, magicRoom,
     grassyTerrain, mistyTerrain, psychicTerrain, electricTerrain,
-    reflect, lightScreen
+    reflect, lightScreen,
+    tailwind
 }

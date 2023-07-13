@@ -308,7 +308,7 @@ public class RunTurnState : State<BattleSystem>
 
                     if (move.Base.Category == MoveCategory.Status)
                     {
-                        yield return RunMoveEffect(move.Base.Effects, sourceUnit.Unit, targeted.Unit, move.Base.Target);
+                        yield return RunMoveEffect(move.Base.Effects, sourceUnit, targeted.Unit, move.Base.Target);
                     }
                     else
                     {
@@ -325,7 +325,7 @@ public class RunTurnState : State<BattleSystem>
                         {
                             var rnd = UnityEngine.Random.Range(1, 101);
                             if (rnd <= secondary.Chance)
-                                yield return RunMoveEffect(secondary, sourceUnit.Unit, targeted.Unit, secondary.Target);
+                                yield return RunMoveEffect(secondary, sourceUnit, targeted.Unit, secondary.Target);
                         }
                     }
                     hit = i;
@@ -373,7 +373,7 @@ public class RunTurnState : State<BattleSystem>
                     yield return HandleUnitFainted(sourceUnit);
                     break;
                 }
-                else if (move.Base.Category == MoveCategory.Status)
+                else if (move.Base.Category != MoveCategory.Status)
                 {
                     // 특성
                     var abilityConditionObject = sourceUnit.Unit.Base.Ability?.AfterAttack(sourceUnit, targeted, move);
@@ -619,8 +619,9 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    IEnumerator RunMoveEffect(MoveEffects effects, Unit source, Unit target, MoveTarget moveTarget)
+    IEnumerator RunMoveEffect(MoveEffects effects, BattleUnit sourceUnit, Unit target, MoveTarget moveTarget)
     {
+        Unit source = sourceUnit.Unit;
         // stat 증가 TODO 여러명 때리는 경우에 셀프 스텟 증가하면 2번 3번 중첩되는 문제가 생김
         if (effects.Boosts != null)
         {
@@ -669,13 +670,30 @@ public class RunTurnState : State<BattleSystem>
         {
             Field.Reflect.SetCondition(effects.Reflect);
             Field.Reflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
+            yield return dialogBox.TypeDialog(Field.Reflect.condition.StartMessage);
         }
-        if (effects.Reflect != ConditionID.none)
+        if (effects.LightScreen != ConditionID.none)
         {
             Field.LightScreen.SetCondition(effects.LightScreen);
             Field.LightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
+            yield return dialogBox.TypeDialog(Field.LightScreen.condition.StartMessage);
+        }
+
+        // 순풍
+        if (effects.Tailwind != ConditionID.none)
+        {
+            if (sourceUnit.IsPlayerUnit)
+            {
+                Field.PlayerTailwind.SetCondition(effects.Tailwind);
+                Field.PlayerTailwind.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+                yield return dialogBox.TypeDialog(Field.PlayerTailwind.condition.StartMessage);
+            }
+            else
+            {
+                Field.EnemyTailwind.SetCondition(effects.Tailwind);
+                Field.EnemyTailwind.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+                yield return dialogBox.TypeDialog(Field.EnemyTailwind.condition.StartMessage);
+            }
         }
 
         // 방어

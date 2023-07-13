@@ -150,6 +150,7 @@ public class MoveEffects
     [SerializeField] ConditionID field;
     [SerializeField] ConditionID reflect;
     [SerializeField] ConditionID lightScreen;
+    [SerializeField] ConditionID tailwind;
     [SerializeField] bool protect = false;
 
     public List<StatBoost> Boosts
@@ -184,6 +185,10 @@ public class MoveEffects
     public ConditionID LightScreen
     {
         get { return lightScreen; }
+    }
+    public ConditionID Tailwind
+    {
+        get { return tailwind; }
     }
     public bool Protect
     {
