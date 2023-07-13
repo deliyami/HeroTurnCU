@@ -53,6 +53,7 @@ public class Unit
     public bool HPChanged { get; set; }
     public event System.Action OnStatusChanged;
     public event System.Action OnHPChanged;
+    const int MEDIAN = 1;
 
     public void Init()
     {
@@ -325,11 +326,12 @@ public class Unit
     // }
     public DamageDetails TakeDamage(Move move, Unit attacker, Field field)
     {
+        List<int> criticalPercentage = new List<int>(new int[] { 2, (int)Mathf.Pow(2, 2 * move.Base.CriticalRank - 1), 48 });
+        criticalPercentage.Sort();
         float critical = 1f;
-        if (Random.value * 100f <= 6.25f)
-            critical = 2f;
+        if (Random.value <= criticalPercentage[MEDIAN] / 48f)
+            critical = 1.5f;
         // 
-        critical = 2f;
         float typeEffectiveness = TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type1) * TypeChart.GetEffectiveness(move.Base.Type, this.Base.Type2);
 
         float weatherMod = field.Weather?.condition?.OnDamageModify?.Invoke(this, attacker, move) ?? 1f;

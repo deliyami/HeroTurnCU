@@ -93,6 +93,10 @@ public class MoveBase : ScriptableObject
     {
         get { return alwaysHits; }
     }
+    public int CriticalRank
+    {
+        get { return criticalRank; }
+    }
     public bool FirstTurnChance
     {
         get { return firstTurnChance; }
