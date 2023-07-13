@@ -300,14 +300,30 @@ public class BattleSystem : MonoBehaviour
             // 적 유닛 확인
             foreach (var enemyUnit in enemyUnits)
             {
-                var randAction = new BattleAction()
+                bool isHavePP = true;
+                foreach (Move m in enemyUnit.Unit.Moves)
+                {
+                    if (m.PP > 0)
+                    {
+                        isHavePP = true;
+                        break;
+                    }
+                    isHavePP = false;
+                }
+                BattleAction enemyAction;
+                Move move;
+                if (!isHavePP) move = (enemyUnit.Unit.Attack >= enemyUnit.Unit.SpAttack) ?
+                                        new Move(GlobalSettings.i.StrugglePhysical) :
+                                        new Move(GlobalSettings.i.StruggleSpecial);
+                else move = enemyUnit.Unit.GetRandomMove();
+                enemyAction = new BattleAction()
                 {
                     Type = ActionType.Move,
                     User = enemyUnit,
                     Target = playerUnits[UnityEngine.Random.Range(0, playerUnits.Count)],
-                    Move = enemyUnit.Unit.GetRandomMove()
+                    Move = move
                 };
-                actions.Add(randAction);
+                actions.Add(enemyAction);
             }
 
             // StartCoroutine(RunTurns());

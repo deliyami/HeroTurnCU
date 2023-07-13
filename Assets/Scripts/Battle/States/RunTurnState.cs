@@ -349,6 +349,14 @@ public class RunTurnState : State<BattleSystem>
                     yield return targeted.Hud.WaitForHPUpdate();
                     yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}은(는) 반동피해를 입었다!");
                 }
+                if (move.Base.IsStruggle)
+                {
+                    sourceUnit.PlayerHitAnimation();
+                    AudioManager.i.PlaySfx(AudioId.Hit);
+                    sourceUnit.Unit.ReboundTakeDamage(move.Base.Rebound, sourceUnit.Unit.MaxHP / 4);
+                    yield return targeted.Hud.WaitForHPUpdate();
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}은(는) 몸부림 쳤다!");
+                }
 
                 if (targeted.Unit.HP <= 0)
                 {

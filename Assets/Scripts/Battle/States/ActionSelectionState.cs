@@ -51,12 +51,7 @@ public class ActionSelectionState : State<BattleSystem>
         // 1. 버튼 누름 -> actionselectionUI->selectionUI의 public virtual void HandleUpdate()를 이용해 이 메소드에 들어옴, 각자의 state로 변경
         if (selection == 0)
         {
-
-            // fight TODO 이거 2번 연속으로 싸우는 경우도 생각해야 됨
-            // 이거 다른데서 하자... runturnstate에서 하는게 처리하는게 편하다\
-            // 밑에 런이라던가 그런것들도 마찬가지. 여기서 처리하면 battle system에서 처리하는거랑 마찬가지이므로
-            // 여기서는 다른 state로 이동하는 것만 처리
-            // 다른 state에서 어떠한 액션이 들어가는지 처리
+            // TODO 해당 유닛이 PP가 전부 0일 경우에 자폭공격
             // var action = new BattleAction()
             // {
             //     Type = ActionType.Move,
@@ -65,11 +60,28 @@ public class ActionSelectionState : State<BattleSystem>
             //     Move = move
             // }
             // bs.AddBattleAction(action);
-            Debug.Log(bs.ActionIndex);
-            Debug.Log(MoveSelectionState.i);
-            Debug.Log(MoveSelectionState.i.Moves);
-            var testValue = bs.PlayerUnits[bs.ActionIndex].Unit.Moves;
-            MoveSelectionState.i.Moves = testValue;
+            bool isHavePP = true;
+            foreach (Move m in bs.PlayerUnits[bs.ActionIndex].Unit.Moves)
+            {
+                if (m.PP > 0)
+                {
+                    isHavePP = true;
+                    break;
+                }
+                isHavePP = false;
+            }
+            if (!isHavePP)
+            {
+                BattleUnit user = bs.PlayerUnits[bs.ActionIndex];
+                Move move = (user.Unit.Attack >= user.Unit.SpAttack) ?
+                                new Move(GlobalSettings.i.StrugglePhysical) :
+                                new Move(GlobalSettings.i.StruggleSpecial);
+                UnitSelectionState.i.Move = move;
+                bs.StateMachine.ChangeState(UnitSelectionState.i);
+                return;
+            }
+
+            MoveSelectionState.i.Moves = bs.PlayerUnits[bs.ActionIndex].Unit.Moves;
             // MoveSelectionState.i.Moves = bs.PlayerUnits[bs.ActionIndex].Unit.Moves;
             // 순서 변경좀;
             bs.StateMachine.ChangeState(MoveSelectionState.i);

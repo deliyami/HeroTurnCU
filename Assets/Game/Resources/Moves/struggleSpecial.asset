@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e9b44898666e64d83606e4bf72579c, type: 3}
+  m_Name: struggleSpecial
+  m_EditorClassIdentifier: 
+  name: "\uBC1C\uBC84\uB465"
+  description: "\uBB3C\uB9AC"
+  type: 0
+  statIndex: 0
+  power: 50
+  accuracy: 100
+  priority: 0
+  pp: 999
+  category: 0
+  alwaysHits: 1
+  criticalRank: 0
+  isChangeUnit: 0
+  firstTurnChance: 0
+  isStruggle: 1
+  effects:
+    boosts: []
+    status: 0
+    volatileStatus: 0
+    weather: 0
+    room: 0
+    field: 0
+    reflect: 0
+    lightScreen: 0
+    protect: 0
+  target: 0
+  hitRange: {x: 0, y: 0}
+  rebound: {x: 0, y: 0, z: 0}
+  sound: {fileID: 0}
+  secondaries: []

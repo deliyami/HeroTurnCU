@@ -21,9 +21,12 @@ public class MoveBase : ScriptableObject
     [SerializeField] MoveCategory category;
     [Header("특수한 기술")]
     [SerializeField] bool alwaysHits;
+    [SerializeField] int criticalRank;
     // todo 교체랑 첫턴 공격 구현해야함
     [SerializeField] bool isChangeUnit;
     [SerializeField] bool firstTurnChance = false;
+    [Header("발버둥")]
+    [SerializeField] bool isStruggle = false;
 
     [Header("확정 스텟/날씨")]
     [SerializeField] MoveEffects effects;
@@ -93,6 +96,10 @@ public class MoveBase : ScriptableObject
     public bool FirstTurnChance
     {
         get { return firstTurnChance; }
+    }
+    public bool IsStruggle
+    {
+        get { return isStruggle; }
     }
     public bool IsChangeUnit
     {
