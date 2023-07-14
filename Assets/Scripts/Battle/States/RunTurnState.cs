@@ -388,6 +388,14 @@ public class RunTurnState : State<BattleSystem>
                     yield return targeted.Hud.WaitForHPUpdate();
                     yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}은(는) 몸부림 쳤다!");
                 }
+                if (move.Base.BellyDrum)
+                {
+                    sourceUnit.PlayerHitAnimation();
+                    AudioManager.i.PlaySfx(AudioId.Hit);
+                    sourceUnit.Unit.ReboundTakeDamage(move.Base.Rebound, sourceUnit.Unit.MaxHP / 2);
+                    yield return targeted.Hud.WaitForHPUpdate();
+                    yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 분위기가 무지막지하게 변했다!");
+                }
 
                 if (targeted.Unit.HP <= 0)
                 {

@@ -51,6 +51,12 @@ namespace GDE.GenericSelectionUI
 
             if (selectedItem != prevSelection) UpdateSelectionInUI();
 
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Debug.Log("상태창 호출 중");
+                GameController.Instance.StateMachine.Push(DexState.i);
+            }
+
             if (Input.GetButtonDown("Submit"))
                 HandleSubmit();
             else if (Input.GetButtonDown("Cancel"))

@@ -25,6 +25,8 @@ public class MoveBase : ScriptableObject
     // todo 교체랑 첫턴 공격 구현해야함
     [SerializeField] bool isChangeUnit;
     [SerializeField] bool firstTurnChance = false;
+    [SerializeField] bool bellyDrum = false;
+
     [Header("발버둥")]
     [SerializeField] bool isStruggle = false;
 
@@ -100,6 +102,10 @@ public class MoveBase : ScriptableObject
     public bool FirstTurnChance
     {
         get { return firstTurnChance; }
+    }
+    public bool BellyDrum
+    {
+        get { return bellyDrum; }
     }
     public bool IsStruggle
     {

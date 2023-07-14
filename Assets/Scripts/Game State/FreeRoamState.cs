@@ -19,6 +19,11 @@ public class FreeRoamState : State<GameController>
     {
         PlayerController.i.HandleUpdate();
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            gc.StateMachine.Push(DexState.i);
+        }
+
         if (Input.GetButtonDown("Cancel"))
         {
             gc.StateMachine.Push(GameMenuState.i);
