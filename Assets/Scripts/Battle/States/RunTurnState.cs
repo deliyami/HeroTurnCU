@@ -67,9 +67,41 @@ public class RunTurnState : State<BattleSystem>
 
 
         if (bs?.Field?.Room?.condition?.ID == ConditionID.trickRoom)
-            actions = ac.ThenBy(a => a.User.Unit.Speed).ToList();
+            actions = ac.ThenBy(a =>
+            {
+                if (a.User.IsPlayerUnit)
+                {
+                    if (bs.Field.PlayerTailwind != null)
+                        return a.User.Unit.Speed * 2;
+                    else
+                        return a.User.Unit.Speed;
+                }
+                else
+                {
+                    if (bs.Field.EnemyTailwind != null)
+                        return a.User.Unit.Speed * 2;
+                    else
+                        return a.User.Unit.Speed;
+                }
+            }).ToList();
         else
-            actions = ac.ThenByDescending(a => a.User.Unit.Speed).ToList();
+            actions = ac.ThenByDescending(a =>
+            {
+                if (a.User.IsPlayerUnit)
+                {
+                    if (bs.Field.PlayerTailwind != null)
+                        return a.User.Unit.Speed * 2;
+                    else
+                        return a.User.Unit.Speed;
+                }
+                else
+                {
+                    if (bs.Field.EnemyTailwind != null)
+                        return a.User.Unit.Speed * 2;
+                    else
+                        return a.User.Unit.Speed;
+                }
+            }).ToList();
 
 
         foreach (var action in actions)
@@ -143,7 +175,7 @@ public class RunTurnState : State<BattleSystem>
                 if (Field.Weather.duration == 0)
                 {
                     Field.Weather = null;
-                    Field.Weather.duration = null;
+                    Field.Weather.duration = 0;
                     yield return dialogBox.TypeDialog("날씨가 원래대로 되돌아왔다!");
                 }
             }
@@ -152,6 +184,8 @@ public class RunTurnState : State<BattleSystem>
         FinishTurnCheckField(Field.field, "필드가 원래대로 되돌아왔다!");
         FinishTurnCheckField(Field.Reflect, "분위기가 원래대로 되돌아왔다!");
         FinishTurnCheckField(Field.LightScreen, "위화감이 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.PlayerTailwind, "상대측의 바람이 멎었다!");
+        FinishTurnCheckField(Field.EnemyTailwind, "우리측의 바람이 멎었다!");
         // if (Field.Room != null)
         // {
         //     if (Field.Room.duration != null)
@@ -218,15 +252,12 @@ public class RunTurnState : State<BattleSystem>
     {
         if (fieldBase != null)
         {
-            if (fieldBase.duration != null)
+            fieldBase.duration--;
+            if (fieldBase.duration == 0)
             {
-                fieldBase.duration--;
-                if (fieldBase.duration == 0)
-                {
-                    fieldBase = null;
-                    fieldBase.duration = null;
-                    yield return dialogBox.TypeDialog(returnMessage);
-                }
+                fieldBase.duration = 0;
+                fieldBase = null;
+                yield return dialogBox.TypeDialog(returnMessage);
             }
         }
     }

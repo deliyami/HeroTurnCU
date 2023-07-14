@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: struggleSpecial
   m_EditorClassIdentifier: 
   name: "\uBC1C\uBC84\uB465"
-  description: "\uBB3C\uB9AC"
+  description: "\uD2B9\uC218"
   type: 0
   statIndex: 0
   power: 50
   accuracy: 100
   priority: 0
   pp: 999
-  category: 0
+  category: 1
   alwaysHits: 1
   criticalRank: 0
   isChangeUnit: 0
@@ -35,6 +35,7 @@ MonoBehaviour:
     field: 0
     reflect: 0
     lightScreen: 0
+    tailwind: 0
     protect: 0
   target: 0
   hitRange: {x: 0, y: 0}

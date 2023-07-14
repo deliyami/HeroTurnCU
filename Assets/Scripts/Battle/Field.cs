@@ -16,7 +16,7 @@ public class Field
 public class FieldBase
 {
     public Condition condition { get; set; }
-    public int? duration { get; set; }
+    public int duration { get; set; }
     public void SetCondition(ConditionID conditionID)
     {
         condition = ConditionDB.Conditions[conditionID];
