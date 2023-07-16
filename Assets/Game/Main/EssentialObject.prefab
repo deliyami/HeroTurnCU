@@ -3954,7 +3954,7 @@ MonoBehaviour:
   struggleSpecial: {fileID: 11400000, guid: 7ad5c6f2ca88012468dfa5a54afa539f, type: 2}
   highLightedColor: {r: 0.96862745, g: 0.7372549, b: 0.37254903, a: 1}
   unchosenColor: {r: 0, g: 0, b: 0, a: 0}
-  portraitsHideColor: {r: 0, g: 0, b: 0, a: 0}
+  portraitsHideColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   HeroSprite:
   - {fileID: 1609684750, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
   - {fileID: 1434793265, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}

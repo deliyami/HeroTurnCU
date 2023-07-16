@@ -18,8 +18,6 @@ public class DialogManager : MonoBehaviour
     public event Action OnShowDialog;
     public event Action OnDialogFinished;
 
-    Color originalColor = new Color(1, 1, 1, 1);
-
     public static DialogManager Instance { get; private set; }
     private void Awake()
     {
@@ -35,6 +33,8 @@ public class DialogManager : MonoBehaviour
     public IEnumerator ShowDialogText(string text, bool waitForInput = true, bool autoClose = true,
         List<string> choices = null, Action<int> onChoiceSelected = null)
     {
+        playerSprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
+        enemySprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
         OnShowDialog?.Invoke();
         IsShowing = true;
         dialogBox.SetActive(true);
@@ -61,8 +61,6 @@ public class DialogManager : MonoBehaviour
     {
         dialogBox.SetActive(false);
         IsShowing = false;
-        playerSprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
-        enemySprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
     }
     public IEnumerator ShowDialog(Dialog dialog, List<string> choices = null,
         Action<int> onChoiceSelected = null)
@@ -89,23 +87,23 @@ public class DialogManager : MonoBehaviour
             if (line.UnitID == UnitID.None)
             {
                 // 128, 808080
-                if (playerSprite.color.a != 0) playerSprite.color = GlobalSettings.i.PortraitsHideColor;
-                if (enemySprite.color.a != 0) enemySprite.color = GlobalSettings.i.PortraitsHideColor;
+                if (playerSprite.color.a == 1) playerSprite.color = Color.gray;
+                if (enemySprite.color.a == 1) enemySprite.color = Color.gray;
             }
             else
             {
                 if (line.IsLeft)
                 {
-                    playerSprite.color = originalColor;
+                    playerSprite.color = Color.white;
                     playerSprite.sprite = GlobalSettings.i.UnitSprites[line.UnitID][line.Expression];
-                    if (enemySprite.color.a != 0) enemySprite.color = GlobalSettings.i.PortraitsHideColor;
+                    if (enemySprite.color.a == 1) enemySprite.color = Color.gray;
 
                 }
                 else
                 {
-                    enemySprite.color = originalColor;
+                    enemySprite.color = Color.white;
                     enemySprite.sprite = GlobalSettings.i.UnitSprites[line.UnitID][line.Expression];
-                    if (playerSprite.color.a != 0) playerSprite.color = GlobalSettings.i.PortraitsHideColor;
+                    if (playerSprite.color.a == 1) playerSprite.color = Color.gray;
                 }
             }
             yield return TypeDialog(line.Text);
@@ -116,6 +114,9 @@ public class DialogManager : MonoBehaviour
         {
             yield return choiceBox.ShowChoices(choices, onChoiceSelected);
         }
+
+        playerSprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
+        enemySprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
 
         dialogBox.SetActive(false);
         IsShowing = false;

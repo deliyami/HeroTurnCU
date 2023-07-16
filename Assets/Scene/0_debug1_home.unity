@@ -3550,21 +3550,21 @@ MonoBehaviour:
   dialog:
     lines:
     - name: "\uC0B4\uB77C\uB9CC\uB2E4"
+      unitID: 9
       text: "\uBC18\uAC00\uC6CC!"
       expression: 0
-      isSystem: 0
       isLeft: 0
       imgReverse: 1
     - name: "\uC0B4\uB77C\uB9CC\uB2E4"
+      unitID: 9
       text: "\uB0B4\uB294 \uD14C\uC2A4\uD2B8\uC5D0 \uC0B4\uB77C\uB9CC\uB2E4\uB2E4"
-      expression: 0
-      isSystem: 0
-      isLeft: 0
+      expression: 1
+      isLeft: 1
       imgReverse: 1
     - name: "\uC0B4\uB77C\uB9CC\uB2E4"
+      unitID: 9
       text: "\uC798 \uD558\uACE0 \uC788\uADF8\uB808\uC774"
-      expression: 0
-      isSystem: 0
+      expression: 3
       isLeft: 0
       imgReverse: 1
   questToStart: {fileID: 11400000, guid: 5ccbfa84ff80f904ca459150427bea46, type: 2}
@@ -4095,15 +4095,15 @@ MonoBehaviour:
         dialog:
           lines:
           - name: NPCCUT
+            unitID: 0
             text: NPCCUT
             expression: 0
-            isSystem: 0
             isLeft: 0
             imgReverse: 0
           - name: NPCCUT
+            unitID: 0
             text: test
             expression: 0
-            isSystem: 0
             isLeft: 0
             imgReverse: 0
 --- !u!1 &1196798935
@@ -4154,15 +4154,15 @@ MonoBehaviour:
   dialog:
     lines:
     - name: "\uC2DC\uC2A4\uD15C"
+      unitID: 0
       text: "\uC5EC\uAE38 \uD1B5\uACFC\uD558\uAE30\uC5D4 \uB108\uBB34 \uC774\uB974\uB2E4!"
       expression: 0
-      isSystem: 0
       isLeft: 0
       imgReverse: 0
     - name: "\uC2DC\uC2A4\uD15C"
+      unitID: 0
       text: "\uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC5D0\uAC8C \uB9D0\uC744 \uAC78\uC5B4\uBCF4\uC790!"
       expression: 0
-      isSystem: 0
       isLeft: 0
       imgReverse: 0
 --- !u!61 &1196798938
@@ -5298,9 +5298,9 @@ MonoBehaviour:
         dialog:
           lines:
           - name: "\uD14C\uC2A4\uD2B8"
+            unitID: 0
             text: "\uB4E4\uC5B4\uAC00\uC11C \uD018\uC2A4\uD2B8\uB97C!"
             expression: 0
-            isSystem: 0
             isLeft: 1
             imgReverse: 0
     - rid: 622563358411063301
