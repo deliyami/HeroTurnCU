@@ -51,7 +51,7 @@ namespace GDE.GenericSelectionUI
 
             if (selectedItem != prevSelection) UpdateSelectionInUI();
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C) && GameController.Instance.StateMachine.CurrentState != DexState.i && GameController.Instance.StateMachine.CurrentState != DexDescriptionState.i)
             {
                 Debug.Log("상태창 호출 중");
                 GameController.Instance.StateMachine.Push(DexState.i);

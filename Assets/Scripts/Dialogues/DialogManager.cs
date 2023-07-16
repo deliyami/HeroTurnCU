@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class DialogManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class DialogManager : MonoBehaviour
 
     public event Action OnShowDialog;
     public event Action OnDialogFinished;
+
+    Color originalColor = new Color(1, 1, 1, 1);
 
     public static DialogManager Instance { get; private set; }
     private void Awake()
@@ -58,6 +61,8 @@ public class DialogManager : MonoBehaviour
     {
         dialogBox.SetActive(false);
         IsShowing = false;
+        playerSprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
+        enemySprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
     }
     public IEnumerator ShowDialog(Dialog dialog, List<string> choices = null,
         Action<int> onChoiceSelected = null)
@@ -66,6 +71,9 @@ public class DialogManager : MonoBehaviour
         OnShowDialog?.Invoke();
         IsShowing = true;
         dialogBox.SetActive(true);
+
+        Image playerSprite = this.playerSprite.GetComponent<Image>();
+        Image enemySprite = this.enemySprite.GetComponent<Image>();
 
 
         foreach (var line in dialog.Lines)
@@ -77,6 +85,29 @@ public class DialogManager : MonoBehaviour
             // 그래서 그것을 여기서 처리해야 함
             AudioManager.i.PlaySfx(AudioId.UISelect);
             dialogName.text = line.Name;
+            // 사진 변경
+            if (line.UnitID == UnitID.None)
+            {
+                // 128, 808080
+                if (playerSprite.color.a != 0) playerSprite.color = GlobalSettings.i.PortraitsHideColor;
+                if (enemySprite.color.a != 0) enemySprite.color = GlobalSettings.i.PortraitsHideColor;
+            }
+            else
+            {
+                if (line.IsLeft)
+                {
+                    playerSprite.color = originalColor;
+                    playerSprite.sprite = GlobalSettings.i.UnitSprites[line.UnitID][line.Expression];
+                    if (enemySprite.color.a != 0) enemySprite.color = GlobalSettings.i.PortraitsHideColor;
+
+                }
+                else
+                {
+                    enemySprite.color = originalColor;
+                    enemySprite.sprite = GlobalSettings.i.UnitSprites[line.UnitID][line.Expression];
+                    if (playerSprite.color.a != 0) playerSprite.color = GlobalSettings.i.PortraitsHideColor;
+                }
+            }
             yield return TypeDialog(line.Text);
             yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
         }

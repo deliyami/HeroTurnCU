@@ -18,8 +18,7 @@ public class FreeRoamState : State<GameController>
     public override void Execute()
     {
         PlayerController.i.HandleUpdate();
-
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && GameController.Instance.StateMachine.CurrentState != DexState.i && GameController.Instance.StateMachine.CurrentState != DexDescriptionState.i)
         {
             gc.StateMachine.Push(DexState.i);
         }

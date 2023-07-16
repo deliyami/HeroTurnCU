@@ -10,7 +10,8 @@ public class Dialog
     // string, string, int, string, bool
     [SerializeField] List<DialogObject> lines;
 
-    public List<DialogObject> Lines {
+    public List<DialogObject> Lines
+    {
         get { return lines; }
     }
 }
@@ -19,27 +20,39 @@ public class Dialog
 public class DialogObject
 {
     [SerializeField] string name;
+    [SerializeField] UnitID unitID;
     [TextArea]
     [SerializeField] string text;
+    [Header("표정")]
     [SerializeField] int expression;
     // 대화창에서 화면 왼쪽에 있는가?
-    [SerializeField] bool isSystem;
-    [SerializeField] bool isLeft;
+    [Header("좌측")]
+    [SerializeField] bool isLeft = true;
+    [Header("좌우 반전")]
     [SerializeField] bool imgReverse;
 
-    public string Name {
+    public string Name
+    {
         get { return name; }
     }
-    public string Text {
+    public UnitID UnitID
+    {
+        get { return unitID; }
+    }
+    public string Text
+    {
         get { return text; }
     }
-    public int Expression {
+    public int Expression
+    {
         get { return expression; }
     }
-    public bool IsLeft {
+    public bool IsLeft
+    {
         get { return isLeft; }
     }
-    public bool ImgReverse {
+    public bool ImgReverse
+    {
         get { return imgReverse; }
     }
 }

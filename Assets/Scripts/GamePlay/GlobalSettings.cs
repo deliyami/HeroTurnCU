@@ -14,6 +14,7 @@ public class GlobalSettings : MonoBehaviour
     [Header("글자 색")]
     [SerializeField] Color highLightedColor;
     [SerializeField] Color unchosenColor;
+    [SerializeField] Color portraitsHideColor;
     [Header("스프라이트")] // TODO sprite 여기서 관리하고 유닛에게 들어간 sprite는 전부 여기서 사용하고, 유닛에게 ID박을것, 아마도 하단에 UNITID가 UNITBASE로 갈듯
     [SerializeField] List<Sprite> HeroSprite;
     [SerializeField] List<Sprite> HinamiSprite;
@@ -40,6 +41,8 @@ public class GlobalSettings : MonoBehaviour
     public MoveBase StruggleSpecial => struggleSpecial;
     public Color HighlightedColor => highLightedColor;
     public Color UnchosenColor => unchosenColor;
+    public Color PortraitsHideColor => portraitsHideColor;
+    public Color Transparent => new Color(1, 1, 1, 1);
     public static GlobalSettings i { get; private set; }
     public Dictionary<UnitID, List<Sprite>> UnitSprites { get; private set; }
     public Dictionary<UnitID, List<Sprite>> ReversedSprites { get; private set; }

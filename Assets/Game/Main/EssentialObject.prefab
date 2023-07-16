@@ -3881,7 +3881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSprite: {fileID: 157505967686317044}
   enemySprite: {fileID: 6899046185590573144}
-  dialogBox: {fileID: 6380145191945231298}
+  dialogBox: {fileID: 7572818095421370050}
   choiceBox: {fileID: 6133224950006400206}
   dialogText: {fileID: 6380145193294220026}
   lettersPerSecond: 25
@@ -3954,6 +3954,7 @@ MonoBehaviour:
   struggleSpecial: {fileID: 11400000, guid: 7ad5c6f2ca88012468dfa5a54afa539f, type: 2}
   highLightedColor: {r: 0.96862745, g: 0.7372549, b: 0.37254903, a: 1}
   unchosenColor: {r: 0, g: 0, b: 0, a: 0}
+  portraitsHideColor: {r: 0, g: 0, b: 0, a: 0}
   HeroSprite:
   - {fileID: 1609684750, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
   - {fileID: 1434793265, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
@@ -3990,20 +3991,20 @@ MonoBehaviour:
   - {fileID: -1618686950, guid: 37e3b72b84edf7145a41bb992af84cae, type: 3}
   - {fileID: 734073645, guid: 37e3b72b84edf7145a41bb992af84cae, type: 3}
   LordSprite:
-  - {fileID: -20880879, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  - {fileID: -882073715, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  - {fileID: -1424686530, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  - {fileID: 265415542, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: 70712815, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  - {fileID: 848880732, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  - {fileID: -1562109130, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  - {fileID: 609188298, guid: af1ea94e53067934999bf143ad254957, type: 3}
   SalamandarSprite:
   - {fileID: 1410530196, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
   - {fileID: -90319447, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
   - {fileID: -109435434, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
   - {fileID: -1707604402, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
   VioletSprite:
-  - {fileID: -79391, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
-  - {fileID: 1051045910, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
-  - {fileID: 1259411640, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
-  - {fileID: -14282188, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: -697719736, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: 1637074165, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: -131177741, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: 1273041206, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
   ControllerSprite:
   - {fileID: 1669614967, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
   - {fileID: 1514197298, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
@@ -4015,25 +4016,25 @@ MonoBehaviour:
   - {fileID: 620500350, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
   - {fileID: 407439024, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
   OctaSprite:
-  - {fileID: 351313076, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  - {fileID: -1232576639, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  - {fileID: 921598330, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  - {fileID: 1740458326, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  ReversedLord:
-  - {fileID: 70712815, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  - {fileID: 848880732, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  - {fileID: -1562109130, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  - {fileID: 609188298, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  ReversedViolet:
-  - {fileID: -697719736, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
-  - {fileID: 1637074165, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
-  - {fileID: -131177741, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
-  - {fileID: 1273041206, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
-  ReversedOcta:
   - {fileID: 1376137996, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
   - {fileID: -866766317, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
   - {fileID: 1246621120, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
   - {fileID: -373834740, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
+  ReversedLord:
+  - {fileID: -20880879, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: -882073715, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: -1424686530, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: 265415542, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  ReversedViolet:
+  - {fileID: -79391, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: 1051045910, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: 1259411640, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: -14282188, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  ReversedOcta:
+  - {fileID: 351313076, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  - {fileID: -1232576639, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  - {fileID: 921598330, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  - {fileID: 1740458326, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
 --- !u!114 &906191807540441433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5494,11 +5495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7067a8611aa5224c97158dac7a88fb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6380145191945231298 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5819739297696678301, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
-  m_PrefabInstance: {fileID: 597019632009239135}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6380145193044887449 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5819739298811026886, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
@@ -5540,6 +5536,11 @@ MonoBehaviour:
 --- !u!1 &6899046185590573144 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6338640290814595591, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
+  m_PrefabInstance: {fileID: 597019632009239135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7572818095421370050 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7012394746465612957, guid: 4636b5bc4682306458b3e5f495e18692, type: 3}
   m_PrefabInstance: {fileID: 597019632009239135}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7940770465424169582 stripped

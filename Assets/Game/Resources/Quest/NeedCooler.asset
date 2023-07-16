@@ -17,11 +17,13 @@ MonoBehaviour:
   startDialogue:
     lines:
     - name: "\uD018\uC2A4\uD2B8"
+      unitID: 9
       text: "\uD14C\uC2A4\uD2B8 \uD018\uC2A4\uD2B8 \uC785\uB2C8\uB2E4."
       expression: 0
-      isLeft: 0
+      isLeft: 1
       imgReverse: 0
     - name: "\uD018\uC2A4\uD2B8"
+      unitID: 0
       text: "\uD018\uC2A4\uD2B8 \uC2E4\uD589\uD558\uC138\uC694"
       expression: 0
       isLeft: 0
@@ -29,18 +31,21 @@ MonoBehaviour:
   inProgressDialogue:
     lines:
     - name: "\uD018\uC2A4\uD2B8"
+      unitID: 9
       text: "\uC120\uD48D\uAE30 \uAC00\uC838\uB2E4\uC8FC\uC138\uC694."
-      expression: 0
+      expression: 1
       isLeft: 0
       imgReverse: 0
   completedDialogue:
     lines:
     - name: "\uD018\uC2A4\uD2B8"
+      unitID: 0
       text: "\uCD95\uD558\uD569\uB2C8\uB2E4!"
       expression: 0
       isLeft: 0
       imgReverse: 0
     - name: "\uD018\uC2A4\uD2B8"
+      unitID: 0
       text: "\uD018\uC2A4\uD2B8 \uC644\uB8CC!"
       expression: 0
       isLeft: 0
