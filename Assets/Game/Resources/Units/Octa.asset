@@ -14,20 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uBB34\uB108"
   description: "\uBB38\uC5B4"
+  unitID: 13
   frontSprite: {fileID: -582188891, guid: 80b2c5c2ff9b9984aa47869e93eb3c65, type: 3}
   reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: -304217957, guid: 80b2c5c2ff9b9984aa47869e93eb3c65, type: 3}
   smallSprite: {fileID: -691645288, guid: c515353ecf735d5469916f745264b467, type: 3}
-  portraitSprite:
-  - {fileID: 351313076, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  - {fileID: -1232576639, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  - {fileID: 921598330, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  - {fileID: 1740458326, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
-  reversedPortraitSprite:
-  - {fileID: 1376137996, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
-  - {fileID: -866766317, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
-  - {fileID: 1246621120, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
-  - {fileID: -373834740, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
   type1: 3
   type2: 11
   maxHP: 80

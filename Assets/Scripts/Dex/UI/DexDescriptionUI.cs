@@ -32,7 +32,7 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
     [SerializeField] TextMeshProUGUI abilityDescription; // 특성
     [SerializeField] TextMeshProUGUI secondAbility; // 특성
     [SerializeField] TextMeshProUGUI secondAbilityDescription; // 특성
-
+    const int UNIT_SPRITE_LENGTH = 4;
     public int selectedCategory = 0;
     public static DexDescriptionUI i { get; private set; }
 
@@ -71,9 +71,10 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
         unit = DexState.i.CurrentUnit;
         unitName.text = unit.Name;
         unitDescriptionText.text = unit.Description;
-        int length = unit.PortraitSprite.Length;
-        int randomPortraitSpriteIndex = Random.Range(0, 100) / ((unit.PortraitSprite.Length - 1) * 11);
-        portraitSprite.sprite = (unit.PortraitSprite == null && length > 0) ? null : unit.PortraitSprite[randomPortraitSpriteIndex]; // 1% 확률로 네번째 얼굴이 나옴
+        int randomPortraitSpriteIndex = Random.Range(0, 100) / ((UNIT_SPRITE_LENGTH - 1) * 11);
+        // int randomPortraitSpriteIndex = 98 / ((UNIT_SPRITE_LENGTH - 1) * 11);
+        // Debug.Log($"rand: {randomPortraitSpriteIndex}, unit id {unit.UnitID}");
+        portraitSprite.sprite = GlobalSettings.i.UnitSprites[unit.UnitID][randomPortraitSpriteIndex]; // 1% 확률로 네번째 얼굴이 나옴
         battleSprite.sprite = unit.FrontSprite;
 
         individualText.text = $"{unit.Name}은(는) {IndividualChart.GetIndividualText(unit.Individual)}.";

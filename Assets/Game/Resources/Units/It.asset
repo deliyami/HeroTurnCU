@@ -14,16 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uC787\uCA29"
   description: "\uC787\uCA29"
+  unitID: 6
   frontSprite: {fileID: 770637360, guid: d8e4478f93ae33a4d972bc4eb18db46d, type: 3}
   reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: 921617451, guid: d8e4478f93ae33a4d972bc4eb18db46d, type: 3}
   smallSprite: {fileID: -480098491, guid: a4e8ad1ea77a0eb4a959c471972edeeb, type: 3}
-  portraitSprite:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  reversedPortraitSprite: []
   type1: 11
   type2: 5
   maxHP: 60

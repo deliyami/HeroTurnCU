@@ -6,6 +6,8 @@ using TMPro;
 
 public class DialogManager : MonoBehaviour
 {
+    [SerializeField] GameObject playerSprite;
+    [SerializeField] GameObject enemySprite;
     [SerializeField] GameObject dialogBox;
     [SerializeField] ChoiceBox choiceBox;
     [SerializeField] TextMeshProUGUI dialogText;
@@ -16,7 +18,8 @@ public class DialogManager : MonoBehaviour
     public event Action OnDialogFinished;
 
     public static DialogManager Instance { get; private set; }
-    private void Awake() {
+    private void Awake()
+    {
         Instance = this;
     }
 

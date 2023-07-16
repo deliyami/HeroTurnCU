@@ -11,13 +11,12 @@ public class UnitBase : ScriptableObject
     [TextArea]
     [SerializeField] string description;
 
+    [SerializeField] UnitID unitID;
     [Header("유닛 스프라이트")]
     [SerializeField] Sprite frontSprite;
     [SerializeField] Sprite reverseFrontSprite;
     [SerializeField] Sprite backSprite;
     [SerializeField] Sprite smallSprite;
-    [SerializeField] Sprite[] portraitSprite = new Sprite[4];
-    [SerializeField] Sprite[] reversedPortraitSprite;
 
     [SerializeField] UnitType type1;
     [SerializeField] UnitType type2;
@@ -76,6 +75,10 @@ public class UnitBase : ScriptableObject
     {
         get { return description; }
     }
+    public UnitID UnitID
+    {
+        get { return unitID; }
+    }
     public Sprite FrontSprite
     {
         get { return frontSprite; }
@@ -88,7 +91,6 @@ public class UnitBase : ScriptableObject
     {
         get { return smallSprite; }
     }
-    public Sprite[] PortraitSprite => portraitSprite;
     public UnitType Type1
     {
         get { return type1; }
@@ -335,4 +337,11 @@ public class PersonalityChart
     public static string[][] Chart => chart;
     public static string[][] TailerWord => tailerWord;
     public static string[][] ClosingRemarks => closingRemarks;
+}
+
+public enum UnitID
+{
+    None,
+    Hero, Hinami, Krabe, Ghost, Mashiro, It,
+    Karl, Lord, Salamandar, Violet, Controller, Treka, Octa
 }

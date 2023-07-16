@@ -14,16 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uD2B8\uB808\uCE74"
   description: "\uD2B8\uB808\uCE74?"
+  unitID: 12
   frontSprite: {fileID: 389173509, guid: 75a886bb2d8433e4fbd1c4e3c026ecec, type: 3}
   reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: -1172122696, guid: 75a886bb2d8433e4fbd1c4e3c026ecec, type: 3}
   smallSprite: {fileID: 1827363509, guid: b9891a3e1fc0f0d46ae4fc5f2daa74a8, type: 3}
-  portraitSprite:
-  - {fileID: -763264699, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
-  - {fileID: -1806769409, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
-  - {fileID: 620500350, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
-  - {fileID: 407439024, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
-  reversedPortraitSprite: []
   type1: 17
   type2: 12
   maxHP: 70

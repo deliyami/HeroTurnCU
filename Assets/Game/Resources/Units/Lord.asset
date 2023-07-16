@@ -14,20 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uB85C\uB4DC"
   description: "\uB85C\uB4DC"
+  unitID: 8
   frontSprite: {fileID: 1817327747, guid: b9bcd4f4ad9211a42ac616eb7af0041c, type: 3}
   reverseFrontSprite: {fileID: 0}
   backSprite: {fileID: 887971906, guid: b9bcd4f4ad9211a42ac616eb7af0041c, type: 3}
   smallSprite: {fileID: -1669930542, guid: 9cbc9dadff37dd945b1e838c883086eb, type: 3}
-  portraitSprite:
-  - {fileID: -20880879, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  - {fileID: -882073715, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  - {fileID: -1424686530, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  - {fileID: 265415542, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
-  reversedPortraitSprite:
-  - {fileID: 70712815, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  - {fileID: 848880732, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  - {fileID: -1562109130, guid: af1ea94e53067934999bf143ad254957, type: 3}
-  - {fileID: 609188298, guid: af1ea94e53067934999bf143ad254957, type: 3}
   type1: 1
   type2: 0
   maxHP: 100
