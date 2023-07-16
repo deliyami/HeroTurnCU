@@ -46,6 +46,12 @@ public class AudioManager : MonoBehaviour
         currMusic = clip;
         StartCoroutine(PlayMusicAsync(clip, loop, fade));
     }
+    public void PlayMusic(AudioId audioId, bool loop = true, bool fade = false)
+    {
+        if (!sfxLookup.ContainsKey(audioId)) return;
+        var audioData = sfxLookup[audioId];
+        StartCoroutine(PlayMusicAsync(audioData.clip, loop, fade));
+    }
     IEnumerator PlayMusicAsync(AudioClip clip, bool loop, bool fade)
     {
         if (fade)
@@ -68,7 +74,7 @@ public class AudioManager : MonoBehaviour
     }
 }
 
-public enum AudioId { UISelect, Hit, Faint, ExpGain, ItemObtained, UnitObtained }
+public enum AudioId { UISelect, Hit, Faint, ExpGain, ItemObtained, UnitObtained, Intro, Slice, Slice2 }
 
 [System.Serializable]
 public class AudioData

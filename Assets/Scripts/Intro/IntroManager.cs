@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class IntroManager : MonoBehaviour
 {
     [SerializeField] GameObject backgroundObject;
@@ -16,6 +17,11 @@ public class IntroManager : MonoBehaviour
     [SerializeField] float moveDistance;
     Vector3 heroDefaultPosition;
     Vector3 slimeDefaultPosition;
+    float fadeDuration = 0.75f;
+    float originalMusicVol;
+
+    [SerializeField] GameObject introObject;
+    [SerializeField] GameObject gameplayObject;
 
     // panel
     public static IntroManager i { get; private set; }
@@ -23,11 +29,13 @@ public class IntroManager : MonoBehaviour
     {
         i = this;
     }
-    void Start()
+    private void Start()
     {
         heroDefaultPosition = new Vector3(heroObject.GetComponent<Image>().transform.position.x, heroObject.GetComponent<Image>().transform.position.y);
         slimeDefaultPosition = new Vector3(slimeObject.GetComponent<Image>().transform.position.x, slimeObject.GetComponent<Image>().transform.position.y);
         StartCoroutine(IntroCutscene());
+
+        AudioManager.i.PlayMusic(AudioId.Intro, fade: true);
     }
 
     void Update()
@@ -53,6 +61,7 @@ public class IntroManager : MonoBehaviour
             yield return MoveImage(hero, 3, "hero", deltaTime);
         }
         yield return new WaitForSeconds(1f);
+        AudioManager.i.PlaySfx(AudioId.Slice);
         Fader.color = new Color(1f, 1f, 1f, 1f);
         // back 2
         hero.color = new Color(1f, 1f, 1f, 0f);
@@ -61,18 +70,23 @@ public class IntroManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Fader.color = new Color(1f, 1f, 1f, 0f);
         yield return new WaitForSeconds(0.5f);
+        AudioManager.i.PlaySfx(AudioId.Slice);
         Fader.color = new Color(1f, 1f, 1f, 1f);
         // back 3
         background.sprite = background3;
         yield return new WaitForSeconds(0.5f);
         Fader.color = new Color(1f, 1f, 1f, 0f);
         yield return new WaitForSeconds(0.5f);
+        AudioManager.i.PlaySfx(AudioId.Slice2);
         Fader.color = new Color(1f, 1f, 1f, 1f);
         // back 4
         backgroundObject.SetActive(false);
         pixelBackground.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         Fader.color = new Color(1f, 1f, 1f, 0f);
+        yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
+        gameplayObject.SetActive(true);
+        introObject.SetActive(false);
     }
 
     public IEnumerator FadeInImage(Image image, float deltaTime)

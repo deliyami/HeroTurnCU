@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EssentialObject : MonoBehaviour
+public class SoundObject : MonoBehaviour
 {
     private void Awake()
     {
