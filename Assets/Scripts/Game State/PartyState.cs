@@ -67,6 +67,23 @@ public class PartyState : State<GameController>
         {
             // 뭐였지, 설명창인데
             Debug.Log($"{selection} 선택됨");
+            if (partyScreen.changedItem == -1) partyScreen.changedItem = selection;
+            else if (partyScreen.changedItem == selection)
+            {
+                partyScreen.changedItem = -1;
+            }
+            else
+            {
+                partyScreen.ResetUI();
+                UnitParty party = UnitParty.GetPlayerParty();
+                List<Unit> units = party.Units;
+                Unit tmp = units[selection];
+                units[selection] = units[partyScreen.changedItem];
+                units[partyScreen.changedItem] = tmp;
+                party.Units = units;
+                // party.PartyUpdated();
+                partyScreen.changedItem = -1;
+            }
         }
     }
     IEnumerator GoToUseItemState()
@@ -78,6 +95,8 @@ public class PartyState : State<GameController>
     {
         SelectedUnit = null;
         var prevState = gc.StateMachine.GetPrevState();
+        partyScreen.changedItem = -1;
+        partyScreen.selectedItem = 0;
         if (prevState == BattleState.i)
         {
             var battleState = prevState as BattleState;

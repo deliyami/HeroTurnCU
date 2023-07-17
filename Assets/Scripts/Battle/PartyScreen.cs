@@ -12,6 +12,7 @@ public class PartyScreen : SelectionUI<TextSlot>
     List<Unit> units;
     UnitParty party;
     public Unit SelectedMember => units[selectedItem];
+    public int changedItem = -1;
 
     PartyMemberUI[] memberSlots;
 
@@ -24,6 +25,12 @@ public class PartyScreen : SelectionUI<TextSlot>
         SetPartyData();
 
         party.OnUpdated += SetPartyData;
+    }
+
+    public override void HandleUpdate()
+    {
+        base.HandleUpdate();
+        UpdateUI();
     }
 
     public void SetPartyData()
@@ -69,6 +76,22 @@ public class PartyScreen : SelectionUI<TextSlot>
         for (int i = 0; i < units.Count; i++)
         {
             memberSlots[i].SetStatusText();
+        }
+    }
+    public void UpdateUI()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (i == selectedItem) items[i].OnSelectionChange(true);
+            else if (i == changedItem) items[i].OnSeatChange(true);
+            else items[i].OnSelectionChange(false);
+        }
+    }
+    public void ResetUI()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].OnResetColor();
         }
     }
 }

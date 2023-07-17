@@ -9,7 +9,7 @@ namespace GDE.GenericSelectionUI
     public enum SelectionType { List, Grid }
     public class SelectionUI<T> : MonoBehaviour where T : ISelectableItem
     {
-        List<T> items;
+        protected List<T> items;
         public int selectedItem = 0;
         SelectionType selectionType;
         int gridWidth = 2;
