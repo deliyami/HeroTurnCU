@@ -9,7 +9,8 @@ public class QuestObject : MonoBehaviour
     [SerializeField] ObjectActions onComplete;
 
     QuestList questList;
-    private void Start() {
+    private void Start()
+    {
         questList = QuestList.GetQuestList();
         questList.OnUpdated += UpdateObjectStatus;
 
@@ -23,13 +24,14 @@ public class QuestObject : MonoBehaviour
     {
         if (onStart != ObjectActions.DoNothing && questList.IsStarted(questToCheck.Name))
         {
-            foreach(Transform child in transform)
+            foreach (Transform child in transform)
             {
-                if (onStart == ObjectActions.Enable)    
+                if (onStart == ObjectActions.Enable)
                 {
                     child.gameObject.SetActive(true);
 
                     var savable = child.GetComponent<SavableEntity>();
+                    Debug.Log($"quest object{savable}");
                     if (savable != null)
                         SavingSystem.i.RestoreEntity(savable);
                 }
@@ -40,7 +42,7 @@ public class QuestObject : MonoBehaviour
 
         if (onComplete != ObjectActions.DoNothing && questList.IsCompleted(questToCheck.Name))
         {
-            foreach(Transform child in transform)
+            foreach (Transform child in transform)
             {
                 if (onComplete == ObjectActions.Enable)
                 {

@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalSettings : MonoBehaviour
+public class GlobalSettings : MonoBehaviour, ISavable
 {
     [SerializeField] UIMode screenMode;
 
@@ -34,7 +35,21 @@ public class GlobalSettings : MonoBehaviour
     [SerializeField] List<Sprite> ReversedLord;
     [SerializeField] List<Sprite> ReversedViolet;
     [SerializeField] List<Sprite> ReversedOcta;
-
+    [Header("닉네임")]
+    [SerializeField] Sprite HeroNicknameSprite;
+    [SerializeField] Sprite HinamiNicknameSprite;
+    [SerializeField] Sprite KrabeNicknameSprite;
+    [SerializeField] Sprite GhostNicknameSprite;
+    [SerializeField] Sprite MashiroNicknameSprite;
+    [SerializeField] Sprite ItNicknameSprite;
+    [SerializeField] Sprite KarlNicknameSprite;
+    [SerializeField] Sprite LordNicknameSprite;
+    [SerializeField] Sprite SalamandarNicknameSprite;
+    [SerializeField] Sprite VioletNicknameSprite;
+    [SerializeField] Sprite ControllerNicknameSprite;
+    [SerializeField] Sprite TrekaNicknameSprite;
+    [SerializeField] Sprite OctaNicknameSprite;
+    [SerializeField] float nicknameSize;
 
     public UIMode ScreenMode => screenMode;
     public MoveBase StrugglePhysical => strugglePhysical;
@@ -46,6 +61,10 @@ public class GlobalSettings : MonoBehaviour
     public static GlobalSettings i { get; private set; }
     public Dictionary<UnitID, List<Sprite>> UnitSprites { get; private set; }
     public Dictionary<UnitID, List<Sprite>> ReversedSprites { get; private set; }
+    public bool IsClear = false;
+    public Dictionary<UnitID, bool> CheckNaming { get; private set; }
+    public Dictionary<UnitID, Sprite> UnitNicknameSprites { get; private set; }
+    public float NicknameSize => nicknameSize;
     private void Awake()
     {
         i = this;
@@ -123,6 +142,97 @@ public class GlobalSettings : MonoBehaviour
                 ReversedOcta
             },
         };
+        Array array = Enum.GetValues(typeof(UnitID));
+        CheckNaming = new Dictionary<UnitID, bool>();
+        foreach (object value in array)
+        {
+            //object型のvalueからnumに変換
+            UnitID id = (UnitID)value;
+
+            // Console.WriteLine(id);
+            CheckNaming.Add(id, false);
+        }
+        UnitNicknameSprites = new Dictionary<UnitID, Sprite>()
+        {
+            {
+                UnitID.None,
+                HeroNicknameSprite
+            },
+            {
+                UnitID.Hero,
+                HeroNicknameSprite
+            },
+            {
+                UnitID.Hinami,
+                HinamiNicknameSprite
+            },
+            {
+                UnitID.Krabe,
+                KrabeNicknameSprite
+            },
+            {
+                UnitID.Ghost,
+                GhostNicknameSprite
+            },
+            {
+                UnitID.Mashiro,
+                MashiroNicknameSprite
+            },
+            {
+                UnitID.It,
+                ItNicknameSprite
+            },
+            {
+                UnitID.Karl,
+                KarlNicknameSprite
+            },
+            {
+                UnitID.Lord,
+                LordNicknameSprite
+            },
+            {
+                UnitID.Salamandar,
+                SalamandarNicknameSprite
+            },
+            {
+                UnitID.Violet,
+                VioletNicknameSprite
+            },
+            {
+                UnitID.Controller,
+                ControllerNicknameSprite
+            },
+            {
+                UnitID.Treka,
+                TrekaNicknameSprite
+            },
+            {
+                UnitID.Octa,
+                OctaNicknameSprite
+            },
+        };
+    }
+    public object CaptureState()
+    {
+        var saveData = new ClearSaveData();
+        saveData.IsClear = this.IsClear;
+
+        return saveData;
+    }
+
+    public void RestoreState(object state)
+    {
+        var saveData = state as ClearSaveData;
+        if (saveData != null)
+        {
+            IsClear = saveData.IsClear;
+        }
     }
 }
 public enum UIMode { Light, Dark }
+public enum difficulty { Normal, Hell }
+[System.Serializable]
+public class ClearSaveData
+{
+    public bool IsClear;
+}

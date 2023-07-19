@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1159582083780399767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6884718700731089868}
+  - component: {fileID: 870943998911367739}
+  - component: {fileID: 758666679662462881}
+  - component: {fileID: 4351355523641856453}
+  - component: {fileID: 7122406182032489101}
+  m_Layer: 0
+  m_Name: GlobalSettingObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6884718700731089868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159582083780399767}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 640, y: 480, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &870943998911367739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159582083780399767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a079895d2b95154085f317af7b167e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenMode: 0
+  strugglePhysical: {fileID: 11400000, guid: ee43257011bb11d4695e19eda9e7a0c3, type: 2}
+  struggleSpecial: {fileID: 11400000, guid: 7ad5c6f2ca88012468dfa5a54afa539f, type: 2}
+  highLightedColor: {r: 0.96862745, g: 0.7372549, b: 0.37254903, a: 1}
+  greenLightedColor: {r: 0.2509804, g: 0.84705883, b: 0.2509804, a: 1}
+  unchosenColor: {r: 0, g: 0, b: 0, a: 0}
+  HeroSprite:
+  - {fileID: 1609684750, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
+  - {fileID: 1434793265, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
+  - {fileID: 552695188, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
+  - {fileID: 1209297694, guid: 7663034113ae19249a13b6ca89cb98e7, type: 3}
+  HinamiSprite:
+  - {fileID: -1409714109, guid: 3e684b8484187f34db0ccc054f1f91b5, type: 3}
+  - {fileID: 193300945, guid: 3e684b8484187f34db0ccc054f1f91b5, type: 3}
+  - {fileID: 934733741, guid: 3e684b8484187f34db0ccc054f1f91b5, type: 3}
+  - {fileID: -455394628, guid: 3e684b8484187f34db0ccc054f1f91b5, type: 3}
+  KrabeSprite:
+  - {fileID: 1820896426, guid: 76d626856a3c29247bcbf2921d6d2c26, type: 3}
+  - {fileID: -1551210393, guid: 76d626856a3c29247bcbf2921d6d2c26, type: 3}
+  - {fileID: -417175157, guid: 76d626856a3c29247bcbf2921d6d2c26, type: 3}
+  - {fileID: -117238869, guid: 76d626856a3c29247bcbf2921d6d2c26, type: 3}
+  GhostSprite:
+  - {fileID: -759177923, guid: 84f358c6f9d48ca4aa84b8572102fd82, type: 3}
+  - {fileID: -1305278180, guid: 84f358c6f9d48ca4aa84b8572102fd82, type: 3}
+  - {fileID: -783867858, guid: 84f358c6f9d48ca4aa84b8572102fd82, type: 3}
+  - {fileID: -2018253769, guid: 84f358c6f9d48ca4aa84b8572102fd82, type: 3}
+  MashiroSprite:
+  - {fileID: 514689016, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  - {fileID: 1240311327, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  - {fileID: 1770222067, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  - {fileID: -251645836, guid: 0c5e2ea226a5adc4aa4bf72336ca99bc, type: 3}
+  ItSprite:
+  - {fileID: -249941458, guid: cb04b9140e5cfa6439b0358ea1e4e68c, type: 3}
+  - {fileID: -1617471234, guid: cb04b9140e5cfa6439b0358ea1e4e68c, type: 3}
+  - {fileID: -878880630, guid: cb04b9140e5cfa6439b0358ea1e4e68c, type: 3}
+  - {fileID: 1668326077, guid: cb04b9140e5cfa6439b0358ea1e4e68c, type: 3}
+  KarlSprite:
+  - {fileID: 319431840, guid: 37e3b72b84edf7145a41bb992af84cae, type: 3}
+  - {fileID: -1011325054, guid: 37e3b72b84edf7145a41bb992af84cae, type: 3}
+  - {fileID: -1618686950, guid: 37e3b72b84edf7145a41bb992af84cae, type: 3}
+  - {fileID: 734073645, guid: 37e3b72b84edf7145a41bb992af84cae, type: 3}
+  LordSprite:
+  - {fileID: 70712815, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  - {fileID: 848880732, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  - {fileID: -1562109130, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  - {fileID: 609188298, guid: af1ea94e53067934999bf143ad254957, type: 3}
+  SalamandarSprite:
+  - {fileID: 1410530196, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  - {fileID: -90319447, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  - {fileID: -109435434, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  - {fileID: -1707604402, guid: 22728f75d2fb724459e24b52f2444440, type: 3}
+  VioletSprite:
+  - {fileID: -697719736, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: 1637074165, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: -131177741, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  - {fileID: 1273041206, guid: c44dcc4935cb2c74eb5039cb7996f1cd, type: 3}
+  ControllerSprite:
+  - {fileID: 1669614967, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  - {fileID: 1514197298, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  - {fileID: 948873770, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  - {fileID: -224267512, guid: 391d614373a17a6499cd4ebd6dc5aede, type: 3}
+  TrekaSprite:
+  - {fileID: -763264699, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  - {fileID: -1806769409, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  - {fileID: 620500350, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  - {fileID: 407439024, guid: 4c9fc007135cb964fb4ac7436a8bb85c, type: 3}
+  OctaSprite:
+  - {fileID: 1376137996, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
+  - {fileID: -866766317, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
+  - {fileID: 1246621120, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
+  - {fileID: -373834740, guid: ac30547b93f432549a81eeaae4fed129, type: 3}
+  ReversedLord:
+  - {fileID: -20880879, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: -882073715, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: -1424686530, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  - {fileID: 265415542, guid: 58e2924890955ad438508dba2a8fd1e1, type: 3}
+  ReversedViolet:
+  - {fileID: -79391, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: 1051045910, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: 1259411640, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  - {fileID: -14282188, guid: 0a6e949f91ec7a443a14a5c7c8d60445, type: 3}
+  ReversedOcta:
+  - {fileID: 351313076, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  - {fileID: -1232576639, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  - {fileID: 921598330, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  - {fileID: 1740458326, guid: b233c3f5c14766648a54fc19207515b5, type: 3}
+  HeroNicknameSprite: {fileID: 21300000, guid: ad8762ddff9acaa4b91a74491b868191, type: 3}
+  HinamiNicknameSprite: {fileID: 21300000, guid: 1f34e3e69e78df74b9cee4d1f4a29c02, type: 3}
+  KrabeNicknameSprite: {fileID: 21300000, guid: 42d74d28fd65a45428dccb9acf1e1995, type: 3}
+  GhostNicknameSprite: {fileID: 21300000, guid: 9c42f23a314c83f46a794a4ba0d91c4d, type: 3}
+  MashiroNicknameSprite: {fileID: 21300000, guid: d84fd5be63b84b848837fcfa6064be8b, type: 3}
+  ItNicknameSprite: {fileID: 21300000, guid: 5c1b0cefd7414564cba3a40408efc078, type: 3}
+  KarlNicknameSprite: {fileID: 21300000, guid: 3962afe3eac10d549973287d350c397c, type: 3}
+  LordNicknameSprite: {fileID: 21300000, guid: feb9d2752c13715488f1bb1af4c18759, type: 3}
+  SalamandarNicknameSprite: {fileID: 21300000, guid: 155dc01577968ca49948850d4d5db155, type: 3}
+  VioletNicknameSprite: {fileID: 21300000, guid: f5e9ec02c89c57145a1a8ba405d2afa3, type: 3}
+  ControllerNicknameSprite: {fileID: 21300000, guid: 98f344b19c97c9b40b4ed499a7dccc5a, type: 3}
+  TrekaNicknameSprite: {fileID: 21300000, guid: cf17cbf368506484e9626236b4c908b2, type: 3}
+  OctaNicknameSprite: {fileID: 21300000, guid: 81e78eb4a2f5b974fa14f900942ecf59, type: 3}
+  nicknameSize: 32
+  IsClear: 0
+--- !u!114 &758666679662462881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159582083780399767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ddb908fa7c729419f05867d9550daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4351355523641856453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159582083780399767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 
+--- !u!114 &7122406182032489101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159582083780399767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6eb5014d22ef24794f0adec0e1b8e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

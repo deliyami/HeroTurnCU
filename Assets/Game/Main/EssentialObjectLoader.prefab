@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   essentialObjectsPrefab: {fileID: 8115450737557203738, guid: 05b6849a79cfd914483073583baa6c4c, type: 3}
   soundObjectsPrefab: {fileID: 2726324205781752429, guid: 753a76fb672cb6746a32e783ae76a8eb, type: 3}
+  globalSettingPrefab: {fileID: 1159582083780399767, guid: bb29b715c7c346c458f1ef7eaafa6078, type: 3}

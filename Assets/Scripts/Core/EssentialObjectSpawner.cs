@@ -7,6 +7,7 @@ public class EssentialObjectSpawner : MonoBehaviour
 {
     [SerializeField] GameObject essentialObjectsPrefab;
     [SerializeField] GameObject soundObjectsPrefab;
+    [SerializeField] GameObject globalSettingPrefab;
 
     private void Awake()
     {
@@ -31,6 +32,17 @@ public class EssentialObjectSpawner : MonoBehaviour
             if (grid != null)
                 spawnPos = grid.transform.position;
             Instantiate(soundObjectsPrefab, spawnPos, Quaternion.identity);
+        }
+        var globalObjects = FindObjectsOfType<GlobalObject>();
+        if (globalObjects.Length == 0)
+        {
+            // 중앙 생성
+            var spawnPos = new Vector3(0, 0, 0);
+
+            var grid = FindObjectOfType<Grid>();
+            if (grid != null)
+                spawnPos = grid.transform.position;
+            Instantiate(globalSettingPrefab, spawnPos, Quaternion.identity);
         }
     }
 }
