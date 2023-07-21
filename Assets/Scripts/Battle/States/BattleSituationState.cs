@@ -2,6 +2,7 @@ using GDEUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BattleSituationState : State<BattleSystem>
 {
@@ -18,11 +19,10 @@ public class BattleSituationState : State<BattleSystem>
     public override void Enter(BattleSystem owner)
     {
         bs = owner;
-
         selectionUI.gameObject.SetActive(true);
+        Debug.Log(bs.PlayerUnits.Concat(bs.EnemyUnits).ToList());
+        selectionUI.SetUnit(bs.PlayerUnits.Concat(bs.EnemyUnits).ToList());
         selectionUI.OnBack += OnBack;
-
-        bs.DialogBox.EnableDialogText(false);
     }
     public override void Execute()
     {
@@ -30,12 +30,10 @@ public class BattleSituationState : State<BattleSystem>
     }
     public override void Exit()
     {
-        selectionUI.gameObject.SetActive(false);
         selectionUI.OnBack -= OnBack;
+        selectionUI.selectedItem = 0;
 
-        selectionUI.ClearItems();
-
-        bs.DialogBox.EnableDialogText(true);
+        selectionUI.gameObject.SetActive(false);
     }
     void OnBack()
     {

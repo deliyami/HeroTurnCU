@@ -31,34 +31,22 @@ public class BattleSituationUI : SelectionUI<TextSlot>
     Image typeImage2;
     TextMeshProUGUI typeText2;
     List<BattleUnit> units;
+    public bool isFirstAccess = true;
     private void Start()
     {
+        SetBattleSituation();
+    }
+    public void SetUnit(List<BattleUnit> units)
+    {
+        this.units = units;
+        this.isFirstAccess = true;
+
         typeImage1 = typeObject1.GetComponentInChildren<Image>();
         typeText1 = typeObject1.GetComponentInChildren<TextMeshProUGUI>();
         typeImage2 = typeObject2.GetComponentInChildren<Image>();
         typeText2 = typeObject2.GetComponentInChildren<TextMeshProUGUI>();
-        units = BattleSystem.i.PlayerUnits.Concat(BattleSystem.i.EnemyUnits).ToList();
-
-        weather.text = BattleSystem.i.Field.Weather?.condition.Name ?? "없음";
-        field.text = BattleSystem.i.Field.field?.condition.Name ?? "없음";
-        room.text = BattleSystem.i.Field.Room?.condition.Name ?? "없음";
-
-        List<string> teamSpecials = new List<string>();
-        if (BattleSystem.i.Field.PlayerReflect != null) teamSpecials.Add("리플렉터 발동 중");
-        if (BattleSystem.i.Field.PlayerLightScreen != null) teamSpecials.Add("빛의 장막 발동 중");
-        if (BattleSystem.i.Field.PlayerTailwind != null) teamSpecials.Add("바람이 부는 중");
-        string combinedTeamSpecial = string.Join("\n", teamSpecials);
-        teamSpecial.text = combinedTeamSpecial;
-
-        List<string> enemySpecials = new List<string>();
-        if (BattleSystem.i.Field.EnemyReflect != null) teamSpecials.Add("리플렉터 발동 중");
-        if (BattleSystem.i.Field.EnemyLightScreen != null) teamSpecials.Add("빛의 장막 발동 중");
-        if (BattleSystem.i.Field.EnemyTailwind != null) teamSpecials.Add("바람이 부는 중");
-        string combinedEnemySpecial = string.Join("\n", teamSpecials);
-        teamSpecial.text = combinedEnemySpecial;
-
-        UpdateSelectionInUI();
     }
+
     public override void HandleUpdate()
     {
         UpdateSelectionTimer();
@@ -70,7 +58,7 @@ public class BattleSituationUI : SelectionUI<TextSlot>
         else if (selectedItem < 0)
             selectedItem = units.Count - 1;
 
-        if (selectedItem != prevSelection) UpdateSelectionInUI();
+        if (selectedItem != prevSelection || isFirstAccess) UpdateSelectionInUI();
 
         // if (Input.GetKeyDown(KeyCode.C) && GameController.Instance.StateMachine.CurrentState != DexState.i && GameController.Instance.StateMachine.CurrentState != DexDescriptionState.i)
         // {
@@ -94,6 +82,9 @@ public class BattleSituationUI : SelectionUI<TextSlot>
     }
     public override void UpdateSelectionInUI()
     {
+        isFirstAccess = false;
+        SetBattleSituation();
+
         // base.UpdateSelectionInUI();
         name.text = units[selectedItem].Unit.Base.Name;
         typeImage1.sprite = TypeDB.GetObjectByName(units[selectedItem].Unit.Base.Type1.ToString()).Sprite;
@@ -106,5 +97,29 @@ public class BattleSituationUI : SelectionUI<TextSlot>
         {
             Boost[i].text = units[selectedItem].Unit.GetStatBoost(i).ToString();
         }
+    }
+    private void SetBattleSituation()
+    {
+        List<string> teamSpecials = new List<string>();
+        if (BattleSystem.i.Field.PlayerReflect != null) teamSpecials.Add("리플렉터 발동 중");
+        if (BattleSystem.i.Field.PlayerLightScreen != null) teamSpecials.Add("빛의 장막 발동 중");
+        if (BattleSystem.i.Field.PlayerTailwind != null) teamSpecials.Add("바람이 부는 중");
+        string combinedTeamSpecial = string.Join("\n", teamSpecials);
+        teamSpecial.text = combinedTeamSpecial;
+
+        List<string> enemySpecials = new List<string>();
+        if (BattleSystem.i.Field.EnemyReflect != null) enemySpecials.Add("리플렉터 발동 중");
+        if (BattleSystem.i.Field.EnemyLightScreen != null) enemySpecials.Add("빛의 장막 발동 중");
+        if (BattleSystem.i.Field.EnemyTailwind != null) enemySpecials.Add("바람이 부는 중");
+        string combinedEnemySpecial = string.Join("\n", enemySpecials);
+        enemySpecial.text = combinedEnemySpecial;
+
+        SetField();
+    }
+    public void SetField()
+    {
+        weather.text = BattleSystem.i.Field.Weather?.condition.Name ?? "없음";
+        field.text = BattleSystem.i.Field.field?.condition.Name ?? "없음";
+        room.text = BattleSystem.i.Field.Room?.condition.Name ?? "없음";
     }
 }

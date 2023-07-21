@@ -154,10 +154,8 @@ public class MoveEffects
     [SerializeField] ConditionID weather;
     [SerializeField] ConditionID room;
     [SerializeField] ConditionID field;
-    [SerializeField] ConditionID playerReflect;
-    [SerializeField] ConditionID enemyReflect;
-    [SerializeField] ConditionID playerLightScreen;
-    [SerializeField] ConditionID enemyLightScreen;
+    [SerializeField] ConditionID reflect;
+    [SerializeField] ConditionID lightScreen;
     [SerializeField] ConditionID tailwind;
     [SerializeField] bool protect = false;
 
@@ -186,21 +184,13 @@ public class MoveEffects
     {
         get { return field; }
     }
-    public ConditionID PlayerReflect
+    public ConditionID Reflect
     {
-        get { return playerReflect; }
+        get { return reflect; }
     }
-    public ConditionID EnemyReflect
+    public ConditionID LightScreen
     {
-        get { return enemyReflect; }
-    }
-    public ConditionID PlayerLightScreen
-    {
-        get { return playerLightScreen; }
-    }
-    public ConditionID EnemyLightScreen
-    {
-        get { return enemyLightScreen; }
+        get { return lightScreen; }
     }
     public ConditionID Tailwind
     {

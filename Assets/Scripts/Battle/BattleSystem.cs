@@ -78,6 +78,10 @@ public class BattleSystem : MonoBehaviour
     BattleUnit unitToSwitch;
 
     BattleTrigger battleTrigger;
+    private void Awake()
+    {
+        i = this;
+    }
     public void StartBattle(UnitParty PlayerParty, Unit WildUnit,
         BattleTrigger trigger = BattleTrigger.LongGrass)
     {
@@ -95,7 +99,7 @@ public class BattleSystem : MonoBehaviour
     }
 
     public void StartTrainerBattle(UnitParty PlayerParty, UnitParty TrainerParty,
-        int UnitCount = 1)
+        int UnitCount = 2)
     {
         battleTrigger = BattleTrigger.Trainer;
         this.PlayerParty = PlayerParty;

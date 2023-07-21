@@ -169,9 +169,11 @@ public class RunTurnState : State<BattleSystem>
                     yield break;
                 }
             }
-            if (Field.Weather.duration != null)
+            if (Field.Weather != null)
             {
                 Field.Weather.duration--;
+                Debug.Log(Field.Weather);
+                Debug.Log(Field.Weather.duration);
                 if (Field.Weather.duration == 0)
                 {
                     Field.Weather = null;
@@ -686,67 +688,81 @@ public class RunTurnState : State<BattleSystem>
         // 날씨 변경
         if (effects.Weather != ConditionID.none)
         {
+            Field.Weather = new FieldBase();
             Field.Weather.SetCondition(effects.Weather);
-            Field.Weather.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            Field.Weather.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
             yield return dialogBox.TypeDialog(Field.Weather.condition.StartMessage);
         }
 
         // 공간 변경
         if (effects.Room != ConditionID.none)
         {
+            Field.Room = new FieldBase();
             Field.Room.SetCondition(effects.Room);
-            Field.Room.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            Field.Room.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
             yield return dialogBox.TypeDialog(Field.Room.condition.StartMessage);
         }
 
         // 필드 변경
         if (effects.Field != ConditionID.none)
         {
+            Field.field = new FieldBase();
             Field.field.SetCondition(effects.Field);
-            Field.field.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            Field.field.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
             yield return dialogBox.TypeDialog(Field.field.condition.StartMessage);
         }
 
         // 리플렉터, 빛의 장막
-        if (effects.PlayerReflect != ConditionID.none)
+        if (effects.Reflect != ConditionID.none)
         {
-            Field.PlayerReflect.SetCondition(effects.PlayerReflect);
-            Field.PlayerReflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.PlayerReflect.condition.StartMessage);
+            if (sourceUnit.IsPlayerUnit)
+            {
+                Field.PlayerReflect = new FieldBase();
+                Field.PlayerReflect.SetCondition(effects.Tailwind);
+                Field.PlayerReflect.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
+                yield return dialogBox.TypeDialog(Field.PlayerReflect.condition.StartMessage);
+            }
+            else
+            {
+                Field.EnemyReflect = new FieldBase();
+                Field.EnemyReflect.SetCondition(effects.Tailwind);
+                Field.EnemyReflect.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
+                yield return dialogBox.TypeDialog(Field.EnemyReflect.condition.StartMessage);
+            }
         }
-        if (effects.EnemyReflect != ConditionID.none)
+        if (effects.LightScreen != ConditionID.none)
         {
-            Field.EnemyReflect.SetCondition(effects.EnemyReflect);
-            Field.EnemyReflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.EnemyReflect.condition.StartMessage);
+            if (sourceUnit.IsPlayerUnit)
+            {
+                Field.PlayerLightScreen = new FieldBase();
+                Field.PlayerLightScreen.SetCondition(effects.Tailwind);
+                Field.PlayerLightScreen.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
+                yield return dialogBox.TypeDialog(Field.PlayerLightScreen.condition.StartMessage);
+            }
+            else
+            {
+                Field.EnemyLightScreen = new FieldBase();
+                Field.EnemyLightScreen.SetCondition(effects.Tailwind);
+                Field.EnemyLightScreen.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
+                yield return dialogBox.TypeDialog(Field.EnemyLightScreen.condition.StartMessage);
+            }
         }
-        if (effects.PlayerLightScreen != ConditionID.none)
-        {
-            Field.PlayerLightScreen.SetCondition(effects.PlayerLightScreen);
-            Field.PlayerLightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.PlayerLightScreen.condition.StartMessage);
-        }
-        if (effects.EnemyLightScreen != ConditionID.none)
-        {
-            Field.EnemyLightScreen.SetCondition(effects.EnemyLightScreen);
-            Field.EnemyLightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.EnemyLightScreen.condition.StartMessage);
-        }
-
 
         // 순풍
         if (effects.Tailwind != ConditionID.none)
         {
             if (sourceUnit.IsPlayerUnit)
             {
+                Field.PlayerTailwind = new FieldBase();
                 Field.PlayerTailwind.SetCondition(effects.Tailwind);
-                Field.PlayerTailwind.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+                Field.PlayerTailwind.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
                 yield return dialogBox.TypeDialog(Field.PlayerTailwind.condition.StartMessage);
             }
             else
             {
+                Field.EnemyTailwind = new FieldBase();
                 Field.EnemyTailwind.SetCondition(effects.Tailwind);
-                Field.EnemyTailwind.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+                Field.EnemyTailwind.duration = (int)(5 * (source.Base.Ability?.OnField() ?? 1) * (source.Base.SecondAbility?.OnField() ?? 1));
                 yield return dialogBox.TypeDialog(Field.EnemyTailwind.condition.StartMessage);
             }
         }
