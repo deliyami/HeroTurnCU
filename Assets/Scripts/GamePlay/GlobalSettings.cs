@@ -49,7 +49,7 @@ public class GlobalSettings : MonoBehaviour, ISavable
     [SerializeField] Sprite ControllerNicknameSprite;
     [SerializeField] Sprite TrekaNicknameSprite;
     [SerializeField] Sprite OctaNicknameSprite;
-    [SerializeField] float nicknameSize;
+    [SerializeField] float nicknameSize = 64;
 
     public UIMode ScreenMode => screenMode;
     public MoveBase StrugglePhysical => strugglePhysical;
@@ -65,6 +65,9 @@ public class GlobalSettings : MonoBehaviour, ISavable
     public Dictionary<UnitID, bool> CheckNaming { get; private set; }
     public Dictionary<UnitID, Sprite> UnitNicknameSprites { get; private set; }
     public float NicknameSize => nicknameSize;
+    public int TakedTurn = 0;
+    public Difficulty GameLevel = Difficulty.Normal;
+    public List<ClearData> ClearDatas;
     private void Awake()
     {
         i = this;
@@ -216,6 +219,7 @@ public class GlobalSettings : MonoBehaviour, ISavable
     {
         var saveData = new ClearSaveData();
         saveData.IsClear = this.IsClear;
+        saveData.ClearDatas = this.ClearDatas;
 
         return saveData;
     }
@@ -226,13 +230,22 @@ public class GlobalSettings : MonoBehaviour, ISavable
         if (saveData != null)
         {
             IsClear = saveData.IsClear;
+            ClearDatas = saveData.ClearDatas;
         }
     }
 }
 public enum UIMode { Light, Dark }
-public enum difficulty { Normal, Hell }
+public enum Difficulty { Normal, Hell }
 [System.Serializable]
 public class ClearSaveData
 {
     public bool IsClear;
+    public List<ClearData> ClearDatas;
+}
+
+public class ClearData
+{
+    public int TakeTurn { get; private set; }
+    public List<Unit> Party { get; private set; }
+    public List<ItemSlot> UsedItems { get; private set; }
 }

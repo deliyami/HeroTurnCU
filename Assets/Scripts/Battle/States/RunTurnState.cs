@@ -247,6 +247,7 @@ public class RunTurnState : State<BattleSystem>
             bs.ResetActions();
             bs.StateMachine.ChangeState(ActionSelectionState.i);
         }
+        GlobalSettings.i.TakedTurn++;
     }
     IEnumerator FinishTurnCheckField(FieldBase fieldBase, string returnMessage)
     {

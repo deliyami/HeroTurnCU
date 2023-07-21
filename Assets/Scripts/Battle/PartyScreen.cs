@@ -3,23 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using GDE.GenericSelectionUI;
 
 public class PartyScreen : SelectionUI<TextSlot>
 {
     [SerializeField] TextMeshProUGUI messageText;
+    [SerializeField] GameObject typeObject1;
+    [SerializeField] GameObject typeObject2;
+    [SerializeField] TextMeshProUGUI ability1;
+    [SerializeField] TextMeshProUGUI ability2;
+    [SerializeField] GameObject moveObject;
     List<Unit> units;
     UnitParty party;
     public Unit SelectedMember => units[selectedItem];
     public int changedItem = -1;
+
+    Image typeImage1;
+    TextMeshProUGUI typeText1;
+    Image typeImage2;
+    TextMeshProUGUI typeText2;
+    PartyScreenMove[] moves;
 
     PartyMemberUI[] memberSlots;
 
     public void Init()
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
-        SetSelectionSettings(SelectionType.Grid, 2);
+        SetSelectionSettings(SelectionType.List, 1);
+
+        typeImage1 = typeObject1.GetComponentInChildren<Image>();
+        typeText1 = typeObject1.GetComponentInChildren<TextMeshProUGUI>();
+        typeImage2 = typeObject2.GetComponentInChildren<Image>();
+        typeText2 = typeObject2.GetComponentInChildren<TextMeshProUGUI>();
+
+        moves = GetComponentsInChildren<PartyScreenMove>();
 
         party = UnitParty.GetPlayerParty();
         SetPartyData();
@@ -85,6 +104,22 @@ public class PartyScreen : SelectionUI<TextSlot>
             if (i == selectedItem) items[i].OnSelectionChange(true);
             else if (i == changedItem) items[i].OnSeatChange(true);
             else items[i].OnSelectionChange(false);
+        }
+        TypeBase typeBase1 = TypeDB.GetObjectByName(units[selectedItem].Base.Type1.ToString());
+        TypeBase typeBase2 = TypeDB.GetObjectByName(units[selectedItem].Base.Type2.ToString());
+        typeImage1.sprite = typeBase1.Sprite;
+        typeText1.text = typeBase1.Name;
+        typeImage2.sprite = typeBase2.Sprite;
+        typeText2.text = typeBase2.Name;
+
+        for (int i = 0; i < units[selectedItem].Moves.Count; i++)
+        {
+            var partyScreenMove = moves[i];
+            var unitMove = units[selectedItem].Moves[i];
+            partyScreenMove.SetName(unitMove.Base.Name);
+            partyScreenMove.SetPP($"{unitMove.PP}/{unitMove.Base.PP}");
+            partyScreenMove.SetType(unitMove.Base.Type);
+            partyScreenMove.SetSprite(unitMove.Base.Type);
         }
     }
     public void ResetUI()

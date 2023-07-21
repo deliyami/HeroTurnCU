@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class IntroManager : MonoBehaviour
 {
+    [SerializeField] GameObject introObject;
+    [SerializeField] GameObject gameDescriptionObject;
+    [SerializeField] GameObject gameplayObject;
     [SerializeField] GameObject backgroundObject;
     [SerializeField] Sprite background2;
     [SerializeField] Sprite background3;
@@ -19,20 +22,32 @@ public class IntroManager : MonoBehaviour
     Vector3 slimeDefaultPosition;
     float fadeDuration = 0.75f;
     float originalMusicVol;
+    int selectedMenu = 0;
+    bool isStart = false;
+    float selectionTimer = 0;
+    const float selectionSpeed = 5;
 
-    [SerializeField] GameObject introObject;
-    [SerializeField] GameObject gameplayObject;
 
     // panel
     public static IntroManager i { get; private set; }
     private void Awake()
     {
         i = this;
+        // Screen.SetResolution(1280, 800, false);
     }
     private void Start()
     {
-        heroDefaultPosition = new Vector3(heroObject.GetComponent<Image>().transform.position.x, heroObject.GetComponent<Image>().transform.position.y);
-        slimeDefaultPosition = new Vector3(slimeObject.GetComponent<Image>().transform.position.x, slimeObject.GetComponent<Image>().transform.position.y);
+        Debug.Log($"객체 이름: {this.gameObject.transform.name}");
+        try
+        {
+            heroDefaultPosition = new Vector3(heroObject.GetComponent<Image>().transform.position.x, heroObject.GetComponent<Image>().transform.position.y);
+            slimeDefaultPosition = new Vector3(slimeObject.GetComponent<Image>().transform.position.x, slimeObject.GetComponent<Image>().transform.position.y);
+
+        }
+        catch (System.Exception)
+        {
+            Debug.Log($"객체 이름2: {this.gameObject.transform.name}");
+        }
         StartCoroutine(IntroCutscene());
 
         AudioManager.i.PlayMusic(AudioId.Intro, fade: true);
@@ -40,10 +55,64 @@ public class IntroManager : MonoBehaviour
 
     void Update()
     {
+        if (!isStart) return;
+        HandleUpdate();
+    }
+    private void HandleUpdate()
+    {
+        UpdateSelectionTimer();
+        // if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        //     selectedMenu++;
+        // else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        //     selectedMenu--;
+        HandleListSelection();
+
+        selectedMenu = Mathf.Clamp(selectedMenu, 0, GlobalSettings.i.GameLevel == Difficulty.Normal ? 1 : 2);
+
+        // UI 변경
+
+        if (Input.GetButtonDown("Submit"))
+        {
+            if (selectedMenu == 0)
+            {
+                gameDescriptionObject.SetActive(true);
+            }
+            else
+            {
+                if (GlobalSettings.i.IsClear || selectedMenu == 1)
+                {
+                    GlobalSettings.i.GameLevel = Difficulty.Hell;
+                    gameplayObject.SetActive(true);
+                }
+                else
+                {
+                    // 종료
+                    Application.Quit();
+                }
+            }
+            introObject.SetActive(false);
+        }
+    }
+    protected void UpdateSelectionTimer()
+    {
+        if (selectionTimer > 0)
+            selectionTimer = Mathf.Clamp(selectionTimer - Time.deltaTime, 0, selectionTimer);
+    }
+    void HandleListSelection()
+    {
+        // TODO: 메뉴에는 이게 맞는데, 파티창같이 좌우로도 움직일 수 있는건 다른것으로 고쳐야 함
+        float v = Input.GetAxis("Vertical");
+        if (selectionTimer == 0 && Mathf.Abs(v) > 0.2f)
+        {
+            selectedMenu += -(int)Mathf.Sign(v);
+            selectionTimer = 1 / selectionSpeed;
+        }
     }
 
     public IEnumerator IntroCutscene()
     {
+        SavingSystem.i.Load("yonggi");
+
         Image hero = heroObject.GetComponent<Image>();
         Image slime = slimeObject.GetComponent<Image>();
         Image background = backgroundObject.GetComponent<Image>();
@@ -84,9 +153,11 @@ public class IntroManager : MonoBehaviour
         pixelBackground.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         Fader.color = new Color(1f, 1f, 1f, 0f);
-        yield return new WaitUntil(() => Input.GetButtonDown("Submit"));
-        gameplayObject.SetActive(true);
-        introObject.SetActive(false);
+        isStart = true;
+        heroObject.SetActive(false);
+        slimeObject.SetActive(false);
+        backgroundObject.SetActive(false);
+        yield return null;
     }
 
     public IEnumerator FadeInImage(Image image, float deltaTime)
@@ -112,7 +183,7 @@ public class IntroManager : MonoBehaviour
         float defaultY = (objectName == "hero" ? heroDefaultPosition.y : slimeDefaultPosition.y);
         x = Mathf.Clamp(image.transform.position.x + x, defaultX - moveDistance, defaultX + moveDistance);
         y = Mathf.Clamp(image.transform.position.y + y, defaultY - moveDistance, defaultY + moveDistance);
-        Debug.Log($"name: {objectName}, x: {x}, y: {y}");
+        // Debug.Log($"name: {objectName}, x: {x}, y: {y}");
         image.transform.position = new Vector3(x, y);
         yield return null;
     }
