@@ -14,9 +14,9 @@ namespace GDE.GenericSelectionUI
         SelectionType selectionType;
         int gridWidth = 2;
 
-        float selectionTimer = 0;
+        protected float selectionTimer = 0;
 
-        const float selectionSpeed = 5;
+        protected const float selectionSpeed = 5;
 
         public event Action<int> OnSelected;
         public event Action OnBack;
@@ -51,11 +51,12 @@ namespace GDE.GenericSelectionUI
 
             if (selectedItem != prevSelection) UpdateSelectionInUI();
 
-            if (Input.GetKeyDown(KeyCode.C) && GameController.Instance.StateMachine.CurrentState != DexState.i && GameController.Instance.StateMachine.CurrentState != DexDescriptionState.i)
-            {
-                Debug.Log("상태창 호출 중");
-                GameController.Instance.StateMachine.Push(DexState.i);
-            }
+            // if (Input.GetKeyDown(KeyCode.C) && GameController.Instance.StateMachine.CurrentState != DexState.i && GameController.Instance.StateMachine.CurrentState != DexDescriptionState.i)
+            // {
+            //     // if (GameController.Instance.StateMachine.CurrentState == BattleState.i)
+            //     Debug.Log("상태창 호출 중");
+            //     GameController.Instance.StateMachine.Push(DexState.i);
+            // }
 
             if (Input.GetButtonDown("Submit"))
                 HandleSubmit();

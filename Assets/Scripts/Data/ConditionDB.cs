@@ -19,6 +19,13 @@ public class ConditionDB
     public static Dictionary<ConditionID, Condition> Conditions { get; set; } = new Dictionary<ConditionID, Condition>()
     {
         {
+            ConditionID.none,
+            new Condition()
+            {
+                Name = "없음",
+            }
+        },
+        {
             ConditionID.psn,
             new Condition()
             {

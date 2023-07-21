@@ -182,8 +182,10 @@ public class RunTurnState : State<BattleSystem>
         }
         FinishTurnCheckField(Field.Room, "공간이 원래대로 되돌아왔다!");
         FinishTurnCheckField(Field.field, "필드가 원래대로 되돌아왔다!");
-        FinishTurnCheckField(Field.Reflect, "분위기가 원래대로 되돌아왔다!");
-        FinishTurnCheckField(Field.LightScreen, "위화감이 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.PlayerReflect, "우리쪽의 분위기가 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.PlayerLightScreen, "우리쪽의 위화감이 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.EnemyReflect, "적의 분위기가 원래대로 되돌아왔다!");
+        FinishTurnCheckField(Field.EnemyLightScreen, "적의 위화감이 원래대로 되돌아왔다!");
         FinishTurnCheckField(Field.PlayerTailwind, "상대측의 바람이 멎었다!");
         FinishTurnCheckField(Field.EnemyTailwind, "우리측의 바람이 멎었다!");
         // if (Field.Room != null)
@@ -344,7 +346,7 @@ public class RunTurnState : State<BattleSystem>
                     }
                     else
                     {
-                        var damageDetails = targeted.Unit.TakeDamage(move, sourceUnit.Unit, Field);
+                        var damageDetails = targeted.Unit.TakeDamage(move, sourceUnit.Unit, Field, sourceUnit.IsPlayerUnit);
                         damage = damageDetails.Damage;
                         yield return targeted.Hud.WaitForHPUpdate();
                         yield return ShowDamageDetails(damageDetails);
@@ -402,8 +404,8 @@ public class RunTurnState : State<BattleSystem>
                 {
                     if (sourceUnit.Unit.HP > 0)
                     {
-                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.Ability?.OnFinish());
-                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.SecondAbility?.OnFinish());
+                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.Ability?.OnFinish() ?? new List<StatBoost>());
+                        sourceUnit.Unit.ApplyBoosts(sourceUnit.Unit.Base.SecondAbility?.OnFinish() ?? new List<StatBoost>());
                     }
                     // AudioManager.i.PlaySfx(AudioId.Faint);
                     yield return HandleUnitFainted(targeted);
@@ -706,18 +708,31 @@ public class RunTurnState : State<BattleSystem>
         }
 
         // 리플렉터, 빛의 장막
-        if (effects.Reflect != ConditionID.none)
+        if (effects.PlayerReflect != ConditionID.none)
         {
-            Field.Reflect.SetCondition(effects.Reflect);
-            Field.Reflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.Reflect.condition.StartMessage);
+            Field.PlayerReflect.SetCondition(effects.PlayerReflect);
+            Field.PlayerReflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            yield return dialogBox.TypeDialog(Field.PlayerReflect.condition.StartMessage);
         }
-        if (effects.LightScreen != ConditionID.none)
+        if (effects.EnemyReflect != ConditionID.none)
         {
-            Field.LightScreen.SetCondition(effects.LightScreen);
-            Field.LightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
-            yield return dialogBox.TypeDialog(Field.LightScreen.condition.StartMessage);
+            Field.EnemyReflect.SetCondition(effects.EnemyReflect);
+            Field.EnemyReflect.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            yield return dialogBox.TypeDialog(Field.EnemyReflect.condition.StartMessage);
         }
+        if (effects.PlayerLightScreen != ConditionID.none)
+        {
+            Field.PlayerLightScreen.SetCondition(effects.PlayerLightScreen);
+            Field.PlayerLightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            yield return dialogBox.TypeDialog(Field.PlayerLightScreen.condition.StartMessage);
+        }
+        if (effects.EnemyLightScreen != ConditionID.none)
+        {
+            Field.EnemyLightScreen.SetCondition(effects.EnemyLightScreen);
+            Field.EnemyLightScreen.duration = (int)(5 * source.Base.Ability?.OnField() * source.Base.SecondAbility?.OnField());
+            yield return dialogBox.TypeDialog(Field.EnemyLightScreen.condition.StartMessage);
+        }
+
 
         // 순풍
         if (effects.Tailwind != ConditionID.none)

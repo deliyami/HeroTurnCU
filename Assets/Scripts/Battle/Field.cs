@@ -7,8 +7,10 @@ public class Field
     public FieldBase Weather { get; set; }
     public FieldBase Room { get; set; }
     public FieldBase field { get; set; }
-    public FieldBase Reflect { get; set; }
-    public FieldBase LightScreen { get; set; }
+    public FieldBase PlayerReflect { get; set; }
+    public FieldBase EnemyReflect { get; set; }
+    public FieldBase PlayerLightScreen { get; set; }
+    public FieldBase EnemyLightScreen { get; set; }
     public FieldBase PlayerTailwind { get; set; }
     public FieldBase EnemyTailwind { get; set; }
 }

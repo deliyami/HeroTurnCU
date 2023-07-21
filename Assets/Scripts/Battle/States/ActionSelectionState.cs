@@ -25,6 +25,7 @@ public class ActionSelectionState : State<BattleSystem>
         selectionUI.gameObject.SetActive(true);
         selectionUI.OnSelected += OnActionSelected;
         selectionUI.OnBack += OnActionCancel;
+        selectionUI.OnSituation += GoToBattleSituationState;
 
         // TODO unit의 이름까지 넘겨야함
         bs.DialogBox.SetDialog($"행동을 선택하세요.");
@@ -44,6 +45,7 @@ public class ActionSelectionState : State<BattleSystem>
         selectionUI.gameObject.SetActive(false);
         selectionUI.OnSelected -= OnActionSelected;
         selectionUI.OnBack -= OnActionCancel;
+        selectionUI.OnSituation -= GoToBattleSituationState;
     }
 
     void OnActionSelected(int selection)
@@ -148,6 +150,12 @@ public class ActionSelectionState : State<BattleSystem>
             bs.AddBattleAction(action);
             bs.StateMachine.ChangeState(RunTurnState.i);
         }
+    }
+
+    void GoToBattleSituationState()
+    {
+        bs.StateMachine.ChangeState(BattleSituationState.i);
+        // bs.StateMachine.ChangeState(BattleSituationState.i);
     }
 
     public List<ActiveUnitArrow> Arrow => arrow;

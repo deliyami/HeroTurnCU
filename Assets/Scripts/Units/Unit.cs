@@ -151,6 +151,26 @@ public class Unit
             { Stat.Evasion, 0 },
         };
     }
+    public int GetStatBoost(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return StatBoosts[Stat.Attack];
+            case 1:
+                return StatBoosts[Stat.Defense];
+            case 2:
+                return StatBoosts[Stat.SpAttack];
+            case 3:
+                return StatBoosts[Stat.SpDefense];
+            case 4:
+                return StatBoosts[Stat.Speed];
+            case 5:
+                return StatBoosts[Stat.Accuracy];
+            default:
+                return StatBoosts[Stat.Evasion];
+        }
+    }
 
     private int CalculateBaseStats(int stat, int statIndex)
     {
@@ -324,7 +344,7 @@ public class Unit
     // virtual public int SettingRealStat() {
     //     return (((STAT * 2) + tribe + (effort / 4)) * level / 100 + 5) * personality;
     // }
-    public DamageDetails TakeDamage(Move move, Unit attacker, Field field)
+    public DamageDetails TakeDamage(Move move, Unit attacker, Field field, bool isPlayerUnit)
     {
         List<int> criticalPercentage = new List<int>(new int[] { 2, (int)Mathf.Pow(2, 2 * move.Base.CriticalRank - 1), 48 });
         criticalPercentage.Sort();
@@ -342,9 +362,9 @@ public class Unit
         float reflectLightScreen = 1f;
         if (move.Base.Category == MoveCategory.Special)
         {
-            if (field.Reflect != null) reflectLightScreen = BattleSystem.i.UnitCount == 1 ? 0.5f : 2 / 3f;
+            if ((isPlayerUnit ? field.PlayerReflect : field.EnemyReflect) != null) reflectLightScreen = BattleSystem.i.UnitCount == 1 ? 0.5f : 2 / 3f;
         }
-        else if (field.LightScreen != null) reflectLightScreen = BattleSystem.i.UnitCount == 1 ? 0.5f : 2 / 3f;
+        else if ((isPlayerUnit ? field.PlayerLightScreen : field.EnemyLightScreen) != null) reflectLightScreen = BattleSystem.i.UnitCount == 1 ? 0.5f : 2 / 3f;
 
         // 랜덤수 × 타입상성1 × 타입상성2 × [[급소]] × Mod2) × 자속보정 × Mod3 x 특성)
         float modifiers = Random.Range(85f, 100f) / 100f * typeEffectiveness * critical * weatherMod
