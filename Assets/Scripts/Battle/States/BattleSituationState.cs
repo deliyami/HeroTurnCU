@@ -20,7 +20,6 @@ public class BattleSituationState : State<BattleSystem>
     {
         bs = owner;
         selectionUI.gameObject.SetActive(true);
-        Debug.Log(bs.PlayerUnits.Concat(bs.EnemyUnits).ToList());
         selectionUI.SetUnit(bs.PlayerUnits.Concat(bs.EnemyUnits).ToList());
         selectionUI.OnBack += OnBack;
     }

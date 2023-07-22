@@ -15,8 +15,8 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
     [SerializeField] TextMeshProUGUI unitDescriptionText;
     [SerializeField] Image portraitSprite;
     [SerializeField] Image battleSprite;
-    [SerializeField] TextMeshProUGUI individualText;
-    [SerializeField] TextMeshProUGUI personalityText;
+    [SerializeField] GameObject individualObject;
+    [SerializeField] GameObject personalityObject;
     [Header("스킬 설명창")]
     [SerializeField] GameObject moveDescription;
     [SerializeField] TextMeshProUGUI power;
@@ -77,6 +77,71 @@ public class DexDescriptionUI : SelectionUI<DexMoveSlotUI>
         portraitSprite.sprite = GlobalSettings.i.UnitSprites[unit.UnitID][randomPortraitSpriteIndex]; // 1% 확률로 네번째 얼굴이 나옴
         battleSprite.sprite = unit.FrontSprite;
 
+        var individualText = individualObject.GetComponentInChildren<TextMeshProUGUI>();
+        var personalityText = personalityObject.GetComponentInChildren<TextMeshProUGUI>();
+        var individualSprite = individualObject.GetComponent<Image>();
+        var personalitySprite = personalityObject.GetComponent<Image>();
+        if (unit.Individual[0] == 0) individualSprite.sprite = TypeDB.GetObjectByName(UnitType.Courage.ToString()).Sprite;
+        else if (unit.Individual[0] == 1) individualSprite.sprite = TypeDB.GetObjectByName(UnitType.Soil.ToString()).Sprite;
+        else if (unit.Individual[0] == 2) individualSprite.sprite = TypeDB.GetObjectByName(UnitType.Wind.ToString()).Sprite;
+        else if (unit.Individual[0] == 3) individualSprite.sprite = TypeDB.GetObjectByName(UnitType.Strange.ToString()).Sprite;
+        else individualSprite.sprite = TypeDB.GetObjectByName(UnitType.Ice.ToString()).Sprite;
+
+        if (unit.Personality[0] == unit.Personality[1])
+        {
+            // 중앙값
+            personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Normal.ToString()).Sprite;
+
+        }
+        else if (unit.Personality[0] % 2 == 1)
+        {
+            if (unit.Personality[1] % 2 == 0)
+            {
+                if (unit.Personality[1] > 3)
+                {
+                    // 무사태평, 건방
+                    personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Grass.ToString()).Sprite;
+                }
+                else
+                {
+                    // 대담, 장난, 차분, 신중
+                    personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Water.ToString()).Sprite;
+                }
+            }
+            else
+            {
+                // 얌전, 촐랑
+                personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Devil.ToString()).Sprite;
+            }
+        }
+        else if (unit.Personality[1] % 2 == 1)
+        {
+            if (unit.Personality[0] > 3)
+            {
+                // 외로움 개구쟁이, 의젓 덜렁
+                personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Psycho.ToString()).Sprite;
+            }
+            else
+            {
+                // 성급 천진난만
+                personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Stone.ToString()).Sprite;
+            }
+        }
+        else if (unit.Personality[0] >= 4)
+        {
+            // 겁쟁이 명랑
+            personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Electric.ToString()).Sprite;
+        }
+        else if (unit.Personality[1] >= 4)
+        {
+            // 냉정 용감
+            personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Sky.ToString()).Sprite;
+        }
+        else
+        {
+            // 고집 조심
+            personalitySprite.sprite = TypeDB.GetObjectByName(UnitType.Fire.ToString()).Sprite;
+        }
         individualText.text = $"{unit.Name}은(는) {IndividualChart.GetIndividualText(unit.Individual)}.";
         personalityText.text = $"{unit.Name}은(는) {PersonalityChart.GetPersonalityText(unit.Personality)} 성격이다.";
     }

@@ -41,9 +41,9 @@ public class BattleSituationUI : SelectionUI<TextSlot>
         this.units = units;
         this.isFirstAccess = true;
 
-        typeImage1 = typeObject1.GetComponentInChildren<Image>();
+        typeImage1 = typeObject1.GetComponent<Image>();
         typeText1 = typeObject1.GetComponentInChildren<TextMeshProUGUI>();
-        typeImage2 = typeObject2.GetComponentInChildren<Image>();
+        typeImage2 = typeObject2.GetComponent<Image>();
         typeText2 = typeObject2.GetComponentInChildren<TextMeshProUGUI>();
     }
 
@@ -58,7 +58,7 @@ public class BattleSituationUI : SelectionUI<TextSlot>
         else if (selectedItem < 0)
             selectedItem = units.Count - 1;
 
-        if (selectedItem != prevSelection || isFirstAccess) UpdateSelectionInUI();
+        if ((selectedItem != prevSelection) || isFirstAccess) UpdateSelectionInUI();
 
         // if (Input.GetKeyDown(KeyCode.C) && GameController.Instance.StateMachine.CurrentState != DexState.i && GameController.Instance.StateMachine.CurrentState != DexDescriptionState.i)
         // {
@@ -101,16 +101,20 @@ public class BattleSituationUI : SelectionUI<TextSlot>
     private void SetBattleSituation()
     {
         List<string> teamSpecials = new List<string>();
+        teamSpecials.Add("아군 쪽에");
         if (BattleSystem.i.Field.PlayerReflect != null) teamSpecials.Add("리플렉터 발동 중");
         if (BattleSystem.i.Field.PlayerLightScreen != null) teamSpecials.Add("빛의 장막 발동 중");
         if (BattleSystem.i.Field.PlayerTailwind != null) teamSpecials.Add("바람이 부는 중");
+        if (teamSpecials.Count == 1) teamSpecials.Add("아무일도 없다");
         string combinedTeamSpecial = string.Join("\n", teamSpecials);
         teamSpecial.text = combinedTeamSpecial;
 
         List<string> enemySpecials = new List<string>();
+        enemySpecials.Add("적 쪽에");
         if (BattleSystem.i.Field.EnemyReflect != null) enemySpecials.Add("리플렉터 발동 중");
         if (BattleSystem.i.Field.EnemyLightScreen != null) enemySpecials.Add("빛의 장막 발동 중");
         if (BattleSystem.i.Field.EnemyTailwind != null) enemySpecials.Add("바람이 부는 중");
+        if (enemySpecials.Count == 1) enemySpecials.Add("아무일도 없다");
         string combinedEnemySpecial = string.Join("\n", enemySpecials);
         enemySpecial.text = combinedEnemySpecial;
 
@@ -118,8 +122,11 @@ public class BattleSituationUI : SelectionUI<TextSlot>
     }
     public void SetField()
     {
-        weather.text = BattleSystem.i.Field.Weather?.condition.Name ?? "없음";
-        field.text = BattleSystem.i.Field.field?.condition.Name ?? "없음";
-        room.text = BattleSystem.i.Field.Room?.condition.Name ?? "없음";
+        if (BattleSystem.i.Field.Weather != null) weather.text = $"현재 날씨는 {BattleSystem.i.Field.Weather.condition.Name}(이)다";
+        else weather.text = "날씨는 멀쩡하다";
+        if (BattleSystem.i.Field.field != null) field.text = $"현재 필드는 {BattleSystem.i.Field.field.condition.Name}(이)다";
+        else field.text = "특별한 점은 없다";
+        if (BattleSystem.i.Field.Room != null) room.text = $"현재 공간이 {BattleSystem.i.Field.Room.condition.Name}(이)다";
+        else room.text = "큰 문제는 없다";
     }
 }

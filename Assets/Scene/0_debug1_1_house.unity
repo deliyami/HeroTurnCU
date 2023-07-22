@@ -4031,21 +4031,18 @@ MonoBehaviour:
   unitToGive:
     _base: {fileID: 11400000, guid: adcf2ed4cf08d8546a2b97a55aae1e7a, type: 2}
     level: 12
-    tribe: 0a0000000a0000000a0000000a0000000a0000000a000000
-    effort: 0a0000000a0000000a0000000a0000000a0000000a000000
-    personality: 0100000002000000
   dialog:
     lines:
     - name: "\uC720\uB2DB"
+      unitID: 0
       text: "\uC720\uB2DB \uC218\uC5EC \uD14C\uC2A4\uD2B8\uC785\uB2C8\uB2E4."
       expression: 0
-      isSystem: 0
       isLeft: 0
       imgReverse: 0
     - name: "\uC720\uB2DB"
+      unitID: 0
       text: "\uD655\uC778 \uBD80\uD0C1"
       expression: 0
-      isSystem: 0
       isLeft: 0
       imgReverse: 0
 --- !u!1 &2065767566
