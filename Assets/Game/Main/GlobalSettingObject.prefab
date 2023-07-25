@@ -146,7 +146,7 @@ MonoBehaviour:
   ControllerNicknameSprite: {fileID: 21300000, guid: 98f344b19c97c9b40b4ed499a7dccc5a, type: 3}
   TrekaNicknameSprite: {fileID: 21300000, guid: cf17cbf368506484e9626236b4c908b2, type: 3}
   OctaNicknameSprite: {fileID: 21300000, guid: 81e78eb4a2f5b974fa14f900942ecf59, type: 3}
-  nicknameSize: 64
+  nicknameSize: 48
   IsClear: 0
   TakedTurn: 0
   GameLevel: 0

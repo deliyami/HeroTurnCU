@@ -13,14 +13,14 @@ public class QuestBase : ScriptableObject
     [SerializeField] Dialog inProgressDialogue;
     [SerializeField] Dialog completedDialogue;
 
-    [SerializeField] ItemBase requiredItem;
+    [SerializeField] List<ItemBase> requiredItem;
     [SerializeField] ItemBase rewardItem;
 
     public string Name { get => name; }
     public string Description { get => description; }
     public Dialog StartDialogue { get => startDialogue; }
-    public Dialog InProgressDialogue { get => inProgressDialogue?.Lines.Count > 0?inProgressDialogue:startDialogue; }
+    public Dialog InProgressDialogue { get => inProgressDialogue?.Lines.Count > 0 ? inProgressDialogue : startDialogue; }
     public Dialog CompletedDialogue { get => completedDialogue; }
-    public ItemBase RequiredItem { get => requiredItem; }
+    public List<ItemBase> RequiredItem { get => requiredItem; }
     public ItemBase RewardItem { get => rewardItem; }
 }

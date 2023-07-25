@@ -49,7 +49,7 @@ public class GlobalSettings : MonoBehaviour, ISavable
     [SerializeField] Sprite ControllerNicknameSprite;
     [SerializeField] Sprite TrekaNicknameSprite;
     [SerializeField] Sprite OctaNicknameSprite;
-    [SerializeField] float nicknameSize = 64;
+    [SerializeField] float nicknameSize = 48;
 
     public UIMode ScreenMode => screenMode;
     public MoveBase StrugglePhysical => strugglePhysical;

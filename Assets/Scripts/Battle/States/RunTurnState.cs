@@ -367,8 +367,8 @@ public class RunTurnState : State<BattleSystem>
                     hit = i;
                     if (targeted.Unit.HP <= 0)
                     {
-                        bool abilityFocusSash = targeted.Unit.Base.Ability.isFocusSash();
-                        bool secondAbilityFocusSash = targeted.Unit.Base.Ability.isFocusSash();
+                        bool abilityFocusSash = targeted.Unit.Base.Ability?.isFocusSash() ?? false;
+                        bool secondAbilityFocusSash = targeted.Unit.Base.Ability?.isFocusSash() ?? false;
                         if (abilityFocusSash || secondAbilityFocusSash) targeted.Unit.SetHP(1);
                         else break;
                     }
@@ -591,6 +591,7 @@ public class RunTurnState : State<BattleSystem>
         var actionToRemove = actions.FirstOrDefault(a => a.User == faintedUnit);
         if (actionToRemove != null)
             actionToRemove.IsInvalid = true;
+        Debug.Log($"player unit?{faintedUnit.IsPlayerUnit}");
         if (faintedUnit.IsPlayerUnit)
         {
             var activeUnits = playerUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
@@ -606,7 +607,7 @@ public class RunTurnState : State<BattleSystem>
                 // unitToSwitch = faintedUnit;
                 // OpenPartyScreen();
                 yield return GameController.Instance.StateMachine.PushAndWait(PartyState.i);
-                yield return bs.SwitchUnit(bs.PlayerUnits[bs.ActionIndex], PartyState.i.SelectedUnit);
+                yield return bs.SwitchUnit(faintedUnit, PartyState.i.SelectedUnit);
                 // return; // return remove
             }
             else if (nextUnit == null && activeUnits.Count > 0)

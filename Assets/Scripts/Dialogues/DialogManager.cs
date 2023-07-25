@@ -12,11 +12,12 @@ public class DialogManager : MonoBehaviour
     [SerializeField] GameObject playerNickName;
     [SerializeField] GameObject enemyNickName;
 
-    [SerializeField] GameObject dialogBox;
-    [SerializeField] ChoiceBox choiceBox;
+    [SerializeField] GameObject dialogContainer;
+    [SerializeField] RectTransform dialogBox;
+    [SerializeField] TextMeshProUGUI dialogName;
     [SerializeField] TextMeshProUGUI dialogText;
     [SerializeField] int lettersPerSecond;
-    [SerializeField] TextMeshProUGUI dialogName;
+    [SerializeField] ChoiceBox choiceBox;
 
     public event Action OnShowDialog;
     public event Action OnDialogFinished;
@@ -51,7 +52,7 @@ public class DialogManager : MonoBehaviour
         enemySprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
         OnShowDialog?.Invoke();
         IsShowing = true;
-        dialogBox.SetActive(true);
+        dialogContainer.SetActive(true);
 
         AudioManager.i.PlaySfx(AudioId.UISelect);
 
@@ -73,7 +74,7 @@ public class DialogManager : MonoBehaviour
     }
     public void CloseDialog()
     {
-        dialogBox.SetActive(false);
+        dialogContainer.SetActive(false);
         IsShowing = false;
     }
     public IEnumerator ShowDialog(Dialog dialog, List<string> choices = null,
@@ -82,7 +83,7 @@ public class DialogManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         OnShowDialog?.Invoke();
         IsShowing = true;
-        dialogBox.SetActive(true);
+        dialogContainer.SetActive(true);
 
         Image playerSprite = this.playerSprite.GetComponent<Image>();
         Image enemySprite = this.enemySprite.GetComponent<Image>();
@@ -97,6 +98,20 @@ public class DialogManager : MonoBehaviour
             // 그래서 그것을 여기서 처리해야 함
 
             AudioManager.i.PlaySfx(AudioId.UISelect);
+            if (line.IsLeft)
+            {
+                Vector3 vector = new Vector3(1, 1, 1);
+                dialogBox.localScale = vector;
+                dialogName.GetComponent<RectTransform>().localScale = vector;
+                dialogText.GetComponent<RectTransform>().localScale = vector;
+            }
+            else
+            {
+                Vector3 vector = new Vector3(-1, 1, 1);
+                dialogBox.localScale = vector;
+                dialogName.GetComponent<RectTransform>().localScale = vector;
+                dialogText.GetComponent<RectTransform>().localScale = vector;
+            }
             dialogName.text = line.Name;
             // 사진 변경
             if (line.UnitID == UnitID.None)
@@ -145,7 +160,7 @@ public class DialogManager : MonoBehaviour
         playerSprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
         enemySprite.GetComponent<Image>().color = GlobalSettings.i.Transparent;
 
-        dialogBox.SetActive(false);
+        dialogContainer.SetActive(false);
         IsShowing = false;
         OnDialogFinished?.Invoke();
     }

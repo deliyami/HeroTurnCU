@@ -50,5 +50,6 @@ MonoBehaviour:
       expression: 0
       isLeft: 0
       imgReverse: 0
-  requiredItem: {fileID: 11400000, guid: 8cb544bf206fa1548accbde256d74f6a, type: 2}
+  requiredItem:
+  - {fileID: 11400000, guid: 8cb544bf206fa1548accbde256d74f6a, type: 2}
   rewardItem: {fileID: 11400000, guid: 34b0ef7f91b4cf04bb4d55c8b0d0b97c, type: 2}

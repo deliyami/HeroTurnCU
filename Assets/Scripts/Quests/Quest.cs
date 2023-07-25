@@ -45,16 +45,16 @@ public class Quest
         yield return DialogManager.Instance.ShowDialog(Base.CompletedDialogue);
 
         var inventory = Inventory.GetInventory();
-        if (Base.RequiredItem != null)
+        if (Base.RequiredItem?.Count > 0)
         {
-            inventory.RemoveItem(Base.RequiredItem);
-            
+            // inventory.RemoveItem(Base.RequiredItem);
+
         }
 
         if (Base.RewardItem != null)
         {
             inventory.AddItem(Base.RewardItem);
-            
+
             yield return DialogManager.Instance.ShowDialogText($"{Base.RewardItem.Name}을(를) 얻었다!");
         }
 
@@ -65,10 +65,11 @@ public class Quest
     public bool CanBeCompleted()
     {
         var inventory = Inventory.GetInventory();
-        if (Base.RequiredItem != null)
+        if (Base.RequiredItem?.Count > 0)
         {
-            if (!inventory.HasItem(Base.RequiredItem))
-                return false;
+            foreach (var item in Base.RequiredItem)
+                if (!inventory.HasItem(item))
+                    return false;
         }
         return true;
     }

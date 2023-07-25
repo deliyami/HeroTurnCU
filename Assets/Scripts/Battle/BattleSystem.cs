@@ -609,8 +609,8 @@ public class BattleSystem : MonoBehaviour
         yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 나선다!");
 
         // 특성
-        newUnit.Base.Ability.BeforeRunTurn(Field, newUnit);
-        newUnit.Base.SecondAbility.BeforeRunTurn(Field, newUnit);
+        newUnit.Base.Ability?.BeforeRunTurn(Field, newUnit);
+        newUnit.Base.SecondAbility?.BeforeRunTurn(Field, newUnit);
 
         // if (isTrainerAboutToUse)
         //     StartCoroutine(SendNextTrainerUnit());
