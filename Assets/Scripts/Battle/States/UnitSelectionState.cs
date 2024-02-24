@@ -74,11 +74,9 @@ public class UnitSelectionState : State<BattleSystem>
         var checkPlayerUnit = playerUnits.FirstOrDefault(u => u.Unit.Base.Name != currentUnit.Unit.Base.Name);
         BattleUnit playerUnit = checkPlayerUnit is BattleUnit ? checkPlayerUnit : playerUnits.First();
 
-        var enemyUnit = enemyUnits.Count < bs.UnitCount ? enemyUnits.First() : enemyUnits[selection];
-
         var targetedUnit = selection >= enemyUnits.Count ?
                 playerUnit :
-                enemyUnit;
+                enemyUnits.Count < bs.UnitCount ? enemyUnits.First() : enemyUnits[selection];
 
         var action = new BattleAction()
         {

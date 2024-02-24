@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemCategory { Items, Balls, Tms }
+public enum ItemCategory { Items, Balls, Tms, Quest }
 public class Inventory : MonoBehaviour, ISavable
 {
     [SerializeField] List<ItemSlot> slots;
     [SerializeField] List<ItemSlot> ballSlots;
     [SerializeField] List<ItemSlot> tmSlots;
+    [SerializeField] List<ItemSlot> questSlots;
     List<List<ItemSlot>> allSlots;
     public event Action OnUpdated;
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>>() { slots, ballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>>() { slots, ballSlots, tmSlots, questSlots };
     }
     public static List<string> ItemCategories { get; set; } = new List<string>()
     {
@@ -108,7 +109,7 @@ public class Inventory : MonoBehaviour, ISavable
             return ItemCategory.Balls;
         else if (item is TmItem)
             return ItemCategory.Tms;
-        return ItemCategory.Tms;
+        return ItemCategory.Quest;
     }
 
     public static Inventory GetInventory()
@@ -123,6 +124,7 @@ public class Inventory : MonoBehaviour, ISavable
             items = slots.Select(i => i.GetSaveData()).ToList(),
             balls = ballSlots.Select(i => i.GetSaveData()).ToList(),
             tms = tmSlots.Select(i => i.GetSaveData()).ToList(),
+            quests = questSlots.Select(i => i.GetSaveData()).ToList(),
         };
         return saveData;
     }
@@ -134,8 +136,9 @@ public class Inventory : MonoBehaviour, ISavable
         slots = saveData.items.Select(i => new ItemSlot(i)).ToList();
         ballSlots = saveData.balls.Select(i => new ItemSlot(i)).ToList();
         tmSlots = saveData.tms.Select(i => new ItemSlot(i)).ToList();
+        questSlots = saveData.quests.Select(i => new ItemSlot(i)).ToList();
 
-        allSlots = new List<List<ItemSlot>>() { slots, ballSlots, tmSlots };
+        allSlots = new List<List<ItemSlot>>() { slots, ballSlots, tmSlots, questSlots };
 
         OnUpdated?.Invoke();
     }
@@ -190,4 +193,5 @@ public class InventorySaveData
     public List<ItemSaveData> items;
     public List<ItemSaveData> balls;
     public List<ItemSaveData> tms;
+    public List<ItemSaveData> quests;
 }

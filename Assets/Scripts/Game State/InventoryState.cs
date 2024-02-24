@@ -34,6 +34,7 @@ public class InventoryState : State<GameController>
     }
     public override void Exit()
     {
+        SelectedItem = null;
         inventoryUI.gameObject.SetActive(false);
         inventoryUI.OnSelected -= OnItemSelected;
         inventoryUI.OnBack -= OnBack;
@@ -52,6 +53,8 @@ public class InventoryState : State<GameController>
     IEnumerator SelectUnitAndUseItem()
     {
         var prevState = gc.StateMachine.GetPrevState();
+        Debug.Log("battle item use before state is");
+        Debug.Log(prevState);
         if (prevState == BattleState.i)
         {
             //  in battle
@@ -80,7 +83,6 @@ public class InventoryState : State<GameController>
         }
 
         yield return gc.StateMachine.PushAndWait(PartyState.i);
-
         if (prevState == BattleState.i)
         {
             if (UseItemState.i.ItemUsed)

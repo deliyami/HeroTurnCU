@@ -6,11 +6,9 @@ using TMPro;
 public class TextSlot : MonoBehaviour, ISelectableItem
 {
     [SerializeField] TextMeshProUGUI text;
-    Color originalColor;
+    [SerializeField] Color originalColor = Color.black;
     public void Init()
-    {
-        originalColor = text.color;
-    }
+    { }
     public void Clear()
     {
         text.color = originalColor;

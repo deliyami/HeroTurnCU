@@ -34,6 +34,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] AudioClip trainerBattleVictoryMusic;
 
     [Header("배경")]
+    [SerializeField] GameObject battleCanvas;
     [SerializeField] Image backgroundImage;
     [SerializeField] Sprite grassBackground;
     [SerializeField] Sprite waterBackground;
@@ -250,12 +251,6 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(true);
     }
 
-    void OpenBag()
-    {
-        state = BattleStates.Bag;
-        inventoryUI.gameObject.SetActive(true);
-    }
-
     void OpenPartyScreen()
     {
         // partyScreen.CalledFrom = state;
@@ -270,29 +265,6 @@ public class BattleSystem : MonoBehaviour
         dialogBox.EnableActionSelector(false);
         dialogBox.EnableDialogText(false);
         dialogBox.EnableMoveSelector(true);
-    }
-    void TargetSelection()
-    {
-        state = BattleStates.TargetSelection;
-        currentTarget = 0;
-    }
-    IEnumerator AboutToUse(Unit newUnit)
-    {
-        state = BattleStates.Busy;
-        yield return dialogBox.TypeDialog($"{newUnit.Base.Name}(이)가 준비중이다! 팀원을 교체하겠습니까?");
-
-        state = BattleStates.AboutToUse;
-        dialogBox.EnableChoiceBox(true);
-    }
-    IEnumerator ChooseMoveToForget(Unit unit, MoveBase newMove)
-    {
-        state = BattleStates.Busy;
-        yield return dialogBox.TypeDialog($"기술 배우는 창, 보인다면 버그입니다.");
-        moveSelectionUI.gameObject.SetActive(true);
-        // moveSelectionUI.SetMoveData(unit.Moves.Select(x => x.Base).ToList(), newMove);
-        moveToLearn = newMove;
-
-        state = BattleStates.MoveToForget;
     }
     public void AddBattleAction(BattleAction action)
     {
@@ -329,15 +301,24 @@ public class BattleSystem : MonoBehaviour
                 };
                 actions.Add(enemyAction);
             }
-
-            // StartCoroutine(RunTurns());
         }
         else
         {
             ActionSelection(ActionIndex + 1);
         }
     }
+    public bool HasUnitInBattleAction(Unit unit)
+    {
 
+        return actions.Any(a =>
+        {
+            Debug.Log("here is HasUnitInBattleAction");
+            Debug.Log(a.Type == ActionType.SwitchUnit && a.SelectedUnit == unit);
+            Debug.Log(a.SelectedUnit);
+            Debug.Log(unit);
+            return a.Type == ActionType.SwitchUnit && a.SelectedUnit == unit;
+        });
+    }
     public void HandleUpdate()
     {
         StateMachine.Execute();
@@ -373,13 +354,10 @@ public class BattleSystem : MonoBehaviour
                 moveSelectionUI.gameObject.SetActive(false);
                 if (moveIndex == UnitBase.MaxNumOfMoves)
                 {
-                    // 배우지 않음
                     StartCoroutine(dialogBox.TypeDialog($"배우지 않는다. 이것도 보이면 버그다..."));
                 }
                 else
                 {
-                    // 새로운 스킬 배움
-                    // var selectedMove = playerUnit.Unit.Moves[moveIndex].Base;
                     unitTryingToLearn.Unit.Moves[moveIndex] = new Move(moveToLearn);
                     StartCoroutine(dialogBox.TypeDialog($"아님 핵을 썼던가..."));
                 }
@@ -387,104 +365,9 @@ public class BattleSystem : MonoBehaviour
                 unitTryingToLearn = null;
                 state = BattleStates.RunningTurn;
             };
-            // TODO 배틀에서 선택하는거 처리해야함
-            // moveSelectionUI.HandleMoveSelection(onMoveSelected);
-        }
-        // if (Input.GetKeyDown(KeyCode.T))
-        //     StartCoroutine(ThrowBall());
-    }
-
-    void HandleActionSelection()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            currentAction += 2;
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            currentAction -= 2;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            --currentAction;
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            ++currentAction;
-
-        currentAction = Mathf.Clamp(currentAction, 0, 3);
-
-        dialogBox.UpdateActionSelection(currentAction);
-
-        if (Input.GetButtonDown("Submit"))
-        {
-            if (currentAction == 0)
-            {
-                // fight
-                MoveSelection();
-            }
-            else if (currentAction == 1)
-            {
-                // Bag
-                OpenBag();
-
-            }
-            else if (currentAction == 2)
-            {
-                // Unit
-                OpenPartyScreen();
-            }
-            else if (currentAction == 3)
-            {
-                // run
-                var action = new BattleAction()
-                {
-                    Type = ActionType.Run,
-                    User = currentUnit
-                };
-                AddBattleAction(action);
-            }
         }
     }
-    void HandleMoveSelection()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-            currentMove += 2;
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            currentMove -= 2;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            --currentMove;
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            ++currentMove;
 
-        currentMove = Mathf.Clamp(currentMove, 0, currentUnit.Unit.Moves.Count - 1);
-
-        dialogBox.UpdateMoveSelection(currentMove, currentUnit.Unit.Moves[currentMove]);
-
-        if (Input.GetButtonDown("Submit"))
-        {
-            var move = currentUnit.Unit.Moves[currentMove];
-            if (move.PP == 0) return;
-
-            dialogBox.EnableMoveSelector(false);
-            dialogBox.EnableDialogText(true);
-
-            if (enemyUnits.Count > 1)
-            {
-                TargetSelection();
-            }
-            else
-            {
-                var action = new BattleAction()
-                {
-                    Type = ActionType.Move,
-                    User = currentUnit,
-                    Target = enemyUnits[0],
-                    Move = move
-                };
-                AddBattleAction(action);
-            }
-        }
-        else if (Input.GetButtonDown("Cancel"))
-        {
-            dialogBox.EnableMoveSelector(false);
-            dialogBox.EnableDialogText(true);
-            ActionSelection(ActionIndex);
-        }
-    }
     void HandleTargetSelection()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
@@ -585,13 +468,13 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
-                StartCoroutine(SendNextTrainerUnit());
+                StartCoroutine(ChangeNextTrainerUnit());
             }
         }
         else if (Input.GetButtonDown("Cancel"))
         {
             dialogBox.EnableChoiceBox(false);
-            StartCoroutine(SendNextTrainerUnit());
+            StartCoroutine(ChangeNextTrainerUnit());
         }
     }
 
@@ -613,25 +496,36 @@ public class BattleSystem : MonoBehaviour
         newUnit.Base.SecondAbility?.BeforeRunTurn(Field, newUnit);
 
         // if (isTrainerAboutToUse)
-        //     StartCoroutine(SendNextTrainerUnit());
+        //     StartCoroutine(ChangeNextTrainerUnit());
         // else
         //     state = BattleStates.RunningTurn;
     }
 
-    public IEnumerator SendNextTrainerUnit()
+    public IEnumerator ChangeNextTrainerUnit()
     {
         state = BattleStates.Busy;
 
         var faintedUnit = enemyUnits.First(u => u.Unit.HP == 0);
         var activeUnits = enemyUnits.Select(unit => unit.Unit).Where(u => u.HP > 0).ToList();
         var nextUnit = TrainerParty.GetHealthyUnit(activeUnits);
+        yield return ChangeTrainerUnit(faintedUnit, nextUnit);
+    }
+    public IEnumerator ChangeNextTrainerUnitByUTurn(BattleUnit faintedUnit, Unit nextUnit)
+    {
+        state = BattleStates.Busy;
+        yield return ChangeTrainerUnit(faintedUnit, nextUnit);
+    }
+    IEnumerator ChangeTrainerUnit(BattleUnit faintedUnit, Unit nextUnit)
+    {
         faintedUnit.Setup(nextUnit);
         yield return dialogBox.TypeDialog($"{nextUnit.Base.Name}(이)가 교대로 나온다!");
 
         state = BattleStates.RunningTurn;
     }
+    // TODO deprecated function
     IEnumerator OnItemUsed(ItemBase usedItem)
     {
+        Debug.Log("on item use1");
         state = BattleStates.Busy;
         inventoryUI.gameObject.SetActive(false);
 
@@ -643,6 +537,7 @@ public class BattleSystem : MonoBehaviour
         {
             Type = ActionType.UseItem,
             User = currentUnit,
+            Priority = 99,
         };
         AddBattleAction(action);
     }
@@ -778,6 +673,8 @@ public class BattleSystem : MonoBehaviour
     //     UnitCount == 1 ?
     //         new List<BattleUnit>() { enemyUnitSingle } :
     //         enemyUnitsMulti.GetRange(0, enemyUnitsMulti.Count);
+    public GameObject BattleCanvas => battleCanvas;
+    public Image BackgroundImage => backgroundImage;
 
     public List<BattleUnit> PlayerUnits => playerUnits;
     public List<BattleUnit> EnemyUnits => enemyUnits;

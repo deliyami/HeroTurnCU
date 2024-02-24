@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 
 public class RunTurnState : State<BattleSystem>
@@ -73,15 +76,13 @@ public class RunTurnState : State<BattleSystem>
                 {
                     if (bs.Field.PlayerTailwind != null)
                         return a.User.Unit.Speed * 2;
-                    else
-                        return a.User.Unit.Speed;
+                    return a.User.Unit.Speed;
                 }
                 else
                 {
                     if (bs.Field.EnemyTailwind != null)
                         return a.User.Unit.Speed * 2;
-                    else
-                        return a.User.Unit.Speed;
+                    return a.User.Unit.Speed;
                 }
             }).ToList();
         else
@@ -91,15 +92,13 @@ public class RunTurnState : State<BattleSystem>
                 {
                     if (bs.Field.PlayerTailwind != null)
                         return a.User.Unit.Speed * 2;
-                    else
-                        return a.User.Unit.Speed;
+                    return a.User.Unit.Speed;
                 }
                 else
                 {
                     if (bs.Field.EnemyTailwind != null)
                         return a.User.Unit.Speed * 2;
-                    else
-                        return a.User.Unit.Speed;
+                    return a.User.Unit.Speed;
                 }
             }).ToList();
 
@@ -128,7 +127,18 @@ public class RunTurnState : State<BattleSystem>
                 }
                 else
                 {
-
+                    if (action.SelectedItem.isUsable(action.User.Unit))
+                    {
+                        bool itemUsed = action.SelectedItem.Use(action.User.Unit);
+                        if (itemUsed)
+                        {
+                            // 유닛이 필드에 나와있는지 확인하고 이벤트 작성
+                            yield return action.User.Hud.WaitForHPUpdate();
+                            yield return dialogBox.TypeDialog($"{action.User.Unit.Base.Name}(은)는 아이템을 사용했다!");
+                        }
+                    }
+                    else
+                        yield return dialogBox.TypeDialog($"{action.User.Unit.Base.Name}(은)는 아이템 사용에 실패했다!");
                 }
             }
             else if (action.Type == ActionType.Run)
@@ -146,7 +156,7 @@ public class RunTurnState : State<BattleSystem>
                 var pu = playerUnits[i];
                 Field.Weather.condition.OnWeather?.Invoke(pu.Unit);
                 yield return ShowStatusChanges(pu.Unit);
-                if (pu.Unit.HPChanged) pu.PlayerHitAnimation();
+                if (pu.Unit.HPChanged) pu.PlayerDamagedtAnimation();
                 pu.Hud.UpdateHP();
                 if (pu.Unit.HP <= 0)
                 {
@@ -160,7 +170,7 @@ public class RunTurnState : State<BattleSystem>
                 var eu = enemyUnits[i];
                 Field.Weather.condition.OnWeather?.Invoke(eu.Unit);
                 yield return ShowStatusChanges(eu.Unit);
-                if (eu.Unit.HPChanged) eu.PlayerHitAnimation();
+                if (eu.Unit.HPChanged) eu.PlayerDamagedtAnimation();
                 eu.Hud.UpdateHP();
                 if (eu.Unit.HP <= 0)
                 {
@@ -190,64 +200,13 @@ public class RunTurnState : State<BattleSystem>
         FinishTurnCheckField(Field.EnemyLightScreen, "적의 위화감이 원래대로 되돌아왔다!");
         FinishTurnCheckField(Field.PlayerTailwind, "상대측의 바람이 멎었다!");
         FinishTurnCheckField(Field.EnemyTailwind, "우리측의 바람이 멎었다!");
-        // if (Field.Room != null)
-        // {
-        //     if (Field.Room.duration != null)
-        //     {
-        //         Field.Room.duration--;
-        //         if (Field.Room.duration == 0)
-        //         {
-        //             Field.Room = null;
-        //             Field.Room.duration = null;
-        //             yield return dialogBox.TypeDialog("공간이 원래대로 되돌아왔다!");
-        //         }
-        //     }
-        // }
-        // if (Field.field != null)
-        // {
-        //     if (Field.field.duration != null)
-        //     {
-        //         Field.field.duration--;
-        //         if (Field.field.duration == 0)
-        //         {
-        //             Field.field = null;
-        //             Field.field.duration = null;
-        //             yield return dialogBox.TypeDialog("필드가 원래대로 되돌아왔다!");
-        //         }
-        //     }
-        // }
-        // if (Field.Reflect != null)
-        // {
-        //     if (Field.Reflect.duration != null)
-        //     {
-        //         Field.Reflect.duration--;
-        //         if (Field.Reflect.duration == 0)
-        //         {
-        //             Field.Reflect = null;
-        //             Field.Reflect.duration = null;
-        //             yield return dialogBox.TypeDialog("분위기가 원래대로 되돌아왔다!");
-        //         }
-        //     }
-        // }
-        // if (Field.LightScreen != null)
-        // {
-        //     if (Field.LightScreen.duration != null)
-        //     {
-        //         Field.LightScreen.duration--;
-        //         if (Field.LightScreen.duration == 0)
-        //         {
-        //             Field.LightScreen = null;
-        //             Field.LightScreen.duration = null;
-        //             yield return dialogBox.TypeDialog("위화감이 원래대로 되돌아왔다!");
-        //         }
-        //     }
-        // }
 
         foreach (var action in actions)
             yield return RunAfterTurn(action.User);
 
         if (!bs.IsbattleOver)
         {
+            Debug.Log("reset battle action");
             bs.ResetActions();
             bs.StateMachine.ChangeState(ActionSelectionState.i);
         }
@@ -270,13 +229,12 @@ public class RunTurnState : State<BattleSystem>
     {
         bool canRunMove = sourceUnit.Unit.OnBeforeMove();
 
+        yield return ShowStatusChanges(sourceUnit.Unit);
         if (!canRunMove)
         {
-            yield return ShowStatusChanges(sourceUnit.Unit);
             yield return sourceUnit.Hud.WaitForHPUpdate();
             yield break;
         }
-        yield return ShowStatusChanges(sourceUnit.Unit);
 
         move.PP--;
         yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 {move.Base.Name}을(를) 사용했다!");
@@ -286,13 +244,29 @@ public class RunTurnState : State<BattleSystem>
         sourceUnit.Unit.Base.SecondAbility?.BeforeAttack(sourceUnit, move);
 
         // 여기서 맞을 친구들 정하기
-        // targetUnit.Unit
         List<BattleUnit> targetedUnits = new List<BattleUnit>();
 
         List<BattleUnit> sourceUnits = sourceUnit.IsPlayerUnit ? playerUnits : enemyUnits;
         List<BattleUnit> targetUnits = targetUnit.IsPlayerUnit ? playerUnits : enemyUnits;
 
-        if (move.Base.Target == MoveTarget.Foe || move.Base.Target == MoveTarget.Team || move.Base.Target == MoveTarget.TeamAnother || move.Base.Target == MoveTarget.Self || move.Base.Target == MoveTarget.Another) targetedUnits.Add(targetUnit);
+        bool isSingleTarget = move.Base.Target == MoveTarget.Foe || move.Base.Target == MoveTarget.Team || move.Base.Target == MoveTarget.TeamAnother || move.Base.Target == MoveTarget.Self || move.Base.Target == MoveTarget.Another;
+
+        if (isSingleTarget)
+        {
+            if (targetUnit.HasUnit()) targetedUnits.Add(targetUnit);
+            // 이하는 hasUnit == null => 남은 유닛이 하나라 나머지 자리에 null이 된 경우
+            else if (move.Base.Target == MoveTarget.Foe) targetedUnits.Add(targetUnits.Where(t => t.HasUnit()).First());
+            else if (move.Base.Target == MoveTarget.Team) targetedUnits.Add(sourceUnit);
+            else if (move.Base.Target == MoveTarget.Another && move.Base.Category != MoveCategory.Status)
+            {
+                targetedUnits.Add(targetUnits.Where(t => t.HasUnit()).First());
+            }
+            else
+            {
+                yield return dialogBox.TypeDialog("기술을 사용 할 상대가 없다!");
+                yield break;
+            }
+        }
         if (move.Base.Target == MoveTarget.FoeAll)
         {
             targetUnits.ForEach(t =>
@@ -318,10 +292,19 @@ public class RunTurnState : State<BattleSystem>
             sourceUnits.ForEach(s => targetedUnits.Add(s));
             targetUnits.ForEach(t => targetedUnits.Add(t));
         }
-        if (move.Base.Category != MoveCategory.Status)
-            sourceUnit.PlayAttackAnimation();
+        // TODO : 여기서 공격하는 애니메이션을 수정해야함
+        if (isSingleTarget)
+            yield return PlayAttackAnimation(sourceUnit, targetedUnits, move);
+        else
+            yield return PlayBackgroundAnimation(sourceUnit, targetedUnits, move);
+        // move.Base.GetHitTimes() == 1이면 단일공격, 2이상이면 멀티공격
+        bool isSingleTimeAttack = move.Base.GetHitTimes() == 1;
+        bool isAppliedableEffect = true;
+        bool isAppliedableSecondaryEffect = true;
         foreach (var targeted in targetedUnits)
         {
+            if (!isAppliedableEffect) break;
+            if (!targeted.HasUnit()) continue;
             bool checkDefenseAbility = (targeted.Unit.Base.Ability?.BeforeDefense(targeted, move) ?? true) && (targeted.Unit.Base.SecondAbility?.BeforeDefense(targeted, move) ?? true);
             bool accuracyHit = CheckIfMoveHits(move, sourceUnit.Unit, targeted.Unit);
             if (accuracyHit && checkDefenseAbility && (!move.Base.FirstTurnChance || move.IsActivitable) && !targeted.Unit.IsProtectActivative)
@@ -332,18 +315,27 @@ public class RunTurnState : State<BattleSystem>
                 int damage = 0;
                 for (int i = 1; i <= hitTimes; i++)
                 {
+                    if (i > 1)
+                    {
+                        yield return PlayAttackAnimation(sourceUnit, targetedUnits, move);
+                        yield return dialogBox.TypeDialog($"{i}번째 공격!");
+                    }
                     if (move.Base.Sound != null)
                         AudioManager.i.PlaySfx(move.Base.Sound);
 
                     yield return new WaitForSeconds(1f);
                     if (move.Base.Category != MoveCategory.Status)
                     {
-                        targeted.PlayerHitAnimation();
+                        // 공격 받고나서 깜빡이는 애니메이션인데... 추가적인 애니메이션이 필요한지 생각해야함
+                        targeted.PlayerDamagedtAnimation();
                         AudioManager.i.PlaySfx(AudioId.Hit);
                     }
 
-                    if (move.Base.Category == MoveCategory.Status)
+                    if (move.Base.Category == MoveCategory.Status && isAppliedableEffect)
                     {
+                        // isAppliedableEffect = !(move.Base.Effects.Weather != ConditionID.none || move.Base.Effects.Room != ConditionID.none || move.Base.Effects.Field != ConditionID.none || move.Base.Effects.Reflect != ConditionID.none || move.Base.Effects.LightScreen != ConditionID.none || move.Base.Effects.Tailwind != ConditionID.none);
+                        isAppliedableEffect = move.Base.Effects.Weather == ConditionID.none && move.Base.Effects.Room == ConditionID.none && move.Base.Effects.Field == ConditionID.none && move.Base.Effects.Reflect == ConditionID.none && move.Base.Effects.LightScreen == ConditionID.none && move.Base.Effects.Tailwind == ConditionID.none;
+
                         yield return RunMoveEffect(move.Base.Effects, sourceUnit, targeted.Unit, move.Base.Target);
                     }
                     else
@@ -355,13 +347,16 @@ public class RunTurnState : State<BattleSystem>
                         typeEffectiveness = damageDetails.TypeEffectiveness;
                     }
 
-                    if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targeted.Unit.HP > 0)
+                    if (move.Base.Secondaries != null && move.Base.Secondaries.Count > 0 && targeted.Unit.HP > 0 && isAppliedableSecondaryEffect)
                     {
                         foreach (var secondary in move.Base.Secondaries)
                         {
                             var rnd = UnityEngine.Random.Range(1, 101);
                             if (rnd <= secondary.Chance)
+                            {
+                                if (secondary.Target == MoveTarget.Self || !isSingleTimeAttack) isAppliedableSecondaryEffect = false;
                                 yield return RunMoveEffect(secondary, sourceUnit, targeted.Unit, secondary.Target);
+                            }
                         }
                     }
                     hit = i;
@@ -379,26 +374,27 @@ public class RunTurnState : State<BattleSystem>
 
                 if ((move.Base.Rebound.x != 0 && move.Base.Rebound.y != 0) || move.Base.Rebound.z != 0)
                 {
-                    sourceUnit.PlayerHitAnimation();
+                    Debug.Log($"{sourceUnit.Unit.Base.Name}반동피해 ${damage}");
+                    sourceUnit.PlayerDamagedtAnimation();
                     AudioManager.i.PlaySfx(AudioId.Hit);
                     sourceUnit.Unit.ReboundTakeDamage(move.Base.Rebound, damage);
-                    yield return targeted.Hud.WaitForHPUpdate();
+                    yield return sourceUnit.Hud.WaitForHPUpdate();
                     yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}은(는) 반동피해를 입었다!");
                 }
                 if (move.Base.IsStruggle)
                 {
-                    sourceUnit.PlayerHitAnimation();
+                    sourceUnit.PlayerDamagedtAnimation();
                     AudioManager.i.PlaySfx(AudioId.Hit);
                     sourceUnit.Unit.ReboundTakeDamage(move.Base.Rebound, sourceUnit.Unit.MaxHP / 4);
-                    yield return targeted.Hud.WaitForHPUpdate();
+                    yield return sourceUnit.Hud.WaitForHPUpdate();
                     yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}은(는) 몸부림 쳤다!");
                 }
                 if (move.Base.BellyDrum)
                 {
-                    sourceUnit.PlayerHitAnimation();
+                    sourceUnit.PlayerDamagedtAnimation();
                     AudioManager.i.PlaySfx(AudioId.Hit);
                     sourceUnit.Unit.ReboundTakeDamage(move.Base.Rebound, sourceUnit.Unit.MaxHP / 2);
-                    yield return targeted.Hud.WaitForHPUpdate();
+                    yield return sourceUnit.Hud.WaitForHPUpdate();
                     yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}의 분위기가 무지막지하게 변했다!");
                 }
 
@@ -417,7 +413,8 @@ public class RunTurnState : State<BattleSystem>
                     yield return HandleUnitFainted(sourceUnit);
                     break;
                 }
-                else if (move.Base.Category != MoveCategory.Status)
+
+                if (move.Base.Category != MoveCategory.Status)
                 {
                     // 특성
                     var abilityConditionObject = sourceUnit.Unit.Base.Ability?.AfterAttack(sourceUnit, targeted, move);
@@ -429,7 +426,6 @@ public class RunTurnState : State<BattleSystem>
                     yield return RunAbilityAfterAttack(secondAbilityConditionObject, sourceUnit.Unit, targeted.Unit);
                     yield return RunAbilityAfterAttack(targetedAbilityConditionObject, sourceUnit.Unit, targeted.Unit);
                     yield return RunAbilityAfterAttack(targetedSecondAbilityConditionObject, sourceUnit.Unit, targeted.Unit);
-
                 }
             }
             else
@@ -453,10 +449,10 @@ public class RunTurnState : State<BattleSystem>
             }
         }
         // 교체 기술 사용
-        int sourceUnitCount = sourceUnit.IsPlayerUnit ? bs.PlayerUnitsMulti.Count : bs.EnemyUnitsMulti.Count;
+        int sourceUnitCount = sourceUnit.IsPlayerUnit ? playerParty.GetHealthyUnitCount() : trainerParty.GetHealthyUnitCount();
         if (sourceUnit.Unit.HP > 0 && move.Base.IsChangeUnit && sourceUnitCount > 2)
         {
-            HandleChangeMove(sourceUnit);
+            yield return HandleChangeMove(sourceUnit);
         }
         move.IsActivitable = false;
     }
@@ -512,79 +508,30 @@ public class RunTurnState : State<BattleSystem>
     {
         AudioManager.i.PlaySfx(AudioId.Faint);
         yield return dialogBox.TypeDialog($"{faintedUnit.Unit.Base.Name}(이)가 쓰러졌다!");
-        faintedUnit.PlayFaintAnimation();
+        yield return RemoveUnit(faintedUnit);
+        // faintedUnit.PlayFaintAnimation();
 
-        yield return new WaitForSeconds(2f);
-        yield return HandleExpGain(faintedUnit);
+        // yield return new WaitForSeconds(2f);
 
-        yield return NextStepsAfterFainting(faintedUnit);
+        // yield return NextStepsAfterFainting(faintedUnit);
     }
     IEnumerator HandleChangeMove(BattleUnit sourceUnit)
     {
         yield return dialogBox.TypeDialog($"{sourceUnit.Unit.Base.Name}(이)가 전투에서 빠진다!");
-        sourceUnit.PlayFaintAnimation();
+        yield return RemoveUnit(sourceUnit);
+        // sourceUnit.PlayFaintAnimation();
 
-        yield return new WaitForSeconds(2f);
+        // yield return new WaitForSeconds(2f);
 
-        yield return NextStepsAfterFainting(sourceUnit);
+        // yield return NextStepsAfterFainting(sourceUnit);
     }
-
-    IEnumerator HandleExpGain(BattleUnit faintedUnit)
+    IEnumerator RemoveUnit(BattleUnit unit)
     {
-        if (!faintedUnit.IsPlayerUnit)
-        {
-            bool battleWon = true;
-            if (isTrainerBattle)
-                battleWon = trainerParty.GetHealthyUnit() == null;
-
-            // TODO : 이거 노래 다 끝날 때 까지 움직이지 못하게 해야 함
-            if (battleWon)
-                AudioManager.i.PlayMusic(bs.IsTrainerBattle ? bs.TrainerBattleVictoryMusic : bs.WildBattleVictoryMusic, loop: false);
-            // exp 획득
-            int expYield = faintedUnit.Unit.Base.ExpYield;
-            int enemyLevel = faintedUnit.Unit.Level;
-            float trainerBonus = (bs.IsTrainerBattle) ? 1.5f : 1f;
-
-            // int expGain = Mathf.FloorToInt(expYield * enemyLevel * trainerBonus / 7);
-            int expGain = 0;
-            if (expGain != 0)
-                for (int i = 0; i < unitCount; i++)
-                {
-                    var playerUnit = playerUnits[i];
-                    yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 자세를 다잡는다!");
-                    playerUnit.Unit.Exp += expGain;
-                    // yield return playerUnit.Hud.SetExpSmooth();
-                    // 레벨 업
-
-                    while (playerUnit.Unit.CheckForLevelUp())
-                    {
-                        playerUnit.Hud.SetLevel();
-                        yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 렙업했긴한데 사용하지 않는 코드다!!");
-                        // 스킬 배우기
-                        var newMove = playerUnit.Unit.GetLearnableMoveAtCurrLevel();
-                        if (newMove != null)
-                        {
-                            if (playerUnit.Unit.Moves.Count < UnitBase.MaxNumOfMoves)
-                            {
-                                playerUnit.Unit.LearnMove(newMove.Base);
-                                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 얻을 수 없는 스킬을 얻었다!");
-                                dialogBox.SetMoveNames(playerUnit.Unit.Moves);
-                            }
-                            else
-                            {
-                                // 기술 잊기
-                                // unitTryingToLearn = playerUnit;
-                                yield return dialogBox.TypeDialog($"{playerUnit.Unit.Base.Name}은(는) 잊을 수 없는 스킬을 잊으려 한다!");
-                                // yield return ChooseMoveToForget(playerUnit.Unit, newMove.Base);
-                                yield return new WaitForSeconds(2f);
-                            }
-                        }
-                        yield return playerUnit.Hud.SetExpSmooth(true);
-                    }
-                }
-            yield return new WaitForSeconds(1f);
-        }
+        unit.PlayFaintAnimation();
+        yield return new WaitForSeconds(2f);
+        yield return NextStepsAfterFainting(unit);
     }
+
     IEnumerator NextStepsAfterFainting(BattleUnit faintedUnit)
     {
         List<BattleAction> actions = bs.Actions;
@@ -645,11 +592,18 @@ public class RunTurnState : State<BattleSystem>
                     // unitToSwitch = playerUnits[0];
                     // StartCoroutine(AboutToUse(nextUnit));
                 }
-                AboutToUseState.i.NewUnit = nextUnit;
-                yield return bs.StateMachine.PushAndWait(AboutToUseState.i);
+                if (faintedUnit.Unit.HP > 0)
+                {
+                    yield return bs.ChangeNextTrainerUnitByUTurn(faintedUnit, nextUnit);
+                }
+                else
+                {
+                    AboutToUseState.i.NewUnit = nextUnit;
+                    yield return bs.StateMachine.PushAndWait(AboutToUseState.i);
+                }
                 // else
                 // TODO Change Unit
-                // StartCoroutine(SendNextTrainerUnit());
+                // StartCoroutine(bs.ChangeNextTrainerUnit());
             }
             else if (nextUnit == null && activeUnits.Count > 0)
             {
@@ -662,6 +616,308 @@ public class RunTurnState : State<BattleSystem>
                 actionsToChange.ForEach(a => a.Target = enemyUnits.First());
             }
         }
+    }
+
+    IEnumerator PlayBackgroundAnimation(BattleUnit sourceUnit, List<BattleUnit> targetUnits, Move move)
+    {
+        // bs.BattleCanvas.GetComponent<Image>().DOColor(Color.white, 0.2f).SetLoops(2, LoopType.Yoyo);
+        string moveName = move.Base.Name;
+        switch (moveName)
+        {
+            case "적전체공격test":
+                break;
+            // tailWind
+            case "업템포":
+                break;
+            // sparklingAria
+            case "에코 슬라이드":
+                for (int i = 0; i < playerUnits.Count; i++)
+                {
+                    yield return playerUnits[i].sparklingAriaHit();
+                }
+                break;
+            // citronVeil
+            case "R-77":
+                float x = 0;
+                playerUnits.ForEach(p =>
+                {
+                    x += p.transform.position.x;
+                });
+                yield return sourceUnit.citronVeilAttack(x);
+
+                // effects[i].transform.position = this.transform.position + (isPlayerUnit ? Vector3.down * 0.55f : Vector3.zero) + new Vector3(x, y);
+                break;
+            default:
+                break;
+        }
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    IEnumerator PlayAttackAnimation(BattleUnit sourceUnit, List<BattleUnit> targetUnits, Move move)
+    {
+        string moveName = move.Base.Name;
+        switch (moveName)
+        {
+            // 테스트
+            case "적전체공격test":
+                sourceUnit.Test1Attack();
+                targetUnits.ForEach(t => t.Test1Hit());
+                break;
+            // 아군
+            // 용사
+            // bodyPress
+            case "가드 대쉬":
+                sourceUnit.bodyPressAttack();
+                // targetUnits.ForEach(t => t.bodyPressHit());
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].bodyPressHit();
+                }
+                break;
+            // doubleIronBash
+            case "검휘두르기":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].doubleIronBashHit();
+                }
+                break;
+            // headSmash
+            case "필사의 돌진":
+                yield return sourceUnit.headSmashAttack();
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    Debug.Log("필사의 돐진 피격 실행");
+                    yield return targetUnits[i].headSmashHit();
+                }
+                break;
+            // ironDefense
+            case "방어자세":
+                yield return sourceUnit.ironDefenseAttack();
+                break;
+            // 히나미
+            // bulletPunch
+            case "은탄":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].bulletPunchHit();
+                }
+                break;
+            // rockBlast
+            case "속사":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].rockBlastHit();
+                }
+                break;
+            // snipeShot
+            case "조준사격":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].snipeShotHit();
+                }
+                break;
+            // suckerPunch
+            case "빈틈포착":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].suckerPunchHit();
+                }
+                break;
+            // 크라베
+            // meteorBeam
+            case "화살":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].meteorBeamHit();
+                }
+                break;
+            // meteorMash
+            case "바늘":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].meteorMashHit();
+                }
+                break;
+            // moonBlast
+            case "달":
+                Image background = BattleSystem.i.BackgroundImage;
+                Color backgroundOriginalColor = new Color(background.color.r, background.color.g, background.color.b, 1f);
+                background.DOColor(new Color((backgroundOriginalColor.r * 255 - 50f) / 255, (backgroundOriginalColor.r * 255 - 50f) / 255, (backgroundOriginalColor.r * 255 - 50f) / 255, 1f), 0.5f);
+                yield return sourceUnit.moonBlastAttack();
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    targetUnits[i].moonBlastHit();
+                }
+                background.DOColor(backgroundOriginalColor, 0.5f);
+                break;
+            // aircutter
+            case "바람":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].aircutterHit();
+                }
+                break;
+            // 흑유령
+            // shadowBall
+            case "사령구체":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].shadowBallHit();
+                }
+                break;
+            // flameThrower
+            case "화염방사":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].flameThrowerHit();
+                }
+                break;
+            // protect
+            case "유체화":
+                yield return sourceUnit.protectAttack();
+                break;
+            // calmMind
+            case "집중":
+                yield return sourceUnit.calmMindAttack();
+                break;
+            // 마시로
+            // hyperVoice
+            case "소리지르기":
+                yield return sourceUnit.hyperVoiceAttack();
+                // for (int i = 0; i < targetUnits.Count; i++)
+                // {
+                //     yield return targetUnits[i].hyperVoiceHit();
+                // }
+                BattleSystem.i.BackgroundImage.transform.DOShakePosition(1f, 0.3f, 10, 90, false, true);
+                yield return sourceUnit.moonBlastAttack();
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    targetUnits[i].moonBlastHit();
+                }
+                break;
+            // partingShot
+            case "야유":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].partingShotHit();
+                }
+                break;
+            // 잇쨩
+            // nuzzle
+            case "CM-516":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].nuzzleHit();
+                }
+                break;
+            // voltSwitch
+            case "PRPR-410":
+                for (int i = 0; i < targetUnits.Count; i++)
+                {
+                    yield return targetUnits[i].voltSwitchHit();
+                }
+                break;
+            // skillSwap
+            case "NK-714":
+                break;
+
+            // 적
+            // 카를
+            // phantomForce
+            case "슬래시":
+                break;
+            // crunch
+            case "가드크래시":
+                break;
+            // shadowClaw
+            case "스크래치":
+                break;
+            // willOWisop
+            case "헬파이어":
+                break;
+            // 로드
+            // bellyDrum
+            case "암흑의 정신":
+                break;
+            // icePunch
+            case "냉동고드름":
+                break;
+            // ironHead
+            case "철구투척":
+                break;
+            // explosion
+            case "침묵의 길":
+                break;
+            // 살라만다
+            // flameThrower
+            // case "flameThrower":
+            //     break;
+            // dracoMeteor
+            case "크게 화내기":
+                break;
+            // flareBlitz
+            case "몸통박치기":
+                break;
+            // earthquake
+            case "땅고르기":
+                break;
+            // 연화
+            // overHeat
+            case "화신섬광":
+                break;
+            // leafStorm
+            case "녹각풍":
+                break;
+            // vacuumWave
+            case "공기탄":
+                break;
+            // fakeOut
+            case "엄습":
+                break;
+            // 컨트롤러
+            // ufoBeam
+            case "우상-창조-":
+                break;
+            // bulldoze
+            case "둘 만의 결정":
+                break;
+            // stoneEdge
+            case "소성단의 꿈":
+                break;
+            // airSlach
+            case "업보":
+                break;
+            // 트레카
+            // swordsDance
+            case "순보":
+                break;
+            // uTurn
+            case "영원한 토끼":
+                break;
+            // firstImpression
+            case "허풍떨기":
+                break;
+            // spinOut
+            case "발도:만월베기":
+                break;
+            // 무너
+            // scald
+            case "물주전자":
+                break;
+            // iceBeam
+            case "빙하물주전자":
+                break;
+            // surf
+            case "급격한 조수":
+                break;
+            // lightScreen
+            case "lightScreen":
+                break;
+            default:
+                sourceUnit.PlayDefaultAttackAnimation();
+                break;
+        }
+        // yield return new WaitForSeconds(0.5f);
     }
 
     IEnumerator RunMoveEffect(MoveEffects effects, BattleUnit sourceUnit, Unit target, MoveTarget moveTarget)

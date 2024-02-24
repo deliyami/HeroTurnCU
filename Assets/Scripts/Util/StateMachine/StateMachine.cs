@@ -55,5 +55,9 @@ namespace GDEUtils.StateMachine
         {
             return StateStack.ElementAt(1);
         }
+        public bool hasStateInPrevState(State<T> state)
+        {
+            return StateStack.Contains(state);
+        }
     }
 }

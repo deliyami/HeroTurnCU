@@ -6,8 +6,14 @@ public class UnitGiver : MonoBehaviour, ISavable
 {
     [SerializeField] Unit unitToGive;
     [SerializeField] Dialog dialog;
+    [SerializeField] QuestBase questToCheck;
+    QuestList questList;
 
     bool used = false;
+    private void Start()
+    {
+        questList = QuestList.GetQuestList();
+    }
 
     public IEnumerator GiveUnit(PlayerController player)
     {
@@ -19,13 +25,13 @@ public class UnitGiver : MonoBehaviour, ISavable
         used = true;
 
         AudioManager.i.PlaySfx(AudioId.UnitObtained, pauseMusic: true);
-        
+
         yield return DialogManager.Instance.ShowDialogText($"{unitToGive.Base.Name}와(과) 동료가 되었다!");
     }
 
     public bool CanBeGiven()
     {
-        return unitToGive != null && !used;
+        return unitToGive != null && !used && questList.IsStarted(questToCheck.Name);
     }
 
     public object CaptureState()

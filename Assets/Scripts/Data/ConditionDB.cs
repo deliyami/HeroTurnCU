@@ -166,6 +166,10 @@ public class ConditionDB
                     unit.StatusChanges.Enqueue($"{unit.Base.Name}은(는) 풀이죽어 움직이지 못한다!");
                     unit.CureVolatileStatus();
                     return false;
+                },
+                OnAfterTurn = (Unit unit) =>
+                {
+                    unit.CureVolatileStatus();
                 }
             }
         },

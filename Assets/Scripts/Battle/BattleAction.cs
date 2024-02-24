@@ -14,6 +14,16 @@ public class BattleAction
     public ItemBase SelectedItem { get; set; } // item
 
     public bool IsInvalid { get; set; }
-
-    public int Priority => (Type == ActionType.Move) ? Move.Base.Priority : 99;
+    private int priority = 0;
+    public int Priority
+    {
+        get
+        {
+            return (Type == ActionType.Move) ? Move.Base.Priority : priority;
+        }
+        set
+        {
+            priority = value;
+        }
+    }
 }

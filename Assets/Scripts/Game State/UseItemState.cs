@@ -50,19 +50,22 @@ public class UseItemState : State<GameController>
                     yield break;
                 }
             }
-            var usedItem = inventory.UseItem(item, partyScreen.SelectedMember);
-            if (usedItem != null)
+            if (item.isUsable(unit))
             {
                 ItemUsed = true;
-                if (usedItem is RecoveryItem)
-                    yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
-                // onItemUsed?.Invoke(usedItem);
+                if (!gc.StateMachine.hasStateInPrevState(BattleState.i))
+                {
+                    var usedItem = inventory.UseItem(item, unit);
+                    if (usedItem != null)
+                    {
+                        if (usedItem is RecoveryItem)
+                            yield return DialogManager.Instance.ShowDialogText($"{usedItem.Name}을(를) 사용했다!");
+                        // onItemUsed?.Invoke(usedItem);
+                    }
+                }
             }
-            else
-            {
-                if (inventoryUI.SelectedCategory == (int)ItemCategory.Items)
-                    yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
-            }
+            else if (inventoryUI.SelectedCategory == (int)ItemCategory.Items)
+                yield return DialogManager.Instance.ShowDialogText($"그것을 사용 할 수 없다!");
         }
         gc.StateMachine.Pop();
     }

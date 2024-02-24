@@ -46,7 +46,7 @@ public class MoveSelectionUI : SelectionUI<TextSlot>
             var move = _moves[selectedItem];
 
             ppText.text = $"PP {move.PP}/ {move.Base.PP}";
-            typeText.text = Type.GetType(move.Base.Type);
+            typeText.text = Type.GetTypeOfName(move.Base.Type);
             // typeSprite.Type.Base.Courage
             typeSprite.Setup(move.Base.Type);
 

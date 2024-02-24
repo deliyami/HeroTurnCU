@@ -30,7 +30,7 @@ public class ActionSelectionState : State<BattleSystem>
         // TODO unit의 이름까지 넘겨야함
         bs.DialogBox.SetDialog($"행동을 선택하세요.");
 
-        if (bs.UnitCount != 1) arrow[bs.ActionIndex].gameObject.SetActive(true);
+        ResetArrow();
         // bs.PlayerUnits[bs.ActionIndex].SetSelected(true);
         // bs.DialogBox.SetDialog($"{currentUnit.Unit.Base.Name}의 행동을 선택하세요.");
     }
@@ -50,6 +50,7 @@ public class ActionSelectionState : State<BattleSystem>
 
     void OnActionSelected(int selection)
     {
+        Debug.Log("on item use2");
         // 1. 버튼 누름 -> actionselectionUI->selectionUI의 public virtual void HandleUpdate()를 이용해 이 메소드에 들어옴, 각자의 state로 변경
         if (selection == 0)
         {
@@ -104,7 +105,8 @@ public class ActionSelectionState : State<BattleSystem>
             var action = new BattleAction()
             {
                 Type = ActionType.Run,
-                User = bs.PlayerUnits[bs.ActionIndex]
+                User = bs.PlayerUnits[bs.ActionIndex],
+                Priority = 0,
             };
             bs.AddBattleAction(action);
             bs.StateMachine.ChangeState(RunTurnState.i);
@@ -112,7 +114,15 @@ public class ActionSelectionState : State<BattleSystem>
     }
     void OnActionCancel()
     {
+        Debug.Log("reset battle action");
         bs.ResetActions();
+        ResetArrow();
+    }
+
+    public void ResetArrow()
+    {
+        foreach (var arr in arrow) arr.gameObject.SetActive(false);
+        if (bs.UnitCount != 1) arrow[bs.ActionIndex].gameObject.SetActive(true);
     }
 
     IEnumerator GoToPartyState()
@@ -125,7 +135,8 @@ public class ActionSelectionState : State<BattleSystem>
             {
                 Type = ActionType.SwitchUnit,
                 User = bs.PlayerUnits[bs.ActionIndex],
-                SelectedUnit = selectedUnit
+                SelectedUnit = selectedUnit,
+                Priority = 88,
             };
             bs.AddBattleAction(action);
             bs.StateMachine.ChangeState(RunTurnState.i);
@@ -145,7 +156,8 @@ public class ActionSelectionState : State<BattleSystem>
                 Type = ActionType.UseItem,
                 User = bs.PlayerUnits[bs.ActionIndex],
                 SelectedUnit = PartyState.i.SelectedUnit,
-                SelectedItem = selectedItem
+                SelectedItem = selectedItem,
+                Priority = 99,
             };
             bs.AddBattleAction(action);
             bs.StateMachine.ChangeState(RunTurnState.i);

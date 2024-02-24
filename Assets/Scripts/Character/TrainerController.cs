@@ -39,7 +39,7 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
         character.LookTowards(initiator.position);
         if (!battleLost)
         {
-            AudioManager.i.PlayMusic(TrainerAppearsClip);
+            AudioManager.i.PlayMusic(TrainerAppearsClip, false);
             yield return DialogManager.Instance.ShowDialog(dialog);
             GameController.Instance.StartTrainerBattle(this, battleUnitCount);
         }
@@ -52,7 +52,7 @@ public class TrainerController : MonoBehaviour, Interactable, ISavable
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
         GameController.Instance.StateMachine.Push(CutsceneState.i);
-        AudioManager.i.PlayMusic(TrainerAppearsClip);
+        AudioManager.i.PlayMusic(TrainerAppearsClip, false);
 
         // 머리 위 상태 느낌표
         exclamation.SetActive(true);

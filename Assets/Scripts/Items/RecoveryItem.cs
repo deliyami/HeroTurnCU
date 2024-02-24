@@ -20,6 +20,35 @@ public class RecoveryItem : ItemBase
     [Header("Revive")]
     [SerializeField] bool revive;
     [SerializeField] bool maxRevive;
+    public override bool isUsable(Unit unit)
+    {
+        // 부활
+        if ((revive || maxRevive) && unit.HP <= 0)
+        {
+            return true;
+        }
+        // 체력 회복
+        if ((restoreMaxHP || hpAmount > 0) && unit.HP < unit.MaxHP && unit.HP > 0)
+        {
+            return true;
+        }
+        // 상태이상 회복
+        if ((recoveryAllStatus || status != ConditionID.none) && unit.Status != null || unit.VolatileStatus != null)
+        {
+            if (recoveryAllStatus) return true;
+            else if (unit.Status?.ID == status || unit.VolatileStatus?.ID == status) return true;
+        }
+        // 기술 회복
+        if (restoreMaxPP)
+        {
+            return true;
+        }
+        else if (ppAmount > 0)
+        {
+            return true;
+        }
+        return false;
+    }
 
     public override bool Use(Unit unit)
     {

@@ -20,7 +20,7 @@ public class PartyState : State<GameController>
         gc = owner;
 
         SelectedUnit = null;
-
+        partyScreen.ResetMessage();
         partyScreen.gameObject.SetActive(true);
         partyScreen.OnSelected += OnUnitSelected;
         partyScreen.OnBack += OnBack;
@@ -58,6 +58,11 @@ public class PartyState : State<GameController>
             if (battleState.BattleSystem.PlayerUnits.Any(u => u.Unit == SelectedUnit))
             {
                 partyScreen.SetMessageText("그 동료는 싸우고 있다!");
+                return;
+            }
+            if (battleState.BattleSystem.HasUnitInBattleAction(SelectedUnit))
+            {
+                partyScreen.SetMessageText("그 동료는 싸울예정이다!");
                 return;
             }
 

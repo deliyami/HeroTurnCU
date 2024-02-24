@@ -63,10 +63,10 @@ public class InventoryUI : SelectionUI<TextSlot>
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             selectedCategory--;
 
-        if (selectedCategory > Inventory.ItemCategories.Count - 1)
+        if (selectedCategory > Inventory.ItemCategories.Count - 2)
             selectedCategory = 0;
         else if (selectedCategory < 0)
-            selectedCategory = Inventory.ItemCategories.Count - 1;
+            selectedCategory = Inventory.ItemCategories.Count - 2;
 
         if (prevCategry != selectedCategory)
         {

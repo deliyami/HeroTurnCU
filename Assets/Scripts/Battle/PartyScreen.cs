@@ -68,7 +68,7 @@ public class PartyScreen : SelectionUI<TextSlot>
         var textSlots = memberSlots.Select(m => m.GetComponent<TextSlot>());
         SetItems(textSlots.Take(units.Count).ToList());
 
-        messageText.text = "동료를 선택하세요!";
+        ResetMessage();
     }
 
     public void ShowIfTmIsUsable(TmItem tmItem)
@@ -101,9 +101,12 @@ public class PartyScreen : SelectionUI<TextSlot>
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if (i == selectedItem) items[i].OnSelectionChange(true);
-            else if (i == changedItem) items[i].OnSeatChange(true);
+            if (i == changedItem) items[i].OnSeatChange(true);
+            else if (i == selectedItem) items[i].OnSelectionChange(true);
             else items[i].OnSelectionChange(false);
+            // if (i == selectedItem) items[i].OnSelectionChange(true);
+            // else if (i == changedItem) items[i].OnSeatChange(true);
+            // else items[i].OnSelectionChange(false);
         }
         TypeBase typeBase1 = TypeDB.GetObjectByName(units[selectedItem].Base.Type1.ToString());
         TypeBase typeBase2 = TypeDB.GetObjectByName(units[selectedItem].Base.Type2.ToString());
@@ -128,5 +131,9 @@ public class PartyScreen : SelectionUI<TextSlot>
         {
             items[i].OnResetColor();
         }
+    }
+    public void ResetMessage()
+    {
+        messageText.text = "동료를 선택하세요!";
     }
 }

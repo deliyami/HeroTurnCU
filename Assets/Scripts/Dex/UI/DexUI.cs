@@ -86,6 +86,7 @@ public class DexUI : SelectionUI<TextSlot>
 
         if (prevCategry != selectedCategory)
         {
+            Debug.Log("reset battle action with DexUI");
             ResetSelection();
             categoryText.text = Dex.DexCategories[selectedCategory];
             UpdateDexList();
@@ -108,20 +109,10 @@ public class DexUI : SelectionUI<TextSlot>
             typeSprite1.sprite = type1.Sprite;
             typeText1.text = type1.Name;
             var sd = typeContainer.sizeDelta;
-            if (type2.UnitType == UnitType.None)
-            {
-                if (typeObject2.activeSelf) typeObject2.SetActive(false);
-
-                sd.x = TYPE_OBJECT_WIDTH;
-                typeContainer.sizeDelta = sd;
-            }
+            if (type2.UnitType == UnitType.None) typeObject2.SetActive(false);
+            else if (!typeObject2.activeSelf) typeObject2.SetActive(true);
             else
             {
-                if (!typeObject2.activeSelf) typeObject2.SetActive(true);
-
-                sd.x = TYPE_OBJECT_WIDTH * 2 + TYPE_OBJECT_SPACE;
-                typeContainer.sizeDelta = sd;
-
                 typeSprite2.sprite = type2.Sprite;
                 typeText2.text = type2.Name;
             }

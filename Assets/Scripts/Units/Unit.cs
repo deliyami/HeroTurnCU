@@ -212,10 +212,10 @@ public class Unit
             switch (stat)
             {
                 case Stat.Attack:
-                    statName = "공격";
+                    statName = "공격력";
                     break;
                 case Stat.Defense:
-                    statName = "방어";
+                    statName = "방어력";
                     break;
                 case Stat.SpAttack:
                     statName = "마법력";
@@ -400,10 +400,12 @@ public class Unit
         float reboundPercentage = 0f;
         if (rebound.x != 0 && rebound.y != 0)
         {
-            reboundPercentage = rebound.x / rebound.y;
+            reboundPercentage = (float)rebound.x / (float)rebound.y;
         }
 
         DecreaseHP(Mathf.FloorToInt(damage * reboundPercentage + rebound.z));
+        Debug.Log($"반동피해 {damage * reboundPercentage + rebound.z}");
+        Debug.Log($"rebound {rebound.x} {rebound.y}");
 
         var damageDetails = new DamageDetails()
         {
@@ -507,6 +509,11 @@ public class Unit
     {
         if (Status.Name == "수면" || Status.Name == "냉동") return false;
         return true;
+    }
+
+    public void setLevel(int level)
+    {
+        this.level = level;
     }
 }
 

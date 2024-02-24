@@ -69,7 +69,9 @@ public class Quest
         {
             foreach (var item in Base.RequiredItem)
                 if (!inventory.HasItem(item))
+                {
                     return false;
+                }
         }
         return true;
     }

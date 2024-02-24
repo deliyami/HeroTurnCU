@@ -98,7 +98,7 @@ public class DialogManager : MonoBehaviour
             // 그래서 그것을 여기서 처리해야 함
 
             AudioManager.i.PlaySfx(AudioId.UISelect);
-            if (line.IsLeft)
+            if (line.IsLeft || line.UnitID == UnitID.None)
             {
                 Vector3 vector = new Vector3(1, 1, 1);
                 dialogBox.localScale = vector;
@@ -211,7 +211,7 @@ public class DialogManager : MonoBehaviour
         else
         {
             Image nickname = enemyNickName.GetComponent<Image>();
-            nickname.rectTransform.sizeDelta = GlobalSettings.i.UnitNicknameSprites[unitID].bounds.size;
+            nickname.rectTransform.sizeDelta = GlobalSettings.i.UnitNicknameSprites[unitID].bounds.size * GlobalSettings.i.NicknameSize;
             nickname.sprite = GlobalSettings.i.UnitNicknameSprites[unitID];
 
             enemyNickName.GetComponent<Image>().color = GlobalSettings.i.Transparent;

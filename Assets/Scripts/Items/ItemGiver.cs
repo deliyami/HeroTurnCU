@@ -7,8 +7,14 @@ public class ItemGiver : MonoBehaviour, ISavable
     [SerializeField] ItemBase item;
     [SerializeField] int count;
     [SerializeField] Dialog dialog;
+    [SerializeField] QuestBase questToCheck;
+    QuestList questList;
 
     bool used = false;
+    private void Start()
+    {
+        questList = QuestList.GetQuestList();
+    }
 
     public IEnumerator GiveItem(PlayerController player)
     {
@@ -16,13 +22,17 @@ public class ItemGiver : MonoBehaviour, ISavable
         player.GetComponent<Inventory>().AddItem(item, count);
 
         used = true;
-        AudioManager.i.PlaySfx(AudioId.ItemObtained, pauseMusic: true);
-        yield return DialogManager.Instance.ShowDialogText($"{item.Name}을(를) 받았다!");
+        if (dialog.Lines.Count > 0)
+        {
+            AudioManager.i.PlaySfx(AudioId.ItemObtained, pauseMusic: true);
+            yield return DialogManager.Instance.ShowDialogText($"{item.Name}을(를) 받았다!");
+        }
     }
 
     public bool CanBeGiven()
     {
-        return item != null && count > 0 && !used;
+
+        return item != null && !used && questList.IsStarted(questToCheck.Name);
     }
 
     public object CaptureState()

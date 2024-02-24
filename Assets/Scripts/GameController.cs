@@ -8,6 +8,7 @@ public enum GameState { FreeRoam, Busy, Battle, Dialog, Menu, PartyScreen, Bag, 
 public class GameController : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
+    [SerializeField] List<Unit> startingUnits;
     [SerializeField] BattleSystem battleSystem;
     [SerializeField] Camera worldCamera;
     [SerializeField] PartyScreen partyScreen;
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         StateMachine = new StateMachine<GameController>(this);
-        StateMachine.ChangeState(FreeRoamState.i);
+
         battleSystem.OnBattleOver += EndBattle;
 
         partyScreen.Init();
@@ -71,6 +72,29 @@ public class GameController : MonoBehaviour
             state = GameState.Shop;
         };
         ShopController.i.OnFinish += () => { state = GameState.FreeRoam; };
+        StateMachine.ChangeState(FreeRoamState.i);
+
+        StartCoroutine(InitStory());
+    }
+
+    private IEnumerator InitStory()
+    {
+        StateMachine.Push(CutsceneState.i);
+
+        yield return new WaitForSeconds(1f);
+        yield return Fader.i.FadeOut(0.5f);
+
+        // TODO: global확인하면서 레벨 setLevel해야함
+        // startingUnits.setLevel(15);
+        startingUnits.ForEach(u =>
+        {
+            u.Init();
+            PlayerController.i.GetComponent<UnitParty>().AddUnit(u);
+        });
+        yield return PlayerController.i.Character.Move(new Vector2(0, 3));
+        yield return new WaitForSeconds(0.5f);
+        yield return DialogManager.Instance.ShowDialogText("이곳에 용건이 있어서 왔다.");
+        StateMachine.Pop();
     }
 
     public void PauseGame(bool pause)
@@ -79,10 +103,12 @@ public class GameController : MonoBehaviour
         {
             prevState = state;
             state = GameState.Paused;
+            StateMachine.Push(CutsceneState.i);
         }
         else
         {
             state = prevState;
+            StateMachine.Pop();
         }
     }
     public void StartBattle(BattleTrigger trigger)

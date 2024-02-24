@@ -45,6 +45,11 @@ public class UnitParty : MonoBehaviour
         return units.Where(x => x.HP > 0).Take(unitCount).ToList();
     }
 
+    public int GetHealthyUnitCount()
+    {
+        return units.Where(x => x.HP > 0).ToList().Count;
+    }
+
     public int CheckHealthyUnits()
     {
         return units.Where(x => x.HP > 0).ToList().Count;

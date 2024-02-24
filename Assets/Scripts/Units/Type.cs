@@ -10,9 +10,9 @@ public class Type
     {
         Base = uBase;
     }
-    public static string GetType(UnitType unitType)
+    public static string GetTypeOfName(UnitType unitType)
     {
-        return TypeDB.GetObjectByName(unitType.ToString()).name;
+        return TypeDB.GetObjectByName(unitType.ToString()).Name;
         // string type;
         // if (unitType == UnitType.Normal)
         //     type = "없음";
